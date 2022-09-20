@@ -352,7 +352,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrPressure01 ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 1; maxValue: dialog.convertedFullScale
+                    stepValue : 1; minValue: 0; maxValue: dialog.convertedFullScale
                     fixedN : dialog.pressureFixedN
 
                     onChangedText: {
@@ -374,7 +374,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrPressure02 ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 1; maxValue: dialog.convertedFullScale
+                    stepValue : 1; minValue: 0; maxValue: dialog.convertedFullScale
                     fixedN : dialog.pressureFixedN
 
                     onChangedText: {
@@ -396,7 +396,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrPressure03 ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 1; maxValue: dialog.convertedFullScale
+                    stepValue : 1; minValue: 0; maxValue: dialog.convertedFullScale
                     fixedN : dialog.pressureFixedN
 
                     onChangedText: {
@@ -418,7 +418,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrPressure04 ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 1; maxValue: dialog.convertedFullScale
+                    stepValue : 1; minValue: 0; maxValue: dialog.convertedFullScale
                     fixedN : dialog.pressureFixedN
 
                     onChangedText: {
@@ -440,7 +440,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrPressure05 ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 1; maxValue: dialog.convertedFullScale
+                    stepValue : 1; minValue: 0; maxValue: dialog.convertedFullScale
                     fixedN : dialog.pressureFixedN
 
                     onChangedText: {
@@ -462,7 +462,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrPressure06 ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 1; maxValue: dialog.convertedFullScale
+                    stepValue : 1; minValue: 0; maxValue: dialog.convertedFullScale
                     fixedN : dialog.pressureFixedN
 
                     onChangedText: {
