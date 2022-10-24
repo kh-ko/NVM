@@ -46,9 +46,6 @@ BaseSetupWindow{
     }
 
     Component.onCompleted: {
-
-        console.debug("[khko_debug]float set win modality = " + modality)
-
         body = bodyImpl.createObject(contentBody)
         bodyHeight = body.height
         bodyWidth  = body.width

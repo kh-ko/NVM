@@ -294,7 +294,7 @@ NWindow{ // khko_todo
                                                 idxValue === 21 ? qsTr("(sync current)") :
                                                 idxValue === 22 ? qsTr("(min current)") :
                                                 idxValue === 23 ? qsTr("(max current)") :
-                                                idxValue === 24 ? qsTr("(A-DN40 max speed)") :
+                                                idxValue === 24 ? qsTr("(A-DN40/DN25 max speed)") :
                                                 idxValue === 25 ? qsTr("(A-DN50 max speed)") :
                                                 idxValue === 26 ? qsTr("(A-DN63 max speed)") :
                                                 idxValue === 27 ? qsTr("(A-DN80 max speed)") :

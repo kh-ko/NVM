@@ -124,5 +124,8 @@
         <file>ui/dialog/InterfaceStatusRS232Dlg.qml</file>
         <file>uiengine/GUISetting.qml</file>
         <file>ui/dialog/SensorSetupExDlg.qml</file>
+        <file>ui/dialog/SensorAnalyzerDlg.qml</file>
+        <file>ui/dialog/InterfaceSetupDevNetItem.qml</file>
+        <file>ui/dialog/InterfaceStatusDevNetItem.qml</file>
     </qresource>
 </RCC>

@@ -561,13 +561,24 @@ private:
 
         if(mIsWritten == false && mState == STATE_READY)
         {
-            foreach(InterfaceSetupEthCATItemModel * pItem, mPDOList)
-            {
-                pItem->setIsEdit(false);
-            }
-            onCommandSetEdit(false);
+//            foreach(InterfaceSetupEthCATItemModel * pItem, mPDOList)
+//            {
+//                pItem->setIsEdit(false);
+//            }
+//            onCommandSetEdit(false);
 
             emit signalEventCompletedLoad();
+        }
+
+        if(mState == STATE_READ_PDO_END)
+        {
+            bool isPDOErr = false;
+            foreach(InterfaceSetupEthCATItemModel * pItem, mPDOList)
+            {
+                if(pItem->getErrDataType() || pItem->getErrRangeFrom() || pItem->getErrRangeTo())
+                    isPDOErr = true;
+            }
+            onCommandSetEdit(isPDOErr || getErrDIFunction() || getErrDIMode() || getErrDIInput() || getErrDOFunction() || getErrDOMode() || getErrDOOutput() || getErrDevID());
         }
 
         if(mState >= STATE_READ_DI && mState <= STATE_READ_PDO_END)
@@ -659,7 +670,14 @@ private:
         }
         else
         {
-            mPDOList[itemIdx]->setDataType(dataType);
+            mPDOList[itemIdx]->setErrDataType(dataType != 0);
+
+            if(dataType != 0)
+                mPDOList[itemIdx]->setIsEdit(true);
+            else
+                mPDOList[itemIdx]->setIsEdit(false);
+
+            mPDOList[itemIdx]->setDataType(0); // only supported unsigned integer
             mPDOList[itemIdx]->setIsEdit(false);
         }
     }

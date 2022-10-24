@@ -60,6 +60,7 @@ BaseSetupWindow{
 
 
         var pressure01 = parseFloat(body.setPoint01Pressure.textField.text)
+
         pressure01 = Math.round(dialog.stdFullScale * (pressure01 / dialog.convertedFullScale))
 
         var pressure02 = parseFloat(body.setPoint02Pressure.textField.text)
@@ -102,6 +103,7 @@ BaseSetupWindow{
 
         onSignalEventChangedPressure01: {
             var convertedPressure = UnitUtil.convert(sensorFullScaleUnit, (mPressure01 * dialog.pressureConvertFactor), dialog.pressureDpUnit)
+
             body.setPoint01Pressure.setValue(convertedPressure)
         }
         onSignalEventChangedPressure02: {

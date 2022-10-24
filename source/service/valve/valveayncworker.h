@@ -172,10 +172,30 @@
 #define RES_INTERFACE_CFG_ETHCAT_PDO_RANGE_DATA_LEN     0
 
 /* devicenet interface setup*/
-#define REQ_READ_INTERFACE_CFG_DNET_MAC                 "b:7202"
-#define RES_INTERFACE_CFG_DNET_MAC_DATA_LEN             3
-#define REQ_READ_INTERFACE_CFG_DNET_BAUDRATE            "b:7203"
-#define RES_INTERFACE_CFG_DNET_BAUDRATE_DATA_LEN        3
+#define REQ_READ_INTERFACE_CFG_DNET_MAC                 "a:72500001"
+#define RES_INTERFACE_CFG_DNET_MAC_DATA_LEN             2
+#define REQ_READ_INTERFACE_CFG_DNET_BAUDRATE            "a:72500002"
+#define RES_INTERFACE_CFG_DNET_BAUDRATE_DATA_LEN        2
+#define REQ_READ_INTERFACE_CFG_DNET_DATA_TYPE           "a:72500003"
+#define RES_INTERFACE_CFG_DNET_DATA_TYPE_DATA_LEN       2
+#define REQ_READ_INTERFACE_CFG_DNET_POS_UNIT            "a:7250000B"
+#define RES_INTERFACE_CFG_DNET_POS_UNIT_DATA_LEN        4
+#define REQ_READ_INTERFACE_CFG_DNET_POS_GAIN            "a:7250000F"
+#define RES_INTERFACE_CFG_DNET_POS_GAIN_DATA_LEN        8
+#define REQ_READ_INTERFACE_CFG_DNET_PRESSURE_UNIT       "a:7250000A"
+#define RES_INTERFACE_CFG_DNET_PRESSURE_UNIT_DATA_LEN   4
+#define REQ_READ_INTERFACE_CFG_DNET_S01_GAIN            "a:7250000D"
+#define RES_INTERFACE_CFG_DNET_S01_GAIN_DATA_LEN        8
+#define REQ_READ_INTERFACE_CFG_DNET_S02_GAIN            "a:7250000E"
+#define RES_INTERFACE_CFG_DNET_S02_GAIN_DATA_LEN        8
+#define REQ_READ_INTERFACE_CFG_DNET_IN_ASS              "a:72500005"
+#define RES_INTERFACE_CFG_DNET_IN_ASS_DATA_LEN          8
+#define REQ_READ_INTERFACE_CFG_DNET_OUT_ASS             "a:72500004"
+#define RES_INTERFACE_CFG_DNET_OUT_ASS_DATA_LEN         8
+#define REQ_READ_INTERFACE_CFG_DNET_DEV_STATUS          "a:72500008"
+#define RES_INTERFACE_CFG_DNET_DEV_STATUS_DATA_LEN      2
+#define REQ_READ_INTERFACE_CFG_DNET_EX_STATUS           "a:72500009"
+#define RES_INTERFACE_CFG_DNET_EX_STATUS_DATA_LEN       2
 #define REQ_READ_INTERFACE_CFG_DNET_DI                  "i:2601"
 #define RES_INTERFACE_CFG_DNET_DI_DATA_LEN              6
 #define REQ_READ_INTERFACE_CFG_DNET_DO                  "i:2611"
@@ -253,13 +273,23 @@
 #define REQ_READ_INTERFACE_STATUS_ETHCAT                "i:40"
 #define RES_INTERFACE_STATUS_ETHCAT_DATA_LEN            8
 #define REQ_READ_INTERFACE_DNET_FIRMWARE_ID             "b:7200"
-#define RES_INTERFACE_DNET_FIRMWARE_ID_DATA_LEN         6
+#define RES_INTERFACE_DNET_FIRMWARE_ID_DATA_LEN         0
 #define REQ_READ_INTERFACE_DNET_SERIAL_NUM              "b:7201"
-#define RES_INTERFACE_DNET_SERIAL_NUM_DATA_LEN          10
+#define RES_INTERFACE_DNET_SERIAL_NUM_DATA_LEN          0
 #define REQ_READ_INTERFACE_STATUS_DNET                  "i:40"
 #define RES_INTERFACE_STATUS_DNET_DATA_LEN              8
 #define REQ_READ_INTERFACE_STATUS_RS232                 "i:40"
 #define RES_INTERFACE_STATUS_RS232_DATA_LEN             8
+
+/* sensor offset, sensor value */
+#define REQ_READ_SENSOR_OFFSET                          "x:06"
+#define RES_SENSOR_OFFSET_DATA_LEN                      16
+#define REQ_READ_SENSOR_VALUE                           "x:03"
+#define RES_SENSOR_VALUE_DATA_LEN                       24
+#define REQ_READ_SENSOR_SELECTION                       "b:3005"
+#define RES_SENSOR_SELECTION_DATA_LEN                   8
+
+
 #define REQ_WRITE_ACCESS                                "c:01"
 #define REQ_WRITE_ENABLE_PFO                            "c:10"
 #define REQ_WRITE_CTRL_CYCLES_RESET                     "c:20"
@@ -346,6 +376,14 @@
 /* devicenet interface */
 #define REQ_WRITE_INTERFACE_CONFIG_DNET_DI           "s:2601"
 #define REQ_WRITE_INTERFACE_CONFIG_DNET_DO           "s:2611"
+#define REQ_WRITE_INTERFACE_CONFIG_DNET_DATA_TYPE     "a:72500103"
+#define REQ_WRITE_INTERFACE_CONFIG_DNET_POS_UNIT      "a:7250010B"
+#define REQ_WRITE_INTERFACE_CONFIG_DNET_POS_GAIN      "a:7250010F"
+#define REQ_WRITE_INTERFACE_CONFIG_DNET_PRESSURE_UNIT "a:7250010A"
+#define REQ_WRITE_INTERFACE_CONFIG_DNET_S01_GAIN      "a:7250010D"
+#define REQ_WRITE_INTERFACE_CONFIG_DNET_S02_GAIN      "a:7250010E"
+#define REQ_WRITE_INTERFACE_CONFIG_DNET_IN_ASS        "a:72500105"
+#define REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_ASS       "a:72500104"
 
 /* rs232 interface */
 #define REQ_WRITE_INTERFACE_CONFIG_RS232_IF          "s:20"
@@ -802,12 +840,12 @@ public slots:
         {
             retryConnect = false;
         }
-        else if(!resDto.mIsSucc && err != IValve::ResourceError)
+        else if(!resDto.mIsSucc && err != IValve::ResourceError && err != IValve::WriteError)
         {
             resDto.mIsSucc = mConn.sendCmd(dto.mReqCommand,"",dto.mCheckString, dto.mCheckLen, response, mTimeout, &err);
             resDto.mIsNetworkErr = !resDto.mIsSucc;
         }
-        else if(!resDto.mIsSucc && err == IValve::ResourceError)
+        else if(!resDto.mIsSucc && (err == IValve::ResourceError || err == IValve::WriteError))
         {
             retryConnect = false;
             mConn.disconnectValve();

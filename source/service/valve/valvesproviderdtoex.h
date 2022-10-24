@@ -255,6 +255,108 @@ public:
 
 Q_DECLARE_METATYPE(ValveResponseSensorConfigDto);
 
+class ValveResponseSensorOffsetValuesDto : public ValveResponseDto
+{
+public:
+    double mS01Offset = 0;
+    double mS02Offset = 0;
+
+    ValveResponseSensorOffsetValuesDto(){}
+    ValveResponseSensorOffsetValuesDto(ValveRequestDto reqDto, QDateTime resDateTime, QString resData, bool isParsed, bool isSucc, bool isNetworkErr, QString errMsg =""):ValveResponseDto(reqDto, resDateTime, resData, isParsed, isSucc, isNetworkErr, errMsg){}
+    ValveResponseSensorOffsetValuesDto(ValveResponseDto baseDto) : ValveResponseDto(baseDto){}
+    ValveResponseSensorOffsetValuesDto(const ValveResponseSensorOffsetValuesDto& copy) : ValveResponseDto(copy),
+        mS01Offset(copy.mS01Offset),
+        mS02Offset(copy.mS02Offset){}
+
+    ~ValveResponseSensorOffsetValuesDto(){}
+
+    ValveResponseSensorOffsetValuesDto& operator=(const ValveResponseSensorOffsetValuesDto& other)
+    {
+        ValveResponseDto::operator=(other);
+
+        mS01Offset = other.mS01Offset;
+        mS02Offset = other.mS02Offset;
+
+        return *this;
+    }
+
+    QString toString()
+    {
+        return QString("%1, mS01Offset = %2, mS02Offset = %3").arg(ValveResponseDto::toString()).arg(mS01Offset).arg(mS02Offset);
+    }
+};
+
+Q_DECLARE_METATYPE(ValveResponseSensorOffsetValuesDto);
+
+class ValveResponseSensorValueDto : public ValveResponseDto
+{
+public:
+    double mResultingValue = 0;
+    double mS01Value       = 0;
+    double mS02Value       = 0;
+
+    ValveResponseSensorValueDto(){}
+    ValveResponseSensorValueDto(ValveRequestDto reqDto, QDateTime resDateTime, QString resData, bool isParsed, bool isSucc, bool isNetworkErr, QString errMsg =""):ValveResponseDto(reqDto, resDateTime, resData, isParsed, isSucc, isNetworkErr, errMsg){}
+    ValveResponseSensorValueDto(ValveResponseDto baseDto) : ValveResponseDto(baseDto){}
+    ValveResponseSensorValueDto(const ValveResponseSensorValueDto& copy) : ValveResponseDto(copy),
+        mResultingValue(copy.mResultingValue),
+        mS01Value      (copy.mS01Value      ),
+        mS02Value      (copy.mS02Value      ){}
+
+    ~ValveResponseSensorValueDto(){}
+
+    ValveResponseSensorValueDto& operator=(const ValveResponseSensorValueDto& other)
+    {
+        ValveResponseDto::operator=(other);
+
+        mResultingValue  = other.mResultingValue;
+        mS01Value        = other.mS01Value      ;
+        mS02Value        = other.mS02Value      ;
+
+        return *this;
+    }
+
+    QString toString()
+    {
+        return QString("%1, mResultingValue = %2, mS01Value = %3, mS02Value = %4").arg(ValveResponseDto::toString()).arg(mResultingValue).arg(mS01Value).arg(mS02Value);
+    }
+};
+
+Q_DECLARE_METATYPE(ValveResponseSensorValueDto);
+
+class ValveResponseSensorSelectionDto : public ValveResponseDto
+{
+public:
+    bool mS01Selected = false;
+    bool mS02Selected = false;
+
+    ValveResponseSensorSelectionDto(){}
+    ValveResponseSensorSelectionDto(ValveRequestDto reqDto, QDateTime resDateTime, QString resData, bool isParsed, bool isSucc, bool isNetworkErr, QString errMsg =""):ValveResponseDto(reqDto, resDateTime, resData, isParsed, isSucc, isNetworkErr, errMsg){}
+    ValveResponseSensorSelectionDto(ValveResponseDto baseDto) : ValveResponseDto(baseDto){}
+    ValveResponseSensorSelectionDto(const ValveResponseSensorSelectionDto& copy) : ValveResponseDto(copy),
+        mS01Selected(copy.mS01Selected),
+        mS02Selected(copy.mS02Selected){}
+
+    ~ValveResponseSensorSelectionDto(){}
+
+    ValveResponseSensorSelectionDto& operator=(const ValveResponseSensorSelectionDto& other)
+    {
+        ValveResponseDto::operator=(other);
+
+        mS01Selected = other.mS01Selected;
+        mS02Selected = other.mS02Selected;
+
+        return *this;
+    }
+
+    QString toString()
+    {
+        return QString("%1, mS01Selected = %2, mS02Selected = %3").arg(ValveResponseDto::toString()).arg(mS01Selected).arg(mS02Selected);
+    }
+};
+
+Q_DECLARE_METATYPE(ValveResponseSensorSelectionDto);
+
 class ValveResponsePressureCtrlConfigDto : public ValveResponseDto
 {
 public:

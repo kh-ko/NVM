@@ -17,6 +17,7 @@
 #include "source/qmlmodel/valverecoverydlgmodel.h"
 #include "source/qmlmodel/sensorsetupdlgmodel.h"
 #include "source/qmlmodel/sensorsetupexdlgmodel.h"
+#include "source/qmlmodel/sensoranalysisdlgmodel.h"
 #include "source/qmlmodel/pressurectrlsetupdlgmodel.h"
 #include "source/qmlmodel/pressurectrlfloatsetupdlgmodel.h"
 #include "source/qmlmodel/pressurectrllearnparamdlgmodel.h"
@@ -138,12 +139,14 @@ int main(int argc, char *argv[])
     qmlRegisterType<ValveRecoveryDlgModel>("ValveRecoveryDlgModel", 1, 0, "ValveRecoveryDlgModel");
     qmlRegisterType<SensorSetupDlgModel>("SensorSetupDlgModel", 1, 0, "SensorSetupDlgModel");
     qmlRegisterType<SensorSetupExDlgModel>("SensorSetupExDlgModel", 1, 0, "SensorSetupExDlgModel");
+    qmlRegisterType<SensorAnalysisDlgModel>("SensorAnalysisDlgModel", 1, 0, "SensorAnalysisDlgModel");
     qmlRegisterType<PressureCtrlSetupDlgModel>("PressureCtrlSetupDlgModel", 1, 0, "PressureCtrlSetupDlgModel");
     qmlRegisterType<PressureCtrlFloatSetupDlgModel>("PressureCtrlFloatSetupDlgModel", 1, 0, "PressureCtrlFloatSetupDlgModel");
     qmlRegisterType<PressureCtrlLearnParamDlgModel>("PressureCtrlLearnParamDlgModel", 1, 0, "PressureCtrlLearnParamDlgModel");
     qmlRegisterType<PressureCtrlLearnParamItemModel>("PressureCtrlLearnParamItemModel", 1, 0, "PressureCtrlLearnParamItemModel");
     qmlRegisterType<NCPASettingsDlgModel>("NCPASettingsDlgModel", 1, 0, "NCPASettingsDlgModel");
     qmlRegisterType<InterfaceSetupDevNetDlgModel>("InterfaceSetupDevNetDlgModel", 1, 0, "InterfaceSetupDevNetDlgModel");
+    qmlRegisterType<InterfaceSetupDevNetAssemblyItemModel>("InterfaceSetupDevNetAssemblyItemModel", 1, 0, "InterfaceSetupDevNetAssemblyItemModel");
     qmlRegisterType<InterfaceSetupLogicDlgModel>("InterfaceSetupLogicDlgModel", 1, 0, "InterfaceSetupLogicDlgModel");
     qmlRegisterType<InterfaceSetupEtherCATDlgModel>("InterfaceSetupEtherCATDlgModel", 1, 0, "InterfaceSetupEtherCATDlgModel");
     qmlRegisterType<InterfaceSetupEthCATItemModel>("InterfaceSetupEthCATItemModel", 1, 0, "InterfaceSetupEthCATItemModel");

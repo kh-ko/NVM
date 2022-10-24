@@ -285,7 +285,7 @@ public slots:
     void onValveChangedFirmwareVersion()
     {
         bool result;
-        setEnableDeltaFactor(pValveSP->getFirmwareVersion().toULongLong(&result, 16) > 0x2205260298);
+        setEnableDeltaFactor(pValveSP->getFirmwareVersion().toULongLong(&result, 16) > 0x2205260298 && pValveSP->getFirmwareVersion().toULongLong(&result, 16) < 0x2208030207);
 
         qDebug() << "[" << Q_FUNC_INFO << "] version = " <<  pValveSP->getFirmwareVersion();
     }

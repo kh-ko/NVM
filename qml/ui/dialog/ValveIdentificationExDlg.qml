@@ -235,7 +235,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "N : Non-Sealing", "S : Sealing"]
+                    model: ["Unknow", "N : Non-Sealing", "S : Sealing", "F : FCup-Sealing"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -267,7 +267,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "040 : DN40", "050 : DN50", "063 : DN63" , "080 : DN80" , "100 : DN100" , "160 : DN160" , "200 : DN200" , "250 : DN250"]
+                    model: ["Unknow", "040 : DN40", "050 : DN50", "063 : DN63" , "080 : DN80" , "100 : DN100" , "160 : DN160" , "200 : DN200" , "250 : DN250", "025 : DN25"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)

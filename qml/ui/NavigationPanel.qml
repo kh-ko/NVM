@@ -24,6 +24,7 @@ Rectangle {
     signal clickValveRecovery()
     signal clickValveCailbration()
     signal clickSensorSetup()
+    signal clickSensorAnalysis()
     signal clickPressureCtrlSetup()
     signal clickPressureCtrlLearnParam()
     signal clickInterfaceSetup()
@@ -134,11 +135,20 @@ Rectangle {
 
                 NExButtonItem{
                     id : menuSensorSetup
-                    anchors.bottom: parent.bottom
+                    anchors.bottom: menuSensorAnalysis.top
                     text.text: qsTr("Setup")
                     enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
 
                     onClicked: { panel.clickSensorSetup() }
+                }
+
+                NExButtonItem{
+                    id : menuSensorAnalysis
+                    anchors.bottom: parent.bottom
+                    text.text: qsTr("Analysis")
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+
+                    onClicked: { panel.clickSensorAnalysis() }
                 }
 
                 /*

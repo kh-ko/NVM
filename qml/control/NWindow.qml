@@ -27,8 +27,6 @@ ApplicationWindow {
 
     onVisibleChanged:
     {
-        console.debug("[khko_debug]win visible = " + nwindow.visible + ", modality = " + modality)
-
         if(isModal === false)
         {
             if(nwindow.visible == true)

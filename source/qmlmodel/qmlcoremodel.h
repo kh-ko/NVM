@@ -19,6 +19,7 @@ class QmlCoreModel : public QObject
     Q_PROPERTY(qint64  mStdFullScale          READ getStdFullScale          NOTIFY signalEventChangedStdFullScale          )
     Q_PROPERTY(double  mPressureConvertFactor READ getPressureConvertFactor NOTIFY signalEventChangedPressureConvertFactor )
     Q_PROPERTY(QString mNCPAVersion           READ getNCPAVersion           NOTIFY signalEventChangedNCPAVersion           )
+    Q_PROPERTY(bool    mIsWithoutLogo         READ getIsWithoutLogo         NOTIFY signalEventChangedIsWithoutLogo         )
     Q_PROPERTY(bool    mIsValveConnect        READ getIsValeConnect         NOTIFY signalEventChangedIsValveConnect        )
     Q_PROPERTY(QString mErrMsg                READ getErrMsg                NOTIFY signalEventChangedErrMsg                )
     Q_PROPERTY(int     mLoadProgress          READ getLoadProgress          NOTIFY signalEventChangedLoadProgress          )
@@ -175,6 +176,7 @@ public:
     qint64  getStdFullScale         (){ return mStdFullScale             ;}
     double  getPressureConvertFactor(){ return mPressureConvertFactor    ;}
     QString getNCPAVersion          (){ return pLSettingSP->mBuildVersion;}
+    bool    getIsWithoutLogo        (){ return pLSettingSP->mIsWithoutLogo;}
     bool    getIsValeConnect        (){ return mIsValveConnect           ;}
     QString getErrMsg               (){ return mErrMsg                   ;}
     int     getLoadProgress         (){ return mLoadProgress             ;}
@@ -320,6 +322,7 @@ signals:
     void signalEventChangedStdFullScale         (qint64  value);
     void signalEventChangedPressureConvertFactor(double  value);
     void signalEventChangedNCPAVersion          (QString value);
+    void signalEventChangedIsWithoutLogo        (bool    value);
     void signalEventChangedIsValveConnect       (bool    value);
     void signalEventChangedErrMsg               (QString value);
     void signalEventChangedLoadProgress         (int     value);
@@ -743,6 +746,8 @@ public slots:
 
     Q_INVOKABLE void onCommandSaveRecordData(QString filePath)
     {
+        qDebug() << "[" << Q_FUNC_INFO << "]";
+
         saveRecordData(filePath);
     }
 
@@ -869,6 +874,14 @@ private:
         pressureFixedN = pressureFixedN > 0 ? pressureFixedN : 0;
 
         FileWriterEx file;
+
+        if(filePath == "")
+        {
+            filePath = QString("%1/%2.txt").arg(QApplication::applicationDirPath()).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss"));
+        }
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << filePath;
+
         int splitIdx = filePath.lastIndexOf("/")+1;
         QString dir = filePath.left(splitIdx);
         QString fileName = filePath.mid(splitIdx);

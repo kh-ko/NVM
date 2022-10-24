@@ -8,6 +8,7 @@
 
 #include "source/service/localsetting/localsettingsprovider.h"
 #include "source/service/valve/valvesprovider.h"
+#include "source/service/config/configsprovider.h"
 
 #define pCoreService CoreService::getInstance()
 

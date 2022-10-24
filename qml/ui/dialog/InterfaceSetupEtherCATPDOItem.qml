@@ -20,11 +20,12 @@ RowLayout {
     spacing: 1 * GUISetting.scale
 
     onFromValueChanged: {
-        rangeFrom.textField.text = fromValue
+        rangeFrom.setTextByValue(parseFloat(itemModel.mRangeFrom))//textField.text = fromValue
     }
 
     onToValueChanged: {
-        rangeTo.textField.text = toValue
+        rangeTo.setTextByValue(parseFloat(itemModel.mRangeTo))
+        //rangeTo.textField.text = toValue
     }
 
     IntValidator{
@@ -66,7 +67,7 @@ RowLayout {
 
             textColor: itemModel.mErrDataType ? "#FF0000" : "#000000"
             visible: !item.isHeader
-            enabled: item.enabled
+            enabled: false //item.enabled
             currentIndex: itemModel.mDataType
 
             model: ["signed integer","floating"]

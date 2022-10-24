@@ -162,6 +162,8 @@ private:
             pSerialValve = new SerialValve();
         }
 
+        qDebug() << "[" << Q_FUNC_INFO << "]";
+
         QStringList portList = pSerialValve->searchDevice("i:83","","i:83", 0, additionalInfo);
 
         if(pSerialValve != mpValve)

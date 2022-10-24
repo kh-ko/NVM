@@ -23,8 +23,6 @@ NWindow {
     property real bodyHeight:50
     property real bodyWidth :500
 
-    onBodyWidthChanged: {console.debug("[khko_debug]onBodyWidthChanged : " + bodyWidth)}
-
     property alias changeAccessDlg : _changeAccessDlg
 
     function openChangeAccessDlg()

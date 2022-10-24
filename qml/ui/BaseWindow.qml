@@ -18,13 +18,11 @@ import GUISetting 1.0
 Window {
     id: window
 
-    property bool isLogoVisible : true
     property ValveRecoveryDlg valveRecoveryDlgObj: null
     property FatalErrorDlg fatalErrorDlgObj: null
 
     visible: true
-    title: qsTr("NVM - NOVASEN Valve Manager")
-    //title: "Control Performance Analyzer"
+    title: model.mIsWithoutLogo ? qsTr("New Valve Manager") : qsTr("NVM - NOVASEN Valve Manager")
 
     width: 1024; height: 705
     minimumHeight: 705; minimumWidth: 1024
@@ -37,6 +35,7 @@ Window {
     }
 
     Component.onCompleted: {
+        console.debug("model.mIsWithoutLogo = " + model.mIsWithoutLogo)
         window.showPortSelection();
     }
 
@@ -46,6 +45,14 @@ Window {
 
     onHeightChanged: {
         GUISetting.scale = (width / minimumWidth) > (height / minimumHeight) ? (height / minimumHeight) : (width / minimumWidth)
+    }
+
+
+    onClosing: {
+        if(model.mIsRecord)
+        {
+            model.onCommandSaveRecordData("")
+        }
     }
 
     QmlCoreModel{
@@ -114,7 +121,7 @@ Window {
         width: GUISetting.navi_panel_width
         anchors.top: title.bottom; anchors.topMargin: 2; anchors.bottom: statusBar.top; anchors.bottomMargin : 2;
 
-        isLogoVisible  : window.isLogoVisible
+        isLogoVisible  : !model.mIsWithoutLogo
         isRunSequencer : seqTestDlg.isRun
         isZeroEnable   : model.mZeroEnable
         isConnected    : model.mIsValveConnect
@@ -135,6 +142,7 @@ Window {
         }
         onClickValveCailbration       : { var popup = valveCalibrationDlg.createObject(window)      ; popup.show(); }
         onClickSensorSetup            : { var popup = sensorSetupExDlg.createObject(window)         ; popup.show(); }
+        onClickSensorAnalysis         : { var popup = sensorAnalysisDlg.createObject(window)        ; popup.show(); }
         onClickPressureCtrlSetup      : { var popup = pressureCtrlFloatSetupDlg.createObject(window); popup.show(); }
         onClickPressureCtrlLearnParam : { var popup = pressureCtrlLearnParamDlg.createObject(window); popup.show(); }//popup.open(); }
         onClickNCPASettings           : { var popup = ncpaSettingsDlg.createObject(window)          ; popup.show(); }
@@ -424,6 +432,13 @@ Window {
             }
         }
     }
+    Component{
+        id : sensorAnalysisDlg
+        SensorAnalyzerDlg{
+
+        }
+    }
+
     Component{
         id : pressureCtrlSetupDlg
         PressureCtrlSetupDlg{}

@@ -48,6 +48,7 @@ HEADERS += \
     source/qmlmodel/fatalerrordlgmodel.h \
     source/qmlmodel/firmwareupdatedlgmodel.h \
     source/qmlmodel/graphanalyzedlgmodel.h \
+    source/qmlmodel/interfacesetupdevnetassemblyitemmodel.h \
     source/qmlmodel/interfacesetupdevnetdlgmodel.h \
     source/qmlmodel/interfacesetupethercatdlgmodel.h \
     source/qmlmodel/interfacesetuplogicdlgmodel.h \
@@ -63,6 +64,7 @@ HEADERS += \
     source/qmlmodel/pressurectrlsetupdlgmodel.h \
     source/qmlmodel/qmlcoremodel.h \
     source/qmlmodel/searchdevicedlgmodel.h \
+    source/qmlmodel/sensoranalysisdlgmodel.h \
     source/qmlmodel/sensorsetupdlgmodel.h \
     source/qmlmodel/sensorsetupexdlgmodel.h \
     source/qmlmodel/sequencerdlgmodel.h \
@@ -74,6 +76,7 @@ HEADERS += \
     source/qmlmodel/valvepowerfailstatusdlgmodel.h \
     source/qmlmodel/valverecoverydlgmodel.h \
     source/qmlmodel/valvesetupdlgmodel.h \
+    source/service/config/configsprovider.h \
     source/service/coreservice.h \
     source/service/def/builddef.h \
     source/service/def/datetimeform.h \

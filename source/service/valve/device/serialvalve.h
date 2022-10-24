@@ -134,7 +134,7 @@ public:
             {
                 result = sendCmdInt(cmd, value, checkPreFix, checkLength, dummy, 300);
 
-                //qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]connected port["<< info.portName() <<"] search : result = " << result;
+                qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]connected port["<< info.portName() <<"] search : result = " << result;
             }
             else
             {
@@ -144,11 +144,11 @@ public:
                 {
                     result = pSeacherValve->sendCmdInt(cmd, value, checkPreFix, checkLength, dummy, 300);
 
-                    //qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]port["<< info.portName() <<"] search : result = " << result;
+                    qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]port["<< info.portName() <<"] search : result = " << result;
                 }
                 else
                 {
-                    //qDebug() << "[khko_debug][" << Q_FUNC_INFO << "] port[" << info.portName() <<"] is open fail";
+                    qDebug() << "[khko_debug][" << Q_FUNC_INFO << "] port[" << info.portName() <<"] is open fail";
                 }
             }
 
@@ -268,6 +268,9 @@ public:
         }
 
         resValue = QString(readFramBuffer);
+
+        if(checkLength != 0)
+            checkLength = checkPreFix.length() + checkLength;
 
         if((!resValue.startsWith(checkPreFix) && !resValue.startsWith("E:") && checkPreFix != "") || (resValue.length() < checkLength && resValue.startsWith(checkPreFix)))
         {

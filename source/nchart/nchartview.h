@@ -282,7 +282,7 @@ public slots:
     Q_INVOKABLE void   onCommandInit(QString family, int fontSize, QString strYAxis01Color, QString strYAxis02Color, bool simpleXAxis, bool zoomEnable, bool fmtTime, bool rtUpdate, bool y01Enable, bool y01DashEnable, bool y02Enable, bool y02DashEnable)
     {
         if(getDebug())
-            qDebug() << "[khko_debug][onCommandInit]";
+            qDebug() << "[khko_debug][onCommandInit]y01Enable = " << y01Enable <<", y01DashEnable = " << y01DashEnable << ", y02Enable = " << y02Enable << ", y02DashEnable" << y02DashEnable;
 
         QFont labelFont(family, fontSize);
         QFont tickFont(family, fontSize);
@@ -492,6 +492,9 @@ private:
 
         CHECK_PTR_RETURN(m_CustomPlot);
 
+        if(getDebug())
+            qDebug() << "[khko_debug]["<< Q_FUNC_INFO <<"] mYAxis01Factor = " << mYAxis01Factor << ", mYAxis02Factor = " << mYAxis02Factor;
+
         m_CustomPlot->graph(0)->clearData();
         m_CustomPlot->graph(1)->clearData();
         m_CustomPlot->graph(2)->clearData();
@@ -536,6 +539,9 @@ private:
             if(value < min)
                 min = value;
         }
+
+        if(getDebug())
+            qDebug() << "[khko_debug]["<< Q_FUNC_INFO <<"] min = " << min << ", max = " << max;
 
         return true;
     }
@@ -645,6 +651,9 @@ private slots:
         // y range
         if((mUpdateCnt % 10 == 1) || mTimer.isActive() == false)
         {
+            if(getDebug())
+                qDebug() << "[khko_debug][onUpdateGraph] update YAxis, 01Max = " << mYAxis01Max << ", 02Max = " << mYAxis02Max;
+
             mUpdateCnt = 1;
             setYAxisRange(0, mY01Draw, mY01DashDraw, mYAxis01AutoScale, mYAxis01Log, mYAxis01LogDecades, mYAxis01Min, mYAxis01Max);
             setYAxisRange(1, mY02Draw, mY02DashDraw, mYAxis02AutoScale, mYAxis02Log, mYAxis02LogDecades, mYAxis02Min, mYAxis02Max);
@@ -654,7 +663,7 @@ private slots:
         }
 
         if(getDebug())
-            qDebug() << "[khko_debug][onUpdateGraph]";
+            qDebug() << "[khko_debug][onUpdateGraph] proc";
 
         // precision
         m_CustomPlot->yAxis->setNumberPrecision(mYAxis01Precision);

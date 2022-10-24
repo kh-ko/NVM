@@ -110,16 +110,12 @@ Item {
             var stepStr = "0"
             var targetIdx = cursorPosition
 
-            console.debug("[khko_debug]" + targetIdx + ", [0] = " + text.charAt(0))
-
             if(control.isHexMode)
                 return 1
 
             if(targetIdx !== 0 && (text.charAt(targetIdx - 1) >= '0' &&text.charAt(targetIdx - 1) <= '9')) // 커서 앞에 숫자가 나올 경우
             {
                 targetIdx = targetIdx - 1
-
-                console.debug("[khko_debug] calc 01")
 
                 for(idx = 0; idx < text.length; idx++)
                 {
@@ -138,8 +134,6 @@ Item {
             else if((targetIdx === 0 && (text.charAt(targetIdx) >= '0' &&text.charAt(targetIdx) <= '9')) // 커서가 제일 앞에 있고 뒤에 숫자가 있는경우
                     ||(text.charAt(targetIdx - 1) === '.' && (text.charAt(targetIdx) >= '0' && text.charAt(targetIdx) <= '9'))) // 커서 앞에 '.'이 있고 뒤에 숫자가 있는 경우
             {
-
-                console.debug("[khko_debug] calc 02 : char = " + text.charAt(targetIdx))
 
                 for(idx = 0; idx < text.length; idx++)
                 {
@@ -228,6 +222,7 @@ Item {
 
                 if(isEexplicitInputMode)
                 {
+
                     isEexplicitInput = true;
                 }
                 focus = false
@@ -248,9 +243,13 @@ Item {
                 var value = control.isHexMode ? parseInt(text, 16) : parseFloat(text)
 
                 if(value > control.maxValue)
+                {
                     value = control.maxValue;
+                }
                 else if(value < control.minValue)
+                {
                     value = control.minValue;
+                }
 
                 setTextByValue(value)
 
