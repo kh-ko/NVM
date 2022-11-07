@@ -1106,6 +1106,46 @@ public:
 
 Q_DECLARE_METATYPE(ValveResponseInterfaceConfigRS232Dto);
 
+class ValveResponseInterfaceConfigRS485Dto : public ValveResponseDto
+{
+public:
+    int mOperationModeIdx = 0;
+    int mDuplexModeIdx    = 0;
+    int mDevAddr          = 0;
+    int mTerminationIdx   = 0;
+
+    ValveResponseInterfaceConfigRS485Dto(){}
+    ValveResponseInterfaceConfigRS485Dto(ValveRequestDto reqDto, QDateTime resDateTime, QString resData, bool isParsed, bool isSucc, bool isNetworkErr, QString errMsg =""):ValveResponseDto(reqDto, resDateTime, resData, isParsed, isSucc, isNetworkErr, errMsg){}
+    ValveResponseInterfaceConfigRS485Dto(ValveResponseDto baseDto) : ValveResponseDto(baseDto){}
+    ValveResponseInterfaceConfigRS485Dto(const ValveResponseInterfaceConfigRS485Dto& copy) : ValveResponseDto(copy),
+        mOperationModeIdx(copy.mOperationModeIdx),
+        mDuplexModeIdx   (copy.mDuplexModeIdx   ),
+        mDevAddr         (copy.mDevAddr         ),
+        mTerminationIdx  (copy.mTerminationIdx  ){}
+
+    ~ValveResponseInterfaceConfigRS485Dto(){}
+
+    ValveResponseInterfaceConfigRS485Dto& operator=(const ValveResponseInterfaceConfigRS485Dto& other)
+    {
+        ValveResponseDto::operator=(other);
+
+        mOperationModeIdx = other.mOperationModeIdx;
+        mDuplexModeIdx    = other.mDuplexModeIdx   ;
+        mDevAddr          = other.mDevAddr         ;
+        mTerminationIdx   = other.mTerminationIdx  ;
+
+        return *this;
+    }
+
+    QString toString()
+    {
+        return QString("%1, mOperationModeIdx = %2, mDuplexModeIdx = %3, mDevAddr = %4, mTerminationIdx = %5")
+                               .arg(ValveResponseDto::toString()).arg(mOperationModeIdx).arg(mDuplexModeIdx).arg(mDevAddr).arg(mTerminationIdx);
+    }
+};
+
+Q_DECLARE_METATYPE(ValveResponseInterfaceConfigRS485Dto);
+
 class ValveResponseInterfaceConfigRS232RangeDto : public ValveResponseDto
 {
 public:

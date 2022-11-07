@@ -178,6 +178,7 @@
 #define ENABLE_SLOT_VALVE_READED_IF_CONFIG_DNET_DI                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetDi              (ValveResponseInterfaceConfigDNetDiDto           )), this, SLOT(onValveReadedInterfaceCfgDNetDi            (ValveResponseInterfaceConfigDNetDiDto             )))
 #define ENABLE_SLOT_VALVE_READED_IF_CONFIG_DNET_DO                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetDo              (ValveResponseInterfaceConfigDNetDoDto           )), this, SLOT(onValveReadedInterfaceCfgDNetDo            (ValveResponseInterfaceConfigDNetDoDto             )))
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_RS232                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgRS232               (ValveResponseInterfaceConfigRS232Dto            )), this, SLOT(onValveReadedInterfaceCfgRS232             (ValveResponseInterfaceConfigRS232Dto              )))
+#define ENABLE_SLOT_VALVE_READED_IF_CFG_RS485                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgRS485               (ValveResponseInterfaceConfigRS485Dto            )), this, SLOT(onValveReadedInterfaceCfgRS485             (ValveResponseInterfaceConfigRS485Dto              )))
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_RS232_RANGE                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgRS232Range          (ValveResponseInterfaceConfigRS232RangeDto       )), this, SLOT(onValveReadedInterfaceCfgRS232Range        (ValveResponseInterfaceConfigRS232RangeDto         )))
 #define ENABLE_SLOT_VALVE_READED_IF_STATUS_LOGIC                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceStatusLogic            (ValveResponseInterfaceStatusLogicDto            )), this, SLOT(onValveReadedInterfaceStatusLogic          (ValveResponseInterfaceStatusLogicDto              )))
 #define ENABLE_SLOT_VALVE_READED_IF_STATUS_ETHERCAT                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceStatusEtherCAT         (ValveResponseInterfaceStatusEtherCATDto         )), this, SLOT(onValveReadedInterfaceStatusEtherCAT       (ValveResponseInterfaceStatusEtherCATDto           )))
@@ -288,29 +289,30 @@
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUTPUT_ASS             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetOutputAss   (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetOutputAss   (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_DI                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetDi          (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetDi          (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_DO                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetDo          (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetDo          (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_RS232                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgRS232           (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgRS232            (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_RS232_RANGE                    connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgRS232Range      (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgRS232Range       (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_CTRL_CYCLE_RESET                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenControlCyclesReset          (ValveResponseDto                                )), this, SLOT(onValveWrittenControlCyclesReset           (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_ISOL_CYCLE_RESET                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenIsolationCyclesReset        (ValveResponseDto                                )), this, SLOT(onValveWrittenIsolationCyclesReset         (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_ADC_GAINZERO                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenAdcGainZero                 (ValveResponseDto                                )), this, SLOT(onValveWrittenAdcGainZero                  (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SENSOR_ZERO                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSensorZero                  (ValveResponseDto                                )), this, SLOT(onValveWrittenSensorZero                   (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_LEARN_RUN                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenLearnRun                    (ValveResponseDto                                )), this, SLOT(onValveWrittenLearnRun                     (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SIMULATION                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSimulation                  (ValveResponseDto                                )), this, SLOT(onValveWrittenSimulation                   (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_HOLD_POS                              connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenHoldPosition                (ValveResponseDto                                )), this, SLOT(onValveWrittenHoldPosition                 (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_OPEN_POS                              connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenOpenPosition                (ValveResponseDto                                )), this, SLOT(onValveWrittenOpenPosition                 (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_CLOSE_POS                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenClosePosition               (ValveResponseDto                                )), this, SLOT(onValveWrittenClosePosition                (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_01                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint01                  (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint01                   (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_02                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint02                  (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint02                   (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_03                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint03                  (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint03                   (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_04                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint04                  (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint04                   (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_05                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint05                  (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint05                   (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_06                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint06                  (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint06                   (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_ENABLE_PFO                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenEnablePFO                   (ValveResponseDto                                )), this, SLOT(onValveWrittenEnablePFO                    (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SOFT_OPEN                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSoftOpen                    (ValveResponseDto                                )), this, SLOT(onValveWrittenSoftOpen                     (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_SOFT_CLOSE                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSoftClose                   (ValveResponseDto                                )), this, SLOT(onValveWrittenSoftClose                    (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_TEST_MODE                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenTestMode                    (ValveResponseDto                                )), this, SLOT(onValveWrittenTestMode                     (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_ENCODER_ZERO                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenEncoderZero                 (ValveResponseDto                                )), this, SLOT(onValveWrittenEncoderZero                  (ValveResponseDto                                )))
-#define ENABLE_SLOT_VALVE_WRITTEN_CUSTOM_REQUEST                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenCustomRequest               (ValveResponseDto                                )), this, SLOT(onValveWrittenCustomRequest                (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_RS232                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgRS232              (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgRS232              (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_RS485                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgRS485              (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgRS485              (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_RS232_RANGE                    connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgRS232Range         (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgRS232Range         (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_CTRL_CYCLE_RESET                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenControlCyclesReset             (ValveResponseDto                                )), this, SLOT(onValveWrittenControlCyclesReset             (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ISOL_CYCLE_RESET                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenIsolationCyclesReset           (ValveResponseDto                                )), this, SLOT(onValveWrittenIsolationCyclesReset           (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ADC_GAINZERO                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenAdcGainZero                    (ValveResponseDto                                )), this, SLOT(onValveWrittenAdcGainZero                    (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SENSOR_ZERO                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSensorZero                     (ValveResponseDto                                )), this, SLOT(onValveWrittenSensorZero                     (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_LEARN_RUN                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenLearnRun                       (ValveResponseDto                                )), this, SLOT(onValveWrittenLearnRun                       (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SIMULATION                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSimulation                     (ValveResponseDto                                )), this, SLOT(onValveWrittenSimulation                     (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_HOLD_POS                              connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenHoldPosition                   (ValveResponseDto                                )), this, SLOT(onValveWrittenHoldPosition                   (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_OPEN_POS                              connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenOpenPosition                   (ValveResponseDto                                )), this, SLOT(onValveWrittenOpenPosition                   (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_CLOSE_POS                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenClosePosition                  (ValveResponseDto                                )), this, SLOT(onValveWrittenClosePosition                  (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_01                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint01                     (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint01                     (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_02                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint02                     (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint02                     (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_03                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint03                     (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint03                     (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_04                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint04                     (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint04                     (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_05                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint05                     (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint05                     (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SETPOINT_06                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSetPoint06                     (ValveResponseDto                                )), this, SLOT(onValveWrittenSetPoint06                     (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ENABLE_PFO                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenEnablePFO                      (ValveResponseDto                                )), this, SLOT(onValveWrittenEnablePFO                      (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SOFT_OPEN                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSoftOpen                       (ValveResponseDto                                )), this, SLOT(onValveWrittenSoftOpen                       (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_SOFT_CLOSE                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSoftClose                      (ValveResponseDto                                )), this, SLOT(onValveWrittenSoftClose                      (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_TEST_MODE                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenTestMode                       (ValveResponseDto                                )), this, SLOT(onValveWrittenTestMode                       (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ENCODER_ZERO                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenEncoderZero                    (ValveResponseDto                                )), this, SLOT(onValveWrittenEncoderZero                    (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_CUSTOM_REQUEST                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenCustomRequest                  (ValveResponseDto                                )), this, SLOT(onValveWrittenCustomRequest                  (ValveResponseDto                                )))
 
 class ReqCommandUserData : public QObject
 {
@@ -807,6 +809,7 @@ signals:
     void signalEventReadedInterfaceCfgDNetDi           (ValveResponseInterfaceConfigDNetDiDto            dto);
     void signalEventReadedInterfaceCfgDNetDo           (ValveResponseInterfaceConfigDNetDoDto            dto);
     void signalEventReadedInterfaceCfgRS232            (ValveResponseInterfaceConfigRS232Dto             dto);
+    void signalEventReadedInterfaceCfgRS485            (ValveResponseInterfaceConfigRS485Dto             dto);
     void signalEventReadedInterfaceCfgRS232Range       (ValveResponseInterfaceConfigRS232RangeDto        dto);
     void signalEventReadedLearnStatus                  (ValveResponseLearnStatusDto                      dto);
     void signalEventReadedLearnPressureLimit           (ValveResponseLearnPressureLimitDto               dto);
@@ -927,6 +930,7 @@ signals:
     void signalEventWrittenInterfaceConfigDNetInputAss    (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceConfigDNetOutputAss   (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceCfgRS232              (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceCfgRS485              (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceCfgRS232Range         (ValveResponseDto                                 dto);
     void signalEventWrittenSensorScale                    (ValveResponseDto                                 dto);
     void signalEventWrittenSetPoint01                     (ValveResponseDto                                 dto);
@@ -1497,6 +1501,10 @@ public :
     {
         emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgRS232, nullptr, REQ_READ_INTERFACE_CONFIG_RS232_IF, REQ_READ_INTERFACE_CONFIG_RS232_IF, RES_INTERFACE_CONFIG_RS232_IF_DATA_LEN, retryCnt, userData));
     }
+    void readInterfaceConfigRS485(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgRS485, nullptr, REQ_READ_INTERFACE_CONFIG_RS485_COMM, REQ_READ_INTERFACE_CONFIG_RS485_COMM, RES_INTERFACE_CONFIG_RS485_COMM_DATA_LEN, retryCnt, userData));
+    }
     void readInterfaceConfigRS232Range(void * userData, int retryCnt = 0)
     {
         emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgRS232Range, nullptr, REQ_READ_INTERFACE_CONFIG_RS232_COMM, REQ_READ_INTERFACE_CONFIG_RS232_COMM, RES_INTERFACE_CONFIG_RS232_COMM_DATA_LEN, retryCnt, userData));
@@ -1934,6 +1942,20 @@ public :
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceCfgRS232, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 
+    void setInterfaceConfigRS485(int operationModeIdx, int duplexModeIdx, int devAddr, int terminationIdx, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2%3%4%5%6").arg(REQ_WRITE_INTERFACE_CONFIG_RS485_IF)
+                                                   .arg(operationModeIdx)
+                                                   .arg(devAddr, 3, 10, QChar('0'))
+                                                   .arg(duplexModeIdx)
+                                                   .arg(terminationIdx)
+                                                   .arg("00");
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]cmd = " << cmd;
+
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceCfgRS485, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
+    }
+
     void setInterfaceConfigRS232Range(int posRangeIdx, int pressureRange, void * userData, int retryCnt = 0)
     {
         QString cmd = QString("%1%2%3").arg(REQ_WRITE_INTERFACE_CONFIG_RS232_COMM)
@@ -2311,7 +2333,7 @@ public slots:
             setInterface          (signalDto.mInterface   );
             setSensorVersion      (signalDto.mSensorVerion);
 
-            //qDebug() << "[khko_debug]interface = " << signalDto.mInterface;
+            qDebug() << "[khko_debug]interface = " << signalDto.mInterface;
 
         }while(false);
 
@@ -2467,8 +2489,8 @@ public slots:
             QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
 
             int startIdx = 0;
-            signalDto.mS01Offset = value.mid(startIdx,8).toDouble(); startIdx += 8;
-            signalDto.mS02Offset = value.mid(startIdx,8).toDouble(); startIdx += 8;
+            signalDto.mS01Offset = value.mid(startIdx,6).toDouble(); startIdx += 6;
+            signalDto.mS02Offset = value.mid(startIdx,6).toDouble(); startIdx += 6;
 
         }while(false);
 
@@ -5304,6 +5326,34 @@ public slots:
         }
     }
 
+    static void staticProcReadInterfaceCfgRS485(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceCfgRS485(pResData);}
+    void procReadInterfaceCfgRS485(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseInterfaceConfigRS485Dto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            int startIdx = 0;
+            signalDto.mOperationModeIdx = value.mid(startIdx,1).toInt(); startIdx += 1;
+            signalDto.mDevAddr          = value.mid(startIdx,3).toInt(); startIdx += 3;
+            signalDto.mDuplexModeIdx    = value.mid(startIdx,1).toInt(); startIdx += 1;
+            signalDto.mTerminationIdx   = value.mid(startIdx,1).toInt(); startIdx += 1;
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceCfgRS485(signalDto);
+        }
+    }
+
     static void staticProcReadInterfaceCfgRS232Range(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceCfgRS232Range(pResData);}
     void procReadInterfaceCfgRS232Range(void * pResData)
     {
@@ -6011,6 +6061,17 @@ public slots:
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventWrittenInterfaceCfgRS232(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceCfgRS485(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceCfgRS485(pResData);}
+    void procWrittenInterfaceCfgRS485(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceCfgRS485(signalDto);
         }
     }
 

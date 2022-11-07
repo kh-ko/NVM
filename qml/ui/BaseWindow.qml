@@ -156,7 +156,7 @@ Window {
             {
                 popup = interfaceSetupDevNetDlg.createObject(window);
             }
-            else if(model.mInterface === ValveEnumDef.INTERFACE_RS232 || model.mInterface === ValveEnumDef.INTERFACE_RS232_WITH_ANALOGOUTPUT)
+            else if(model.mInterface === ValveEnumDef.INTERFACE_RS232 || model.mInterface === ValveEnumDef.INTERFACE_RS232_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_RS485 ||  model.mInterface === ValveEnumDef.INTERFACE_RS485_WITH_ANALOGOUTPUT)
             {
                 popup = interfaceSetupRS232Dlg.createObject(window);
             }
@@ -177,7 +177,7 @@ Window {
             {
                 popup = interfaceStatusDNetDlg.createObject(window);
             }
-            else if(model.mInterface === ValveEnumDef.INTERFACE_RS232 || model.mInterface === ValveEnumDef.INTERFACE_RS232_WITH_ANALOGOUTPUT)
+            else if(model.mInterface === ValveEnumDef.INTERFACE_RS232 || model.mInterface === ValveEnumDef.INTERFACE_RS232_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_RS485 ||  model.mInterface === ValveEnumDef.INTERFACE_RS485_WITH_ANALOGOUTPUT)
             {
                 popup = interfaceStatusRS232Dlg.createObject(window);
             }

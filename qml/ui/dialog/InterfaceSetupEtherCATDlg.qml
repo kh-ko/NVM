@@ -13,7 +13,7 @@ BaseSetupWindow{
     readonly property int emptyHeight : 24 * GUISetting.scale
     property var body : null
 
-    titleText   : qsTr("Interface setup")
+    titleText   : qsTr("Interface setup(EtherCAT)")
     progress    : dlgModel.mProgress
     strStatus   : dlgModel.mStrStatus
     errMsg      : dlgModel.mErrMsg

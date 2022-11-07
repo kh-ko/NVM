@@ -137,9 +137,9 @@ BaseSetupWindow{
             body.s02AnalActive.isSelect                     = dlgModel.mS02AnalActive
             body.s02Selection.currentIndex                  = dlgModel.mS02Selection
             if(dlgModel.mIsSensor02Support == false && dlgModel.mS02SourceIdx == 1)
-                body.s02Source.currentIndex = currentIndex = 0
+                body.s02Source.currentIndex                 = 0
             else
-                body.s02Source.currentIndex                     = dlgModel.mS02SourceIdx
+                body.s02Source.currentIndex                 = dlgModel.mS02SourceIdx
             body.s02Unit.currentIndex                       = dlgModel.mS02UnitIdx
             body.s02FullScale.textField.text                = dlgModel.mS02FullScale
             body.s02DigiValue.textField.text                = dlgModel.mS02DigiValue

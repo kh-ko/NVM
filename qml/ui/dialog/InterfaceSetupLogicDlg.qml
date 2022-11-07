@@ -12,7 +12,7 @@ BaseSetupWindow{
     readonly property int emptyHeight : 24
     property var body : null
 
-    titleText   : qsTr("Interface setup")
+    titleText   : qsTr("Interface setup(Logic)")
     progress    : dlgModel.mProgress
     strStatus   : dlgModel.mStrStatus
     errMsg      : dlgModel.mErrMsg

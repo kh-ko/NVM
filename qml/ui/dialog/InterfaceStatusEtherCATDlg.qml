@@ -12,7 +12,7 @@ BaseSetupWindow{
 
     property var body : null
 
-    titleText   : qsTr("Interface status")
+    titleText   : qsTr("Interface status(EtherCAT)")
     progress    : dlgModel.mProgress
     strStatus   : dlgModel.mStrStatus
     errMsg      : dlgModel.mErrMsg

@@ -236,7 +236,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrAdapRampTime ? "#FF0000" : "#000000"
-                    stepValue : 0.01; minValue: 0; maxValue: 10//00000
+                    stepValue : 0.01; minValue: 0; maxValue: 9.99
                     fixedN : 2
 
                     onChangedText: {
@@ -246,7 +246,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _adapRampTime.verticalCenter; anchors.left: _adapRampTime.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("ramp time(0.00 sec ~ 10.00 sec)")
+                    text : qsTr("ramp time(0.00 sec ~ 9.99 sec)")
                 }
 
 
@@ -371,7 +371,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrFixed1RampTime ? "#FF0000" : "#000000"
-                    stepValue : 0.01; minValue: 0; maxValue: 10//00000
+                    stepValue : 0.01; minValue: 0; maxValue: 9.99//00000
                     fixedN : 2
 
                     onChangedText: {
@@ -381,7 +381,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _fixed1RampTime.verticalCenter; anchors.left: _fixed1RampTime.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("ramp time(0.00 sec ~ 10.00 sec)")
+                    text : qsTr("ramp time(0.00 sec ~ 9.99 sec)")
                 }
 
 
@@ -526,7 +526,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrFixed2RampTime ? "#FF0000" : "#000000"
-                    stepValue : 0.01; minValue: 0; maxValue: 10//00000
+                    stepValue : 0.01; minValue: 0; maxValue: 9.99//00000
                     fixedN : 2
 
                     onChangedText: {
@@ -536,7 +536,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _fixed2RampTime.verticalCenter; anchors.left: _fixed2RampTime.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("ramp time(0.00 sec ~ 10.00 secs)")
+                    text : qsTr("ramp time(0.00 sec ~ 9.99 secs)")
                 }
 
 

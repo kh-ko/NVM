@@ -1286,7 +1286,7 @@ private:
 
         foreach(DNetAssemblyItem item, pConfigSP->mInputAssemblyTable)
         {
-            InterfaceSetupDevNetAssemblyItemModel * pQmlItem = new InterfaceSetupDevNetAssemblyItemModel(item);
+            InterfaceSetupDevNetAssemblyItemModel * pQmlItem = new InterfaceSetupDevNetAssemblyItemModel(item, this);
             mInputTable.append(pQmlItem);
         }
 
@@ -1294,7 +1294,7 @@ private:
 
         foreach(DNetAssemblyItem item, pConfigSP->mOutputAssemblyTable)
         {
-            InterfaceSetupDevNetAssemblyItemModel * pQmlItem = new InterfaceSetupDevNetAssemblyItemModel(item);
+            InterfaceSetupDevNetAssemblyItemModel * pQmlItem = new InterfaceSetupDevNetAssemblyItemModel(item, this);
             mOutputTable.append(pQmlItem);
         }
     }

@@ -12,7 +12,7 @@ BaseSetupWindow{
 
     property var body : null
 
-    titleText   : qsTr("Interface status")
+    titleText   : qsTr("Interface status(RS232/RS485)")
     progress    : dlgModel.mProgress
     strStatus   : dlgModel.mStrStatus
     errMsg      : dlgModel.mErrMsg

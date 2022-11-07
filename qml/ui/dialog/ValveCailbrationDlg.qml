@@ -19,6 +19,19 @@ BaseSetupWindow{
     isRS232Test : dlgModel.mIsRS232Test
     isEdit      : false
 
+    function zeroEnableToggle()
+    {
+        if(dialog.access !== ValveEnumDef.ACCESS_LOCAL && dialog.isRS232Test == false)
+        {
+            var popup = changeAccessDlg.createObject(dialog)
+            popup.caller = zeroEnableFunc
+            popup.open();
+            return;
+        }
+
+        zeroEnableFunc.onResultChangeAccess(true)
+    }
+
     function adcGainCalibration()
     {
         if(dialog.access !== ValveEnumDef.ACCESS_LOCAL && dialog.isRS232Test == false)
@@ -43,6 +56,20 @@ BaseSetupWindow{
         }
 
         adcZeroCalibFunc.onResultChangeAccess(true)
+    }
+
+    Item{
+        id : zeroEnableFunc
+
+        function onResultChangeAccess(value)
+        {
+            if(value)
+            {
+                dlgModel.onCommandZeroEnable(!dlgModel.mIsZeroEnable)
+                return;
+            }
+            showErrMessage(qsTr("Mode change failed."))
+        }
     }
 
     Item{
@@ -101,7 +128,7 @@ BaseSetupWindow{
         Rectangle{
             property real guiScale : GUISetting.scale
 
-            height: (GUISetting.line_margin + gainItem.height) + (GUISetting.line_margin + zeroItem.height) + GUISetting.line_margin
+            height:(GUISetting.line_margin + zeroEnableItem.height) + (GUISetting.line_margin + gainItem.height) + (GUISetting.line_margin + zeroItem.height) + GUISetting.line_margin
             anchors.left: parent.left; anchors.right: parent.right; anchors.top: parent.top
 
             color : "#E4E4E4"
@@ -112,10 +139,51 @@ BaseSetupWindow{
             }
 
             Rectangle{
+                id : zeroEnableItem
+
+                height: (GUISetting.margin + zeroEnableTitle.height) + (GUISetting.margin + zeroEnableContent.height) + (GUISetting.margin + zeroEnableBtn.height) + GUISetting.margin
+                anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin
+
+                color: "#FFFFFF"
+
+                NText{
+                    id : zeroEnableTitle
+                    anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    isBold: true
+                    text : qsTr("Zero enable/disable")
+                }
+
+                NText{
+                    id : zeroEnableContent
+                    anchors.top: zeroEnableTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    lineHeight: 1.5
+                    text :  qsTr("You must disable \"sensor zero\" before calibration.")
+                    visible: dialog.progress === 100
+                }
+
+                NButton{
+                    id : zeroEnableBtn
+                    height: 50 * GUISetting.scale; width: parent.width / 2
+                    anchors.top: zeroEnableContent.bottom; anchors.topMargin: GUISetting.margin; anchors.horizontalCenter: parent.horizontalCenter
+                    enabled: dialog.progress === 100
+
+                    bgColor: "#24A7FF"
+                    text.color: "#FFFFFF"
+                    text.text: dlgModel.mIsZeroEnable ? qsTr("Disable") :qsTr("Enable")
+
+                    onClick: {
+                        dialog.zeroEnableToggle()
+                    }
+                }
+            }
+
+            Rectangle{
                 id : gainItem
 
                 height: (GUISetting.margin + gainTitle.height) + (GUISetting.margin + gainContent.height) + (GUISetting.margin + gainCalibBtn.height) + GUISetting.margin
-                anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin
+                anchors.top: zeroEnableItem.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin
 
                 color: "#FFFFFF"
 
@@ -140,7 +208,7 @@ BaseSetupWindow{
                     id : gainCalibBtn
                     height: 50 * GUISetting.scale; width: parent.width / 2
                     anchors.top: gainContent.bottom; anchors.topMargin: GUISetting.margin; anchors.horizontalCenter: parent.horizontalCenter
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && !dlgModel.mIsZeroEnable
 
                     bgColor: "#24A7FF"
                     text.color: "#FFFFFF"
@@ -181,7 +249,7 @@ BaseSetupWindow{
                     id : zeroCalibBtn
                     height: 50 * GUISetting.scale; width: parent.width / 2
                     anchors.top: zeroContent.bottom; anchors.topMargin: GUISetting.margin; anchors.horizontalCenter: parent.horizontalCenter
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && !dlgModel.mIsZeroEnable
 
                     bgColor: "#24A7FF"
                     text.color: "#FFFFFF"

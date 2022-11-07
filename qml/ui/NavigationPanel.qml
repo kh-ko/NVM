@@ -114,7 +114,7 @@ Rectangle {
                     id : menuValveCariblation
                     anchors.bottom: parent.bottom
                     text.text: qsTr("ADC calibration")
-                    enabled: panel.isConnected && !isZeroEnable && !GlobalUiValue.disableWinCreateBtn
+                    enabled: panel.isConnected /*&& !isZeroEnable*/ && !GlobalUiValue.disableWinCreateBtn
 
                     onClicked: {var popup = passwordDlg.createObject(window); popup.caller = menuValveCariblation; popup.open();}
 

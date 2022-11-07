@@ -14,7 +14,7 @@ BaseSetupWindow{
     readonly property int emptyHeight : 24 * GUISetting.scale
     property var body : null
 
-    titleText   : qsTr("Interface setup")
+    titleText   : qsTr("Interface setup(D-Net)")
     progress    : dlgModel.mProgress
     strStatus   : dlgModel.mStrStatus
     errMsg      : dlgModel.mErrMsg
@@ -82,14 +82,15 @@ BaseSetupWindow{
 
             for(i = 1; i <= rowCount; i ++)
             {
-                iAssemblyListModel.append({"itemSeq":(i)})
+                var itemAssemblyData = dlgModel.onCommandGetInputAssemblyItem(i);
+                iAssemblyListModel.append({"itemAssemblyData": itemAssemblyData})
             }
 
             rowCount = dlgModel.onCommandGetOutputAssemblyItemCount()
 
             for(i = 1; i <= rowCount; i ++)
             {
-                oAssemblyListModel.append({"itemSeq":(i)})
+                oAssemblyListModel.append({"itemSeq":i})
             }
 
             onCommandSetEdit(false);
@@ -566,7 +567,7 @@ BaseSetupWindow{
                         model: iAssemblyListModel
 
                         delegate : Item{
-                            property InterfaceSetupDevNetAssemblyItemModel assemblyData : dlgModel.onCommandGetInputAssemblyItem(itemSeq)
+                            property InterfaceSetupDevNetAssemblyItemModel assemblyData : itemAssemblyData /*dlgModel.onCommandGetInputAssemblyItem(itemSeq)*/
 
                             height: (24 * GUISetting.scale) + GUISetting.line_margin; width: iAssemblyListView.width
 

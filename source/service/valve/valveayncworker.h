@@ -206,6 +206,8 @@
 #define RES_INTERFACE_CONFIG_RS232_IF_DATA_LEN          8
 #define REQ_READ_INTERFACE_CONFIG_RS232_COMM            "i:21"
 #define RES_INTERFACE_CONFIG_RS232_COMM_DATA_LEN        8
+#define REQ_READ_INTERFACE_CONFIG_RS485_COMM            "i:22"
+#define RES_INTERFACE_CONFIG_RS485_COMM_DATA_LEN        8
 #define REQ_READ_INTERFACE_CONFIG_RS232_DI_01           "i:2600"
 #define RES_INTERFACE_CONFIG_ETHCAT_DI_01_DATA_LEN      6
 #define REQ_READ_INTERFACE_CONFIG_RS232_DI_02           "i:2601"
@@ -283,7 +285,7 @@
 
 /* sensor offset, sensor value */
 #define REQ_READ_SENSOR_OFFSET                          "x:06"
-#define RES_SENSOR_OFFSET_DATA_LEN                      16
+#define RES_SENSOR_OFFSET_DATA_LEN                      12
 #define REQ_READ_SENSOR_VALUE                           "x:03"
 #define RES_SENSOR_VALUE_DATA_LEN                       24
 #define REQ_READ_SENSOR_SELECTION                       "b:3005"
@@ -387,6 +389,7 @@
 
 /* rs232 interface */
 #define REQ_WRITE_INTERFACE_CONFIG_RS232_IF          "s:20"
+#define REQ_WRITE_INTERFACE_CONFIG_RS485_IF          "s:22"
 #define REQ_WRITE_INTERFACE_CONFIG_RS232_COMM        "s:21"
 
 #define REQ_WRITE_SENSOR_SCALE                       "J:00"

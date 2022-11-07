@@ -12,7 +12,8 @@ BaseSetupWindow{
     readonly property int emptyHeight : 24
     property var body : null
 
-    titleText   : qsTr("Interface setup")
+    property bool isRS485 : dlgModel.mInterface == ValveEnumDef.INTERFACE_RS485 ||  dlgModel.mInterface == ValveEnumDef.INTERFACE_RS485_HV || dlgModel.mInterface == ValveEnumDef.INTERFACE_RS485_WITH_ANALOGOUTPUT || dlgModel.mInterface == ValveEnumDef.INTERFACE_RS485_HV_WITH_ANALOGOUTPUT
+    titleText   : qsTr("Interface setup(RS232/RS485)")
     progress    : dlgModel.mProgress
     strStatus   : dlgModel.mStrStatus
     errMsg      : dlgModel.mErrMsg
@@ -20,7 +21,9 @@ BaseSetupWindow{
     access      : dlgModel.mAccessMode
     isRS232Test : dlgModel.mIsRS232Test
     isEdit      : dlgModel.mIsEdit
+
     //bodyWidth   : 500
+
 
     function commit()
     {
@@ -28,6 +31,11 @@ BaseSetupWindow{
         var parityIdx       = body.parityCombo.currentIndex
         var datalenIdx      = body.datalenCombo.currentIndex
         var stopbitIdx      = body.stopbitCombo.currentIndex
+
+        var operationModeIdx = body.operationModeCombo.currentIndex
+        var duplexModeIdx    = body.duplexModeCombo.currentIndex
+        var deviceAddress    = parseInt(body.deviceAddress.textField.text)
+        var terminationIdx   = body.terminationCombo.currentIndex
 
         var posRangeIdx     = body.posRangeCombo.currentIndex
         var pressureRange   = parseInt(body.pressureRange.textField.text)
@@ -37,7 +45,7 @@ BaseSetupWindow{
         var diOpenIdx       = body.diOpenCombo.currentIndex
         var diCloseIdx      = body.diCloseCombo.currentIndex
 
-        dlgModel.onCommandApply(baudrateIdx, parityIdx, datalenIdx, stopbitIdx, commandSetIdx, secondAnswerIdx, diOpenIdx, diCloseIdx, posRangeIdx, pressureRange)
+        dlgModel.onCommandApply(baudrateIdx, parityIdx, datalenIdx, stopbitIdx, operationModeIdx, duplexModeIdx, deviceAddress, terminationIdx, commandSetIdx, secondAnswerIdx, diOpenIdx, diCloseIdx, posRangeIdx, pressureRange)
     }
 
     function setCommandSetRelationshipValue()
@@ -84,19 +92,24 @@ BaseSetupWindow{
 
         onSignalEventCompletedLoad: {
 
-            body.commandSetCombo.currentIndex  = dlgModel.mCommandSetIdx
-            body.baudrateCombo.currentIndex    = dlgModel.mBaudrateIdx
-            body.parityCombo.currentIndex      = dlgModel.mParityIdx
-            body.datalenCombo.currentIndex     = dlgModel.mDataLenIdx
-            body.stopbitCombo.currentIndex     = dlgModel.mStopBitIdx
+            body.commandSetCombo.currentIndex    = dlgModel.mCommandSetIdx
+            body.baudrateCombo.currentIndex      = dlgModel.mBaudrateIdx
+            body.parityCombo.currentIndex        = dlgModel.mParityIdx
+            body.datalenCombo.currentIndex       = dlgModel.mDataLenIdx
+            body.stopbitCombo.currentIndex       = dlgModel.mStopBitIdx
 
-            body.posRangeCombo.currentIndex    = dlgModel.mPosRangeIdx
-            body.pressureRange.textField.text  = dlgModel.mPressureRange
+            body.operationModeCombo.currentIndex = dlgModel.mOperationModeIdx
+            body.duplexModeCombo.currentIndex    = dlgModel.mDuplexModeIdx
+            body.deviceAddress.textField.text    = dlgModel.mDevAddr
+            body.terminationCombo.currentIndex   = dlgModel.mTerminationIdx
 
-            body.secondAnswerCombo.currentIndex= dlgModel.mSecondAnswerIdx
+            body.posRangeCombo.currentIndex      = dlgModel.mPosRangeIdx
+            body.pressureRange.textField.text    = dlgModel.mPressureRange
 
-            body.diOpenCombo.currentIndex      = dlgModel.mDIOpenValveIdx
-            body.diCloseCombo.currentIndex     = dlgModel.mDICloseValveIdx
+            body.secondAnswerCombo.currentIndex  = dlgModel.mSecondAnswerIdx
+
+            body.diOpenCombo.currentIndex        = dlgModel.mDIOpenValveIdx
+            body.diCloseCombo.currentIndex       = dlgModel.mDICloseValveIdx
 
             onCommandSetEdit(false);
             //dialog.setCommandSetRelationshipValue()
@@ -107,17 +120,21 @@ BaseSetupWindow{
         id : bodyImpl
 
         Rectangle{
-            property alias baudrateCombo    : _baudrateCombo
-            property alias parityCombo      : _parityCombo
-            property alias datalenCombo     : _datalenCombo
-            property alias stopbitCombo     : _stopbitCombo
-            property alias posRangeCombo    : _posRangeCombo
-            property alias pressureRange    : _pressureRange
-            property alias commandSetCombo  : _commandSetCombo
-            property alias secondAnswerCombo: _secondAnswerCombo
-            property alias diOpenCombo      : _diOpenCombo
-            property alias diCloseCombo     : _diCloseCombo
-            property real  guiScale         : GUISetting.scale
+            property alias baudrateCombo      : _baudrateCombo
+            property alias parityCombo        : _parityCombo
+            property alias datalenCombo       : _datalenCombo
+            property alias stopbitCombo       : _stopbitCombo
+            property alias operationModeCombo : _operationModeCombo
+            property alias duplexModeCombo    : _duplexModeCombo
+            property alias deviceAddress      : _deviceAddress
+            property alias terminationCombo   : _terminationCombo
+            property alias posRangeCombo      : _posRangeCombo
+            property alias pressureRange      : _pressureRange
+            property alias commandSetCombo    : _commandSetCombo
+            property alias secondAnswerCombo  : _secondAnswerCombo
+            property alias diOpenCombo        : _diOpenCombo
+            property alias diCloseCombo       : _diCloseCombo
+            property real  guiScale           : GUISetting.scale
 
             height: (GUISetting.line_margin + interfaceSettingItem.height) + (GUISetting.line_margin + commSettingItem.height) + (GUISetting.line_margin + dIItem.height) + (GUISetting.line_margin + btnBox.height + GUISetting.line_margin)
             anchors.left: parent.left; anchors.right: parent.right; anchors.top: parent.top
@@ -226,6 +243,103 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _stopbitCombo.verticalCenter; anchors.left: _stopbitCombo.right; anchors.leftMargin: GUISetting.margin
                     text : qsTr("stop bits")
+                }
+
+                Item {
+                    anchors.top: interfaceSettingTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.5; anchors.right: parent.right;
+
+                    visible: dialog.isRS485
+
+                    NComboBox{
+                        id : _operationModeCombo
+                        width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                        anchors.top: parent.top; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                        textColor: dlgModel.mErrOperationModeIdx ? "#FF0000" : "#000000"
+                        enabled: dlgModel.mProgress == 100
+
+                        model: ["RS232","RS485","RS485(P2P)"]
+
+                        onCurrentIndexChanged: {
+                            dlgModel.onCommandSetEdit(true)
+
+                            if(currentIndex == 0)
+                            {
+                                _duplexModeCombo.currentIndex = 0
+                                _deviceAddress.textField.text = "0"
+                            }
+                            else if(currentIndex == 2)
+                            {
+                                _deviceAddress.textField.text = "0"
+                            }
+                        }
+                    }
+
+                    NText{
+                        anchors.verticalCenter: _operationModeCombo.verticalCenter; anchors.left: _operationModeCombo.right; anchors.leftMargin: GUISetting.margin
+                        text : qsTr("operation mode")
+                    }
+
+                    NComboBox{
+                        id : _duplexModeCombo
+                        width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                        anchors.top: _operationModeCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                        textColor: dlgModel.mErrDuplexModeIdx ? "#FF0000" : "#000000"
+                        enabled: dlgModel.mProgress == 100 && _operationModeCombo.currentIndex != 0
+
+                        model: ["Full","Half"]
+
+                        onCurrentIndexChanged: {
+                            dlgModel.onCommandSetEdit(true)
+                        }
+                    }
+
+                    NText{
+                        anchors.verticalCenter: _duplexModeCombo.verticalCenter; anchors.left: _duplexModeCombo.right; anchors.leftMargin: GUISetting.margin
+                        text : qsTr("duplex mode")
+                    }
+
+                    NInputNumber{
+                        id : _deviceAddress
+                        width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                        anchors.top: _duplexModeCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                        textField.color: dlgModel.mErrDevAddr ? "#FF0000" : "#000000"
+                        enabled: dlgModel.mProgress == 100 && _operationModeCombo.currentIndex == 1
+                        textField.validator: IntValidator{}
+                        stepValue : 1; minValue: 1; maxValue: 999
+                        fixedN : 0
+
+                        onChangedText: {
+                            dlgModel.onCommandSetEdit(true)
+                        }
+                    }
+
+                    NText{
+                        anchors.verticalCenter: _deviceAddress.verticalCenter; anchors.left: _deviceAddress.right; anchors.leftMargin: GUISetting.margin
+                        text : qsTr("device address")
+                    }
+
+                    NComboBox{
+                        id : _terminationCombo
+                        width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                        anchors.top: _deviceAddress.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                        textColor: dlgModel.mErrTerminationIdx ? "#FF0000" : "#000000"
+                        enabled: dlgModel.mProgress == 100
+
+                        model: ["LF(CR/LF)","CR"]
+
+                        onCurrentIndexChanged: {
+                            dlgModel.onCommandSetEdit(true)
+                        }
+                    }
+
+                    NText{
+                        anchors.verticalCenter: _terminationCombo.verticalCenter; anchors.left: _terminationCombo.right; anchors.leftMargin: GUISetting.margin
+                        text : qsTr("termination")
+                    }
                 }
             }
 
