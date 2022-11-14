@@ -6,6 +6,7 @@ import GUISetting 1.0
 Rectangle {
     id : control
 
+    property bool  enableMinimizeBtn : false
     property alias title : titleText.text
 
     property NWindow root : null
@@ -13,6 +14,7 @@ Rectangle {
     property int  previousY
 
     signal clickClose()
+    signal clickMinimized()
 
     width: parent.width; height: GUISetting.popup_title_height
     color: "#24292e"
@@ -50,6 +52,29 @@ Rectangle {
     }
 
     Rectangle{
+        visible: control.enableMinimizeBtn
+        width: parent.height; height: parent.height
+        anchors.right: closeBtn.left; anchors.rightMargin: GUISetting.margin
+        color: minimizeMouseArea.containsPress ? "#29FFFFFF" : minimizeMouseArea.containsMouse ? "#19FFFFFF" : "#00FFFFFF"
+
+        Image{
+            anchors.fill: parent
+            source: "/image/icon-minimized.png"
+        }
+
+        MouseArea{
+            id : minimizeMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onClicked: {
+                control.clickMinimized();
+            }
+        }
+    }
+
+    Rectangle{
+        id : closeBtn
         width: parent.height; height: parent.height
         anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
         color: mouseArea.containsPress ? "#29FFFFFF" : mouseArea.containsMouse ? "#19FFFFFF" : "#00FFFFFF"

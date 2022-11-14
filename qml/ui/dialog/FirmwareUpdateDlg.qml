@@ -42,6 +42,7 @@ NWindow{
             id : titleBox
             root : nwindow
             title: nwindow.titleText
+            enableMinimizeBtn: true
 
             onClickClose: {
                 if(dlgModel.mDFUStep > FirmwareUpdateUiStepDef.START_UPDATE && dlgModel.mDFUStep < FirmwareUpdateUiStepDef.COMPLETE)

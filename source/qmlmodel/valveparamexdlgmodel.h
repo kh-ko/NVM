@@ -19,15 +19,13 @@ class ValveParamExItemModel : public QObject
     Q_PROPERTY(QString mTextValue READ getTextValue NOTIFY signalEventChangedTextValue)
 
 public:
-    bool    mIsWritten = false;
-    bool    mIsPresent = false;
+    bool    mIsPresent = true ;
     bool    mIsEdit    = false;
     bool    mIsErr     = false;
     int     mId        = 0;
     // khko : edit int to qstring //int     mValue     = 0;
-    QString mValue     = "000000";
+    QString mValue     = "";
 
-    bool    getIsWritten(){ return mIsWritten; }
     bool    getIsPresent(){ return mIsPresent; }
     bool    getIsEdit   (){ return mIsEdit   ; }
     bool    getIsErr    (){ return mIsErr    ; }
@@ -35,7 +33,6 @@ public:
     // khko : edit int to qstring //QString getTextValue(){ return QString("%1").arg(mValue, 6, 10, QChar('0')); }
     QString getTextValue(){ return mValue    ; }
 
-    void    setIsWritten(bool    value){ if(mIsWritten == value) return; mIsWritten = value;/*emit signalEventChangedIsWritten(value      );*/}
     void    setIsPresent(bool    value){ if(mIsPresent == value) return; mIsPresent = value; emit signalEventChangedIsPresent(value         );}
     void    setIsEdit   (bool    value){ if(mIsEdit    == value) return; mIsEdit    = value; emit signalEventChangedIsEdit   (value         );}
     void    setIsErr    (bool    value){ if(mIsErr     == value) return; mIsErr     = value; emit signalEventChangedIsErr    (value         );}
@@ -45,7 +42,7 @@ public:
 
     void    reset()
     {
-        setIsPresent(false); setIsEdit(false); setIsErr(false); setValue("000000"); setIsWritten(false);
+        setIsPresent(false); setIsEdit(false); setIsErr(false); setValue("000000");
     }
 
 public slots:
@@ -152,7 +149,7 @@ public:
             mpParamList.append(pItemModel);
         }
 
-        setState(eState::STATE_LOAD);
+        setState(eState::STATE_READY);
     }
     ~ValveParamExDlgModel()
     {
@@ -181,8 +178,7 @@ public slots:
 
     Q_INVOKABLE void onCommandReadFromController()
     {
-        // reset
-        setState(eState::STATE_LOAD);
+        setState(eState::STATE_TOTAL_LOAD);
     }
 
     void onValveReadedValveParam(ValveResponseValveParamDto dto)
@@ -201,7 +197,7 @@ public slots:
 
         setErrMsg("");
 
-        setParam(dto.mIsSucc, id, dto.mValue);
+        setParamByController(dto.mIsSucc, id, dto.mValue);
 
         emit signalEventProcIdx(convertParamID(mState));
 
@@ -217,8 +213,6 @@ public slots:
     Q_INVOKABLE void onCommandWriteToController(bool isReboot = false)
     {
         mRebootCheck = isReboot;
-        //mIsWritten = true;
-        // setErrMsg2
         setState(eState::STATE_WRITE_START);
     }
 
@@ -309,7 +303,7 @@ public slots:
             setErrMsg2(dto.mErrMsg);
         }
 
-        setState(STATE_LOAD);
+        setState(STATE_TOTAL_LOAD);
     }
 
     Q_INVOKABLE void onCommandWriteParamReset(bool isReboot = false)
@@ -344,7 +338,7 @@ public slots:
         }
         else
         {
-            setState(STATE_LOAD);
+            setState(STATE_TOTAL_LOAD);
         }
     }
 
@@ -354,12 +348,9 @@ public slots:
         file.setFileName(filePath);
         file.open(QFile::ReadOnly);
 
-        setState(eState::STATE_LOAD, true);
-
         if(file.isOpen() == false)
         {
             setErrMsg("File open failed!");
-            setState(eState::STATE_READY, true);
             return;
         }
 
@@ -372,7 +363,7 @@ public slots:
 
             if(id < 100)
             {
-                setParam(true, id, value.mid(2,value.length() - 2), true);
+                setParamByFile(true, id, value.mid(2,value.length() - 2));
             }
 
             emit signalEventProcIdx(id);
@@ -380,7 +371,6 @@ public slots:
         }while(!out.atEnd());
 
         file.close();
-        setState(eState::STATE_READY, true);
     }
 
     Q_INVOKABLE void onCommandWriteToFile(QString filePath)
@@ -397,20 +387,18 @@ public slots:
         if(file.open(dir, fileName, FileWriterEx::FILE_OPEN_NEWWRITE) == false)
         {
             setErrMsg2("File open failed!");
-            //setState(eState::STATE_READY, true);
             return;
         }
 
         for(int i = 0; i < mpParamList.count(); i ++)
         {
-            if(mpParamList[i]->getIsPresent())
+            if(mpParamList[i]->getIsPresent() && mpParamList[i]->getTextValue().length() > 0)
             {
                 file.appendLine(QString("%1%2").arg(mpParamList[i]->getTextID()).arg(mpParamList[i]->getTextValue()));
                 emit signalEventProcIdx(i);
             }
         }
 
-        //setState(eState::STATE_READY, true);
         file.close();
         return;
     }
@@ -444,16 +432,15 @@ private:
         STATE_WRITE                 = STATE_WRITE_START       + 1,
         // ...00 ~ 99 STATE_WRITE_ING
         STATE_WRITE_END             = STATE_WRITE             + 100,
-        STATE_RE_LOAD               = STATE_WRITE_END         + 1,
+        STATE_LOAD_ONLY_WRITTEN     = STATE_WRITE_END         + 1,
         // ... 00 ~ 99 STATE_LOAD_ING  =  1,
-        STATE_READY                 = STATE_RE_LOAD           + 100,
-        STATE_LOAD                  = STATE_READY             + 1,
-        // ... 00 ~ 99 STATE_LOAD_ING  =  1,
-        STATE_OVER                  = STATE_LOAD              + 100
+        STATE_READY                 = STATE_LOAD_ONLY_WRITTEN + 100,
+        STATE_TOTAL_LOAD            = STATE_READY             + 1,
+        STATE_TOTAL_LOAD_END        = STATE_TOTAL_LOAD        + 100,
     };
 
     QTimer mTimer;
-    int    mState         = eState::STATE_LOAD;
+    int    mState         = eState::STATE_READY;
 
     void startTimer()
     {
@@ -466,16 +453,16 @@ private:
         int progress = 0;
         QString strStatus;
 
-        mState = state == STATE_OVER ? STATE_READY : state;
+        mState = state == STATE_TOTAL_LOAD_END ? STATE_READY : state;
 
-        if(mState >= STATE_RE_LOAD && mState < STATE_READY)
+        if(mState >= STATE_LOAD_ONLY_WRITTEN && mState < STATE_READY)
         {
             progress = ((mState) * 100) / STATE_READY;
             strStatus = "loading";
         }
-        else if(mState >= STATE_LOAD && mState < STATE_OVER)
+        else if(mState >= STATE_TOTAL_LOAD && mState < STATE_TOTAL_LOAD_END)
         {
-            progress = ((mState) * 100) / STATE_OVER;
+            progress = ((mState) * 100) / STATE_TOTAL_LOAD_END;
             strStatus = "loading";
         }
         else if(mState == STATE_READY)
@@ -502,7 +489,7 @@ private:
         setProgress(progress);
         setStrStatus(strStatus);
 
-        if(mState == STATE_LOAD)
+        if(mState == STATE_TOTAL_LOAD)
         {
             setIsEdit(false);
             setErrMsg("");
@@ -512,19 +499,10 @@ private:
                 mpParamList[i]->reset();
             }
         }
-        else if(mState == STATE_RE_LOAD)
-        {
-
-        }
         else if(mState == STATE_WRITE_START)
         {
             setIsEdit(false);
             setErrMsg2("");
-
-//          for(int i = 0; i < 100; i ++)
-//          {
-//              mpParamList[i]->setIsEdit(false);
-//          }
         }
         else if(mState == STATE_READY)
         {
@@ -534,8 +512,6 @@ private:
                 {
                     setIsEdit(true);
                 }
-
-                mpParamList[i]->setIsWritten(false);
             }
         }
 
@@ -546,15 +522,11 @@ private:
 public slots:
     void onTimeout()
     {
-        if(mState >= STATE_LOAD && mState < STATE_OVER)
-        {
-            pValveSP->readValveParam(convertParamID(mState), this);
-        }
-        else if(mState >= STATE_RE_LOAD && mState < STATE_READY)
+        if(mState >= STATE_LOAD_ONLY_WRITTEN && mState < STATE_READY)
         {
             for(;mState < STATE_READY; mState++)
             {
-                if(mpParamList[convertParamID(mState)]->getIsWritten())
+                if(mpParamList[convertParamID(mState)]->getIsEdit())
                 {
                     pValveSP->readValveParam(convertParamID(mState), this);
                     return;
@@ -562,6 +534,10 @@ public slots:
             }
 
             setState(STATE_READY);
+        }
+        if(mState >= STATE_TOTAL_LOAD && mState < STATE_TOTAL_LOAD_END)
+        {
+            pValveSP->readValveParam(convertParamID(mState), this);
         }
         else if(mState == STATE_WRITE_START)
         {
@@ -573,7 +549,6 @@ public slots:
             {
                 if(mpParamList[convertParamID(mState)]->getIsPresent() && mpParamList[convertParamID(mState)]->getIsEdit())
                 {
-                    mpParamList[convertParamID(mState)]->setIsWritten(true);
                     pValveSP->setValveParam(convertParamID(mState), mpParamList[convertParamID(mState)]->mValue, this);
                     return;
                 }
@@ -582,10 +557,6 @@ public slots:
         }
         else if(mState == STATE_WRITE_END)
         {
-            for(int i = 0; i < 100; i ++)
-            {
-                mpParamList[i]->setIsEdit(false);
-            }
             pValveSP->setValveParamEnd(this);
         }
         else if(mState == STATE_WRITE_FR)
@@ -604,33 +575,30 @@ private:
         if(state < eState::STATE_WRITE_END)
             return (int)state - (int)eState::STATE_WRITE;
         else if(state < eState::STATE_READY)
-            return state - (int)eState::STATE_RE_LOAD;
-        else
-            return state - (int)eState::STATE_LOAD;
+            return state - (int)eState::STATE_LOAD_ONLY_WRITTEN;
+        else if(state < eState::STATE_TOTAL_LOAD_END)
+            return state - (int)eState::STATE_TOTAL_LOAD;
+
+        return 0;
     }
 
-    void setParam(bool isPresent, int paramID, QString paramValue, bool isEdit = false)
+    void setParamByController(bool isPresent, int paramID, QString paramValue)
     {
-        if(mState >= STATE_RE_LOAD && mState < STATE_READY) // 쓰고나서 확인차 읽어오는 과정
-        {
-            mpParamList[paramID]->setIsErr((mpParamList[paramID]->getTextValue().toUpper() != paramValue.toUpper() && isPresent) || isPresent != mpParamList[paramID]->getIsPresent()); // 이전 표현된 값과 다르면 잘못 저장된 것이다.
+        mpParamList[paramID]->setIsPresent(isPresent);
+        mpParamList[paramID]->setValue(isPresent ? paramValue : "000000");
 
-            if(isPresent != mpParamList[paramID]->getIsPresent() && isPresent) // 없던것이 생기면 화면에 표시해줘야 한다.
-            {
-                mpParamList[paramID]->setIsPresent(isPresent);
-                mpParamList[paramID]->setId(paramID);
-                mpParamList[paramID]->setValue(paramValue);
-            }
-        }
-        else if(mState >= STATE_LOAD && mState < STATE_OVER)// 리셋하고 다시 읽어오는 과정
-        {
-            mpParamList[paramID]->setIsPresent(isPresent);
-            mpParamList[paramID]->setId(paramID);
-            mpParamList[paramID]->setValue(isPresent ? paramValue : "000000");
+        mpParamList[paramID]->setIsErr(mpParamList[paramID]->getIsEdit() && mpParamList[paramID]->getTextValue().toUpper() != paramValue.toUpper() && isPresent);
+        mpParamList[paramID]->setIsEdit(false);
+    }
 
-            if(isPresent)
-                mpParamList[paramID]->setIsEdit(isEdit); // 파일읽기로 읽오올 경우 읽어온값은 수정된 값으로 설정해서 화면에 수정값으로 표시해야된다. ( 파일읽기는 수동이 아니라 파일을 이용한 배치처리로 edit한 컨셉임 )
-        }
+    void setParamByFile(bool isPresent, int paramID, QString paramValue)
+    {
+        if( mpParamList[paramID]->getIsPresent() == false)
+            return;
+
+        mpParamList[paramID]->setValue(isPresent ? paramValue : "000000");
+        mpParamList[paramID]->setIsErr(false);
+        mpParamList[paramID]->setIsEdit(true);
     }
 };
 #endif // VALVEPARAMEXDLGMODEL_H

@@ -26,6 +26,8 @@ BaseSetupWindow{
 
     function commit()
     {
+        var macAddr         = parseInt(body.macAddr.textField.text)
+        var baudrateIdx     = body.baudrateCombo.currentIndex
         var posUnitIdx      = body.positionUnitCombo.currentIndex
         var posRange        = parseFloat(body.positionRange.textField.text)
         var pressureUnitIdx = body.pressureUnitCombo.currentIndex
@@ -44,7 +46,7 @@ BaseSetupWindow{
         var doFunction      = body.doFunctionCombo.currentIndex
         var doPolarity      = body.doPolarityCombo.currentIndex
 
-        dlgModel.onCommandApply(posUnitIdx, posRange, pressureUnitIdx, s01Range, s02Range, diActivation, diFunction, diPolarity, doActivation, doFunction, doPolarity)
+        dlgModel.onCommandApply(macAddr, baudrateIdx, posUnitIdx, posRange, pressureUnitIdx, s01Range, s02Range, diActivation, diFunction, diPolarity, doActivation, doFunction, doPolarity)
     }
 
     Component.onCompleted: {
@@ -174,12 +176,17 @@ BaseSetupWindow{
                     enabled: dlgModel.mEnableMacAddr && dlgModel.mProgress == 100
 
                     textField.validator: IntValidator{}
-                    stepValue : 1; minValue:0; maxValue: 255
+                    stepValue : 1; minValue:0; maxValue: 63
                     fixedN : 0
+
+                    onChangedText: {
+                        dlgModel.onCommandSetEdit(true)
+                    }
                 }
 
                 NText{
                     anchors.verticalCenter: _macAddr.verticalCenter; anchors.left: _macAddr.right; anchors.leftMargin: GUISetting.margin
+                    color: dlgModel.mErrMacAddr ? "#FF0000" : "#000000"
                     text : qsTr("MAC address")
                 }
 
@@ -191,10 +198,15 @@ BaseSetupWindow{
                     enabled: dlgModel.mEnableBaudrateIdx && dlgModel.mProgress == 100
 
                     model: ["125k","250k", "500k", "auto"]
+
+                    onCurrentIndexChanged: {
+                        dlgModel.onCommandSetEdit(true)
+                    }
                 }
 
                 NText{
                     anchors.verticalCenter: _baudrateCombo.verticalCenter; anchors.left: _baudrateCombo.right; anchors.leftMargin: GUISetting.margin
+                    color: dlgModel.mErrBaudrateIdx ? "#FF0000" : "#000000"
                     text : qsTr("baudrate")
                 }
 
@@ -221,7 +233,10 @@ BaseSetupWindow{
                             _positionRange.setValue(90)
                         }
                         else
+                        {
                             _positionRange.fixedN = 3
+                            _positionRange.setValue(10000)
+                        }
 
                         dlgModel.onCommandSetEdit(true)
                     }

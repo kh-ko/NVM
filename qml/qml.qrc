@@ -127,5 +127,6 @@
         <file>ui/dialog/SensorAnalyzerDlg.qml</file>
         <file>ui/dialog/InterfaceSetupDevNetItem.qml</file>
         <file>ui/dialog/InterfaceStatusDevNetItem.qml</file>
+        <file>image/icon-minimized.png</file>
     </qresource>
 </RCC>

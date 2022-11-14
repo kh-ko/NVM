@@ -109,6 +109,7 @@ NWindow {
             id : _titleBox
             title: dialog.titleText
             root: dialog
+            enableMinimizeBtn: true
 
             onClickClose: {
                 if(dialog.doNotDestroy)
@@ -119,6 +120,10 @@ NWindow {
                     dialog.close();
                 else
                     dialog.openCloseConfirmDlg()
+            }
+
+            onClickMinimized: {
+                dialog.showMinimized()
             }
         }
 

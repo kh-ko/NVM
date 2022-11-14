@@ -458,16 +458,28 @@ public slots:
 
         setS01OriValue          (dto.mS01Value);
         setS02OriValue          (dto.mS02Value);
-        setResultingOriPressure (dto.mResultingValue);
         setS01GraphConvertFactor(getStrS01FullScale().toDouble() * 0.000001);
         setS02GraphConvertFactor(getStrS02FullScale().toDouble() * 0.000001);
+        setResultingOriPressure (dto.mResultingValue);
 
-        s01Value       = UNITUTIL_CONVERT(getS01Unit()  , getS01FullScale() * (getS01OriValue() *0.000001), getDpUnit());
-        s02Value       = UNITUTIL_CONVERT(getS02Unit()  , getS02FullScale() * (getS02OriValue() *0.000001), getDpUnit());
-        resultingValue = UNITUTIL_CONVERT(sensorHighUnit, fullScale * (getResultingOriPressure()*0.000001), getDpUnit());
+        if(getDpUnit() == ValveEnumDef::PRESSURE_UNIT_VOLT)
+        {
+            s01Value         = getS01OriValue()          * 0.00001;
+            s02Value         = getS02OriValue()          * 0.00001;
+            resultingValue   = getResultingOriPressure() * 0.00001;
 
-        s01MeasuredValue = UNITUTIL_CONVERT(getS01Unit(), getS01FullScale() * ((getS01OriValue() + getS01OffsetOriValue())*0.000001), getDpUnit());
-        s02MeasuredValue = UNITUTIL_CONVERT(getS02Unit(), getS02FullScale() * ((getS02OriValue() + getS02OffsetOriValue())*0.000001), getDpUnit());
+            s01MeasuredValue = ((getS01OriValue() + getS01OffsetOriValue())*0.00001);
+            s02MeasuredValue = ((getS02OriValue() + getS02OffsetOriValue())*0.00001);
+        }
+        else
+        {
+            s01Value       = UNITUTIL_CONVERT(getS01Unit()  , getS01FullScale() * (getS01OriValue() *0.000001), getDpUnit());
+            s02Value       = UNITUTIL_CONVERT(getS02Unit()  , getS02FullScale() * (getS02OriValue() *0.000001), getDpUnit());
+            resultingValue = UNITUTIL_CONVERT(sensorHighUnit, fullScale * (getResultingOriPressure()*0.000001), getDpUnit());
+
+            s01MeasuredValue = UNITUTIL_CONVERT(getS01Unit(), getS01FullScale() * ((getS01OriValue() + getS01OffsetOriValue())*0.000001), getDpUnit());
+            s02MeasuredValue = UNITUTIL_CONVERT(getS02Unit(), getS02FullScale() * ((getS02OriValue() + getS02OffsetOriValue())*0.000001), getDpUnit());
+        }
 
         setStrS01Value         (QString("%1").arg(s01Value));
         setStrS01MeasuredValue (QString("%1").arg(s01MeasuredValue));
@@ -585,6 +597,18 @@ private:
         double s02FullScale;
         double s01Offset;
         double s02Offset;
+
+        if(getDpUnit() == ValveEnumDef::PRESSURE_UNIT_VOLT)
+        {
+
+            setStrS01FullScale(QString("%1").arg("10"));
+            setStrS02FullScale(QString("%1").arg("10"));
+            setS01GraphPrecN(5);
+            setS02GraphPrecN(5);
+            setStrS01OffsetValue(QString("%1").arg((getS01OffsetOriValue()*0.00001)));
+            setStrS02OffsetValue(QString("%1").arg((getS02OffsetOriValue()*0.00001)));
+            return;
+        }
 
         s01FullScale = UNITUTIL_CONVERT(getS01Unit(), getS01FullScale(), getDpUnit());
         s02FullScale = UNITUTIL_CONVERT(getS02Unit(), getS02FullScale(), getDpUnit());

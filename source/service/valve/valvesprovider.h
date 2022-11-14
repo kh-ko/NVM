@@ -280,6 +280,8 @@
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_ETHCAT_PDO_DATA_TYPE           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgEthCATPDODataType  (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgEthCATPDODataType  (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_ETHCAT_PDO_RANGE               connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgEthCATPDORange     (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgEthCATPDORange     (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_DATA_TYPE              connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetDataType    (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetDataType    (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_MAC_ADDR               connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetMacAddr     (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetMacAddr     (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_BAUDRATE               connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetBaudrate    (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetBaudrate    (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_POS_UNIT               connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetPosUnit     (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetPosUnit     (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_POS_GAIN               connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetPosGain     (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetPosGain     (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_PRESSURE_UNIT          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetPressureUnit(ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetPressureUnit(ValveResponseDto                                )))
@@ -922,6 +924,8 @@ signals:
     void signalEventWrittenInterfaceConfigDNetDi          (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceConfigDNetDo          (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceConfigDNetDataType    (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceConfigDNetMacAddr     (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceConfigDNetBaudrate    (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceConfigDNetPosUnit     (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceConfigDNetPosGain     (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceConfigDNetPressureUnit(ValveResponseDto                                 dto);
@@ -1917,6 +1921,8 @@ public :
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetDo, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
     void setInterfaceConfigDNetDataType    (QString dataType, void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_DATA_TYPE    ).arg(dataType); emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetDataType    , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
+    void setInterfaceConfigDNetMacAddress  (QString macAddr , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_MAC_ADDR     ).arg(macAddr ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetMacAddr     , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
+    void setInterfaceConfigDNetBaudrate    (QString baudrate, void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_BAUDRATE     ).arg(baudrate); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetBaudrate    , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
     void setInterfaceConfigDNetPosUnit     (QString unit    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_POS_UNIT     ).arg(unit    ); emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetPosUnit     , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
     void setInterfaceConfigDNetPosGain     (QString gain    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_POS_GAIN     ).arg(gain    ); emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetPosGain     , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
     void setInterfaceConfigDNetPressureUnit(QString unit    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_PRESSURE_UNIT).arg(unit    ); emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetPressureUnit, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
@@ -4856,7 +4862,7 @@ public slots:
             QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
 
             int startIdx = 0;
-            signalDto.mBaudrate = value.mid(startIdx,1).toInt(nullptr,16); startIdx += 1;
+            signalDto.mBaudrate = value.mid(startIdx,2).toInt(nullptr,16); startIdx += 2;
         }while(false);
 
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
@@ -5973,6 +5979,28 @@ public slots:
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventWrittenInterfaceConfigDNetDataType(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceConfigDNetMacAddr(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceCfgDNetMacAddr(pResData);}
+    void procWrittenInterfaceCfgDNetMacAddr(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceConfigDNetMacAddr(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceConfigDNetBaudrate(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceCfgDNetBaudrate(pResData);}
+    void procWrittenInterfaceCfgDNetBaudrate(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceConfigDNetBaudrate(signalDto);
         }
     }
 

@@ -22,6 +22,7 @@ public:
         PRESSURE_UNIT_ATM   = 6,
         PRESSURE_UNIT_PSI   = 7,
         PRESSURE_UNIT_PSF   = 8,
+        PRESSURE_UNIT_VOLT  = 9
     };
 };
 

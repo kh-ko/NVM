@@ -37,6 +37,7 @@ NWindow{ // khko_todo
         NPopupTilte{
             id : titleBox
             root: dialog
+            enableMinimizeBtn: true
             title: qsTr("Graph analyze")
 
             onClickClose: {

@@ -688,9 +688,7 @@ public slots:
 
 private:
     enum eState{
-
-        STATE_READ_MAC            = 0                           ,
-        STATE_READ_FIRMWARE_ID    = STATE_READ_MAC           + 1,
+        STATE_READ_FIRMWARE_ID    = 0,
         STATE_READ_SERIALNUM      = STATE_READ_FIRMWARE_ID   + 1,
         STATE_READ_POS_UNIT       = STATE_READ_SERIALNUM     + 1,
         STATE_READ_POS_GAIN       = STATE_READ_POS_UNIT      + 1,
@@ -704,7 +702,8 @@ private:
         STATE_READ_IO_STATUS      = STATE_READ_DO            + 1,
         STATE_READ_DSTATUS        = STATE_READ_IO_STATUS     + 1,
         STATE_READ_EX_STATUS      = STATE_READ_DSTATUS       + 1,
-        STATE_OVER                = STATE_READ_EX_STATUS     + 1
+        STATE_READ_MAC            = STATE_READ_EX_STATUS     + 1,
+        STATE_OVER                = STATE_READ_MAC           + 1
     };
 
     QTimer mTimer;

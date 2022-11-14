@@ -322,6 +322,8 @@ public:
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUTPUT_ASS       ;
         ENABLE_SLOT_VALVE_READED_IF_CONFIG_DNET_DI            ;
         ENABLE_SLOT_VALVE_READED_IF_CONFIG_DNET_DO            ;
+        ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_MAC_ADDR     ;
+        ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_BAUDRATE     ;
         ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_POS_UNIT     ;
         ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_POS_GAIN     ;
         ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_PRESSURE_UNIT;
@@ -366,17 +368,22 @@ public slots:
 
         setErrMsg(dto.mErrMsg);
 
-        if(!dto.mIsSucc)
+        if(!dto.mIsSucc/* || dto.mMacAddr > 100*/)
         {
             setState(mState);
             return;
         }
 
-        setErrMacAddr(false);
-        setEnableMacAddr(false); // mac addr is not editable
+        setEnableMacAddr(true); // mac addr is not editable
 
-        setMacAddr(QString("%1").arg(dto.mMacAddr,2,10,QChar('0')));
-
+        if(mIsWritten)
+        {
+            //setErrMacAddr(mWriteMAC != dto.mMacAddr);
+        }
+        else
+        {
+            setMacAddr(QString("%1").arg(dto.mMacAddr,2,10,QChar('0')));
+        }
 
         setState((eState)(mState + 1));
     }
@@ -394,9 +401,18 @@ public slots:
             return;
         }
 
-        setErrBaudrateIdx(false);
-        setEnableBaudrateIdx(false); // mac addr is not editable
-        setBaudrateIdx(3); // baudrate is auto
+        setEnableBaudrateIdx(true); // mac addr is not editable
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]" << QString("res = %1, write = %2, baudrate = %3").arg(dto.mResData).arg(mWriteBaudrateIdx).arg(dto.mBaudrate);
+
+        if(mIsWritten)
+        {
+            setErrBaudrateIdx(mWriteBaudrateIdx != dto.mBaudrate);
+        }
+        else
+        {
+            setBaudrateIdx(dto.mBaudrate);
+        }
 
         setState((eState)(mState + 1));
     }
@@ -724,10 +740,12 @@ public slots:
         setIsEdit(value);
     }
 
-    Q_INVOKABLE void onCommandApply(int posUnitIdx, double posRange, int pressureUnitIdx, double s01Range, double s02Range, int diActivation, int diFunction, int diPolarity, int doActivation, int doFunction, int doPolarity)
+    Q_INVOKABLE void onCommandApply(int mac, int baudrateIdx, int posUnitIdx, double posRange, int pressureUnitIdx, double s01Range, double s02Range, int diActivation, int diFunction, int diPolarity, int doActivation, int doFunction, int doPolarity)
     {
         mIsWritten         = true        ;
 
+        mWriteMAC             = mac;
+        mWriteBaudrateIdx     = baudrateIdx;
         mWritePosUnit         = transIdxToPosUnit                    (posUnitIdx     );
         mWritePosGain         = calGain                              (posRange       );
         mWritePressureUnit    = transIdxToPressureUnit               (pressureUnitIdx);
@@ -743,12 +761,15 @@ public slots:
         mWriteDOFunction   = doFunction  ;
         mWriteDOPolarity   = doPolarity  ;
 
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]" << "mWriteBaudrateIdx = " << mWriteBaudrateIdx;
+
         setIsEdit(false);
 
         setErrMsg("");
         setErrMsg2("");
 
-        setState(eState::STATE_WRITE_POS_UNIT);
+        setState(eState::STATE_WRITE_MAC);
     }
 
     Q_INVOKABLE double onCommandGetS01FullScale(int unitIdx)
@@ -798,6 +819,44 @@ public slots:
 
         file.close();
         return;
+    }
+
+    void onValveWrittenInterfaceConfigDNetMacAddr(ValveResponseDto dto)
+    {
+        if(mState != eState::STATE_WRITE_MAC || dto.mReqDto.mpRef != this)
+            return;
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(!dto.mIsSucc)
+        {
+            setErrMsg2(dto.mErrMsg);
+        }
+
+        setState((eState)(mState + 1));
+    }
+
+    void onValveWrittenInterfaceConfigDNetBaudrate(ValveResponseDto dto)
+    {
+        if(mState != eState::STATE_WRITE_BAUDRATE || dto.mReqDto.mpRef != this)
+            return;
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(!dto.mIsSucc)
+        {
+            setErrMsg2(dto.mErrMsg);
+        }
+
+        setState((eState)(mState + 1));
     }
 
 
@@ -966,7 +1025,9 @@ public slots:
 
 private:
     enum eState{
-        STATE_WRITE_POS_UNIT      = 0                            ,
+        STATE_WRITE_MAC           = 0                            ,
+        STATE_WRITE_BAUDRATE      = STATE_WRITE_MAC           + 1,
+        STATE_WRITE_POS_UNIT      = STATE_WRITE_BAUDRATE      + 1,
         STATE_WRITE_POS_GAIN      = STATE_WRITE_POS_UNIT      + 1,
         STATE_WRITE_PRESSURE_UNIT = STATE_WRITE_POS_GAIN      + 1,
         STATE_WRITE_S01_GAIN      = STATE_WRITE_PRESSURE_UNIT + 1,
@@ -995,7 +1056,9 @@ private:
     QList<InterfaceSetupDevNetAssemblyItemModel *>mInputTable;
     QList<InterfaceSetupDevNetAssemblyItemModel *>mOutputTable;
 
-    bool mIsWritten       = false;
+    bool    mIsWritten            = false;
+    int     mWriteMAC             = 0;
+    int     mWriteBaudrateIdx     = 0;
     QString mWritePosUnit         = "1001";
     QString mWritePosGain         = "3F800000";
     QString mWritePressureUnit    = "1001";
@@ -1057,15 +1120,17 @@ public slots:
     {
         switch ((int)mState)
         {
-        case (int)STATE_WRITE_POS_UNIT     : pValveSP->setInterfaceConfigDNetPosUnit      (mWritePosUnit                                         , this); break;
-        case (int)STATE_WRITE_POS_GAIN     : pValveSP->setInterfaceConfigDNetPosGain      (mWritePosGain                                         , this); break;
-        case (int)STATE_WRITE_PRESSURE_UNIT: pValveSP->setInterfaceConfigDNetPressureUnit (mWritePressureUnit                                    , this); break;
-        case (int)STATE_WRITE_S01_GAIN     : pValveSP->setInterfaceConfigDNetSensor01Gain (mWriteSensor01Gain                                    , this); break;
-        case (int)STATE_WRITE_S02_GAIN     : pValveSP->setInterfaceConfigDNetSensor02Gain (mWriteSensor02Gain                                    , this); break;
-        case (int)STATE_WRITE_IN_ASS       : pValveSP->setInterfaceConfigDNetInputAss     (mWriteInAssembly                                      , this); break;
-        case (int)STATE_WRITE_OUT_ASS      : pValveSP->setInterfaceConfigDNetOutputAss    (mWriteOutAssembly                                     , this); break;
-        case (int)STATE_WRITE_DI           : pValveSP->setInterfaceConfigDNetDi           (mWriteDIActivation, mWriteDIFunction, mWriteDIPolarity, this); break;
-        case (int)STATE_WRITE_DO           : pValveSP->setInterfaceConfigDNetDo           (mWriteDOActivation, mWriteDOFunction, mWriteDOPolarity, this); break;
+        case (int)STATE_WRITE_MAC          : pValveSP->setInterfaceConfigDNetMacAddress   (QString("%1").arg(mWriteMAC, 2, 16, QChar('0'))        , this); break;
+        case (int)STATE_WRITE_BAUDRATE     : pValveSP->setInterfaceConfigDNetBaudrate     (QString("%1").arg(mWriteBaudrateIdx, 2, 10, QChar('0')), this); break;
+        case (int)STATE_WRITE_POS_UNIT     : pValveSP->setInterfaceConfigDNetPosUnit      (mWritePosUnit                                          , this); break;
+        case (int)STATE_WRITE_POS_GAIN     : pValveSP->setInterfaceConfigDNetPosGain      (mWritePosGain                                          , this); break;
+        case (int)STATE_WRITE_PRESSURE_UNIT: pValveSP->setInterfaceConfigDNetPressureUnit (mWritePressureUnit                                     , this); break;
+        case (int)STATE_WRITE_S01_GAIN     : pValveSP->setInterfaceConfigDNetSensor01Gain (mWriteSensor01Gain                                     , this); break;
+        case (int)STATE_WRITE_S02_GAIN     : pValveSP->setInterfaceConfigDNetSensor02Gain (mWriteSensor02Gain                                     , this); break;
+        case (int)STATE_WRITE_IN_ASS       : pValveSP->setInterfaceConfigDNetInputAss     (mWriteInAssembly                                       , this); break;
+        case (int)STATE_WRITE_OUT_ASS      : pValveSP->setInterfaceConfigDNetOutputAss    (mWriteOutAssembly                                      , this); break;
+        case (int)STATE_WRITE_DI           : pValveSP->setInterfaceConfigDNetDi           (mWriteDIActivation, mWriteDIFunction, mWriteDIPolarity , this); break;
+        case (int)STATE_WRITE_DO           : pValveSP->setInterfaceConfigDNetDo           (mWriteDOActivation, mWriteDOFunction, mWriteDOPolarity , this); break;
         case (int)STATE_READ_MAC           : pValveSP->readInterfaceConfigDNetMac         (this); break;
         case (int)STATE_READ_BAUDRATE      : pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
         case (int)STATE_READ_POS_UNIT      : pValveSP->readInterfaceConfigDNetPosUnit     (this); break;
@@ -1368,7 +1433,7 @@ private:
             else if(line.contains("ProdCode"   )){line.append(QString(" %1;").arg("0"                                             ));}
             else if(line.contains("MajRev"     )){line.append(QString(" %1;").arg("0"                                             ));}
             else if(line.contains("MinRev"     )){line.append(QString(" %1;").arg("0"                                             ));}
-            else if(line.contains("ProdName"   )){line.append(QString(" %1;").arg("\"NOVASEN_DNS\""                               ));}
+            else if(line.contains("ProdName"   )){line.append(QString(" %1;").arg("\"NOVASEN_APC_VALVE\""                         ));}
             else if(line.contains("Catalog"    )){line.append(QString(" %1;").arg("\"0\""                                         ));}
             else if(line.contains("Default"    )){line.append(QString(" %1;").arg("0x0001"                                        ));}
             else if(line.contains("PollInfo"   )){line.append(QString(" %1;").arg("0x0001,1,1"                                    ));}

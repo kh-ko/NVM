@@ -245,6 +245,7 @@ NWindow{ // khko_todo
             id : titleBox
             root: dialog
             title: dialog.titleText
+            enableMinimizeBtn: true
 
             onClickClose: {
                 if(dialog.progress !== 100)

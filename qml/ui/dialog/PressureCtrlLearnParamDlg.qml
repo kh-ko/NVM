@@ -208,6 +208,7 @@ NWindow{
             id : titleBox
             title: dialog.titleText
             root: dialog
+            enableMinimizeBtn: true
 
             onClickClose: {
                 if(dialog.progress !== 100)

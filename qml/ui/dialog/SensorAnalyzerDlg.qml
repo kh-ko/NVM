@@ -12,15 +12,16 @@ import GUISetting 1.0
 NWindow{ // khko_todo
     id : dialog
 
-    property string strUnit : dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_PA    ? "[pa]"  :
-                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_BAR   ? "[bar]"  :
-                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_MBAR  ? "[mbar]" :
-                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_UBAR  ? "[ubar]" :
-                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_TORR  ? "[Torr]" :
-                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_MTORR ? "[mTorr]":
-                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_ATM   ? "[atm]"  :
-                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_PSI   ? "[psi]"  :
-                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_PSF   ? "[psf]"  : "[]"
+    property string strUnit : dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_PA    ? "[pa]"      :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_BAR   ? "[bar]"     :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_MBAR  ? "[mbar]"    :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_UBAR  ? "[ubar]"    :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_TORR  ? "[Torr]"    :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_MTORR ? "[mTorr]"   :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_ATM   ? "[atm]"     :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_PSI   ? "[psi]"     :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_PSF   ? "[psf]"     :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_VOLT  ? "[voltage]" : ""
 
     contentHeight: contentContainer.height; contentWidth: contentContainer.width
 
@@ -50,6 +51,7 @@ NWindow{ // khko_todo
         NPopupTilte{
             id : titleBox
             root: dialog
+            enableMinimizeBtn: true
             title: qsTr("Sensor analysis")
 
             onClickClose: {
@@ -458,7 +460,7 @@ NWindow{ // khko_todo
 
                     textColor: "#000000"
 
-                    model: ["pa","bar","mbar","ubar", "Torr", "mTorr", "atm", "psi", "psf"]
+                    model: ["pa","bar","mbar","ubar", "Torr", "mTorr", "atm", "psi", "psf","voltage"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetDpUnit(currentIndex)
