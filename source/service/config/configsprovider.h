@@ -50,6 +50,30 @@ public:
 
 Q_DECLARE_METATYPE(DNetAssemblyItem);
 
+class ValveParamDescItem
+{
+public:
+    int     mSeq    = 0;
+    QString mDesc   = "";
+
+    ValveParamDescItem(){}
+    ValveParamDescItem(const ValveParamDescItem& copy):
+        mSeq    (copy.mSeq ),
+        mDesc   (copy.mDesc){}
+
+    ~ValveParamDescItem(){}
+
+    ValveParamDescItem& operator=(const ValveParamDescItem& other)
+    {
+        mSeq     = other.mSeq    ;
+        mDesc    = other.mDesc   ;
+
+        return *this;
+    }
+};
+
+Q_DECLARE_METATYPE(ValveParamDescItem);
+
 class ConfigSProvider : public QObject
 {
     Q_OBJECT
@@ -75,8 +99,9 @@ public:
     }
 
 public:
-    QList<DNetAssemblyItem> mInputAssemblyTable;
-    QList<DNetAssemblyItem> mOutputAssemblyTable;
+    QList<DNetAssemblyItem>   mInputAssemblyTable;
+    QList<DNetAssemblyItem>   mOutputAssemblyTable;
+    QList<ValveParamDescItem> mValveParamDescTable;
 
     void loadInterfaceDNetAssembly()
     {
@@ -138,6 +163,59 @@ public:
             qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]exception";
         }
         return;
+    }
+
+    void loadValveParams()
+    {
+        QFile file;
+        QJsonDocument doc;
+
+        file.setFileName(QString("%1/config/ui/valve_param.json").arg(QApplication::applicationDirPath()));
+        file.open(QFile::ReadOnly);
+
+        mValveParamDescTable.clear();
+
+        if(file.isOpen() == false)
+        {
+            qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]fail";
+            return;
+        }
+
+        QByteArray loadData = file.readAll();
+
+        file.close();
+
+        try{
+            doc = QJsonDocument::fromJson(loadData);
+
+            QJsonObject obj = doc.object();
+
+            QJsonArray valveParamItemList  = obj.value("valve params").toArray();
+
+            for(int i = 0; i < valveParamItemList.size(); i ++)
+            {
+                ValveParamDescItem item;
+                item.mSeq  = valveParamItemList.at(i).toObject().value("seq").toInt();
+                item.mDesc = valveParamItemList.at(i).toObject().value("desc").toString();
+
+                mValveParamDescTable.append(item);
+            }
+        }
+        catch (int ex)
+        {
+            qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]exception";
+        }
+        return;
+    }
+
+    QString getValveParamDesc(int seq)
+    {
+        foreach(ValveParamDescItem item, mValveParamDescTable )
+        {
+            if(item.mSeq == seq)
+                return item.mDesc;
+        }
+        return "";
     }
 
 };

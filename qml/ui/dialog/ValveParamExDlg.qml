@@ -276,41 +276,42 @@ NWindow{ // khko_todo
                 delegate : Item{
                     property ValveParamExItemModel paramItemModel : dlgModel.onCommandGetParamItem(idxValue)
                     property string paramTextValue : paramItemModel.mTextValue
-                    property string paramDesc : idxValue === 0 ? qsTr("(model)") :
-                                                idxValue === 1 ? qsTr("(type)") :
-                                                idxValue === 2 ? qsTr("(sealing type)") :
-                                                idxValue === 3 ? qsTr("(flange size)") :
-                                                idxValue === 4 ? qsTr("(method of contract)") :
-                                                idxValue === 5 ? qsTr("(body material)") :
-                                                idxValue === 6 ? qsTr("(interface)") :
-                                                idxValue === 7 ? qsTr("(power option)") :
-                                                idxValue === 8 ? qsTr("(quantity of sensors)") :
-                                                idxValue === 9 ? qsTr("(version 01)") :
-                                                idxValue === 10 ? qsTr("(version 02)") :
-                                                idxValue === 11 ? qsTr("(version 03)") :
-                                                idxValue === 12 ? qsTr("(product number)") :
-                                                idxValue === 18 ? qsTr("(hardware safety)") :
-                                                idxValue === 19 ? qsTr("(pressure setting mode)") :
-                                                idxValue === 20 ? qsTr("(rest current)") :
-                                                idxValue === 21 ? qsTr("(sync current)") :
-                                                idxValue === 22 ? qsTr("(min current)") :
-                                                idxValue === 23 ? qsTr("(max current)") :
-                                                idxValue === 24 ? qsTr("(A-DN40/DN25 max speed)") :
-                                                idxValue === 25 ? qsTr("(A-DN50 max speed)") :
-                                                idxValue === 26 ? qsTr("(A-DN63 max speed)") :
-                                                idxValue === 27 ? qsTr("(A-DN80 max speed)") :
-                                                idxValue === 28 ? qsTr("(A-DN100 max speed)") :
-                                                idxValue === 29 ? qsTr("(A-DN160 max speed)") :
-                                                idxValue === 30 ? qsTr("(A-DN200 max speed)") :
-                                                idxValue === 31 ? qsTr("(A-DN250 max speed)") :
-                                                idxValue === 32 ? qsTr("(S-DN40 max speed)") :
-                                                idxValue === 33 ? qsTr("(S-DN50 max speed)") :
-                                                idxValue === 34 ? qsTr("(S-DN63 max speed)") :
-                                                idxValue === 35 ? qsTr("(S-DN80 max speed)") :
-                                                idxValue === 36 ? qsTr("(S-DN100 max speed)") :
-                                                idxValue === 37 ? qsTr("(S-DN160 max speed)") :
-                                                idxValue === 38 ? qsTr("(S-DN200 max speed)") :
-                                                idxValue === 39 ? qsTr("(S-DN250 max speed)") : ""
+                    property string paramDesc : paramItemModel.mDesc
+//                        idxValue === 0 ? qsTr("(model)") :
+//                                                idxValue === 1 ? qsTr("(type)") :
+//                                                idxValue === 2 ? qsTr("(sealing type)") :
+//                                                idxValue === 3 ? qsTr("(flange size)") :
+//                                                idxValue === 4 ? qsTr("(method of contract)") :
+//                                                idxValue === 5 ? qsTr("(body material)") :
+//                                                idxValue === 6 ? qsTr("(interface)") :
+//                                                idxValue === 7 ? qsTr("(power option)") :
+//                                                idxValue === 8 ? qsTr("(quantity of sensors)") :
+//                                                idxValue === 9 ? qsTr("(version 01)") :
+//                                                idxValue === 10 ? qsTr("(version 02)") :
+//                                                idxValue === 11 ? qsTr("(version 03)") :
+//                                                idxValue === 12 ? qsTr("(product number)") :
+//                                                idxValue === 18 ? qsTr("(hardware safety)") :
+//                                                idxValue === 19 ? qsTr("(pressure setting mode)") :
+//                                                idxValue === 20 ? qsTr("(rest current)") :
+//                                                idxValue === 21 ? qsTr("(sync current)") :
+//                                                idxValue === 22 ? qsTr("(min current)") :
+//                                                idxValue === 23 ? qsTr("(max current)") :
+//                                                idxValue === 24 ? qsTr("(A-DN40/DN25 max speed)") :
+//                                                idxValue === 25 ? qsTr("(A-DN50 max speed)") :
+//                                                idxValue === 26 ? qsTr("(A-DN63 max speed)") :
+//                                                idxValue === 27 ? qsTr("(A-DN80 max speed)") :
+//                                                idxValue === 28 ? qsTr("(A-DN100 max speed)") :
+//                                                idxValue === 29 ? qsTr("(A-DN160 max speed)") :
+//                                                idxValue === 30 ? qsTr("(A-DN200 max speed)") :
+//                                                idxValue === 31 ? qsTr("(A-DN250 max speed)") :
+//                                                idxValue === 32 ? qsTr("(S-DN40 max speed)") :
+//                                                idxValue === 33 ? qsTr("(S-DN50 max speed)") :
+//                                                idxValue === 34 ? qsTr("(S-DN63 max speed)") :
+//                                                idxValue === 35 ? qsTr("(S-DN80 max speed)") :
+//                                                idxValue === 36 ? qsTr("(S-DN100 max speed)") :
+//                                                idxValue === 37 ? qsTr("(S-DN160 max speed)") :
+//                                                idxValue === 38 ? qsTr("(S-DN200 max speed)") :
+//                                                idxValue === 39 ? qsTr("(S-DN250 max speed)") : ""
 
                     height: paramItemModel.mIsPresent ? (46 * GUISetting.scale) : 0; width: parent.width
                     visible: paramItemModel.mIsPresent

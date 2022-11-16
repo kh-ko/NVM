@@ -17,6 +17,7 @@ class ValveParamExItemModel : public QObject
     Q_PROPERTY(bool    mIsErr     READ getIsErr     NOTIFY signalEventChangedIsErr    )
     Q_PROPERTY(QString mTextID    READ getTextID    NOTIFY signalEventChangedTextID   )
     Q_PROPERTY(QString mTextValue READ getTextValue NOTIFY signalEventChangedTextValue)
+    Q_PROPERTY(QString mDesc      READ getDesc      NOTIFY signalEventChangedDesc     )
 
 public:
     bool    mIsPresent = true ;
@@ -25,6 +26,7 @@ public:
     int     mId        = 0;
     // khko : edit int to qstring //int     mValue     = 0;
     QString mValue     = "";
+    QString mDesc      = "";
 
     bool    getIsPresent(){ return mIsPresent; }
     bool    getIsEdit   (){ return mIsEdit   ; }
@@ -32,6 +34,7 @@ public:
     QString getTextID   (){ return QString("%1").arg(mId, 2, 10, QChar('0'))   ; }
     // khko : edit int to qstring //QString getTextValue(){ return QString("%1").arg(mValue, 6, 10, QChar('0')); }
     QString getTextValue(){ return mValue    ; }
+    QString getDesc     (){ return mDesc     ; }
 
     void    setIsPresent(bool    value){ if(mIsPresent == value) return; mIsPresent = value; emit signalEventChangedIsPresent(value         );}
     void    setIsEdit   (bool    value){ if(mIsEdit    == value) return; mIsEdit    = value; emit signalEventChangedIsEdit   (value         );}
@@ -39,7 +42,7 @@ public:
     void    setId       (int     value){ if(mId        == value) return; mId        = value; emit signalEventChangedTextID   (getTextID()   );}
     // khko : edit int to qstring //void    setValue    (int    value){ if(mValue     == value) return; mValue     = value; emit signalEventChangedTextValue(getTextValue());}
     void    setValue    (QString value){ if(mValue     == value) return; mValue     = value; emit signalEventChangedTextValue(getTextValue());}
-
+    void    setDesc     (QString value){ if(mDesc      == value) return; mDesc      = value; emit signalEventChangedDesc     (value         );}
     void    reset()
     {
         setIsPresent(false); setIsEdit(false); setIsErr(false); setValue("000000");
@@ -62,6 +65,7 @@ signals:
     void signalEventChangedIsErr    (bool    value);
     void signalEventChangedTextID   (QString value);
     void signalEventChangedTextValue(QString value);
+    void signalEventChangedDesc     (QString value);
 
 public:
     explicit ValveParamExItemModel(QObject *parent = nullptr): QObject(parent)
@@ -136,6 +140,8 @@ public:
         ENABLE_SLOT_VALVE_WRITTEN_FACTORY_RESET;
         ENABLE_SLOT_VALVE_WRITTEN_VALVE_PARAM_RESET;
 
+        pConfigSP->loadValveParams();
+
         mTimer.setSingleShot(true);
         connect(&mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
@@ -145,6 +151,7 @@ public:
         for(int i = 0; i < 100; i ++)
         {
             ValveParamExItemModel * pItemModel = new ValveParamExItemModel(i, this);
+            pItemModel->setDesc(pConfigSP->getValveParamDesc(i));
             connect(pItemModel, SIGNAL(signalEventChangedIsEdit(bool)), this, SLOT(onEditItem(bool)));
             mpParamList.append(pItemModel);
         }
