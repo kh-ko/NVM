@@ -352,13 +352,13 @@ NWindow{ // khko_todo
 
                             enabled: dialog.progress === 100
 
-                            textField.validator: RegExpValidator { regExp: /[0-9A-Fa-f]{0,8}/ }//IntValidator{}
+                            textField.validator: IntValidator{} // RegExpValidator { regExp: /[0-9A-Fa-f]{0,8}/ } //IntValidator{}
                             textField.color: parent.parent.paramItemModel.mIsErr ? "#FF0000" : parent.parent.paramItemModel.mIsEdit ? "#24A7FF" : "#000000"
                             textField.text: parent.parent.paramTextValue
                             stepValue : 1; minValue: 0; maxValue: 4294967295
-                            isHexMode : true
+                            //isHexMode : true
                             fixedN : 0
-                            padN   : 6
+                            //padN   : 6
 
                             onChangedValue: {
                                 parent.parent.paramItemModel.editValue(value)

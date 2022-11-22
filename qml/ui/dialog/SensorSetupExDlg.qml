@@ -461,7 +461,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS01ZeroAdjOffsetValue ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: -14; maxValue: 14
+                    stepValue : 1; minValue: -100; maxValue: 100
                     fixedN : 2
 
                     visible: _s01Source.currentIndex != 0 && _s01Selection.currentIndex != 0

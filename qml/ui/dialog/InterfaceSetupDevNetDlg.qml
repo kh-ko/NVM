@@ -221,6 +221,13 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
 
+                        if(currentIndex == 0)
+                        {
+                            // todo : sync value
+                            _positionRange.setValue(dlgModel.mPositionRange)
+                        }
+
+                        /*
                         if(currentIndex == 1)
                         {
                             _positionRange.fixedN = 0
@@ -237,7 +244,7 @@ BaseSetupWindow{
                             _positionRange.fixedN = 3
                             _positionRange.setValue(10000)
                         }
-
+                        */
                         dlgModel.onCommandSetEdit(true)
                     }
                 }
@@ -252,6 +259,7 @@ BaseSetupWindow{
                 NText{
                     id : positionRangeFromLabel
                     anchors.top: _positionUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    visible: _positionUnitCombo.currentIndex == 0
                     text : qsTr("0 ~")
                 }
 
@@ -261,7 +269,8 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width: 120 * GUISetting.scale
                     anchors.verticalCenter: positionRangeFromLabel.verticalCenter; anchors.left: positionRangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _positionUnitCombo.right
 
-                    stepValue : 1; minValue:0; maxValue: 40000
+                    visible: _positionUnitCombo.currentIndex == 0
+                    stepValue : 1; minValue:0; maxValue: 65535
                     fixedN : 0
 
                     enabled: dialog.progress === 100 && _positionUnitCombo.currentIndex == 0
@@ -288,6 +297,14 @@ BaseSetupWindow{
 
 
                     onCurrentIndexChanged: {
+                        if(currentIndex == 0)
+                        {
+                            _sensor01Range.setValue(dlgModel.mSensor01Range)
+                            _sensor02Range.setValue(dlgModel.mSensor02Range)
+                            // todo : sync value
+                        }
+
+                        /*
                         if(currentIndex == 1)
                         {
                             _sensor01Range.fixedN = 0
@@ -309,7 +326,7 @@ BaseSetupWindow{
                             _sensor01Range.fixedN = 3
                             _sensor02Range.fixedN = 3
                         }
-
+                        */
                         dlgModel.onCommandSetEdit(true)
                     }
                 }
@@ -323,6 +340,7 @@ BaseSetupWindow{
                 NText{
                     id : sensor01RangeFromLabel
                     anchors.top: _pressureUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    visible: _pressureUnitCombo.currentIndex == 0
                     text : qsTr("0 ~")
                 }
 
@@ -331,8 +349,8 @@ BaseSetupWindow{
 
                     height: 24 * GUISetting.scale; width: 120 * GUISetting.scale
                     anchors.verticalCenter: sensor01RangeFromLabel.verticalCenter; anchors.left: sensor01RangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _pressureUnitCombo.right
-
-                    stepValue : 1; minValue:0; maxValue: 40000
+                    visible: _pressureUnitCombo.currentIndex == 0
+                    stepValue : 1; minValue:0; maxValue: 65535
                     fixedN : 0
 
                     enabled: dialog.progress === 100 && _pressureUnitCombo.currentIndex == 0
@@ -345,13 +363,14 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _sensor01Range.verticalCenter; anchors.left: _sensor01Range.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrSensor01Range ? "#FF0000" : "#000000"
-                    text : _pressureUnitCombo.currentIndex > 1 ? qsTr("sensor 1 range") : qsTr("sensor range")
+                    visible: _pressureUnitCombo.currentIndex == 0
+                    text : qsTr("sensor range") //_pressureUnitCombo.currentIndex > 1 ? qsTr("sensor 1 range") : qsTr("sensor range")
                  }
 
                 NText{
                     id : sensor02RangeFromLabel
                     anchors.top: _sensor01Range.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                    visible: _pressureUnitCombo.currentIndex > 1
+                    visible: false//_pressureUnitCombo.currentIndex > 1
                     text : qsTr("0 ~")
                 }
 
@@ -364,7 +383,7 @@ BaseSetupWindow{
                     stepValue : 1; minValue:0; maxValue: 40000
                     fixedN : 0
 
-                    visible: _pressureUnitCombo.currentIndex > 1
+                    visible: false//_pressureUnitCombo.currentIndex > 1
                     enabled: dialog.progress === 100 && _pressureUnitCombo.currentIndex == 0
 
                     onChangedText: {
@@ -375,7 +394,7 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _sensor02Range.verticalCenter; anchors.left: _sensor02Range.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrSensor02Range ? "#FF0000" : "#000000"
-                    visible: _pressureUnitCombo.currentIndex > 1
+                    visible: false//_pressureUnitCombo.currentIndex > 1
                     text : qsTr("sensor 2 range")
                 }
             }
