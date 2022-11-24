@@ -60,8 +60,8 @@ public:
     QList<int> mChartMSecOption = {30000, 60000, 120000, 300000};
 
     qint64  mMonitoringCycle       = 10;
-    QString mBuildVersion          = "1.9.6";
-    bool    mIsWithoutLogo         = true;
+    QString mBuildVersion          = "1.9.7";
+    bool    mIsWithoutLogo         = false;
 
     bool    mIsDrawCurrPos         = true ;
     bool    mIsDrawTargetPos       = true ;

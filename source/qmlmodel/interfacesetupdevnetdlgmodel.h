@@ -1203,8 +1203,30 @@ private:
 
         gain = *((float *)floatBuff.data());
 
-        return 10000.0 * gain;
+        return gain;
     }
+
+//    double calRange(QString value)
+//    {
+//        float gain;
+//        QByteArray hexBuff;
+//        QByteArray floatBuff;
+
+//        hexBuff.append(value.at(6));
+//        hexBuff.append(value.at(7));
+//        hexBuff.append(value.at(4));
+//        hexBuff.append(value.at(5));
+//        hexBuff.append(value.at(2));
+//        hexBuff.append(value.at(3));
+//        hexBuff.append(value.at(0));
+//        hexBuff.append(value.at(1));
+
+//        floatBuff = QByteArray::fromHex(hexBuff);
+
+//        gain = *((float *)floatBuff.data());
+
+//        return 10000.0 * gain;
+//    }
 
     void setInputAssemblySeqArrayByHexValue(QString value)
     {
@@ -1269,7 +1291,7 @@ private:
     }
     QString calGain(double range)
     {
-        float gain = range / 10000.0;
+        float gain = range / 1;
 
         //qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]gain = " << QString("%1").arg(gain,0,'f',10);
         QByteArray gainBuff;
@@ -1280,6 +1302,19 @@ private:
 
         return gainBuff.toHex();
     }
+//    QString calGain(double range)
+//    {
+//        float gain = range / 10000.0;
+
+//        //qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]gain = " << QString("%1").arg(gain,0,'f',10);
+//        QByteArray gainBuff;
+//        gainBuff.append(((char *)&gain)[3]);
+//        gainBuff.append(((char *)&gain)[2]);
+//        gainBuff.append(((char *)&gain)[1]);
+//        gainBuff.append(((char *)&gain)[0]);
+
+//        return gainBuff.toHex();
+//    }
     QString transIdxToPressureUnit(int idx)
     {
         switch (idx) {

@@ -256,22 +256,24 @@ BaseSetupWindow{
                 }
 
 
-                NText{
-                    id : positionRangeFromLabel
-                    anchors.top: _positionUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                    visible: _positionUnitCombo.currentIndex == 0
-                    text : qsTr("0 ~")
-                }
+//                NText{
+//                    id : positionRangeFromLabel
+//                    anchors.top: _positionUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+//                    visible: _positionUnitCombo.currentIndex == 0
+//                    text : qsTr("0 ~")
+//                }
 
                 NInputNumber{
                     id : _positionRange
 
                     height: 24 * GUISetting.scale; width: 120 * GUISetting.scale
-                    anchors.verticalCenter: positionRangeFromLabel.verticalCenter; anchors.left: positionRangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _positionUnitCombo.right
+                    anchors.top: _positionUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    //anchors.verticalCenter: positionRangeFromLabel.verticalCenter; anchors.left: positionRangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _positionUnitCombo.right
 
                     visible: _positionUnitCombo.currentIndex == 0
-                    stepValue : 1; minValue:0; maxValue: 65535
-                    fixedN : 0
+                    textField.validator: DoubleValidator{}
+                    stepValue : 1; minValue:0; maxValue: 999999999
+                    fixedN : 3
 
                     enabled: dialog.progress === 100 && _positionUnitCombo.currentIndex == 0
 
@@ -283,7 +285,7 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _positionRange.verticalCenter; anchors.left: _positionRange.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrPositionRange ? "#FF0000" : "#000000"
-                    text : qsTr("position range")
+                    text : qsTr("gain")
                 }
 
                 NComboBox{
@@ -337,21 +339,24 @@ BaseSetupWindow{
                     text : qsTr("pressure unit")
                 }
 
-                NText{
-                    id : sensor01RangeFromLabel
-                    anchors.top: _pressureUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                    visible: _pressureUnitCombo.currentIndex == 0
-                    text : qsTr("0 ~")
-                }
+//                NText{
+//                    id : sensor01RangeFromLabel
+//                    anchors.top: _pressureUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+//                    visible: _pressureUnitCombo.currentIndex == 0
+//                    text : qsTr("0 ~")
+//                }
 
                 NInputNumber{
                     id : _sensor01Range
 
                     height: 24 * GUISetting.scale; width: 120 * GUISetting.scale
-                    anchors.verticalCenter: sensor01RangeFromLabel.verticalCenter; anchors.left: sensor01RangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _pressureUnitCombo.right
+                    //anchors.verticalCenter: sensor01RangeFromLabel.verticalCenter; anchors.left: sensor01RangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _pressureUnitCombo.right
+                    anchors.top: _pressureUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
                     visible: _pressureUnitCombo.currentIndex == 0
-                    stepValue : 1; minValue:0; maxValue: 65535
-                    fixedN : 0
+                    textField.validator: DoubleValidator{}
+                    stepValue : 1; minValue:0; maxValue: 999999999
+                    fixedN : 3
 
                     enabled: dialog.progress === 100 && _pressureUnitCombo.currentIndex == 0
 
@@ -364,7 +369,7 @@ BaseSetupWindow{
                     anchors.verticalCenter: _sensor01Range.verticalCenter; anchors.left: _sensor01Range.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrSensor01Range ? "#FF0000" : "#000000"
                     visible: _pressureUnitCombo.currentIndex == 0
-                    text : qsTr("sensor range") //_pressureUnitCombo.currentIndex > 1 ? qsTr("sensor 1 range") : qsTr("sensor range")
+                    text : qsTr("gain") //_pressureUnitCombo.currentIndex > 1 ? qsTr("sensor 1 range") : qsTr("sensor range")
                  }
 
                 NText{
@@ -380,10 +385,11 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width: 120 * GUISetting.scale
                     anchors.verticalCenter: sensor02RangeFromLabel.verticalCenter; anchors.left: sensor02RangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _sensor01Range.right
 
-                    stepValue : 1; minValue:0; maxValue: 40000
-                    fixedN : 0
+                    stepValue : 1; minValue:0; maxValue: 999999999
+                    fixedN : 3
 
                     visible: false//_pressureUnitCombo.currentIndex > 1
+                    textField.validator: DoubleValidator{}
                     enabled: dialog.progress === 100 && _pressureUnitCombo.currentIndex == 0
 
                     onChangedText: {
