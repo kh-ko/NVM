@@ -229,7 +229,7 @@ public:
         mTimer.setSingleShot(true);
         connect(&mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
-        setState(eState::STATE_READ_MAC);
+        setState(eState::STATE_READ_FIRMWARE_ID);
     }
     ~InterfaceStatusDNetDlgModel()
     {
@@ -345,7 +345,7 @@ public slots:
 
         if(dto.mIsSucc)
         {
-            int prec = calPositionFixedN(getPositionUnitIdx(getPositionUnitValue()));
+            int prec = 3;//calPositionFixedN(getPositionUnitIdx(getPositionUnitValue()));
             setPositionRangeValue(QString("%1").arg(calRange(dto.mValue),  0, 'f', prec)); // todo fixed (3)
         }
         else
@@ -391,7 +391,7 @@ public slots:
 
         if(dto.mIsSucc)
         {
-            int prec = calPressureFixedN(getPressureUnitIdx(getPressureUnitValue()), pValveSP->getS01FullScalePrec(), pValveSP->getS01SullScaleUnit());
+            int prec = 3;//calPressureFixedN(getPressureUnitIdx(getPressureUnitValue()), pValveSP->getS01FullScalePrec(), pValveSP->getS01SullScaleUnit());
             setSensor01RangeValue(QString("%1").arg(calRange(dto.mValue),  0, 'f', prec)); // todo fixed (3)
         }
         else
@@ -415,7 +415,7 @@ public slots:
 
         if(dto.mIsSucc)
         {
-            int prec = calPressureFixedN(getPressureUnitIdx(getPressureUnitValue()), pValveSP->getS02FullScalePrec(), pValveSP->getS02SullScaleUnit());
+            int prec = 3;//calPressureFixedN(getPressureUnitIdx(getPressureUnitValue()), pValveSP->getS02FullScalePrec(), pValveSP->getS02SullScaleUnit());
             setSensor02RangeValue(QString("%1").arg(calRange(dto.mValue),  0, 'f', prec)); // todo fixed (3)
         }
         else
@@ -707,7 +707,7 @@ private:
     };
 
     QTimer mTimer;
-    eState mState         = eState::STATE_READ_MAC;
+    eState mState         = eState::STATE_READ_FIRMWARE_ID;
     qint64 mLastScanMSec  = 0;
     bool   mIsFirstRead   = true;
 
@@ -794,19 +794,20 @@ private:
     }
     QString transValueToUnitStr(QString value)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << value;
         int unit = value.toInt(nullptr, 16);
 
         switch (unit) {
-        case 4097: return "counts "; // 0x1001
+        case 4097: return "counts" ; // 0x1001
         case 4103: return "percent"; // 0x1007
-        case 4864: return "psi    "; // 0x1300
-        case 4865: return "Torr   "; // 0x1301
-        case 4866: return "mTorr  "; // 0x1302
-        case 4871: return "bar    "; // 0x1307
-        case 4872: return "mbar   "; // 0x1308
-        case 4873: return "pa     "; // 0x1309
-        case 4875: return "atm    "; // 0x120B
-        case 5891: return "degree "; // 0x1703
+        case 4864: return "psi"    ; // 0x1300
+        case 4865: return "Torr"   ; // 0x1301
+        case 4866: return "mTorr"  ; // 0x1302
+        case 4871: return "bar"    ; // 0x1307
+        case 4872: return "mbar"   ; // 0x1308
+        case 4873: return "pa"     ; // 0x1309
+        case 4875: return "atm"    ; // 0x120B
+        case 5891: return "degree" ; // 0x1703
         }
         return "unknow";
     }
@@ -830,8 +831,30 @@ private:
 
         gain = *((float *)floatBuff.data());
 
-        return 10000.0 * gain;
+        return gain;
     }
+
+//    double calRange(QString value)
+//    {
+//        float gain;
+//        QByteArray hexBuff;
+//        QByteArray floatBuff;
+
+//        hexBuff.append(value.at(6));
+//        hexBuff.append(value.at(7));
+//        hexBuff.append(value.at(4));
+//        hexBuff.append(value.at(5));
+//        hexBuff.append(value.at(2));
+//        hexBuff.append(value.at(3));
+//        hexBuff.append(value.at(0));
+//        hexBuff.append(value.at(1));
+
+//        floatBuff = QByteArray::fromHex(hexBuff);
+
+//        gain = *((float *)floatBuff.data());
+
+//        return 10000.0 * gain;
+//    }
 
     void setInputAssemblySeqArrayByHexValue(QString value)
     {

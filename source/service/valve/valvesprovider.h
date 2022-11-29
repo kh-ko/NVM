@@ -49,6 +49,9 @@
 #define ENABLE_SLOT_VALVE_CHANGED_IS_TEST_MODE                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedIsTestMode                     (                                                )), this, SLOT(onValveChangedIsTestMode                   (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_FIELDBUS_ERR                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedFieldBusError                  (                                                )), this, SLOT(onValveChangedFieldBusError                (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_FIRMWARE_ERR                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedFirmwareError                  (                                                )), this, SLOT(onValveChangedFirmwareError                (                                                  )))
+#define ENABLE_SLOT_VALVE_CHANGED_UNKNOW_INTERFACE                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedUnknowInterface                (                                                )), this, SLOT(onValveChangedUnknowInterface              (                                                  )))
+#define ENABLE_SLOT_VALVE_CHANGED_NO_SENSOR_SIG                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedNoSensorSignal                 (                                                )), this, SLOT(onValveChangedNoSensorSignal               (                                                  )))
+#define ENABLE_SLOT_VALVE_CHANGED_NO_ANALOG_SIG                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedNoAnalogSignal                 (                                                )), this, SLOT(onValveChangedNoAnalogSignal               (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_NETWORK_FAIL                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedNetworkFailure                 (                                                )), this, SLOT(onValveChangedNetworkFailure               (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_SLAVE_OFFLINE                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedSlaveOffline                   (                                                )), this, SLOT(onValveChangedSlaveOffline                 (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_ISOLATION_VALVE                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedIsolationValve                 (                                                )), this, SLOT(onValveChangedIsolationValve               (                                                  )))
@@ -391,6 +394,9 @@ private:
     bool        mIsTestMode         = false;
     bool        mFieldBusError      = false;
     bool        mFirmwareError      = false;
+    bool        mUnknowInterface    = false;
+    bool        mNoSensorSignal     = false;
+    bool        mNoAnalogSignal     = false;
     bool        mNetworkFailure     = false;
     bool        mSlaveOffline       = false;
     bool        mIsolationValve     = false;
@@ -469,6 +475,9 @@ public:
     bool        getIsTestMode                   (){ return mIsTestMode        ;}
     bool        getFieldBusError                (){ return mFieldBusError     ;}
     bool        getFirmwareError                (){ return mFirmwareError     ;}
+    bool        getUnknowInterface              (){ return mUnknowInterface   ;}
+    bool        getNoSensorSignal               (){ return mNoSensorSignal    ;}
+    bool        getNoAnalogSignal               (){ return mNoAnalogSignal    ;}
     bool        getNetworkFailure               (){ return mNetworkFailure    ;}
     bool        getSlaveOffline                 (){ return mSlaveOffline      ;}
     bool        getIsolationValve               (){ return mIsolationValve    ;}
@@ -545,6 +554,9 @@ public:
         emit signalEventChangedIsTestMode        (     );
         emit signalEventChangedFieldBusError     (     );
         emit signalEventChangedFirmwareError     (     );
+        emit signalEventChangedUnknowInterface   (     );
+        emit signalEventChangedNoSensorSignal    (     );
+        emit signalEventChangedNoAnalogSignal    (     );
         emit signalEventChangedNetworkFailure    (     );
         emit signalEventChangedSlaveOffline      (     );
         emit signalEventChangedIsolationValve    (     );
@@ -609,6 +621,9 @@ public:
     void        setIsTestMode                   (bool        value){if(mIsTestMode         == value) return; mIsTestMode         = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedIsTestMode        ();}
     void        setFieldBusError                (bool        value){if(mFieldBusError      == value) return; mFieldBusError      = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedFieldBusError     ();}
     void        setFirmwareError                (bool        value){if(mFirmwareError      == value) return; mFirmwareError      = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedFirmwareError     ();}
+    void        setUnknowInterface              (bool        value){if(mUnknowInterface    == value) return; mUnknowInterface    = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedUnknowInterface   ();}
+    void        setNoSensorSignal               (bool        value){if(mNoSensorSignal     == value) return; mNoSensorSignal     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedNoSensorSignal    ();}
+    void        setNoAnalogSignal               (bool        value){if(mNoAnalogSignal     == value) return; mNoAnalogSignal     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedNoAnalogSignal    ();}
     void        setNetworkFailure               (bool        value){if(mNetworkFailure     == value) return; mNetworkFailure     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedNetworkFailure    ();}
     void        setSlaveOffline                 (bool        value){if(mSlaveOffline       == value) return; mSlaveOffline       = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedSlaveOffline      ();}
     void        setIsolationValve               (bool        value){if(mIsolationValve     == value) return; mIsolationValve     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedIsolationValve    ();}
@@ -685,6 +700,9 @@ signals:
     void signalEventChangedIsTestMode                   (             );
     void signalEventChangedFieldBusError                (             );
     void signalEventChangedFirmwareError                (             );
+    void signalEventChangedUnknowInterface              (             );
+    void signalEventChangedNoSensorSignal               (             );
+    void signalEventChangedNoAnalogSignal               (             );
     void signalEventChangedNetworkFailure               (             );
     void signalEventChangedSlaveOffline                 (             );
     void signalEventChangedIsolationValve               (             );
@@ -4328,20 +4346,25 @@ public slots:
 
             // error
             signalDto.mFieldBusError   = value.mid(startIdx,1).toInt() == 1; startIdx += 1;
-            signalDto.mFirmwareError   = value.mid(startIdx,1).toInt() == 1; startIdx += 1;
 
             // warring mask
             flags = convertAbcNumberToInt(value.mid(startIdx,1)); startIdx += 1;
-            signalDto.mNetworkFailure  = (flags & WARNING_NETWORK_FAILURE_MASK) != 0;
-            signalDto.mSlaveOffline    = (flags & WARNING_SLAVE_OFFLINE_MASK  ) != 0;
-            signalDto.mIsolationValve  = (flags & WARNING_ISOLATION_VALVE_MASK) != 0;
-            signalDto.mSensorError     = (flags & WARNING_SENSOR_ERROR_MASK   ) != 0;
+            signalDto.mFirmwareError   = (flags & WARNING2_FIRMWARE_MEMORY_MASK ) != 0;
+            signalDto.mUnknowInterface = (flags & WARNING2_UNKNOW_INTERFACE_MASK) != 0;
+            signalDto.mNoSensorSignal  = (flags & WARNING2_NO_SENSOR_SIG_MASK   ) != 0;
+            signalDto.mNoAnalogSignal  = (flags & WARNING2_NO_ANALOG_SIG_MASK   ) != 0;
 
             flags = convertAbcNumberToInt(value.mid(startIdx,1)); startIdx += 1;
-            signalDto.mSvcRequest      = (flags & WARNING_SVC_REQ_MASK   ) != 0;
-            signalDto.mLearnNotPresent = (flags & WARNING_LEARN_NOT_MASK ) != 0;
-            signalDto.mAirNotReady     = (flags & WARNING_AIR_NOT_MASK   ) != 0;
-            signalDto.mPFONotReady     = (flags & WARNING_PFO_NOT_MASK   ) != 0;
+            signalDto.mNetworkFailure  = (flags & WARNING3_NETWORK_FAILURE_MASK) != 0;
+            signalDto.mSlaveOffline    = (flags & WARNING3_SLAVE_OFFLINE_MASK  ) != 0;
+            signalDto.mIsolationValve  = (flags & WARNING3_ISOLATION_VALVE_MASK) != 0;
+            signalDto.mSensorError     = (flags & WARNING3_SENSOR_ERROR_MASK   ) != 0;
+
+            flags = convertAbcNumberToInt(value.mid(startIdx,1)); startIdx += 1;
+            signalDto.mSvcRequest      = (flags & WARNING4_SVC_REQ_MASK   ) != 0;
+            signalDto.mLearnNotPresent = (flags & WARNING4_LEARN_NOT_MASK ) != 0;
+            signalDto.mAirNotReady     = (flags & WARNING4_AIR_NOT_MASK   ) != 0;
+            signalDto.mPFONotReady     = (flags & WARNING4_PFO_NOT_MASK   ) != 0;
 
             // pressure control config
             signalDto.mSensorDelay     = value.mid(startIdx,1).toInt()   ; startIdx += 1;
@@ -4360,6 +4383,9 @@ public slots:
             setIsTestMode       (signalDto.mTestMode         );
             setFieldBusError    (signalDto.mFieldBusError    );
             setFirmwareError    (signalDto.mFirmwareError    );
+            setUnknowInterface  (signalDto.mUnknowInterface  );
+            setNoSensorSignal   (signalDto.mNoSensorSignal   );
+            setNoAnalogSignal   (signalDto.mNoAnalogSignal   );
             setNetworkFailure   (signalDto.mNetworkFailure   );
             setSlaveOffline     (signalDto.mSlaveOffline     );
             setIsolationValve   (signalDto.mIsolationValve   );

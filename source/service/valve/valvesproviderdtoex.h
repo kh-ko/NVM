@@ -1838,6 +1838,9 @@ public:
     bool      mTestMode         ;
     bool      mFieldBusError    ;
     bool      mFirmwareError    ;
+    bool      mUnknowInterface  ;
+    bool      mNoSensorSignal   ;
+    bool      mNoAnalogSignal   ;
     bool      mNetworkFailure   ;
     bool      mSlaveOffline     ;
     bool      mIsolationValve   ;
@@ -1869,6 +1872,9 @@ public:
         mTestMode       (copy.mTestMode         ),
         mFieldBusError  (copy.mFieldBusError    ),
         mFirmwareError  (copy.mFirmwareError    ),
+        mUnknowInterface(copy.mUnknowInterface  ),
+        mNoSensorSignal (copy.mNoSensorSignal   ),
+        mNoAnalogSignal (copy.mNoAnalogSignal   ),
         mNetworkFailure (copy.mNetworkFailure   ),
         mSlaveOffline   (copy.mSlaveOffline     ),
         mIsolationValve (copy.mIsolationValve   ),
@@ -1902,6 +1908,9 @@ public:
         mTestMode        = other.mTestMode         ;
         mFieldBusError   = other.mFieldBusError    ;
         mFirmwareError   = other.mFirmwareError    ;
+        mUnknowInterface = other.mUnknowInterface  ;
+        mNoSensorSignal  = other.mNoSensorSignal   ;
+        mNoAnalogSignal  = other.mNoAnalogSignal   ;
         mNetworkFailure  = other.mNetworkFailure   ;
         mSlaveOffline    = other.mSlaveOffline     ;
         mIsolationValve  = other.mIsolationValve   ;
@@ -1918,10 +1927,10 @@ public:
 
     QString toString()
     {
-        return QString("%1, currPos = %2, currPress = %3, TargetVale = %4, ValveSpeed = %5, gainFac = %6, access = %7, mode = %8, sensor delay = %9, ramp time = %10, is sim = %11, enable PFO = %12, test mode = %13, FieldBusE = %14, FirmwareE = %15, Network Fail = %16, SlaveOffline = %17, mIsolationValve = %18, mSensorError = %19, svcReq = %20, Learn Not = %21, AirNot = %22, PFONot = %23, mControlMode = %24")
+        return QString("%1, currPos = %2, currPress = %3, TargetVale = %4, ValveSpeed = %5, gainFac = %6, access = %7, mode = %8, sensor delay = %9, ramp time = %10, is sim = %11, enable PFO = %12, test mode = %13, FieldBusE = %14, FirmwareE = %15, UnknowInterface = %16, NoSensorSignal = %17, NoAnalogSignal = %18, Network Fail = %19, SlaveOffline = %20, mIsolationValve = %21, mSensorError = %22, svcReq = %23, Learn Not = %24, AirNot = %25, PFONot = %26, mControlMode = %27")
                       .arg(ValveResponseDto::toString()).arg((int)mCurrPosition).arg((int)mCurrPressure).arg(mTargetValue).arg(mValveSpeed)
                       .arg(mGainFactor).arg(mAccess).arg(mMode).arg(mSensorDelay).arg(mRampTime).arg(mIsSimulation).arg(mEnablePFO).arg(mTestMode)
-                      .arg(mFieldBusError).arg(mFirmwareError).arg(mNetworkFailure).arg(mSlaveOffline).arg(mIsolationValve).arg(mSensorError)
+                      .arg(mFieldBusError).arg(mFirmwareError).arg(mUnknowInterface).arg(mNoSensorSignal).arg(mNoAnalogSignal).arg(mNetworkFailure).arg(mSlaveOffline).arg(mIsolationValve).arg(mSensorError)
                       .arg(mSvcRequest).arg(mLearnNotPresent).arg(mAirNotReady).arg(mPFONotReady).arg(mControlMode);
     }
 };

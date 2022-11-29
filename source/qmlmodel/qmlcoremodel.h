@@ -52,6 +52,9 @@ class QmlCoreModel : public QObject
     Q_PROPERTY(bool    mIsRS232Test           READ getIsRS232Test           NOTIFY signalEventChangedIsRS232Test           )
     Q_PROPERTY(bool    mFieldBusError         READ getFieldBusError         NOTIFY signalEventChangedFieldBusError         )
     Q_PROPERTY(bool    mFirmwareError         READ getFirmwareError         NOTIFY signalEventChangedFirmwareError         )
+    Q_PROPERTY(bool    mUnknowInterface       READ getUnknowInterface       NOTIFY signalEventChangedUnknowInterface       )
+    Q_PROPERTY(bool    mNoSensorSignal        READ getNoSensorSignal        NOTIFY signalEventChangedNoSensorSignal        )
+    Q_PROPERTY(bool    mNoAnalogSignal        READ getNoAnalogSignal        NOTIFY signalEventChangedNoAnalogSignal        )
     Q_PROPERTY(bool    mNetworkFailure        READ getNetworkFailure        NOTIFY signalEventChangedNetworkFailure        )
     Q_PROPERTY(bool    mSlaveOffline          READ getSlaveOffline          NOTIFY signalEventChangedSlaveOffline          )
     Q_PROPERTY(bool    mIsolationValve        READ getIsolationValve        NOTIFY signalEventChangedIsolationValve        )
@@ -134,6 +137,9 @@ public:
     bool     mIsRS232Test           = false                               ;
     bool     mFieldBusError         = false                               ;
     bool     mFirmwareError         = false                               ;
+    bool     mUnknowInterface       = false                               ;
+    bool     mNoSensorSignal        = false                               ;
+    bool     mNoAnalogSignal        = false                               ;
     bool     mNetworkFailure        = false                               ;
     bool     mSlaveOffline          = false                               ;
     bool     mIsolationValve        = false                               ;
@@ -209,6 +215,9 @@ public:
     bool    getIsRS232Test          (){ return mIsRS232Test              ;}
     bool    getFieldBusError        (){ return mFieldBusError            ;}
     bool    getFirmwareError        (){ return mFirmwareError            ;}
+    bool    getUnknowInterface      (){ return mUnknowInterface          ;}
+    bool    getNoSensorSignal       (){ return mNoSensorSignal           ;}
+    bool    getNoAnalogSignal       (){ return mNoAnalogSignal           ;}
     bool    getNetworkFailure       (){ return mNetworkFailure           ;}
     bool    getSlaveOffline         (){ return mSlaveOffline             ;}
     bool    getIsolationValve       (){ return mIsolationValve           ;}
@@ -279,6 +288,9 @@ public:
     void setIsRS232Test          (bool              value){ if(mIsRS232Test           == value) return; mIsRS232Test           = value; emit signalEventChangedIsRS232Test          (value);}
     void setFieldBusError        (bool              value){ if(mFieldBusError         == value) return; mFieldBusError         = value; emit signalEventChangedFieldBusError        (value);}
     void setFirmwareError        (bool              value){ if(mFirmwareError         == value) return; mFirmwareError         = value; emit signalEventChangedFirmwareError        (value);}
+    void setUnknowInterface      (bool              value){ if(mUnknowInterface       == value) return; mUnknowInterface       = value; emit signalEventChangedUnknowInterface      (value);}
+    void setNoSensorSignal       (bool              value){ if(mNoSensorSignal        == value) return; mNoSensorSignal        = value; emit signalEventChangedNoSensorSignal       (value);}
+    void setNoAnalogSignal       (bool              value){ if(mNoAnalogSignal        == value) return; mNoAnalogSignal        = value; emit signalEventChangedNoAnalogSignal       (value);}
     void setNetworkFailure       (bool              value){ if(mNetworkFailure        == value) return; mNetworkFailure        = value; emit signalEventChangedNetworkFailure       (value);}
     void setSlaveOffline         (bool              value){ if(mSlaveOffline          == value) return; mSlaveOffline          = value; emit signalEventChangedSlaveOffline         (value);}
     void setIsolationValve       (bool              value){ if(mIsolationValve        == value) return; mIsolationValve        = value; emit signalEventChangedIsolationValve       (value);}
@@ -355,6 +367,9 @@ signals:
     void signalEventChangedIsRS232Test          (bool    value);
     void signalEventChangedFieldBusError        (bool    value);
     void signalEventChangedFirmwareError        (bool    value);
+    void signalEventChangedUnknowInterface      (bool    value);
+    void signalEventChangedNoSensorSignal       (bool    value);
+    void signalEventChangedNoAnalogSignal       (bool    value);
     void signalEventChangedNetworkFailure       (bool    value);
     void signalEventChangedSlaveOffline         (bool    value);
     void signalEventChangedIsolationValve       (bool    value);
@@ -508,6 +523,9 @@ public slots:
     void onValveChangedIsRS232Test            (             ){ setIsRS232Test(pValveSP->getIsRS232Test())                                              ;}
     void onValveChangedFieldBusError          (             ){ setFieldBusError(pValveSP->getFieldBusError())                                          ;}
     void onValveChangedFirmwareError          (             ){ setFirmwareError(pValveSP->getFirmwareError())                                          ;}
+    void onValveChangedUnknowInterface        (             ){ setUnknowInterface(pValveSP->getUnknowInterface())                                      ;}
+    void onValveChangedNoSensorSignal         (             ){ setNoSensorSignal (pValveSP->getNoSensorSignal ())                                      ;}
+    void onValveChangedNoAnalogSignal         (             ){ setNoAnalogSignal (pValveSP->getNoAnalogSignal ())                                      ;}
     void onValveChangedNetworkFailure         (             ){ setNetworkFailure(pValveSP->getNetworkFailure())                                        ;}
     void onValveChangedSlaveOffline           (             ){ setSlaveOffline(pValveSP->getSlaveOffline())                                            ;}
     void onValveChangedIsolationValve         (             ){ setIsolationValve(pValveSP->getIsolationValve())                                        ;}

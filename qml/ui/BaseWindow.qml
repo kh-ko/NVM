@@ -251,6 +251,9 @@ Window {
             isTestMode        : model.mIsTestMode
             isFieldBusError   : model.mFieldBusError
             isFirmwareError   : model.mFirmwareError
+            unknowInterface   : model.mUnknowInterface
+            noSensorSignal    : model.mNoSensorSignal
+            noAnalogSignal    : model.mNoAnalogSignal
             isNetworkFailure  : model.mNetworkFailure
             isSlaveOffline    : model.mSlaveOffline
             isIsolationValve  : model.mIsolationValve

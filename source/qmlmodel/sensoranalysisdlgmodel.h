@@ -471,6 +471,15 @@ public slots:
             s01MeasuredValue = ((getS01OriValue() + getS01OffsetOriValue())*0.00001);
             s02MeasuredValue = ((getS02OriValue() + getS02OffsetOriValue())*0.00001);
         }
+        else if(getDpUnit() == ValveEnumDef::PRESSURE_UNIT_MVOLT)
+        {
+            s01Value         = getS01OriValue()          * 0.01;
+            s02Value         = getS02OriValue()          * 0.01;
+            resultingValue   = getResultingOriPressure() * 0.01;
+
+            s01MeasuredValue = ((getS01OriValue() + getS01OffsetOriValue())*0.01);
+            s02MeasuredValue = ((getS02OriValue() + getS02OffsetOriValue())*0.01);
+        }
         else
         {
             s01Value       = UNITUTIL_CONVERT(getS01Unit()  , getS01FullScale() * (getS01OriValue() *0.000001), getDpUnit());
@@ -607,6 +616,17 @@ private:
             setS02GraphPrecN(5);
             setStrS01OffsetValue(QString("%1").arg((getS01OffsetOriValue()*0.00001)));
             setStrS02OffsetValue(QString("%1").arg((getS02OffsetOriValue()*0.00001)));
+            return;
+        }
+        else if(getDpUnit() == ValveEnumDef::PRESSURE_UNIT_MVOLT)
+        {
+
+            setStrS01FullScale(QString("%1").arg("10000"));
+            setStrS02FullScale(QString("%1").arg("10000"));
+            setS01GraphPrecN(2);
+            setS02GraphPrecN(2);
+            setStrS01OffsetValue(QString("%1").arg((getS01OffsetOriValue()*0.01)));
+            setStrS02OffsetValue(QString("%1").arg((getS02OffsetOriValue()*0.01)));
             return;
         }
 

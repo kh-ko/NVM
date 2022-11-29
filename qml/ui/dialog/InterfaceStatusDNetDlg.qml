@@ -529,14 +529,14 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("position range")
+                        text : qsTr("position gain")
                     }
 
                     NText{
                         id : _positionRangeValue
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
                         isBold: true
-                        text : dlgModel.mPositionRangeValue
+                        text : dlgModel.mPositionUnitValue !== "counts" ? "-" : dlgModel.mPositionRangeValue
                     }
                 }
 
@@ -569,14 +569,14 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("sensor 1 range")
+                        text : qsTr("sensor 1 gain")
                     }
 
                     NText{
                         id : _sensor01RangeValue
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
                         isBold: true
-                        text : dlgModel.mSensor01RangeValue
+                        text : dlgModel.mPressureUnitValue !== "counts" ? "-" : dlgModel.mSensor01RangeValue
                     }
                 }
 
@@ -589,14 +589,14 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("sensor 2 range")
+                        text : qsTr("sensor 2 gain")
                     }
 
                     NText{
                         id : _sensor02RangeValue
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
                         isBold: true
-                        text : dlgModel.mSensor02RangeValue
+                        text : dlgModel.mPressureUnitValue !== "counts" ? "-" : dlgModel.mSensor02RangeValue
                     }
                 }
             }

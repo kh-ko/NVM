@@ -21,7 +21,8 @@ NWindow{ // khko_todo
                               dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_ATM   ? "[atm]"     :
                               dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_PSI   ? "[psi]"     :
                               dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_PSF   ? "[psf]"     :
-                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_VOLT  ? "[voltage]" : ""
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_VOLT  ? "[voltage]" :
+                              dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_MVOLT ? "[mv]" :""
 
     contentHeight: contentContainer.height; contentWidth: contentContainer.width
 
@@ -460,7 +461,7 @@ NWindow{ // khko_todo
 
                     textColor: "#000000"
 
-                    model: ["pa","bar","mbar","ubar", "Torr", "mTorr", "atm", "psi", "psf","voltage"]
+                    model: ["pa","bar","mbar","ubar", "Torr", "mTorr", "atm", "psi", "psf","voltage", "mv"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetDpUnit(currentIndex)

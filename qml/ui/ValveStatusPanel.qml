@@ -17,6 +17,9 @@ Rectangle {
     property var    isTestMode
     property var    isFieldBusError
     property var    isFirmwareError
+    property var    unknowInterface
+    property var    noSensorSignal
+    property var    noAnalogSignal
     property var    isNetworkFailure
     property var    isSlaveOffline
     property var    isIsolationValve
@@ -41,7 +44,7 @@ Rectangle {
         anchors.top: title.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin;
 
         delegate : Item{
-            width: parent.width; height: modeItem.height + accessItem.height + speedItem.height + ctrlAlgoItem.height + simulationItem.height + pfoItem.height + fieldbusItem.height + firmwareItem.height + networkFailItem.height + slaveOfflineItem.height + isolationValveItem.height + sensorErrItem.height + svcRequestItem.height + learnParamItem.height + compressedAirItem.height + pfoNotReadyItem.height
+            width: parent.width; height: modeItem.height + accessItem.height + speedItem.height + ctrlAlgoItem.height + simulationItem.height + pfoItem.height + fieldbusItem.height + firmwareItem.height + unknowInterfaceItem.height + noSensorSignalItem.height + noAnalogSignalItem.height + networkFailItem.height + slaveOfflineItem.height + isolationValveItem.height + sensorErrItem.height + svcRequestItem.height + learnParamItem.height + compressedAirItem.height + pfoNotReadyItem.height
 
             NKeyValueListItem{
                 id : modeItem
@@ -129,8 +132,35 @@ Rectangle {
             }
 
             NKeyValueListItem{
-                id : networkFailItem
+                id : unknowInterfaceItem
                 anchors.top: firmwareItem.bottom; anchors.topMargin: height != 0 ? GUISetting.line_margin : 0
+                iconSource: panel.loadProgress === 100 && panel.unknowInterface ? "/image/icon-warning.png" : ""
+                keyText: qsTr("warning")
+                valueText: panel.loadProgress !== 100 ? "" :
+                           panel.unknowInterface ? qsTr("unknow interface") : ""
+            }
+
+            NKeyValueListItem{
+                id : noSensorSignalItem
+                anchors.top: unknowInterfaceItem.bottom; anchors.topMargin: height != 0 ? GUISetting.line_margin : 0
+                iconSource: panel.loadProgress === 100 && panel.noSensorSignal ? "/image/icon-warning.png" : ""
+                keyText: qsTr("warning")
+                valueText: panel.loadProgress !== 100 ? "" :
+                           panel.noSensorSignal ? qsTr("no sensor signal") : ""
+            }
+
+            NKeyValueListItem{
+                id : noAnalogSignalItem
+                anchors.top: noSensorSignalItem.bottom; anchors.topMargin: height != 0 ? GUISetting.line_margin : 0
+                iconSource: panel.loadProgress === 100 && panel.noAnalogSignal ? "/image/icon-warning.png" : ""
+                keyText: qsTr("warning")
+                valueText: panel.loadProgress !== 100 ? "" :
+                           panel.noAnalogSignal ? qsTr("no analog signal") : ""
+            }
+
+            NKeyValueListItem{
+                id : networkFailItem
+                anchors.top: noAnalogSignalItem.bottom; anchors.topMargin: height != 0 ? GUISetting.line_margin : 0
                 iconSource: panel.loadProgress === 100 && panel.isNetworkFailure ? "/image/icon-warning.png" : ""
                 keyText: qsTr("warning")
                 valueText: panel.loadProgress !== 100 ? "" :
