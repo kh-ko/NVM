@@ -9,11 +9,27 @@ Rectangle {
     property var status   : ""
     property var errMsg   : ""
     property var errMsg2   : ""
+    property var connectInfo : ""
+    property var valveID     : ""
 
     color: "#FFFFFF"
 
+    Rectangle{
+        id : connectInfoBox
+        height: parent.height * 0.5
+        anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom
+
+        color: "#E4E4E4"
+
+        NText{
+            anchors.fill: parent; anchors.leftMargin: GUISetting.margin;
+            verticalAlignment: Text.AlignVCenter
+            text : connectInfo + "      " + valveID
+        }
+    }
+
     RowLayout{
-        anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin; anchors.top: parent.top; anchors.bottom: parent.bottom
+        anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin; anchors.top: parent.top; anchors.bottom: connectInfoBox.top
         spacing: 10
 
         NText{

@@ -20,6 +20,8 @@ NWindow{
     property var access      : dlgModel.mAccessMode
     property var isRS232Test : dlgModel.mIsRS232Test
     property var isEdit      : false
+    property var connectInfo : ""
+    property var valveID     : ""
     property var isCloseAtComplete : false
 
     function openChangeAccessDlgForReset()
@@ -405,12 +407,14 @@ NWindow{
         NPopupStatusBar{
             id : statusBar
 
-            height: 20 * GUISetting.scale; width: parent.width
+            height: 40 * GUISetting.scale; width: parent.width
             anchors.top: body.bottom; anchors.left: parent.left
 
-            progress : dialog.progress
-            status   : dialog.strStatus
-            errMsg   : dialog.errMsg
+            progress    : dialog.progress
+            status      : dialog.strStatus
+            errMsg      : dialog.errMsg
+            connectInfo : dialog.connectInfo
+            valveID     : dialog.valveID
         }
     }
 

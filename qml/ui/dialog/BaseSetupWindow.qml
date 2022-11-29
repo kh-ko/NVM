@@ -16,6 +16,8 @@ NWindow {
     property var access      : ValveEnumDef.ACCESS_REMOTE
     property var isRS232Test : false
     property var isEdit      : false
+    property var connectInfo : ""
+    property var valveID     : ""
     property var isCloseAtComplete : false
 
     property alias titleBox : _titleBox
@@ -136,13 +138,15 @@ NWindow {
         NPopupStatusBar{
             id : statusBar
 
-            height: 20 * GUISetting.scale; width: parent.width
+            height: 40 * GUISetting.scale; width: parent.width
             anchors.top: _contentBody.bottom; anchors.left: parent.left
 
-            progress : dialog.progress
-            status   : dialog.strStatus
-            errMsg   : dialog.errMsg
-            errMsg2  : dialog.errMsg2
+            progress    : dialog.progress
+            status      : dialog.strStatus
+            errMsg      : dialog.errMsg
+            errMsg2     : dialog.errMsg2
+            connectInfo : dialog.connectInfo
+            valveID     : dialog.valveID
         }
     }
 

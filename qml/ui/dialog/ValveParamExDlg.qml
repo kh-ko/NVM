@@ -20,6 +20,8 @@ NWindow{ // khko_todo
     property var access      : dlgModel.mAccessMode
     property var isRS232Test : dlgModel.mIsRS232Test
     property var isEdit      : dlgModel.mIsEdit
+    property var connectInfo : ""
+    property var valveID     : ""
     property var isCloseAtComplete : false
 
 
@@ -474,13 +476,15 @@ NWindow{ // khko_todo
         NPopupStatusBar{
             id : statusBar
 
-            height: 20 * GUISetting.scale; width: parent.width
+            height: 40 * GUISetting.scale; width: parent.width
             anchors.top: body.bottom; anchors.left: parent.left
 
-            progress : dialog.progress
-            status   : dialog.strStatus
-            errMsg   : dialog.errMsg
-            errMsg2  : dialog.errMsg2
+            progress    : dialog.progress
+            status      : dialog.strStatus
+            errMsg      : dialog.errMsg
+            errMsg2     : dialog.errMsg2
+            connectInfo : dialog.connectInfo
+            valveID     : dialog.valveID
         }
     }
 

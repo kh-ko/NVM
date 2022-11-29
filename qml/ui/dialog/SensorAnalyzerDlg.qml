@@ -12,6 +12,8 @@ import GUISetting 1.0
 NWindow{ // khko_todo
     id : dialog
 
+    property var connectInfo : ""
+    property var valveID     : ""
     property string strUnit : dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_PA    ? "[pa]"      :
                               dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_BAR   ? "[bar]"     :
                               dlgModel.mDpUnit === ValveEnumDef.PRESSURE_UNIT_MBAR  ? "[mbar]"    :
@@ -583,12 +585,14 @@ NWindow{ // khko_todo
         NPopupStatusBar{
             id : statusBar
 
-            height: 20 * GUISetting.scale; width: parent.width
+            height: 40 * GUISetting.scale; width: parent.width
             anchors.bottom: parent.bottom; anchors.left: parent.left
 
-            progress : dlgModel.mProgress
-            status   : dlgModel.mStrStatus
-            errMsg   : dlgModel.mErrMsg
+            progress   : dlgModel.mProgress
+            status     : dlgModel.mStrStatus
+            errMsg     : dlgModel.mErrMsg
+            connectInfo: dialog.connectInfo
+            valveID    : dialog.valveID
         }
     }
 }

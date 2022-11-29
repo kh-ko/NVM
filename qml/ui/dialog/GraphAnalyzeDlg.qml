@@ -12,6 +12,9 @@ import GUISetting 1.0
 NWindow{ // khko_todo
     id : dialog
 
+    property var connectInfo : ""
+    property var valveID     : ""
+
 
     function loadFromChart(srcChart)
     {
@@ -298,12 +301,14 @@ NWindow{ // khko_todo
         NPopupStatusBar{
             id : statusBar
 
-            height: 20 * GUISetting.scale; width: parent.width
+            height: 40 * GUISetting.scale; width: parent.width
             anchors.bottom: parent.bottom; anchors.left: parent.left
 
-            progress : 100
-            status   : ""
-            errMsg   : ""
+            progress    : 100
+            status      : ""
+            errMsg      : ""
+            connectInfo : dialog.connectInfo
+            valveID     : dialog.valveID
         }
     }
 

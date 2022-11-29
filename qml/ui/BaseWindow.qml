@@ -401,22 +401,34 @@ Window {
 
     Component{
         id : valveIdentificationExDlg
-        ValveIdentificationExDlg{}
+        ValveIdentificationExDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
 
     Component{
         id : valveSetupDlg
-        ValveSetupDlg{}
+        ValveSetupDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : valveParamExDlg
-        ValveParamExDlg{}
+        ValveParamExDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
 
     Component{
         id : valveRecoveryDlg
         ValveRecoveryDlg
         {
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+
             onClosing: {
                 window.valveRecoveryDlgObj = null;
             }
@@ -424,11 +436,17 @@ Window {
     }
     Component{
         id : sensorSetupDlg
-        SensorSetupDlg{}
+        SensorSetupDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : sensorSetupExDlg
         SensorSetupExDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+
             onSignalEventOccurErr: {
                 close()
                 var popup = sensorSetupDlg.createObject(window); popup.show();
@@ -438,17 +456,24 @@ Window {
     Component{
         id : sensorAnalysisDlg
         SensorAnalyzerDlg{
-
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
         }
     }
 
     Component{
         id : pressureCtrlSetupDlg
-        PressureCtrlSetupDlg{}
+        PressureCtrlSetupDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : pressureCtrlFloatSetupDlg
         PressureCtrlFlotSetupDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+
             onSignalEventOccurErr: {
                 close()
                 var popup = pressureCtrlSetupDlg.createObject(window); popup.show();
@@ -457,70 +482,119 @@ Window {
     }
     Component{
         id : pressureCtrlLearnParamDlg
-        PressureCtrlLearnParamDlg{}
+        PressureCtrlLearnParamDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : ncpaSettingsDlg
-        NCPASettingsDlg{}
+        NCPASettingsDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : interfaceSetupLogicDlg
-        InterfaceSetupLogicDlg{}
+        InterfaceSetupLogicDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : interfaceSetupEtherCATDlg
-        InterfaceSetupEtherCATDlg{}
+        InterfaceSetupEtherCATDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : interfaceSetupDevNetDlg
-        InterfaceSetupDevNetDlg{}
+        InterfaceSetupDevNetDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : interfaceSetupRS232Dlg
-        InterfaceSetupRS232Dlg{}
+        InterfaceSetupRS232Dlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : interfaceStatusLogicDlg
-        InterfaceStatusLogicDlg{}
+        InterfaceStatusLogicDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : interfaceStatusEtherCATDlg
-        InterfaceStatusEtherCATDlg{}
+        InterfaceStatusEtherCATDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : interfaceStatusDNetDlg
-        InterfaceStatusDNetDlg{}
+        InterfaceStatusDNetDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : interfaceStatusRS232Dlg
-        InterfaceStatusRS232Dlg{}
+        InterfaceStatusRS232Dlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
 
     Component{
         id : valveCycleCounterDlg
-        ValveCycleCounterDlg{}
+        ValveCycleCounterDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id : valvePowerFailStatusDlg
-        ValvePowerFailStatusDlg{}
+        ValvePowerFailStatusDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
 
     Component{
         id : valveCalibrationDlg
-        ValveCailbrationDlg{}
+        ValveCailbrationDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
     Component{
         id :helpAboutDlg
-        HelpAboutDlg{ versionValue: model.mNCPAVersion}
+        HelpAboutDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+            versionValue: model.mNCPAVersion
+        }
     }
     Component{
         id : advancedToolTestDlg
-        AdvancedToolTestDlg{}
+        AdvancedToolTestDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
 
     Component{
         id : controlZeroDlg
-        ControlZeroDlg{}
+        ControlZeroDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
     }
 //    Component{
 //        id :controlLearnDlg
@@ -529,10 +603,15 @@ Window {
 
     ControlLearnDlg{
         id :controlLearnDlg
+        connectInfo: model.mConnectionInfo
+        valveID    : model.mValveID
     }
     Component{
         id :fatalErrorDlg
         FatalErrorDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+
             onClosing: {
                 window.fatalErrorDlgObj = null;
             }
@@ -549,6 +628,9 @@ Window {
 
     SequencerDlg{
         id : seqTestDlg
+
+        connectInfo: model.mConnectionInfo
+        valveID    : model.mValveID
     }
 
 
@@ -556,6 +638,9 @@ Window {
         id : setPointPositionDlg
         SetPointPositionDlg
         {
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+
             convertedFullScale    : model.mConvertedFullScale
             sensorfullScale       : model.mFullScale
             sensorFullScaleUnit   : model.mFullScaleUnit
@@ -571,7 +656,6 @@ Window {
 
         FirmwareUpdateDlg
         {
-
         }
     }
 
@@ -579,7 +663,8 @@ Window {
         id : graphAnalyzeDlg
         GraphAnalyzeDlg
         {
-
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
         }
     }
 }
