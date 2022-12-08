@@ -71,6 +71,7 @@ public:
     QString  mFixed2RampTime      ;
     int      mFixed2RampMode      ;
     int      mFixed2CtrlDir       ;
+
     bool     mErrSelControl       = false;
     bool     mErrAdapGainFactor   = false;
     bool     mErrAdapDeltaFactor  = false;
@@ -87,7 +88,9 @@ public:
     bool     mErrFixed2RampTime   = false;
     bool     mErrFixed2RampMode   = false;
     bool     mErrFixed2CtrlDir    = false;
-    bool     mIsEdit              = false;
+
+    bool     mIsEdit               = false;
+
     QString  mStrStatus           = "Loading";
     QString  mErrMsg              = "";
     QString  mErrMsg2             = "";
@@ -292,6 +295,8 @@ public slots:
 
     void onValveReadedSelControlMode (ValveResponseSelControlModeDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_SEL_CONTROL || dto.mReqDto.mpRef != this)
             return;
 
@@ -323,6 +328,8 @@ public slots:
 
     void onValveReadedAdapGainFactor(ValveResponseGainFactorDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_ADAP_GAIN_FACTOR || dto.mReqDto.mpRef != this)
             return;
 
@@ -350,6 +357,8 @@ public slots:
 
     void onValveReadedAdapDeltaFactor(ValveResponseDeltaFactorDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_ADAP_DELTA_FACTOR || dto.mReqDto.mpRef != this)
             return;
 
@@ -376,6 +385,8 @@ public slots:
 
     void onValveReadedAdapSensorDelay(ValveResponseSensorDelayDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_ADAP_SENSOR_DELAY || dto.mReqDto.mpRef != this)
             return;
 
@@ -402,6 +413,8 @@ public slots:
 
     void onValveReadedAdapRampTime(ValveResponseRampTimeDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_ADAP_RAMP_TIME || dto.mReqDto.mpRef != this)
             return;
 
@@ -428,6 +441,8 @@ public slots:
 
     void onValveReadedAdapRampMode(ValveResponseRampModeDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_ADAP_RAMP_MODE || dto.mReqDto.mpRef != this)
             return;
 
@@ -453,6 +468,8 @@ public slots:
 
     void onValveReadedFixed1PGain(ValveResponsePGainDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED1_P_GAIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -479,6 +496,8 @@ public slots:
 
     void onValveReadedFixed1IGain(ValveResponseIGainDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED1_I_GAIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -505,6 +524,8 @@ public slots:
 
     void onValveReadedFixed1RampTime(ValveResponseRampTimeDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED1_RAMP_TIME || dto.mReqDto.mpRef != this)
             return;
 
@@ -531,6 +552,8 @@ public slots:
 
     void onValveReadedFixed1RampMode(ValveResponseRampModeDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED1_RAMP_MODE|| dto.mReqDto.mpRef != this)
             return;
 
@@ -556,6 +579,8 @@ public slots:
 
     void onValveReadedFixed1CtrlDir(ValveResponseCtrlDirDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED1_CTRL_DIR|| dto.mReqDto.mpRef != this)
             return;
 
@@ -581,6 +606,8 @@ public slots:
 
     void onValveReadedFixed2PGain(ValveResponsePGainDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED2_P_GAIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -607,6 +634,8 @@ public slots:
 
     void onValveReadedFixed2IGain(ValveResponseIGainDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED2_I_GAIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -633,6 +662,8 @@ public slots:
 
     void onValveReadedFixed2RampTime(ValveResponseRampTimeDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED2_RAMP_TIME || dto.mReqDto.mpRef != this)
             return;
 
@@ -659,6 +690,8 @@ public slots:
 
     void onValveReadedFixed2RampMode(ValveResponseRampModeDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED2_RAMP_MODE|| dto.mReqDto.mpRef != this)
             return;
 
@@ -684,6 +717,8 @@ public slots:
 
     void onValveReadedFixed2CtrlDir(ValveResponseCtrlDirDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_FIXED2_CTRL_DIR|| dto.mReqDto.mpRef != this)
             return;
 
@@ -730,6 +765,23 @@ public slots:
         setIsEdit(value);
     }
 
+    Q_INVOKABLE void onCommandSetEditSelControl     (){ mEditSelControl      = true; }
+    Q_INVOKABLE void onCommandSetEditAdapGainFactor (){ mEditAdapGainFactor  = true; }
+    Q_INVOKABLE void onCommandSetEditAdapDeltaFactor(){ mEditAdapDeltaFactor = true; }
+    Q_INVOKABLE void onCommandSetEditAdapSensorDelay(){ mEditAdapSensorDelay = true; }
+    Q_INVOKABLE void onCommandSetEditAdapRampTime   (){ mEditAdapRampTime    = true; }
+    Q_INVOKABLE void onCommandSetEditAdapRampMode   (){ mEditAdapRampMode    = true; }
+    Q_INVOKABLE void onCommandSetEditFixed1PGain    (){ mEditFixed1PGain     = true; }
+    Q_INVOKABLE void onCommandSetEditFixed1IGain    (){ mEditFixed1IGain     = true; }
+    Q_INVOKABLE void onCommandSetEditFixed1RampTime (){ mEditFixed1RampTime  = true; }
+    Q_INVOKABLE void onCommandSetEditFixed1RampMode (){ mEditFixed1RampMode  = true; }
+    Q_INVOKABLE void onCommandSetEditFixed1CtrlDir  (){ mEditFixed1CtrlDir   = true; }
+    Q_INVOKABLE void onCommandSetEditFixed2PGain    (){ mEditFixed2PGain     = true; }
+    Q_INVOKABLE void onCommandSetEditFixed2IGain    (){ mEditFixed2IGain     = true; }
+    Q_INVOKABLE void onCommandSetEditFixed2RampTime (){ mEditFixed2RampTime  = true; }
+    Q_INVOKABLE void onCommandSetEditFixed2RampMode (){ mEditFixed2RampMode  = true; }
+    Q_INVOKABLE void onCommandSetEditFixed2CtrlDir  (){ mEditFixed2CtrlDir   = true; }
+
     Q_INVOKABLE void onCommandApply(int     selControl      ,
                                     QString adapGainFactor  ,
                                     QString adapDeltaFactor ,
@@ -773,6 +825,8 @@ public slots:
 
     void onValveWrittenSelContrlMode(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_SEL_CONTROL || dto.mReqDto.mpRef != this)
             return;
 
@@ -792,6 +846,8 @@ public slots:
 
     void onValveWrittenAdapGainFactor(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_ADAP_GAIN_FACTOR || dto.mReqDto.mpRef != this)
             return;
 
@@ -811,6 +867,8 @@ public slots:
 
     void onValveWrittenAdapDeltaFactor(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_ADAP_DELTA_FACTOR || dto.mReqDto.mpRef != this)
             return;
 
@@ -830,6 +888,8 @@ public slots:
 
     void onValveWrittenAdapSensorDelay(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_ADAP_SENSOR_DELAY || dto.mReqDto.mpRef != this)
             return;
 
@@ -849,6 +909,8 @@ public slots:
 
     void onValveWrittenAdapRampTime(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_ADAP_RAMP_TIME|| dto.mReqDto.mpRef != this)
             return;
 
@@ -868,6 +930,8 @@ public slots:
 
     void onValveWrittenAdapRampMode(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_ADAP_RAMP_MODE || dto.mReqDto.mpRef != this)
             return;
 
@@ -887,6 +951,8 @@ public slots:
 
     void onValveWrittenFixed1PGain(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED1_P_GAIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -906,6 +972,8 @@ public slots:
 
     void onValveWrittenFixed1IGain(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED1_I_GAIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -925,6 +993,8 @@ public slots:
 
     void onValveWrittenFixed1RampTime(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED1_RAMP_TIME || dto.mReqDto.mpRef != this)
             return;
 
@@ -944,6 +1014,8 @@ public slots:
 
     void onValveWrittenFixed1RampMode(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED1_RAMP_MODE || dto.mReqDto.mpRef != this)
             return;
 
@@ -963,6 +1035,8 @@ public slots:
 
     void onValveWrittenFixed1CtrlDir(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED1_CTRL_DIR || dto.mReqDto.mpRef != this)
             return;
 
@@ -982,6 +1056,8 @@ public slots:
 
     void onValveWrittenFixed2PGain(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED2_P_GAIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -1001,6 +1077,8 @@ public slots:
 
     void onValveWrittenFixed2IGain(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED2_I_GAIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -1020,6 +1098,8 @@ public slots:
 
     void onValveWrittenFixed2RampTime(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED2_RAMP_TIME || dto.mReqDto.mpRef != this)
             return;
 
@@ -1039,6 +1119,8 @@ public slots:
 
     void onValveWrittenFixed2RampMode(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED2_RAMP_MODE || dto.mReqDto.mpRef != this)
             return;
 
@@ -1058,6 +1140,8 @@ public slots:
 
     void onValveWrittenFixed2CtrlDir(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_WRITE_FIXED2_CTRL_DIR || dto.mReqDto.mpRef != this)
             return;
 
@@ -1133,13 +1217,30 @@ private:
     int     mWriteFixed2RampMode  ;
     int     mWriteFixed2CtrlDir   ;
 
+    bool    mEditSelControl      = false;
+    bool    mEditAdapGainFactor  = false;
+    bool    mEditAdapDeltaFactor = false;
+    bool    mEditAdapSensorDelay = false;
+    bool    mEditAdapRampTime    = false;
+    bool    mEditAdapRampMode    = false;
+    bool    mEditFixed1PGain     = false;
+    bool    mEditFixed1IGain     = false;
+    bool    mEditFixed1RampTime  = false;
+    bool    mEditFixed1RampMode  = false;
+    bool    mEditFixed1CtrlDir   = false;
+    bool    mEditFixed2PGain     = false;
+    bool    mEditFixed2IGain     = false;
+    bool    mEditFixed2RampTime  = false;
+    bool    mEditFixed2RampMode  = false;
+    bool    mEditFixed2CtrlDir   = false;
+
     void startTimer()
     {
         mTimer.stop();
         mTimer.start(70);
     }
 
-    void setState(eState state)
+    void setState(eState state, bool immediately = false)
     {
         if(!mIsWritten && state == eState::STATE_READY)
         {
@@ -1169,11 +1270,31 @@ private:
         if(state == eState::STATE_READY)
         {
             setProgress(100);
+            mEditSelControl      = false;
+            mEditAdapGainFactor  = false;
+            mEditAdapDeltaFactor = false;
+            mEditAdapSensorDelay = false;
+            mEditAdapRampTime    = false;
+            mEditAdapRampMode    = false;
+            mEditFixed1PGain     = false;
+            mEditFixed1IGain     = false;
+            mEditFixed1RampTime  = false;
+            mEditFixed1RampMode  = false;
+            mEditFixed1CtrlDir   = false;
+            mEditFixed2PGain     = false;
+            mEditFixed2IGain     = false;
+            mEditFixed2RampTime  = false;
+            mEditFixed2RampMode  = false;
+            mEditFixed2CtrlDir   = false;
         }
         else
         {
             setProgress(qFloor((state * 100) / eState::STATE_READY));
-            startTimer();
+
+            if(immediately)
+                onTimeout();
+            else
+                startTimer();
         }
     }
 
@@ -1182,39 +1303,64 @@ public slots:
     {
         switch ((int)mState)
         {
-        case (int)STATE_WRITE_SEL_CONTROL       : pValveSP->setSelectControlMode(mWriteSelControl, this)               ;break;
-        case (int)STATE_WRITE_ADAP_GAIN_FACTOR  : pValveSP->setAdaptiveControlGainFactor(mWriteAdapGainFactor, this)   ;break;
-        case (int)STATE_WRITE_ADAP_DELTA_FACTOR : pValveSP->setAdaptiveControlDeltaFactor(mWriteAdapDeltaFactor, this) ;break;
-        case (int)STATE_WRITE_ADAP_SENSOR_DELAY : pValveSP->setAdaptiveControlSensorDelay(mWriteAdapSensorDelay, this) ;break;
-        case (int)STATE_WRITE_ADAP_RAMP_TIME    : pValveSP->setAdaptiveControlRampTime(mWriteAdapRampTime, this)       ;break;
-        case (int)STATE_WRITE_ADAP_RAMP_MODE    : pValveSP->setAdaptiveControlRampMode(mWriteAdapRampMode, this)       ;break;
-        case (int)STATE_WRITE_FIXED1_P_GAIN     : pValveSP->setFixed1ControlPGain(mWriteFixed1PGain, this)             ;break;
-        case (int)STATE_WRITE_FIXED1_I_GAIN     : pValveSP->setFixed1ControlIGain(mWriteFixed1IGain, this)             ;break;
-        case (int)STATE_WRITE_FIXED1_RAMP_TIME  : pValveSP->setFixed1ControlRampTime(mWriteFixed1RampTime, this)       ;break;
-        case (int)STATE_WRITE_FIXED1_RAMP_MODE  : pValveSP->setFixed1ControlRampMode(mWriteFixed1RampMode, this)       ;break;
-        case (int)STATE_WRITE_FIXED1_CTRL_DIR   : pValveSP->setFixed1ControlDirection(mWriteFixed1CtrlDir, this)       ;break;
-        case (int)STATE_WRITE_FIXED2_P_GAIN     : pValveSP->setFixed2ControlPGain(mWriteFixed2PGain, this)             ;break;
-        case (int)STATE_WRITE_FIXED2_I_GAIN     : pValveSP->setFixed2ControlIGain(mWriteFixed2IGain, this)             ;break;
-        case (int)STATE_WRITE_FIXED2_RAMP_TIME  : pValveSP->setFixed2ControlRampTime(mWriteFixed2RampTime, this)       ;break;
-        case (int)STATE_WRITE_FIXED2_RAMP_MODE  : pValveSP->setFixed2ControlRampMode(mWriteFixed2RampMode, this)       ;break;
-        case (int)STATE_WRITE_FIXED2_CTRL_DIR   : pValveSP->setFixed2ControlDirection(mWriteFixed2CtrlDir, this)       ;break;
 
-        case (int)STATE_READ_SEL_CONTROL        : pValveSP->readSelectControlMode(this)                                ;break;
-        case (int)STATE_READ_ADAP_GAIN_FACTOR   : pValveSP->readAdaptiveControlGainFactor(this)                        ;break;
-        case (int)STATE_READ_ADAP_DELTA_FACTOR  : pValveSP->readAdaptiveControlDeltaFactor(this)                       ;break;
-        case (int)STATE_READ_ADAP_SENSOR_DELAY  : pValveSP->readAdaptiveControlSensorDelay(this)                       ;break;
-        case (int)STATE_READ_ADAP_RAMP_TIME     : pValveSP->readAdaptiveControlRampTime(this)                          ;break;
-        case (int)STATE_READ_ADAP_RAMP_MODE     : pValveSP->readAdaptiveControlRampMode(this)                          ;break;
-        case (int)STATE_READ_FIXED1_P_GAIN      : pValveSP->readFixed1ControlPGain(this)                               ;break;
-        case (int)STATE_READ_FIXED1_I_GAIN      : pValveSP->readFixed1ControlIGain(this)                               ;break;
-        case (int)STATE_READ_FIXED1_RAMP_TIME   : pValveSP->readFixed1ControlRampTime(this)                            ;break;
-        case (int)STATE_READ_FIXED1_RAMP_MODE   : pValveSP->readFixed1ControlRampMode(this)                            ;break;
-        case (int)STATE_READ_FIXED1_CTRL_DIR    : pValveSP->readFixed1ControlDirection(this)                           ;break;
-        case (int)STATE_READ_FIXED2_P_GAIN      : pValveSP->readFixed2ControlPGain(this)                               ;break;
-        case (int)STATE_READ_FIXED2_I_GAIN      : pValveSP->readFixed2ControlIGain(this)                               ;break;
-        case (int)STATE_READ_FIXED2_RAMP_TIME   : pValveSP->readFixed2ControlRampTime(this)                            ;break;
-        case (int)STATE_READ_FIXED2_RAMP_MODE   : pValveSP->readFixed2ControlRampMode(this)                            ;break;
-        case (int)STATE_READ_FIXED2_CTRL_DIR    : pValveSP->readFixed2ControlDirection(this)                           ;break;
+        case (int)STATE_WRITE_SEL_CONTROL       : if(!mEditSelControl      && !getErrSelControl     ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setSelectControlMode(mWriteSelControl, this)               ;break;
+        case (int)STATE_WRITE_ADAP_GAIN_FACTOR  : if(!mEditAdapGainFactor  && !getErrAdapGainFactor ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setAdaptiveControlGainFactor(mWriteAdapGainFactor, this)   ;break;
+        case (int)STATE_WRITE_ADAP_DELTA_FACTOR : if(!mEditAdapDeltaFactor && !getErrAdapDeltaFactor()              ){setState((eState)(mState + 1), true); return;} pValveSP->setAdaptiveControlDeltaFactor(mWriteAdapDeltaFactor, this) ;break;
+        case (int)STATE_WRITE_ADAP_SENSOR_DELAY : if(!mEditAdapSensorDelay && !getErrAdapSensorDelay()              ){setState((eState)(mState + 1), true); return;} pValveSP->setAdaptiveControlSensorDelay(mWriteAdapSensorDelay, this) ;break;
+        case (int)STATE_WRITE_ADAP_RAMP_TIME    : if(!mEditAdapRampTime    && !getErrAdapRampTime   ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setAdaptiveControlRampTime(mWriteAdapRampTime, this)       ;break;
+        case (int)STATE_WRITE_ADAP_RAMP_MODE    : if(!mEditAdapRampMode    && !getErrAdapRampMode   ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setAdaptiveControlRampMode(mWriteAdapRampMode, this)       ;break;
+        case (int)STATE_WRITE_FIXED1_P_GAIN     : if(!mEditFixed1PGain     && !getErrFixed1PGain    ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed1ControlPGain(mWriteFixed1PGain, this)             ;break;
+        case (int)STATE_WRITE_FIXED1_I_GAIN     : if(!mEditFixed1IGain     && !getErrFixed1IGain    ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed1ControlIGain(mWriteFixed1IGain, this)             ;break;
+        case (int)STATE_WRITE_FIXED1_RAMP_TIME  : if(!mEditFixed1RampTime  && !getErrFixed1RampTime ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed1ControlRampTime(mWriteFixed1RampTime, this)       ;break;
+        case (int)STATE_WRITE_FIXED1_RAMP_MODE  : if(!mEditFixed1RampMode  && !getErrFixed1RampMode ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed1ControlRampMode(mWriteFixed1RampMode, this)       ;break;
+        case (int)STATE_WRITE_FIXED1_CTRL_DIR   : if(!mEditFixed1CtrlDir   && !getErrFixed1CtrlDir  ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed1ControlDirection(mWriteFixed1CtrlDir, this)       ;break;
+        case (int)STATE_WRITE_FIXED2_P_GAIN     : if(!mEditFixed2PGain     && !getErrFixed2PGain    ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed2ControlPGain(mWriteFixed2PGain, this)             ;break;
+        case (int)STATE_WRITE_FIXED2_I_GAIN     : if(!mEditFixed2IGain     && !getErrFixed2IGain    ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed2ControlIGain(mWriteFixed2IGain, this)             ;break;
+        case (int)STATE_WRITE_FIXED2_RAMP_TIME  : if(!mEditFixed2RampTime  && !getErrFixed2RampTime ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed2ControlRampTime(mWriteFixed2RampTime, this)       ;break;
+        case (int)STATE_WRITE_FIXED2_RAMP_MODE  : if(!mEditFixed2RampMode  && !getErrFixed2RampMode ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed2ControlRampMode(mWriteFixed2RampMode, this)       ;break;
+        case (int)STATE_WRITE_FIXED2_CTRL_DIR   : if(!mEditFixed2CtrlDir   && !getErrFixed2CtrlDir  ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setFixed2ControlDirection(mWriteFixed2CtrlDir, this)       ;break;
+
+        case (int)STATE_READ_SEL_CONTROL        : if(!mEditSelControl      && !getErrSelControl     () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readSelectControlMode(this)                                ;break;
+        case (int)STATE_READ_ADAP_GAIN_FACTOR   : if(!mEditAdapGainFactor  && !getErrAdapGainFactor () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readAdaptiveControlGainFactor(this)                        ;break;
+        case (int)STATE_READ_ADAP_DELTA_FACTOR  : if(!mEditAdapDeltaFactor && !getErrAdapDeltaFactor() && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readAdaptiveControlDeltaFactor(this)                       ;break;
+        case (int)STATE_READ_ADAP_SENSOR_DELAY  : if(!mEditAdapSensorDelay && !getErrAdapSensorDelay() && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readAdaptiveControlSensorDelay(this)                       ;break;
+        case (int)STATE_READ_ADAP_RAMP_TIME     : if(!mEditAdapRampTime    && !getErrAdapRampTime   () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readAdaptiveControlRampTime(this)                          ;break;
+        case (int)STATE_READ_ADAP_RAMP_MODE     : if(!mEditAdapRampMode    && !getErrAdapRampMode   () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readAdaptiveControlRampMode(this)                          ;break;
+        case (int)STATE_READ_FIXED1_P_GAIN      : if(!mEditFixed1PGain     && !getErrFixed1PGain    () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readFixed1ControlPGain(this)                               ;break;
+        case (int)STATE_READ_FIXED1_I_GAIN      : if(!mEditFixed1IGain     && !getErrFixed1IGain    () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readFixed1ControlIGain(this)                               ;break;
+        case (int)STATE_READ_FIXED1_RAMP_TIME   : if(!mEditFixed1RampTime  && !getErrFixed1RampTime () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readFixed1ControlRampTime(this)                            ;break;
+        case (int)STATE_READ_FIXED1_RAMP_MODE   : if(!mEditFixed1RampMode  && !getErrFixed1RampMode () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readFixed1ControlRampMode(this)                            ;break;
+        case (int)STATE_READ_FIXED1_CTRL_DIR    : if(!mEditFixed1CtrlDir   && !getErrFixed1CtrlDir  () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readFixed1ControlDirection(this)                           ;break;
+        case (int)STATE_READ_FIXED2_P_GAIN      : if(!mEditFixed2PGain     && !getErrFixed2PGain    () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readFixed2ControlPGain(this)                               ;break;
+        case (int)STATE_READ_FIXED2_I_GAIN      : if(!mEditFixed2IGain     && !getErrFixed2IGain    () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readFixed2ControlIGain(this)                               ;break;
+        case (int)STATE_READ_FIXED2_RAMP_TIME   : if(!mEditFixed2RampTime  && !getErrFixed2RampTime () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readFixed2ControlRampTime(this)                            ;break;
+        case (int)STATE_READ_FIXED2_RAMP_MODE   : if(!mEditFixed2RampMode  && !getErrFixed2RampMode () && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readFixed2ControlRampMode(this)                            ;break;
+        case (int)STATE_READ_FIXED2_CTRL_DIR    :
+            if(!mEditFixed2CtrlDir && !getErrFixed2CtrlDir  () && mIsWritten)
+            {
+                onCommandSetEdit(getErrSelControl      () ||
+                                 getErrAdapGainFactor  () ||
+                                 getErrAdapDeltaFactor () ||
+                                 getErrAdapSensorDelay () ||
+                                 getErrAdapRampTime    () ||
+                                 getErrAdapRampMode    () ||
+                                 getErrFixed1PGain     () ||
+                                 getErrFixed1IGain     () ||
+                                 getErrFixed1RampTime  () ||
+                                 getErrFixed1RampMode  () ||
+                                 getErrFixed1CtrlDir   () ||
+                                 getErrFixed2PGain     () ||
+                                 getErrFixed2IGain     () ||
+                                 getErrFixed2RampTime  () ||
+                                 getErrFixed2RampMode  () ||
+                                 getErrFixed2CtrlDir   () );
+
+                setState((eState)(mState + 1), true);
+                return;
+            }
+            pValveSP->readFixed2ControlDirection(this);
+            break;
         }
     }
 };

@@ -279,6 +279,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01SourceIdx()
                     }
                 }
 
@@ -301,6 +302,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditSelection()
                     }
                 }
 
@@ -334,6 +336,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01UnitIdx()
                     }
                 }
 
@@ -360,6 +363,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01FullScale()
                     }
 
                     onChangedValue: {
@@ -399,6 +403,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01DigiValue()
                     }
 
                     onChangedValue: {
@@ -439,9 +444,11 @@ BaseSetupWindow{
                         if(currentIndex == 0)
                         {
                             _s01ZeroAdjOffsetValue.textField.text = "0.00"
+                            dlgModel.onCommandSetEditS01ZeroAdjOffsetValue()
                         }
 
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01ZeroAdjEnable()
                     }
                 }
 
@@ -468,6 +475,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01ZeroAdjOffsetValue()
                     }
                 }
 
@@ -494,6 +502,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01ZeroAdjOffsetLimMin()
                     }
                 }
 
@@ -520,6 +529,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01ZeroAdjOffsetLimMax()
                     }
                 }
 
@@ -555,6 +565,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01ScaleOffset()
                     }
                 }
 
@@ -581,6 +592,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01Scale()
                     }
                 }
 
@@ -605,6 +617,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01ScaleZeroPoint()
                     }
                 }
 
@@ -640,6 +653,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01FilterSec()
                     }
                 }
 
@@ -673,6 +687,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01LogSensorLinearize()
                     }
                 }
 
@@ -699,6 +714,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01LogSensorVoltPerDecade()
                     }
                 }
 
@@ -725,6 +741,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS01LogSensorVoltAtFullScale()
                     }
                 }
 
@@ -789,6 +806,7 @@ BaseSetupWindow{
                             currentIndex = 0
 
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02SourceIdx()
                     }
                 }
 
@@ -811,6 +829,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditSelection()
                     }
                 }
 
@@ -844,6 +863,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02UnitIdx()
                     }
                 }
 
@@ -870,6 +890,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02FullScale()
                     }
 
                     onChangedValue: {
@@ -909,6 +930,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02DigiValue()
                     }
 
                     onChangedValue: {
@@ -949,9 +971,11 @@ BaseSetupWindow{
                         if(currentIndex == 0)
                         {
                             _s02ZeroAdjOffsetValue.textField.text = "0.00"
+                            dlgModel.onCommandSetEditS02ZeroAdjOffsetValue()
                         }
 
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02ZeroAdjEnable()
                     }
                 }
 
@@ -978,6 +1002,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02ZeroAdjOffsetValue()
                     }
                 }
 
@@ -1004,6 +1029,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02ZeroAdjOffsetLimMin()
                     }
                 }
 
@@ -1030,6 +1056,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02ZeroAdjOffsetLimMax()
                     }
                 }
 
@@ -1065,6 +1092,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02ScaleOffset()
                     }
                 }
 
@@ -1091,6 +1119,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02Scale()
                     }
                 }
 
@@ -1115,6 +1144,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02ScaleZeroPoint()
                     }
                 }
 
@@ -1150,6 +1180,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02FilterSec()
                     }
                 }
 
@@ -1183,6 +1214,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02LogSensorLinearize()
                     }
                 }
 
@@ -1209,6 +1241,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02LogSensorVoltPerDecade()
                     }
                 }
 
@@ -1235,6 +1268,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditS02LogSensorVoltAtFullScale()
                     }
                 }
 
@@ -1276,6 +1310,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditCrossoverModIdx()
                     }
                 }
 
@@ -1299,6 +1334,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditCrossoverDela()
                     }
                 }
 
@@ -1321,6 +1357,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditCrossoverLow()
                     }
                 }
 
@@ -1344,6 +1381,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditCrossoverHigh()
                     }
                 }
 

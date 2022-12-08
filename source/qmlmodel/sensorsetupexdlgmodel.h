@@ -548,10 +548,44 @@ public slots:
 
     }
 
-    Q_INVOKABLE void onCommandSetEdit(bool value)
-    {
-        setIsEdit(value);
-    }
+    Q_INVOKABLE void onCommandSetEdit                           (bool value){setIsEdit(value)                       ;}
+    Q_INVOKABLE void onCommandSetEditSelection                  (          ){mEditSelection                   = true;}
+    Q_INVOKABLE void onCommandSetEditS01AnalActive              (          ){mEditS01AnalActive               = true;}
+    Q_INVOKABLE void onCommandSetEditS01SourceIdx               (          ){mEditS01SourceIdx                = true;}
+    Q_INVOKABLE void onCommandSetEditS01UnitIdx                 (          ){mEditS01UnitIdx                  = true;}
+    Q_INVOKABLE void onCommandSetEditS01FullScale               (          ){mEditS01FullScale                = true;}
+    Q_INVOKABLE void onCommandSetEditS01DigiValue               (          ){mEditS01DigiValue                = true;}
+    Q_INVOKABLE void onCommandSetEditS01ZeroAdjEnable           (          ){mEditS01ZeroAdjEnable            = true;}
+    Q_INVOKABLE void onCommandSetEditS01ZeroAdjOffsetLimMin     (          ){mEditS01ZeroAdjOffsetLimMin      = true;}
+    Q_INVOKABLE void onCommandSetEditS01ZeroAdjOffsetLimMax     (          ){mEditS01ZeroAdjOffsetLimMax      = true;}
+    Q_INVOKABLE void onCommandSetEditS01ZeroAdjOffsetValue      (          ){mEditS01ZeroAdjOffsetValue       = true;}
+    Q_INVOKABLE void onCommandSetEditS01ScaleOffset             (          ){mEditS01ScaleOffset              = true;}
+    Q_INVOKABLE void onCommandSetEditS01Scale                   (          ){mEditS01Scale                    = true;}
+    Q_INVOKABLE void onCommandSetEditS01ScaleZeroPoint          (          ){mEditS01ScaleZeroPoint           = true;}
+    Q_INVOKABLE void onCommandSetEditS01FilterSec               (          ){mEditS01FilterSec                = true;}
+    Q_INVOKABLE void onCommandSetEditS01LogSensorLinearize      (          ){mEditS01LogSensorLinearize       = true;}
+    Q_INVOKABLE void onCommandSetEditS01LogSensorVoltPerDecade  (          ){mEditS01LogSensorVoltPerDecade   = true;}
+    Q_INVOKABLE void onCommandSetEditS01LogSensorVoltAtFullScale(          ){mEditS01LogSensorVoltAtFullScale = true;}
+    Q_INVOKABLE void onCommandSetEditS02AnalActive              (          ){mEditS02AnalActive               = true;}
+    Q_INVOKABLE void onCommandSetEditS02SourceIdx               (          ){mEditS02SourceIdx                = true;}
+    Q_INVOKABLE void onCommandSetEditS02UnitIdx                 (          ){mEditS02UnitIdx                  = true;}
+    Q_INVOKABLE void onCommandSetEditS02FullScale               (          ){mEditS02FullScale                = true;}
+    Q_INVOKABLE void onCommandSetEditS02DigiValue               (          ){mEditS02DigiValue                = true;}
+    Q_INVOKABLE void onCommandSetEditS02ZeroAdjEnable           (          ){mEditS02ZeroAdjEnable            = true;}
+    Q_INVOKABLE void onCommandSetEditS02ZeroAdjOffsetLimMin     (          ){mEditS02ZeroAdjOffsetLimMin      = true;}
+    Q_INVOKABLE void onCommandSetEditS02ZeroAdjOffsetLimMax     (          ){mEditS02ZeroAdjOffsetLimMax      = true;}
+    Q_INVOKABLE void onCommandSetEditS02ZeroAdjOffsetValue      (          ){mEditS02ZeroAdjOffsetValue       = true;}
+    Q_INVOKABLE void onCommandSetEditS02ScaleOffset             (          ){mEditS02ScaleOffset              = true;}
+    Q_INVOKABLE void onCommandSetEditS02Scale                   (          ){mEditS02Scale                    = true;}
+    Q_INVOKABLE void onCommandSetEditS02ScaleZeroPoint          (          ){mEditS02ScaleZeroPoint           = true;}
+    Q_INVOKABLE void onCommandSetEditS02FilterSec               (          ){mEditS02FilterSec                = true;}
+    Q_INVOKABLE void onCommandSetEditS02LogSensorLinearize      (          ){mEditS02LogSensorLinearize       = true;}
+    Q_INVOKABLE void onCommandSetEditS02LogSensorVoltPerDecade  (          ){mEditS02LogSensorVoltPerDecade   = true;}
+    Q_INVOKABLE void onCommandSetEditS02LogSensorVoltAtFullScale(          ){mEditS02LogSensorVoltAtFullScale = true;}
+    Q_INVOKABLE void onCommandSetEditCrossoverModIdx            (          ){mEditCrossoverModIdx             = true;}
+    Q_INVOKABLE void onCommandSetEditCrossoverLow               (          ){mEditCrossoverLow                = true;}
+    Q_INVOKABLE void onCommandSetEditCrossoverHigh              (          ){mEditCrossoverHigh               = true;}
+    Q_INVOKABLE void onCommandSetEditCrossoverDela              (          ){mEditCrossoverDela               = true;}
 
     Q_INVOKABLE void onCommandApply(int     s01AnalActive              ,
                                     int     s01Selection               ,
@@ -1813,45 +1847,6 @@ public slots:
                 cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
                 setErrCrossoverDela(qAbs(dto.mValue.toDouble() - mWriteCrossoverDela.toDouble()) > cmpDiff);
             }
-
-            onCommandSetEdit(getErrS01AnalActive              () ||
-                             getErrS01Selection               () ||
-                             getErrS01SourceIdx               () ||
-                             getErrS01UnitIdx                 () ||
-                             getErrS01FullScale               () ||
-                             getErrS01DigiValue               () ||
-                             getErrS01ZeroAdjEnable           () ||
-                             getErrS01ZeroAdjOffsetLimMin     () ||
-                             getErrS01ZeroAdjOffsetLimMax     () ||
-                             getErrS01ZeroAdjOffsetValue      () ||
-                             getErrS01ScaleOffset             () ||
-                             getErrS01Scale                   () ||
-                             getErrS01ScaleZeroPoint          () ||
-                             getErrS01FilterSec               () ||
-                             getErrS01LogSensorLinearize      () ||
-                             getErrS01LogSensorVoltPerDecade  () ||
-                             getErrS01LogSensorVoltAtFullScale() ||
-                             getErrS02AnalActive              () ||
-                             getErrS02Selection               () ||
-                             getErrS02SourceIdx               () ||
-                             getErrS02UnitIdx                 () ||
-                             getErrS02FullScale               () ||
-                             getErrS02DigiValue               () ||
-                             getErrS02ZeroAdjEnable           () ||
-                             getErrS02ZeroAdjOffsetLimMin     () ||
-                             getErrS02ZeroAdjOffsetLimMax     () ||
-                             getErrS02ZeroAdjOffsetValue      () ||
-                             getErrS02ScaleOffset             () ||
-                             getErrS02Scale                   () ||
-                             getErrS02ScaleZeroPoint          () ||
-                             getErrS02FilterSec               () ||
-                             getErrS02LogSensorLinearize      () ||
-                             getErrS02LogSensorVoltPerDecade  () ||
-                             getErrS02LogSensorVoltAtFullScale() ||
-                             getErrCrossoverModIdx            () ||
-                             getErrCrossoverLow               () ||
-                             getErrCrossoverHigh              () ||
-                             getErrCrossoverDela              ());
         }
         else
         {
@@ -1863,6 +1858,8 @@ public slots:
 
     void onValveWrittenSensorExSelection(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_SELECTION || dto.mReqDto.mpRef != this)
             return;
 
@@ -1882,6 +1879,8 @@ public slots:
 
     void onValveWrittenS01ExAnalActive(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_ANAL_ACTIVE || dto.mReqDto.mpRef != this)
             return;
 
@@ -1901,6 +1900,8 @@ public slots:
 
     void onValveWrittenS01ExSource(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_SRC || dto.mReqDto.mpRef != this)
             return;
 
@@ -1920,6 +1921,8 @@ public slots:
 
     void onValveWrittenS01ExUnit(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_UNIT || dto.mReqDto.mpRef != this)
             return;
 
@@ -1939,6 +1942,8 @@ public slots:
 
     void onValveWrittenS01ExFullScale(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_FULLSCALE || dto.mReqDto.mpRef != this)
             return;
 
@@ -1958,6 +1963,8 @@ public slots:
 
     void onValveWrittenS01ExDigiValue(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_DIGI || dto.mReqDto.mpRef != this)
             return;
 
@@ -1977,6 +1984,8 @@ public slots:
 
     void onValveWrittenS01ExZeroAdjEnable(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_ZERO_ENABLE || dto.mReqDto.mpRef != this)
             return;
 
@@ -1995,6 +2004,8 @@ public slots:
     }
     void onValveWrittenS01ExZeroAdjOffsetLimMin(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_ZERO_MIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -2014,6 +2025,8 @@ public slots:
 
     void onValveWrittenS01ExZeroAdjOffsetLimMax(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_ZERO_MAX || dto.mReqDto.mpRef != this)
             return;
 
@@ -2033,6 +2046,8 @@ public slots:
 
     void onValveWrittenS01ExZeroAdjOffsetValue(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_ZERO_VALUE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2052,6 +2067,8 @@ public slots:
 
     void onValveWrittenS01ExScaleOffset(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_SCALE_OFFSET || dto.mReqDto.mpRef != this)
             return;
 
@@ -2071,6 +2088,8 @@ public slots:
 
     void onValveWrittenS01ExScale(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_SCALE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2090,6 +2109,8 @@ public slots:
 
     void onValveWrittenS01ExScaleZeroPoint(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_SCALE_Z_POINT || dto.mReqDto.mpRef != this)
             return;
 
@@ -2109,6 +2130,8 @@ public slots:
 
     void onValveWrittenS01ExFilterSec(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_FILTER_SEC || dto.mReqDto.mpRef != this)
             return;
 
@@ -2128,6 +2151,8 @@ public slots:
 
     void onValveWrittenS01ExLogSensorLinearize(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_LOG_SENS_LINEARIZE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2147,6 +2172,8 @@ public slots:
 
     void onValveWrittenS01ExLogSensorVoltPerDecade(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_LOG_SENS_VOLT_DECADE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2166,6 +2193,8 @@ public slots:
 
     void onValveWrittenS01ExLogSensorVoltAtFullScale(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S01_LOG_SENS_VOLT_FULLSCALE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2185,6 +2214,8 @@ public slots:
 
     void onValveWrittenS02ExAnalActive(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_ANAL_ACTIVE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2204,6 +2235,8 @@ public slots:
 
     void onValveWrittenS02ExSource(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_SRC || dto.mReqDto.mpRef != this)
             return;
 
@@ -2223,6 +2256,8 @@ public slots:
 
     void onValveWrittenS02ExUnit(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_UNIT || dto.mReqDto.mpRef != this)
             return;
 
@@ -2240,8 +2275,11 @@ public slots:
         setState((eState)(mState + 1));
     }
 
+
     void onValveWrittenS02ExFullScale(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_FULLSCALE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2261,6 +2299,8 @@ public slots:
 
     void onValveWrittenS02ExDigiValue(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_DIGI || dto.mReqDto.mpRef != this)
             return;
 
@@ -2280,6 +2320,8 @@ public slots:
 
     void onValveWrittenS02ExZeroAdjEnable(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_ZERO_ENABLE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2298,6 +2340,8 @@ public slots:
     }
     void onValveWrittenS02ExZeroAdjOffsetLimMin(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_ZERO_MIN || dto.mReqDto.mpRef != this)
             return;
 
@@ -2317,6 +2361,8 @@ public slots:
 
     void onValveWrittenS02ExZeroAdjOffsetLimMax(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_ZERO_MAX || dto.mReqDto.mpRef != this)
             return;
 
@@ -2336,6 +2382,8 @@ public slots:
 
     void onValveWrittenS02ExZeroAdjOffsetValue(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_ZERO_VALUE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2355,6 +2403,8 @@ public slots:
 
     void onValveWrittenS02ExScaleOffset(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_SCALE_OFFSET || dto.mReqDto.mpRef != this)
             return;
 
@@ -2374,6 +2424,8 @@ public slots:
 
     void onValveWrittenS02ExScale(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_SCALE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2393,6 +2445,8 @@ public slots:
 
     void onValveWrittenS02ExScaleZeroPoint(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_SCALE_Z_POINT || dto.mReqDto.mpRef != this)
             return;
 
@@ -2412,6 +2466,8 @@ public slots:
 
     void onValveWrittenS02ExFilterSec(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_FILTER_SEC || dto.mReqDto.mpRef != this)
             return;
 
@@ -2431,6 +2487,8 @@ public slots:
 
     void onValveWrittenS02ExLogSensorLinearize(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_LOG_SENS_LINEARIZE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2450,6 +2508,8 @@ public slots:
 
     void onValveWrittenS02ExLogSensorVoltPerDecade(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_LOG_SENS_VOLT_DECADE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2469,6 +2529,8 @@ public slots:
 
     void onValveWrittenS02ExLogSensorVoltAtFullScale(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_S02_LOG_SENS_VOLT_FULLSCALE || dto.mReqDto.mpRef != this)
             return;
 
@@ -2488,6 +2550,8 @@ public slots:
 
     void onValveWrittenCrossoverMod(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_CROSSOVER_MOD || dto.mReqDto.mpRef != this)
             return;
 
@@ -2507,6 +2571,8 @@ public slots:
 
     void onValveWrittenCrossoverLow(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_CROSSOVER_LOW || dto.mReqDto.mpRef != this)
             return;
 
@@ -2526,6 +2592,8 @@ public slots:
 
     void onValveWrittenCrossoverHigh(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_CROSSOVER_HIGH || dto.mReqDto.mpRef != this)
             return;
 
@@ -2545,6 +2613,8 @@ public slots:
 
     void onValveWrittenCrossoverDela(ValveResponseDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(mState != eState::STATE_WRITE_CROSSOVER_DELA || dto.mReqDto.mpRef != this)
             return;
 
@@ -2702,13 +2772,51 @@ private:
     QString mWriteCrossoverHigh               = "0";
     QString mWriteCrossoverDela               = "0";
 
+    bool    mEditSelection                   = false;
+    bool    mEditS01AnalActive               = false;
+    bool    mEditS01SourceIdx                = false;
+    bool    mEditS01UnitIdx                  = false;
+    bool    mEditS01FullScale                = false;
+    bool    mEditS01DigiValue                = false;
+    bool    mEditS01ZeroAdjEnable            = false;
+    bool    mEditS01ZeroAdjOffsetLimMin      = false;
+    bool    mEditS01ZeroAdjOffsetLimMax      = false;
+    bool    mEditS01ZeroAdjOffsetValue       = false;
+    bool    mEditS01ScaleOffset              = false;
+    bool    mEditS01Scale                    = false;
+    bool    mEditS01ScaleZeroPoint           = false;
+    bool    mEditS01FilterSec                = false;
+    bool    mEditS01LogSensorLinearize       = false;
+    bool    mEditS01LogSensorVoltPerDecade   = false;
+    bool    mEditS01LogSensorVoltAtFullScale = false;
+    bool    mEditS02AnalActive               = false;
+    bool    mEditS02SourceIdx                = false;
+    bool    mEditS02UnitIdx                  = false;
+    bool    mEditS02FullScale                = false;
+    bool    mEditS02DigiValue                = false;
+    bool    mEditS02ZeroAdjEnable            = false;
+    bool    mEditS02ZeroAdjOffsetLimMin      = false;
+    bool    mEditS02ZeroAdjOffsetLimMax      = false;
+    bool    mEditS02ZeroAdjOffsetValue       = false;
+    bool    mEditS02ScaleOffset              = false;
+    bool    mEditS02Scale                    = false;
+    bool    mEditS02ScaleZeroPoint           = false;
+    bool    mEditS02FilterSec                = false;
+    bool    mEditS02LogSensorLinearize       = false;
+    bool    mEditS02LogSensorVoltPerDecade   = false;
+    bool    mEditS02LogSensorVoltAtFullScale = false;
+    bool    mEditCrossoverModIdx             = false;
+    bool    mEditCrossoverLow                = false;
+    bool    mEditCrossoverHigh               = false;
+    bool    mEditCrossoverDela               = false;
+
     void startTimer()
     {
         mTimer.stop();
         mTimer.start(100);
     }
 
-    void setState(eState state)
+    void setState(eState state, bool immediately = false)
     {
         if(!mIsWritten && state == eState::STATE_READY)
         {
@@ -2732,12 +2840,93 @@ private:
 
         if(state == eState::STATE_READY)
         {
+            mEditSelection                   = false;
+            mEditS01AnalActive               = false;
+            mEditS01SourceIdx                = false;
+            mEditS01UnitIdx                  = false;
+            mEditS01FullScale                = false;
+            mEditS01DigiValue                = false;
+            mEditS01ZeroAdjEnable            = false;
+            mEditS01ZeroAdjOffsetLimMin      = false;
+            mEditS01ZeroAdjOffsetLimMax      = false;
+            mEditS01ZeroAdjOffsetValue       = false;
+            mEditS01ScaleOffset              = false;
+            mEditS01Scale                    = false;
+            mEditS01ScaleZeroPoint           = false;
+            mEditS01FilterSec                = false;
+            mEditS01LogSensorLinearize       = false;
+            mEditS01LogSensorVoltPerDecade   = false;
+            mEditS01LogSensorVoltAtFullScale = false;
+            mEditS02AnalActive               = false;
+            mEditS02SourceIdx                = false;
+            mEditS02UnitIdx                  = false;
+            mEditS02FullScale                = false;
+            mEditS02DigiValue                = false;
+            mEditS02ZeroAdjEnable            = false;
+            mEditS02ZeroAdjOffsetLimMin      = false;
+            mEditS02ZeroAdjOffsetLimMax      = false;
+            mEditS02ZeroAdjOffsetValue       = false;
+            mEditS02ScaleOffset              = false;
+            mEditS02Scale                    = false;
+            mEditS02ScaleZeroPoint           = false;
+            mEditS02FilterSec                = false;
+            mEditS02LogSensorLinearize       = false;
+            mEditS02LogSensorVoltPerDecade   = false;
+            mEditS02LogSensorVoltAtFullScale = false;
+            mEditCrossoverModIdx             = false;
+            mEditCrossoverLow                = false;
+            mEditCrossoverHigh               = false;
+            mEditCrossoverDela               = false;
+
+            onCommandSetEdit(getErrS01AnalActive              () ||
+                             getErrS01Selection               () ||
+                             getErrS01SourceIdx               () ||
+                             getErrS01UnitIdx                 () ||
+                             getErrS01FullScale               () ||
+                             getErrS01DigiValue               () ||
+                             getErrS01ZeroAdjEnable           () ||
+                             getErrS01ZeroAdjOffsetLimMin     () ||
+                             getErrS01ZeroAdjOffsetLimMax     () ||
+                             getErrS01ZeroAdjOffsetValue      () ||
+                             getErrS01ScaleOffset             () ||
+                             getErrS01Scale                   () ||
+                             getErrS01ScaleZeroPoint          () ||
+                             getErrS01FilterSec               () ||
+                             getErrS01LogSensorLinearize      () ||
+                             getErrS01LogSensorVoltPerDecade  () ||
+                             getErrS01LogSensorVoltAtFullScale() ||
+                             getErrS02AnalActive              () ||
+                             getErrS02Selection               () ||
+                             getErrS02SourceIdx               () ||
+                             getErrS02UnitIdx                 () ||
+                             getErrS02FullScale               () ||
+                             getErrS02DigiValue               () ||
+                             getErrS02ZeroAdjEnable           () ||
+                             getErrS02ZeroAdjOffsetLimMin     () ||
+                             getErrS02ZeroAdjOffsetLimMax     () ||
+                             getErrS02ZeroAdjOffsetValue      () ||
+                             getErrS02ScaleOffset             () ||
+                             getErrS02Scale                   () ||
+                             getErrS02ScaleZeroPoint          () ||
+                             getErrS02FilterSec               () ||
+                             getErrS02LogSensorLinearize      () ||
+                             getErrS02LogSensorVoltPerDecade  () ||
+                             getErrS02LogSensorVoltAtFullScale() ||
+                             getErrCrossoverModIdx            () ||
+                             getErrCrossoverLow               () ||
+                             getErrCrossoverHigh              () ||
+                             getErrCrossoverDela              ());
+
             setProgress(100);
         }
         else
         {
             setProgress(qFloor((state * 100) / eState::STATE_READY));
-            startTimer();
+
+            if(immediately)
+                onTimeout();
+            else
+                startTimer();
         }
     }
 
@@ -2746,80 +2935,80 @@ public slots:
     {
         switch ((int)mState)
         {
-        case STATE_WRITE_SELECTION                  : pValveSP->setSensorExSelection             (mWriteSelection                  , this);break;
-        case STATE_WRITE_S01_ANAL_ACTIVE            : pValveSP->setS01ExAnalActive               (mWriteS01AnalActive              , this);break;
-        case STATE_WRITE_S01_SRC                    : pValveSP->setS01ExSource                   (mWriteS01SourceIdx               , this);break;
-        case STATE_WRITE_S01_UNIT                   : pValveSP->setS01ExUnit                     (mWriteS01UnitIdx                 , this);break;
-        case STATE_WRITE_S01_FULLSCALE              : pValveSP->setS01ExFullScale                (mWriteS01FullScale               , this);break;
-        case STATE_WRITE_S01_DIGI                   : pValveSP->setS01ExDigiValue                (mWriteS01DigiValue               , this);break;
-        case STATE_WRITE_S01_ZERO_ENABLE            : pValveSP->setS01ExZeroAdjEnable            (mWriteS01ZeroAdjEnable           , this);break;
-        case STATE_WRITE_S01_ZERO_MIN               : pValveSP->setS01ExZeroAdjOffsetLimMin      (mWriteS01ZeroAdjOffsetLimMin     , this);break;
-        case STATE_WRITE_S01_ZERO_MAX               : pValveSP->setS01ExZeroAdjOffsetLimMax      (mWriteS01ZeroAdjOffsetLimMax     , this);break;
-        case STATE_WRITE_S01_ZERO_VALUE             : pValveSP->setS01ExZeroAdjOffsetValue       (mWriteS01ZeroAdjOffsetValue      , this);break;
-        case STATE_WRITE_S01_SCALE_OFFSET           : pValveSP->setS01ExScaleOffset              (mWriteS01ScaleOffset             , this);break;
-        case STATE_WRITE_S01_SCALE                  : pValveSP->setS01ExScale                    (mWriteS01Scale                   , this);break;
-        case STATE_WRITE_S01_SCALE_Z_POINT          : pValveSP->setS01ExScaleZeroPoint           (mWriteS01ScaleZeroPoint          , this);break;
-        case STATE_WRITE_S01_FILTER_SEC             : pValveSP->setS01ExFilterSec                (mWriteS01FilterSec               , this);break;
-        case STATE_WRITE_S01_LOG_SENS_LINEARIZE     : pValveSP->setS01ExLogSensorLinearize       (mWriteS01LogSensorLinearize      , this);break;
-        case STATE_WRITE_S01_LOG_SENS_VOLT_DECADE   : pValveSP->setS01ExLogSensorVoltPerDecade   (mWriteS01LogSensorVoltPerDecade  , this);break;
-        case STATE_WRITE_S01_LOG_SENS_VOLT_FULLSCALE: pValveSP->setS01ExLogSensorVoltAtFullScale (mWriteS01LogSensorVoltAtFullScale, this);break;
-        case STATE_WRITE_S02_ANAL_ACTIVE            : pValveSP->setS02ExAnalActive               (mWriteS02AnalActive              , this);break;
-        case STATE_WRITE_S02_SRC                    : pValveSP->setS02ExSource                   (mWriteS02SourceIdx               , this);break;
-        case STATE_WRITE_S02_UNIT                   : pValveSP->setS02ExUnit                     (mWriteS02UnitIdx                 , this);break;
-        case STATE_WRITE_S02_FULLSCALE              : pValveSP->setS02ExFullScale                (mWriteS02FullScale               , this);break;
-        case STATE_WRITE_S02_DIGI                   : pValveSP->setS02ExDigiValue                (mWriteS02DigiValue               , this);break;
-        case STATE_WRITE_S02_ZERO_ENABLE            : pValveSP->setS02ExZeroAdjEnable            (mWriteS02ZeroAdjEnable           , this);break;
-        case STATE_WRITE_S02_ZERO_MIN               : pValveSP->setS02ExZeroAdjOffsetLimMin      (mWriteS02ZeroAdjOffsetLimMin     , this);break;
-        case STATE_WRITE_S02_ZERO_MAX               : pValveSP->setS02ExZeroAdjOffsetLimMax      (mWriteS02ZeroAdjOffsetLimMax     , this);break;
-        case STATE_WRITE_S02_ZERO_VALUE             : pValveSP->setS02ExZeroAdjOffsetValue       (mWriteS02ZeroAdjOffsetValue      , this);break;
-        case STATE_WRITE_S02_SCALE_OFFSET           : pValveSP->setS02ExScaleOffset              (mWriteS02ScaleOffset             , this);break;
-        case STATE_WRITE_S02_SCALE                  : pValveSP->setS02ExScale                    (mWriteS02Scale                   , this);break;
-        case STATE_WRITE_S02_SCALE_Z_POINT          : pValveSP->setS02ExScaleZeroPoint           (mWriteS02ScaleZeroPoint          , this);break;
-        case STATE_WRITE_S02_FILTER_SEC             : pValveSP->setS02ExFilterSec                (mWriteS02FilterSec               , this);break;
-        case STATE_WRITE_S02_LOG_SENS_LINEARIZE     : pValveSP->setS02ExLogSensorLinearize       (mWriteS02LogSensorLinearize      , this);break;
-        case STATE_WRITE_S02_LOG_SENS_VOLT_DECADE   : pValveSP->setS02ExLogSensorVoltPerDecade   (mWriteS02LogSensorVoltPerDecade  , this);break;
-        case STATE_WRITE_S02_LOG_SENS_VOLT_FULLSCALE: pValveSP->setS02ExLogSensorVoltAtFullScale (mWriteS02LogSensorVoltAtFullScale, this);break;
-        case STATE_WRITE_CROSSOVER_MOD              : pValveSP->setCrossoverMod                  (mWriteCrossoverModIdx            , this);break;
-        case STATE_WRITE_CROSSOVER_LOW              : pValveSP->setCrossoverLow                  (mWriteCrossoverLow               , this);break;
-        case STATE_WRITE_CROSSOVER_HIGH             : pValveSP->setCrossoverHigh                 (mWriteCrossoverHigh              , this);break;
-        case STATE_WRITE_CROSSOVER_DELA             : pValveSP->setCrossoverDela                 (mWriteCrossoverDela              , this);break;
-        case STATE_READ_SELECTION                   : pValveSP->readSensorExSelection            (this                                   ); break;
-        case STATE_READ_S01_ANAL_ACTIVE             : pValveSP->readS01ExAnalActive              (this                                   ); break;
-        case STATE_READ_S01_SRC                     : pValveSP->readS01ExSource                  (this                                   ); break;
-        case STATE_READ_S01_UNIT                    : pValveSP->readS01ExUnit                    (this                                   ); break;
-        case STATE_READ_S01_FULLSCALE               : pValveSP->readS01ExFullScale               (this                                   ); break;
-        case STATE_READ_S01_DIGI                    : pValveSP->readS01ExDigiValue               (this                                   ); break;
-        case STATE_READ_S01_ZERO_ENABLE             : pValveSP->readS01ExZeroAdjEnable           (this                                   ); break;
-        case STATE_READ_S01_ZERO_MIN                : pValveSP->readS01ExZeroAdjOffsetLimMin     (this                                   ); break;
-        case STATE_READ_S01_ZERO_MAX                : pValveSP->readS01ExZeroAdjOffsetLimMax     (this                                   ); break;
-        case STATE_READ_S01_ZERO_VALUE              : pValveSP->readS01ExZeroAdjOffsetValue      (this                                   ); break;
-        case STATE_READ_S01_SCALE_OFFSET            : pValveSP->readS01ExScaleOffset             (this                                   ); break;
-        case STATE_READ_S01_SCALE                   : pValveSP->readS01ExScale                   (this                                   ); break;
-        case STATE_READ_S01_SCALE_Z_POINT           : pValveSP->readS01ExScaleZeroPoint          (this                                   ); break;
-        case STATE_READ_S01_FILTER_SEC              : pValveSP->readS01ExFilterSec               (this                                   ); break;
-        case STATE_READ_S01_LOG_SENS_LINEARIZE      : pValveSP->readS01ExLogSensorLinearize      (this                                   ); break;
-        case STATE_READ_S01_LOG_SENS_VOLT_DECADE    : pValveSP->readS01ExLogSensorVoltPerDecade  (this                                   ); break;
-        case STATE_READ_S01_LOG_SENS_VOLT_FULLSCALE : pValveSP->readS01ExLogSensorVoltAtFullScale(this                                   ); break;
-        case STATE_READ_S02_ANAL_ACTIVE             : pValveSP->readS02ExAnalActive              (this                                   ); break;
-        case STATE_READ_S02_SRC                     : pValveSP->readS02ExSource                  (this                                   ); break;
-        case STATE_READ_S02_UNIT                    : pValveSP->readS02ExUnit                    (this                                   ); break;
-        case STATE_READ_S02_FULLSCALE               : pValveSP->readS02ExFullScale               (this                                   ); break;
-        case STATE_READ_S02_DIGI                    : pValveSP->readS02ExDigiValue               (this                                   ); break;
-        case STATE_READ_S02_ZERO_ENABLE             : pValveSP->readS02ExZeroAdjEnable           (this                                   ); break;
-        case STATE_READ_S02_ZERO_MIN                : pValveSP->readS02ExZeroAdjOffsetLimMin     (this                                   ); break;
-        case STATE_READ_S02_ZERO_MAX                : pValveSP->readS02ExZeroAdjOffsetLimMax     (this                                   ); break;
-        case STATE_READ_S02_ZERO_VALUE              : pValveSP->readS02ExZeroAdjOffsetValue      (this                                   ); break;
-        case STATE_READ_S02_SCALE_OFFSET            : pValveSP->readS02ExScaleOffset             (this                                   ); break;
-        case STATE_READ_S02_SCALE                   : pValveSP->readS02ExScale                   (this                                   ); break;
-        case STATE_READ_S02_SCALE_Z_POINT           : pValveSP->readS02ExScaleZeroPoint          (this                                   ); break;
-        case STATE_READ_S02_FILTER_SEC              : pValveSP->readS02ExFilterSec               (this                                   ); break;
-        case STATE_READ_S02_LOG_SENS_LINEARIZE      : pValveSP->readS02ExLogSensorLinearize      (this                                   ); break;
-        case STATE_READ_S02_LOG_SENS_VOLT_DECADE    : pValveSP->readS02ExLogSensorVoltPerDecade  (this                                   ); break;
-        case STATE_READ_S02_LOG_SENS_VOLT_FULLSCALE : pValveSP->readS02ExLogSensorVoltAtFullScale(this                                   ); break;
-        case STATE_READ_CROSSOVER_MOD               : pValveSP->readCrossoverMod                 (this                                   ); break;
-        case STATE_READ_CROSSOVER_LOW               : pValveSP->readCrossoverLow                 (this                                   ); break;
-        case STATE_READ_CROSSOVER_HIGH              : pValveSP->readCrossoverHigh                (this                                   ); break;
-        case STATE_READ_CROSSOVER_DELA              : pValveSP->readCrossoverDela                (this                                   ); break;
+        case STATE_WRITE_SELECTION                  : if(!mEditSelection                   && !getErrS01Selection() && !getErrS02Selection()    ){setState((eState)(mState + 1), true); return;} pValveSP->setSensorExSelection             (mWriteSelection                  , this);break;
+        case STATE_WRITE_S01_ANAL_ACTIVE            : if(!mEditS01AnalActive               && !getErrS01AnalActive              ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExAnalActive               (mWriteS01AnalActive              , this);break;
+        case STATE_WRITE_S01_SRC                    : if(!mEditS01SourceIdx                && !getErrS01SourceIdx               ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExSource                   (mWriteS01SourceIdx               , this);break;
+        case STATE_WRITE_S01_UNIT                   : if(!mEditS01UnitIdx                  && !getErrS01UnitIdx                 ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExUnit                     (mWriteS01UnitIdx                 , this);break;
+        case STATE_WRITE_S01_FULLSCALE              : if(!mEditS01FullScale                && !getErrS01FullScale               ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExFullScale                (mWriteS01FullScale               , this);break;
+        case STATE_WRITE_S01_DIGI                   : if(!mEditS01DigiValue                && !getErrS01DigiValue               ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExDigiValue                (mWriteS01DigiValue               , this);break;
+        case STATE_WRITE_S01_ZERO_ENABLE            : if(!mEditS01ZeroAdjEnable            && !getErrS01ZeroAdjEnable           ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExZeroAdjEnable            (mWriteS01ZeroAdjEnable           , this);break;
+        case STATE_WRITE_S01_ZERO_MIN               : if(!mEditS01ZeroAdjOffsetLimMin      && !getErrS01ZeroAdjOffsetLimMin     ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExZeroAdjOffsetLimMin      (mWriteS01ZeroAdjOffsetLimMin     , this);break;
+        case STATE_WRITE_S01_ZERO_MAX               : if(!mEditS01ZeroAdjOffsetLimMax      && !getErrS01ZeroAdjOffsetLimMax     ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExZeroAdjOffsetLimMax      (mWriteS01ZeroAdjOffsetLimMax     , this);break;
+        case STATE_WRITE_S01_ZERO_VALUE             : if(!mEditS01ZeroAdjOffsetValue       && !getErrS01ZeroAdjOffsetValue      ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExZeroAdjOffsetValue       (mWriteS01ZeroAdjOffsetValue      , this);break;
+        case STATE_WRITE_S01_SCALE_OFFSET           : if(!mEditS01ScaleOffset              && !getErrS01ScaleOffset             ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExScaleOffset              (mWriteS01ScaleOffset             , this);break;
+        case STATE_WRITE_S01_SCALE                  : if(!mEditS01Scale                    && !getErrS01Scale                   ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExScale                    (mWriteS01Scale                   , this);break;
+        case STATE_WRITE_S01_SCALE_Z_POINT          : if(!mEditS01ScaleZeroPoint           && !getErrS01ScaleZeroPoint          ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExScaleZeroPoint           (mWriteS01ScaleZeroPoint          , this);break;
+        case STATE_WRITE_S01_FILTER_SEC             : if(!mEditS01FilterSec                && !getErrS01FilterSec               ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExFilterSec                (mWriteS01FilterSec               , this);break;
+        case STATE_WRITE_S01_LOG_SENS_LINEARIZE     : if(!mEditS01LogSensorLinearize       && !getErrS01LogSensorLinearize      ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExLogSensorLinearize       (mWriteS01LogSensorLinearize      , this);break;
+        case STATE_WRITE_S01_LOG_SENS_VOLT_DECADE   : if(!mEditS01LogSensorVoltPerDecade   && !getErrS01LogSensorVoltPerDecade  ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExLogSensorVoltPerDecade   (mWriteS01LogSensorVoltPerDecade  , this);break;
+        case STATE_WRITE_S01_LOG_SENS_VOLT_FULLSCALE: if(!mEditS01LogSensorVoltAtFullScale && !getErrS01LogSensorVoltAtFullScale()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS01ExLogSensorVoltAtFullScale (mWriteS01LogSensorVoltAtFullScale, this);break;
+        case STATE_WRITE_S02_ANAL_ACTIVE            : if(!mEditS02AnalActive               && !getErrS02AnalActive              ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExAnalActive               (mWriteS02AnalActive              , this);break;
+        case STATE_WRITE_S02_SRC                    : if(!mEditS02SourceIdx                && !getErrS02SourceIdx               ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExSource                   (mWriteS02SourceIdx               , this);break;
+        case STATE_WRITE_S02_UNIT                   : if(!mEditS02UnitIdx                  && !getErrS02UnitIdx                 ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExUnit                     (mWriteS02UnitIdx                 , this);break;
+        case STATE_WRITE_S02_FULLSCALE              : if(!mEditS02FullScale                && !getErrS02FullScale               ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExFullScale                (mWriteS02FullScale               , this);break;
+        case STATE_WRITE_S02_DIGI                   : if(!mEditS02DigiValue                && !getErrS02DigiValue               ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExDigiValue                (mWriteS02DigiValue               , this);break;
+        case STATE_WRITE_S02_ZERO_ENABLE            : if(!mEditS02ZeroAdjEnable            && !getErrS02ZeroAdjEnable           ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExZeroAdjEnable            (mWriteS02ZeroAdjEnable           , this);break;
+        case STATE_WRITE_S02_ZERO_MIN               : if(!mEditS02ZeroAdjOffsetLimMin      && !getErrS02ZeroAdjOffsetLimMin     ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExZeroAdjOffsetLimMin      (mWriteS02ZeroAdjOffsetLimMin     , this);break;
+        case STATE_WRITE_S02_ZERO_MAX               : if(!mEditS02ZeroAdjOffsetLimMax      && !getErrS02ZeroAdjOffsetLimMax     ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExZeroAdjOffsetLimMax      (mWriteS02ZeroAdjOffsetLimMax     , this);break;
+        case STATE_WRITE_S02_ZERO_VALUE             : if(!mEditS02ZeroAdjOffsetValue       && !getErrS02ZeroAdjOffsetValue      ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExZeroAdjOffsetValue       (mWriteS02ZeroAdjOffsetValue      , this);break;
+        case STATE_WRITE_S02_SCALE_OFFSET           : if(!mEditS02ScaleOffset              && !getErrS02ScaleOffset             ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExScaleOffset              (mWriteS02ScaleOffset             , this);break;
+        case STATE_WRITE_S02_SCALE                  : if(!mEditS02Scale                    && !getErrS02Scale                   ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExScale                    (mWriteS02Scale                   , this);break;
+        case STATE_WRITE_S02_SCALE_Z_POINT          : if(!mEditS02ScaleZeroPoint           && !getErrS02ScaleZeroPoint          ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExScaleZeroPoint           (mWriteS02ScaleZeroPoint          , this);break;
+        case STATE_WRITE_S02_FILTER_SEC             : if(!mEditS02FilterSec                && !getErrS02FilterSec               ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExFilterSec                (mWriteS02FilterSec               , this);break;
+        case STATE_WRITE_S02_LOG_SENS_LINEARIZE     : if(!mEditS02LogSensorLinearize       && !getErrS02LogSensorLinearize      ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExLogSensorLinearize       (mWriteS02LogSensorLinearize      , this);break;
+        case STATE_WRITE_S02_LOG_SENS_VOLT_DECADE   : if(!mEditS02LogSensorVoltPerDecade   && !getErrS02LogSensorVoltPerDecade  ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExLogSensorVoltPerDecade   (mWriteS02LogSensorVoltPerDecade  , this);break;
+        case STATE_WRITE_S02_LOG_SENS_VOLT_FULLSCALE: if(!mEditS02LogSensorVoltAtFullScale && !getErrS02LogSensorVoltAtFullScale()              ){setState((eState)(mState + 1), true); return;} pValveSP->setS02ExLogSensorVoltAtFullScale (mWriteS02LogSensorVoltAtFullScale, this);break;
+        case STATE_WRITE_CROSSOVER_MOD              : if(!mEditCrossoverModIdx             && !getErrCrossoverModIdx            ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setCrossoverMod                  (mWriteCrossoverModIdx            , this);break;
+        case STATE_WRITE_CROSSOVER_LOW              : if(!mEditCrossoverLow                && !getErrCrossoverLow               ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setCrossoverLow                  (mWriteCrossoverLow               , this);break;
+        case STATE_WRITE_CROSSOVER_HIGH             : if(!mEditCrossoverHigh               && !getErrCrossoverHigh              ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setCrossoverHigh                 (mWriteCrossoverHigh              , this);break;
+        case STATE_WRITE_CROSSOVER_DELA             : if(!mEditCrossoverDela               && !getErrCrossoverDela              ()              ){setState((eState)(mState + 1), true); return;} pValveSP->setCrossoverDela                 (mWriteCrossoverDela              , this);break;
+        case STATE_READ_SELECTION                   : if(!mEditSelection         && !getErrS01Selection() && !getErrS02Selection() && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readSensorExSelection            (this                                   ); break;
+        case STATE_READ_S01_ANAL_ACTIVE             : if(!mEditS01AnalActive               && !getErrS01AnalActive              () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExAnalActive              (this                                   ); break;
+        case STATE_READ_S01_SRC                     : if(!mEditS01SourceIdx                && !getErrS01SourceIdx               () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExSource                  (this                                   ); break;
+        case STATE_READ_S01_UNIT                    : if(!mEditS01UnitIdx                  && !getErrS01UnitIdx                 () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExUnit                    (this                                   ); break;
+        case STATE_READ_S01_FULLSCALE               : if(!mEditS01FullScale                && !getErrS01FullScale               () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExFullScale               (this                                   ); break;
+        case STATE_READ_S01_DIGI                    : if(!mEditS01DigiValue                && !getErrS01DigiValue               () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExDigiValue               (this                                   ); break;
+        case STATE_READ_S01_ZERO_ENABLE             : if(!mEditS01ZeroAdjEnable            && !getErrS01ZeroAdjEnable           () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExZeroAdjEnable           (this                                   ); break;
+        case STATE_READ_S01_ZERO_MIN                : if(!mEditS01ZeroAdjOffsetLimMin      && !getErrS01ZeroAdjOffsetLimMin     () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExZeroAdjOffsetLimMin     (this                                   ); break;
+        case STATE_READ_S01_ZERO_MAX                : if(!mEditS01ZeroAdjOffsetLimMax      && !getErrS01ZeroAdjOffsetLimMax     () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExZeroAdjOffsetLimMax     (this                                   ); break;
+        case STATE_READ_S01_ZERO_VALUE              : if(!mEditS01ZeroAdjOffsetValue       && !getErrS01ZeroAdjOffsetValue      () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExZeroAdjOffsetValue      (this                                   ); break;
+        case STATE_READ_S01_SCALE_OFFSET            : if(!mEditS01ScaleOffset              && !getErrS01ScaleOffset             () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExScaleOffset             (this                                   ); break;
+        case STATE_READ_S01_SCALE                   : if(!mEditS01Scale                    && !getErrS01Scale                   () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExScale                   (this                                   ); break;
+        case STATE_READ_S01_SCALE_Z_POINT           : if(!mEditS01ScaleZeroPoint           && !getErrS01ScaleZeroPoint          () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExScaleZeroPoint          (this                                   ); break;
+        case STATE_READ_S01_FILTER_SEC              : if(!mEditS01FilterSec                && !getErrS01FilterSec               () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExFilterSec               (this                                   ); break;
+        case STATE_READ_S01_LOG_SENS_LINEARIZE      : if(!mEditS01LogSensorLinearize       && !getErrS01LogSensorLinearize      () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExLogSensorLinearize      (this                                   ); break;
+        case STATE_READ_S01_LOG_SENS_VOLT_DECADE    : if(!mEditS01LogSensorVoltPerDecade   && !getErrS01LogSensorVoltPerDecade  () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExLogSensorVoltPerDecade  (this                                   ); break;
+        case STATE_READ_S01_LOG_SENS_VOLT_FULLSCALE : if(!mEditS01LogSensorVoltAtFullScale && !getErrS01LogSensorVoltAtFullScale() && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS01ExLogSensorVoltAtFullScale(this                                   ); break;
+        case STATE_READ_S02_ANAL_ACTIVE             : if(!mEditS02AnalActive               && !getErrS02AnalActive              () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExAnalActive              (this                                   ); break;
+        case STATE_READ_S02_SRC                     : if(!mEditS02SourceIdx                && !getErrS02SourceIdx               () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExSource                  (this                                   ); break;
+        case STATE_READ_S02_UNIT                    : if(!mEditS02UnitIdx                  && !getErrS02UnitIdx                 () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExUnit                    (this                                   ); break;
+        case STATE_READ_S02_FULLSCALE               : if(!mEditS02FullScale                && !getErrS02FullScale               () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExFullScale               (this                                   ); break;
+        case STATE_READ_S02_DIGI                    : if(!mEditS02DigiValue                && !getErrS02DigiValue               () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExDigiValue               (this                                   ); break;
+        case STATE_READ_S02_ZERO_ENABLE             : if(!mEditS02ZeroAdjEnable            && !getErrS02ZeroAdjEnable           () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExZeroAdjEnable           (this                                   ); break;
+        case STATE_READ_S02_ZERO_MIN                : if(!mEditS02ZeroAdjOffsetLimMin      && !getErrS02ZeroAdjOffsetLimMin     () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExZeroAdjOffsetLimMin     (this                                   ); break;
+        case STATE_READ_S02_ZERO_MAX                : if(!mEditS02ZeroAdjOffsetLimMax      && !getErrS02ZeroAdjOffsetLimMax     () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExZeroAdjOffsetLimMax     (this                                   ); break;
+        case STATE_READ_S02_ZERO_VALUE              : if(!mEditS02ZeroAdjOffsetValue       && !getErrS02ZeroAdjOffsetValue      () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExZeroAdjOffsetValue      (this                                   ); break;
+        case STATE_READ_S02_SCALE_OFFSET            : if(!mEditS02ScaleOffset              && !getErrS02ScaleOffset             () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExScaleOffset             (this                                   ); break;
+        case STATE_READ_S02_SCALE                   : if(!mEditS02Scale                    && !getErrS02Scale                   () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExScale                   (this                                   ); break;
+        case STATE_READ_S02_SCALE_Z_POINT           : if(!mEditS02ScaleZeroPoint           && !getErrS02ScaleZeroPoint          () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExScaleZeroPoint          (this                                   ); break;
+        case STATE_READ_S02_FILTER_SEC              : if(!mEditS02FilterSec                && !getErrS02FilterSec               () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExFilterSec               (this                                   ); break;
+        case STATE_READ_S02_LOG_SENS_LINEARIZE      : if(!mEditS02LogSensorLinearize       && !getErrS02LogSensorLinearize      () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExLogSensorLinearize      (this                                   ); break;
+        case STATE_READ_S02_LOG_SENS_VOLT_DECADE    : if(!mEditS02LogSensorVoltPerDecade   && !getErrS02LogSensorVoltPerDecade  () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExLogSensorVoltPerDecade  (this                                   ); break;
+        case STATE_READ_S02_LOG_SENS_VOLT_FULLSCALE : if(!mEditS02LogSensorVoltAtFullScale && !getErrS02LogSensorVoltAtFullScale() && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readS02ExLogSensorVoltAtFullScale(this                                   ); break;
+        case STATE_READ_CROSSOVER_MOD               : if(!mEditCrossoverModIdx             && !getErrCrossoverModIdx            () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readCrossoverMod                 (this                                   ); break;
+        case STATE_READ_CROSSOVER_LOW               : if(!mEditCrossoverLow                && !getErrCrossoverLow               () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readCrossoverLow                 (this                                   ); break;
+        case STATE_READ_CROSSOVER_HIGH              : if(!mEditCrossoverHigh               && !getErrCrossoverHigh              () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readCrossoverHigh                (this                                   ); break;
+        case STATE_READ_CROSSOVER_DELA              : if(!mEditCrossoverDela               && !getErrCrossoverDela              () && mIsWritten){setState((eState)(mState + 1), true); return;}pValveSP->readCrossoverDela                (this                                   ); break;
         }
     }
 };

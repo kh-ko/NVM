@@ -253,6 +253,8 @@ public slots:
 
     void onValveReadedInterfaceConfigEthCATDi(ValveResponseInterfaceConfigEthCATDiDto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(mState != eState::STATE_READ_DI || dto.mReqDto.mpRef != this)
             return;
 
@@ -277,6 +279,10 @@ public slots:
             setDIInput    (dto.mDIInput   );
         }
 
+        mReadedDIFunction = dto.mDIFunction;
+        mReadedDIMode     = dto.mDIMode;
+        mReadedDIInput    = dto.mDIInput;
+
         setState((eState)(mState + 1));
     }
 
@@ -284,6 +290,8 @@ public slots:
     {
         if(mState != eState::STATE_READ_DO || dto.mReqDto.mpRef != this)
             return;
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
 
         setErrMsg(dto.mErrMsg);
 
@@ -308,6 +316,10 @@ public slots:
             setDOOutput   (dto.mDOOutput  );
         }
 
+        mReadedDOFunction = dto.mDOFunction;
+        mReadedDOMode     = dto.mDOMode;
+        mReadedDOOutput   = dto.mDOOutput;
+
         setState((eState)(mState + 1));
     }
 
@@ -315,6 +327,8 @@ public slots:
     {
         if(mState != eState::STATE_READ_DEV_ID || dto.mReqDto.mpRef != this)
             return;
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
 
         setErrMsg(dto.mErrMsg);
 
@@ -326,12 +340,16 @@ public slots:
 
         setDevID (dto.mDevID);
 
+        mReadedDevID = dto.mDevID;
+
         setState((eState)(mState + 1));
     }
 
     void onValveReadedInterfaceCfgEthCATPDODataType(ValveResponseInterfaceConfigEthCATPDODataTypeDto dto)
     {
         int idx = dto.mReqDto.mReqCommand.mid(QString(REQ_READ_INTERFACE_CFG_ETHCAT_PDO_DATA_TYPE).length(), 2).toInt();
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << convertPDOIdx(mState);
 
         if(idx != convertPDOIdx(mState) || dto.mReqDto.mpRef != this)
             return;
@@ -353,6 +371,8 @@ public slots:
     void onValveReadedInterfaceCfgEthCATPDORange(ValveResponseInterfaceConfigEthCATPDORangeDto dto)
     {
         int idx = dto.mReqDto.mReqCommand.mid(QString(REQ_READ_INTERFACE_CFG_ETHCAT_PDO_RANGE).length(), 2).toInt();
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << convertPDOIdx(mState);
 
         if(idx != convertPDOIdx(mState) || dto.mReqDto.mpRef != this)
             return;
@@ -407,10 +427,10 @@ public slots:
         mWriteDevID      = devID     ;
 
         setIsEdit(false);
-        foreach(InterfaceSetupEthCATItemModel * pItem, mPDOList)
-        {
-            pItem->setIsEdit(false);
-        }
+//        foreach(InterfaceSetupEthCATItemModel * pItem, mPDOList)
+//        {
+//            pItem->setIsEdit(false);
+//        }
 
         setErrMsg("");
         setErrMsg2("");
@@ -422,6 +442,8 @@ public slots:
     {
         if(mState != eState::STATE_WRITE_DI || dto.mReqDto.mpRef != this)
             return;
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
 
         if(dto.mIsNetworkErr)
         {
@@ -442,6 +464,8 @@ public slots:
         if(mState != eState::STATE_WRITE_DO || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(dto.mIsNetworkErr)
         {
             setState(mState);
@@ -461,6 +485,8 @@ public slots:
         //if(mState != STATE_WRITE_DEV_ID || dto.mReqDto.mpRef != this)
         //    return;
 
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+
         if(dto.mIsNetworkErr)
         {
             setState(mState);
@@ -478,6 +504,8 @@ public slots:
     void onValveWrittenInterfaceCfgEthCATPDODataType(ValveResponseDto dto)
     {
         int idx = dto.mReqDto.mReqCommand.mid(QString(REQ_WRITE_INTERFACE_CFG_ETHCAT_PDO_DATA_TYPE).length(), 2).toInt();
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << convertPDOIdx(mState);
 
         if(idx != convertPDOIdx(mState) || dto.mReqDto.mpRef != this)
             return;
@@ -497,6 +525,8 @@ public slots:
     void onValveWrittenInterfaceCfgEthCATPDORange(ValveResponseDto dto)
     {
         int idx = dto.mReqDto.mReqCommand.mid(QString(REQ_WRITE_INTERFACE_CFG_ETHCAT_PDO_RANGE).length(), 2).toInt();
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << convertPDOIdx(mState);
 
         if(idx != convertPDOIdx(mState) || dto.mReqDto.mpRef != this)
             return;
@@ -535,16 +565,24 @@ private:
     };
 
     QTimer mTimer;
-    eState mState         = eState::STATE_WRITE_DI;
+    eState mState          = eState::STATE_WRITE_DI;
 
-    bool mIsWritten       = false;
-    int  mWriteDIFunction = 0;
-    int  mWriteDIMode     = 0;
-    int  mWriteDIInput    = 0;
-    int  mWriteDOFunction = 0;
-    int  mWriteDOMode     = 0;
-    int  mWriteDOOutput   = 0;
-    int  mWriteDevID      = 0;
+    bool mIsWritten        = false;
+    int  mWriteDIFunction  = 0;
+    int  mWriteDIMode      = 0;
+    int  mWriteDIInput     = 0;
+    int  mWriteDOFunction  = 0;
+    int  mWriteDOMode      = 0;
+    int  mWriteDOOutput    = 0;
+    int  mWriteDevID       = 0;
+
+    int  mReadedDIFunction = 0;
+    int  mReadedDIMode     = 0;
+    int  mReadedDIInput    = 0;
+    int  mReadedDOFunction = 0;
+    int  mReadedDOMode     = 0;
+    int  mReadedDOOutput   = 0;
+    int  mReadedDevID      = 0;
 
     void startTimer()
     {
@@ -552,7 +590,7 @@ private:
         mTimer.start(100);
     }
 
-    void setState(eState state)
+    void setState(eState state, bool immediately = false)
     {
         int progress = 0;
         QString strStatus;
@@ -600,7 +638,10 @@ private:
         setProgress(progress);
         setStrStatus(strStatus);
 
-        startTimer();
+        if(immediately)
+            onTimeout();
+        else
+            startTimer();
     }
 
 public slots:
@@ -609,22 +650,57 @@ public slots:
         switch ((int)mState)
         {
         case (int)eState::STATE_READ_DI:
+            if(   mReadedDIFunction == mWriteDIFunction && mErrDIFunction == false
+               && mReadedDIMode     == mWriteDIMode     && mErrDIMode     == false
+               && mReadedDIInput    == mWriteDIInput    && mErrDIInput    == false
+               && mIsWritten)
+            {
+                setState((eState)(mState + 1), true);
+                return;
+            }
             pValveSP->readInterfaceConfigEthCATDi(this);
             break;
 
         case (int)eState::STATE_READ_DO:
+            if(   mReadedDOFunction == mWriteDOFunction && mErrDOFunction == false
+               && mReadedDOMode     == mWriteDOMode     && mErrDOMode     == false
+               && mReadedDOOutput   == mWriteDOOutput   && mErrDOOutput   == false
+               && mIsWritten)
+            {
+                setState((eState)(mState + 1), true);
+                return;
+            }
             pValveSP->readInterfaceConfigEthCATDo(this);
             break;
 
         case (int)eState::STATE_READ_DEV_ID:
+            if(   mReadedDevID == mWriteDevID && mErrDevID == false && mIsWritten)
+            {
+                setState((eState)(mState + 1), true);
+                return;
+            }
             pValveSP->readInterfaceConfigEthCATDevID(this);
             break;
 
         case (int)eState::STATE_WRITE_DI:
+            if(   mReadedDIFunction == mWriteDIFunction && mErrDIFunction == false
+               && mReadedDIMode     == mWriteDIMode     && mErrDIMode     == false
+               && mReadedDIInput    == mWriteDIInput    && mErrDIInput    == false)
+            {
+                setState((eState)(mState + 1), true);
+                return;
+            }
             pValveSP->setInterfaceConfigEthCATDi(mWriteDIFunction, mWriteDIMode, mWriteDIInput, this);
             break;
 
         case (int)eState::STATE_WRITE_DO:
+            if(  mReadedDOFunction == mWriteDOFunction && mErrDOFunction == false
+               &&mReadedDOMode     == mWriteDOMode     && mErrDOMode     == false
+               &&mReadedDOOutput   == mWriteDOOutput   && mErrDOOutput   == false)
+            {
+                setState((eState)(mState + 1), true);
+                return;
+            }
             pValveSP->setInterfaceConfigEthCATDo(mWriteDOFunction, mWriteDOMode, mWriteDOOutput, this);
             break;
 
@@ -635,11 +711,30 @@ public slots:
         default:
             if(mState >= STATE_READ_PDO_START && mState <= STATE_READ_PDO_END)
             {
+
+
+                if(mPDOList[convertPDOIdx(mState)]->getIsEdit() == false && mPDOList[convertPDOIdx(mState)]->getErrDataType() == false && mPDOList[convertPDOIdx(mState)]->getErrRangeFrom() == false && mPDOList[convertPDOIdx(mState)]->getErrRangeTo() == false && mIsWritten)
+                {
+                    setState((eState)(mState + 1), true);
+                    return;
+                }
+
+                qDebug() << "[khko_debug][" << Q_FUNC_INFO << "is edit = " << mPDOList[convertPDOIdx(mState)]->getIsEdit();
+
+                mPDOList[convertPDOIdx(mState)]->setIsEdit(false);
                 pValveSP->readInterfaceConfigEthCATPDODataType(convertPDOIdx(mState), this);
                 pValveSP->readInterfaceConfigEthCATPDORange(convertPDOIdx(mState), this);
             }
             else if(mState >= STATE_WRITE_PDO_START && mState <= STATE_WRITE_PDO_END)
             {
+                if(mPDOList[convertPDOIdx(mState)]->getIsEdit() == false && mPDOList[convertPDOIdx(mState)]->getErrDataType() == false && mPDOList[convertPDOIdx(mState)]->getErrRangeFrom() == false && mPDOList[convertPDOIdx(mState)]->getErrRangeTo() == false)
+                {
+                    setState((eState)(mState + 1), true);
+                    return;
+                }
+
+                qDebug() << "[khko_debug][" << Q_FUNC_INFO << "is edit = " << mPDOList[convertPDOIdx(mState)]->getIsEdit();
+
                 int dataType = mPDOList[convertPDOIdx(mState)]->getDataType();
                 QString Range = QString("%1to%2").arg(mPDOList[convertPDOIdx(mState)]->getRangeFrom()).arg(mPDOList[convertPDOIdx(mState)]->getRangeTo());
                 pValveSP->setInterfaceConfigEthCATPDODataType(convertPDOIdx(mState), dataType,this);
@@ -680,17 +775,18 @@ private:
             mPDOList[itemIdx]->setDataType(0); // only supported unsigned integer
             mPDOList[itemIdx]->setIsEdit(false);
         }
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]after : " << mPDOList[itemIdx]->getIsEdit();
     }
 
     void setPDOItemRange(int itemIdx, QString from, QString to)
     {
         if(mIsWritten)
         {
-
             mPDOList[itemIdx]->setErrRangeFrom(qAbs(mPDOList[itemIdx]->getRangeFrom().toDouble() - from.toDouble()) >= 0.00001);//mPDOList[itemIdx]->getRangeFrom() != from);
             mPDOList[itemIdx]->setErrRangeTo(qAbs(mPDOList[itemIdx]->getRangeTo().toDouble() - to.toDouble()) >= 0.00001); //mPDOList[itemIdx]->getRangeTo() != to);
 
-            if(mPDOList[itemIdx]->getRangeFrom() != from || mPDOList[itemIdx]->getRangeTo() != to)
+            if(mPDOList[itemIdx]->getErrRangeFrom() || mPDOList[itemIdx]->getErrRangeTo())
                 mPDOList[itemIdx]->setIsEdit(true);
         }
         else

@@ -152,6 +152,7 @@ BaseSetupWindow{
                         onSignalEventSelected: {
                             dialog.selControlModel = ValveEnumDef.PRESSURE_CTRL_ADAPTIVE
                             dlgModel.onCommandSetEdit(true)
+                            dlgModel.onCommandSetEditSelControl()
                         }
                     }
 
@@ -175,6 +176,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditAdapGainFactor()
                     }
                 }
 
@@ -197,6 +199,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditAdapDeltaFactor()
                     }
                 }
 
@@ -219,6 +222,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditAdapSensorDelay()
                     }
                 }
 
@@ -241,6 +245,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditAdapRampTime()
                     }
                 }
 
@@ -262,6 +267,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditAdapRampMode()
                     }
                 }
 
@@ -309,6 +315,7 @@ BaseSetupWindow{
                         onSignalEventSelected: {
                             dialog.selControlModel = ValveEnumDef.PRESSURE_CTRL_FIXED_DOWN
                             dlgModel.onCommandSetEdit(true)
+                            dlgModel.onCommandSetEditSelControl()
                         }
                     }
 
@@ -332,6 +339,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed1PGain()
                     }
                 }
 
@@ -354,6 +362,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed1IGain()
                     }
                 }
 
@@ -376,6 +385,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed1RampTime()
                     }
                 }
 
@@ -397,6 +407,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed1RampMode()
                     }
                 }
 
@@ -417,6 +428,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed1CtrlDir()
                     }
                 }
 
@@ -464,6 +476,7 @@ BaseSetupWindow{
                         onSignalEventSelected: {
                             dialog.selControlModel = ValveEnumDef.PRESSURE_CTRL_FIXED_UP
                             dlgModel.onCommandSetEdit(true)
+                            dlgModel.onCommandSetEditSelControl()
                         }
                     }
 
@@ -487,6 +500,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed2PGain()
                     }
                 }
 
@@ -509,6 +523,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed2IGain()
                     }
                 }
 
@@ -531,6 +546,7 @@ BaseSetupWindow{
 
                     onChangedText: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed2RampTime()
                     }
                 }
 
@@ -552,6 +568,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed2RampMode()
                     }
                 }
 
@@ -572,6 +589,7 @@ BaseSetupWindow{
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
+                        dlgModel.onCommandSetEditFixed2CtrlDir()
                     }
                 }
 

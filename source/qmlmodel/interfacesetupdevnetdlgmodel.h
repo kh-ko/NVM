@@ -374,7 +374,7 @@ public slots:
             return;
         }
 
-        setEnableMacAddr(true); // mac addr is not editable
+        setEnableMacAddr(true);
 
         if(mIsWritten)
         {
@@ -384,6 +384,8 @@ public slots:
         {
             setMacAddr(QString("%1").arg(dto.mMacAddr,2,10,QChar('0')));
         }
+
+        mReadedMAC = dto.mMacAddr;
 
         setState((eState)(mState + 1));
     }
@@ -401,7 +403,7 @@ public slots:
             return;
         }
 
-        setEnableBaudrateIdx(true); // mac addr is not editable
+        setEnableBaudrateIdx(true);
 
         qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]" << QString("res = %1, write = %2, baudrate = %3").arg(dto.mResData).arg(mWriteBaudrateIdx).arg(dto.mBaudrate);
 
@@ -413,6 +415,8 @@ public slots:
         {
             setBaudrateIdx(dto.mBaudrate);
         }
+
+        mReadedBaudrateIdx = dto.mBaudrate;
 
         setState((eState)(mState + 1));
     }
@@ -439,6 +443,8 @@ public slots:
             setPositionUnitIdx(transUnitToPosIdx(dto.mValue));
         }
 
+        mReadedPosUnit = dto.mValue.toLower();
+
         setState((eState)(mState + 1));
     }
 
@@ -463,6 +469,8 @@ public slots:
         {
             setPositionRange(calRange(dto.mValue));
         }
+
+        mReadedPosGain = dto.mValue.toLower();
 
         setState((eState)(mState + 1));
     }
@@ -489,6 +497,8 @@ public slots:
             setPressureUnitIdx(transUnitToPressureIdx(dto.mValue));
         }
 
+        mReadedPressureUnit = dto.mValue.toLower();
+
         setState((eState)(mState + 1));
     }
     void onValveReadedInterfaceCfgDNetSensor01Gain(ValveResponseSimpleValueDto dto)
@@ -512,6 +522,8 @@ public slots:
         {
             setSensor01Range(calRange(dto.mValue));
         }
+
+        mReadedSensor01Gain = dto.mValue.toLower();
 
         setState((eState)(mState + 1));
     }
@@ -537,6 +549,8 @@ public slots:
             setSensor02Range(calRange(dto.mValue));
         }
 
+        mReadedSensor02Gain = dto.mValue.toLower();
+
         setState((eState)(mState + 1));
     }
     void onValveReadedInterfaceCfgDNetInputAss(ValveResponseSimpleValueDto dto)
@@ -561,6 +575,10 @@ public slots:
             setInputAssemblySeqArrayByHexValue(dto.mValue);
         }
 
+        mReadedInAssembly = dto.mValue.toLower();
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]read in ass = " << mReadedInAssembly;
+
         setState((eState)(mState + 1));
     }
     void onValveReadedInterfaceCfgDNetOutputAss(ValveResponseSimpleValueDto dto)
@@ -584,6 +602,8 @@ public slots:
         {
             setOutputAssemblySeqArrayByHexValue(dto.mValue);
         }
+
+        mReadedOutAssembly = dto.mValue.toLower();
 
         setState((eState)(mState + 1));
     }
@@ -613,6 +633,10 @@ public slots:
             setDIFunction  (dto.mDIFunction  );
             setDIPolarity  (dto.mDIPolarity  );
         }
+
+        mReadedDIActivation = dto.mDIActivation;
+        mReadedDIFunction   = dto.mDIFunction;
+        mReadedDIPolarity   = dto.mDIPolarity;
 
         setState((eState)(mState + 1));
     }
@@ -657,6 +681,10 @@ public slots:
             setDOFunction  (dto.mDOFunction  );
             setDOPolarity  (dto.mDOPolarity  );
         }
+
+        mReadedDOActivation = dto.mDOActivation;
+        mReadedDOFunction   = dto.mDOFunction;
+        mReadedDOPolarity   = dto.mDOPolarity;
 
         setState((eState)(mState + 1));
     }
@@ -1073,13 +1101,29 @@ private:
     int     mWriteDOFunction      = 0;
     int     mWriteDOPolarity      = 0;
 
+    int     mReadedMAC             = 0;
+    int     mReadedBaudrateIdx     = 0;
+    QString mReadedPosUnit         = "1001";
+    QString mReadedPosGain         = "3F800000";
+    QString mReadedPressureUnit    = "1001";
+    QString mReadedSensor01Gain    = "3F800000";
+    QString mReadedSensor02Gain    = "3F800000";
+    QString mReadedInAssembly      = "00";
+    QString mReadedOutAssembly     = "00";
+    int     mReadedDIActivation    = 0;
+    int     mReadedDIFunction      = 0;
+    int     mReadedDIPolarity      = 0;
+    int     mReadedDOActivation    = 0;
+    int     mReadedDOFunction      = 0;
+    int     mReadedDOPolarity      = 0;
+
     void startTimer()
     {
         mTimer.stop();
         mTimer.start(100);
     }
 
-    void setState(eState state)
+    void setState(eState state, bool immediately = false)
     {
         int progress = 0;
         QString strStatus;
@@ -1112,7 +1156,10 @@ private:
         setProgress(progress);
         setStrStatus(strStatus);
 
-        startTimer();
+        if(immediately)
+            onTimeout();
+        else
+            startTimer();
     }
 
 public slots:
@@ -1120,28 +1167,79 @@ public slots:
     {
         switch ((int)mState)
         {
-        case (int)STATE_WRITE_MAC          : pValveSP->setInterfaceConfigDNetMacAddress   (QString("%1").arg(mWriteMAC, 2, 16, QChar('0'))        , this); break;
-        case (int)STATE_WRITE_BAUDRATE     : pValveSP->setInterfaceConfigDNetBaudrate     (QString("%1").arg(mWriteBaudrateIdx, 2, 10, QChar('0')), this); break;
-        case (int)STATE_WRITE_POS_UNIT     : pValveSP->setInterfaceConfigDNetPosUnit      (mWritePosUnit                                          , this); break;
-        case (int)STATE_WRITE_POS_GAIN     : pValveSP->setInterfaceConfigDNetPosGain      (mWritePosGain                                          , this); break;
-        case (int)STATE_WRITE_PRESSURE_UNIT: pValveSP->setInterfaceConfigDNetPressureUnit (mWritePressureUnit                                     , this); break;
-        case (int)STATE_WRITE_S01_GAIN     : pValveSP->setInterfaceConfigDNetSensor01Gain (mWriteSensor01Gain                                     , this); break;
-        case (int)STATE_WRITE_S02_GAIN     : pValveSP->setInterfaceConfigDNetSensor02Gain (mWriteSensor02Gain                                     , this); break;
-        case (int)STATE_WRITE_IN_ASS       : pValveSP->setInterfaceConfigDNetInputAss     (mWriteInAssembly                                       , this); break;
-        case (int)STATE_WRITE_OUT_ASS      : pValveSP->setInterfaceConfigDNetOutputAss    (mWriteOutAssembly                                      , this); break;
-        case (int)STATE_WRITE_DI           : pValveSP->setInterfaceConfigDNetDi           (mWriteDIActivation, mWriteDIFunction, mWriteDIPolarity , this); break;
-        case (int)STATE_WRITE_DO           : pValveSP->setInterfaceConfigDNetDo           (mWriteDOActivation, mWriteDOFunction, mWriteDOPolarity , this); break;
-        case (int)STATE_READ_MAC           : pValveSP->readInterfaceConfigDNetMac         (this); break;
-        case (int)STATE_READ_BAUDRATE      : pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
-        case (int)STATE_READ_POS_UNIT      : pValveSP->readInterfaceConfigDNetPosUnit     (this); break;
-        case (int)STATE_READ_POS_GAIN      : pValveSP->readInterfaceConfigDNetPosGain     (this); break;
-        case (int)STATE_READ_PRESSURE_UNIT : pValveSP->readInterfaceConfigDNetPressureUnit(this); break;
-        case (int)STATE_READ_S01_GAIN      : pValveSP->readInterfaceConfigDNetSensor01Gain(this); break;
-        case (int)STATE_READ_S02_GAIN      : pValveSP->readInterfaceConfigDNetSensor02Gain(this); break;
-        case (int)STATE_READ_IN_ASS        : pValveSP->readInterfaceConfigDNetInputAss    (this); break;
-        case (int)STATE_READ_OUT_ASS       : pValveSP->readInterfaceConfigDNetOutputAss   (this); break;
-        case (int)STATE_READ_DI            : pValveSP->readInterfaceConfigDNetDi          (this); break;
-        case (int)STATE_READ_DO            : pValveSP->readInterfaceConfigDNetDo          (this); break;
+        case (int)STATE_WRITE_MAC          : if(mReadedMAC          == mWriteMAC          && mErrMacAddr         == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetMacAddress   (QString("%1").arg(mWriteMAC, 2, 16, QChar('0'))        , this); break;
+        case (int)STATE_WRITE_BAUDRATE     : if(mReadedBaudrateIdx  == mWriteBaudrateIdx  && mErrBaudrateIdx     == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetBaudrate     (QString("%1").arg(mWriteBaudrateIdx, 2, 10, QChar('0')), this); break;
+        case (int)STATE_WRITE_POS_UNIT     : if(mReadedPosUnit      == mWritePosUnit      && mErrPositionUnitIdx == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetPosUnit      (mWritePosUnit                                          , this); break;
+        case (int)STATE_WRITE_POS_GAIN     : if(mReadedPosGain      == mWritePosGain      && mErrPositionRange   == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetPosGain      (mWritePosGain                                          , this); break;
+        case (int)STATE_WRITE_PRESSURE_UNIT: if(mReadedPressureUnit == mWritePressureUnit && mErrPressureUnitIdx == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetPressureUnit (mWritePressureUnit                                     , this); break;
+        case (int)STATE_WRITE_S01_GAIN     : if(mReadedSensor01Gain == mWriteSensor01Gain && mErrSensor01Range   == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetSensor01Gain (mWriteSensor01Gain                                     , this); break;
+        case (int)STATE_WRITE_S02_GAIN     : if(mReadedSensor02Gain == mWriteSensor02Gain && mErrSensor02Range   == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetSensor02Gain (mWriteSensor02Gain                                     , this); break;
+        case (int)STATE_WRITE_IN_ASS       : if(mReadedInAssembly   == mWriteInAssembly   && mErrInAssTableIdx   == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetInputAss     (mWriteInAssembly                                       , this); break;
+        case (int)STATE_WRITE_OUT_ASS      : if(mReadedOutAssembly  == mWriteOutAssembly  && mErrOutAssTableIdx  == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetOutputAss    (mWriteOutAssembly                                      , this); break;
+        case (int)STATE_WRITE_DI           :
+            if(   mReadedDIActivation == mWriteDIActivation && mErrDIActivation == false
+               && mReadedDIFunction   == mWriteDIFunction   && mErrDIFunction   == false
+               && mReadedDIPolarity   == mWriteDIPolarity   && mErrDIPolarity   == false)
+            {
+                setState((eState)(mState + 1), true);
+                return;
+            }
+            pValveSP->setInterfaceConfigDNetDi(mWriteDIActivation, mWriteDIFunction, mWriteDIPolarity , this);
+            break;
+        case (int)STATE_WRITE_DO           :
+            if(   mReadedDOActivation == mWriteDOActivation && mErrDOActivation == false
+               && mReadedDOFunction   == mWriteDOFunction   && mErrDOFunction   == false
+               && mReadedDOPolarity   == mWriteDOPolarity   && mErrDOPolarity   == false)
+            {
+                setState((eState)(mState + 1), true);
+                return;
+            }
+            pValveSP->setInterfaceConfigDNetDo(mWriteDOActivation, mWriteDOFunction, mWriteDOPolarity , this);
+            break;
+        case (int)STATE_READ_MAC           : if(mReadedMAC          == mWriteMAC          && mErrMacAddr         == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetMac         (this); break;
+        case (int)STATE_READ_BAUDRATE      : if(mReadedBaudrateIdx  == mWriteBaudrateIdx  && mErrBaudrateIdx     == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
+        case (int)STATE_READ_POS_UNIT      : if(mReadedPosUnit      == mWritePosUnit      && mErrPositionUnitIdx == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetPosUnit     (this); break;
+        case (int)STATE_READ_POS_GAIN      : if(mReadedPosGain      == mWritePosGain      && mErrPositionRange   == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetPosGain     (this); break;
+        case (int)STATE_READ_PRESSURE_UNIT : if(mReadedPressureUnit == mWritePressureUnit && mErrPressureUnitIdx == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetPressureUnit(this); break;
+        case (int)STATE_READ_S01_GAIN      : if(mReadedSensor01Gain == mWriteSensor01Gain && mErrSensor01Range   == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetSensor01Gain(this); break;
+        case (int)STATE_READ_S02_GAIN      : if(mReadedSensor02Gain == mWriteSensor02Gain && mErrSensor02Range   == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetSensor02Gain(this); break;
+        case (int)STATE_READ_IN_ASS        : if(mReadedInAssembly   == mWriteInAssembly   && mErrInAssTableIdx   == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetInputAss    (this); break;
+        case (int)STATE_READ_OUT_ASS       : if(mReadedOutAssembly  == mWriteOutAssembly  && mErrOutAssTableIdx  == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetOutputAss   (this); break;
+        case (int)STATE_READ_DI            :
+            if(   mReadedDIActivation == mWriteDIActivation && mErrDIActivation == false
+               && mReadedDIFunction   == mWriteDIFunction   && mErrDIFunction   == false
+               && mReadedDIPolarity   == mWriteDIPolarity   && mErrDIPolarity   == false
+               && mIsWritten)
+            {
+                setState((eState)(mState + 1), true);
+                return;
+            }
+            pValveSP->readInterfaceConfigDNetDi          (this); break;
+        case (int)STATE_READ_DO            :
+            if(   mReadedDOActivation == mWriteDOActivation && mErrDOActivation == false
+               && mReadedDOFunction   == mWriteDOFunction   && mErrDOFunction   == false
+               && mReadedDOPolarity   == mWriteDOPolarity   && mErrDOPolarity   == false
+               && mIsWritten)
+            {
+                onCommandSetEdit(getErrDataTypeIdx    ()||
+                                 getErrPositionUnitIdx()||
+                                 getErrPositionRange  ()||
+                                 getErrPressureUnitIdx()||
+                                 getErrSensor01Range  ()||
+                                 getErrSensor02Range  ()||
+                                 getErrInAssTableIdx  ()||
+                                 getErrOutAssTableIdx ()||
+                                 getErrDIActivation   ()||
+                                 getErrDIFunction     ()||
+                                 getErrDIPolarity     ()||
+                                 getErrDOActivation   ()||
+                                 getErrDOFunction     ()||
+                                 getErrDOPolarity     ());
+
+                setState((eState)(mState + 1), true);
+                return;
+            }
+            pValveSP->readInterfaceConfigDNetDo          (this); break;
         }
     }
 
