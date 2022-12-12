@@ -50,6 +50,10 @@ NWindow{
                 else
                     close()
             }
+
+            onClickMinimized: {
+                nwindow.showMinimized()
+            }
         }
 
         Rectangle{

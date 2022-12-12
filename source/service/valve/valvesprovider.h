@@ -508,7 +508,8 @@ public:
     int         getInterface                    (){ return mInterface         ;}
     int         getSensorVersion                (){ return mSensorVersion     ;}
     qint64      getScanRate                     (){ return mScanRate          ;}
-    bool        getIsRS232Test                  (){ return mIsRS232Test       ;}
+    //bool        getIsRS232Test                  (){ return mIsRS232Test       ;}
+    bool        getIsRS232Test                  (){ return mAccess == ValveEnumDef::ACCESS_REMOTE;}
     // set properties
     void        setIsRunning                    (bool        value){ if(mIsRunning          == value) return; mIsRunning          = value; emit signalEventChangedIsRunning         (value); }
     void        setIsConnected                  (bool        value){ if(mIsConnected        == value) return; mIsConnected        = value; emit signalEventChangedIsConnected       (value); }

@@ -46,6 +46,10 @@ NWindow{ // khko_todo
             onClickClose: {
                 dialog.close();
             }
+
+            onClickMinimized: {
+                dialog.showMinimized()
+            }
         }
 
         Rectangle{

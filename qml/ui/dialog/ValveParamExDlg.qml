@@ -257,6 +257,10 @@ NWindow{ // khko_todo
                 else
                     dialog.openCloseConfirmDlg()
             }
+
+            onClickMinimized: {
+                dialog.showMinimized()
+            }
         }
 
         Rectangle{

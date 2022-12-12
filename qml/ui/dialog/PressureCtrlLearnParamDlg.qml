@@ -220,6 +220,10 @@ NWindow{
                 else
                     dialog.openCloseConfirmDlg()
             }
+
+            onClickMinimized: {
+                dialog.showMinimized()
+            }
         }
 
         Rectangle{

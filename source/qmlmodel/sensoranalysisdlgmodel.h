@@ -262,7 +262,7 @@ public:
         ENABLE_SLOT_VALVE_CHANGED_ACCESS;
         ENABLE_SLOT_VALVE_CHANGED_IS_RS232_TEST;
         ENABLE_SLOT_VALVE_CHANGED_SENSOR_VERSION;
-        ENABLE_SLOT_VALVE_CHANGED_PRESSURE_DB_UNIT;
+        //ENABLE_SLOT_VALVE_CHANGED_PRESSURE_DB_UNIT;
         ENABLE_SLOT_VALVE_READED_SENSOR_CONFIG;
         ENABLE_SLOT_VALVE_READED_SENSEX_CROSSOVER_HIGH;
         ENABLE_SLOT_VALVE_READED_SENSEX_CROSSOVER_LOW;
@@ -274,7 +274,8 @@ public:
         onValveChangedAccess();
         onValveChangedIsRS232Test();
         onValveChangedSensorVersion();
-        onValveChangedPressureDpUnit();
+        setDpUnit(pValveSP->getPressureDpUnit());
+        //onValveChangedPressureDpUnit();
 
         mTimer.setSingleShot(true);
         connect(&mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));

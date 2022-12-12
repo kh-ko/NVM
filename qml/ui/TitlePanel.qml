@@ -23,9 +23,9 @@ Rectangle {
         width: GUISetting.title_btn_access_width; height: parent.height
         iconSource: "/image/icon-key.png"
         textSource: panel.isLocal && panel.isRS232Test == false? qsTr("Remote") :
-                    panel.isLocal && panel.isRS232Test == true ? qsTr("Remote(RS232 Test)") :
+                    panel.isLocal && panel.isRS232Test == true ? qsTr("Remote") :
                     panel.isLocal == false && panel.isRS232Test == false? qsTr("Local") :
-                    panel.isLocal == false && panel.isRS232Test == true ? qsTr("Local(RS232 Test)") : ""
+                    panel.isLocal == false && panel.isRS232Test == true ? qsTr("Local") : ""
 
         enabled   : connected
 
