@@ -378,7 +378,7 @@ Window {
             nameFilters: ["Text files (*.txt)"]
 
             onAccepted: {
-                model.onCommandSaveRecordData(currentFile.toString().split("///")[1] + ".txt")
+                model.onCommandSaveRecordData(currentFile.toString().split("///")[1])
             }
             onRejected: {
             }
