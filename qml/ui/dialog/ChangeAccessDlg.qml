@@ -83,9 +83,13 @@ NPopup {
                     Layout.fillWidth: true
                     Layout.preferredWidth: 1
 
-                    text.text: qsTr("Cancle")
+                    text.text: qsTr("Ignore")
 
                     onClick: {
+                        if(caller !== null)
+                        {
+                            caller.onResultChangeAccess(true);
+                        }
                         dialog.close();
                     }
                 }

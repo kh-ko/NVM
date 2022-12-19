@@ -44,7 +44,6 @@ private:
     const QString mDevModeIsOnKey           = "dev/is_on"                      ;
 
 public:
-
     static LocalSettingSProvider * getInstance()
     {
         static LocalSettingSProvider *mpSelf = nullptr;
@@ -60,8 +59,8 @@ public:
     QList<int> mChartMSecOption = {30000, 60000, 120000, 300000};
 
     qint64  mMonitoringCycle       = 10;
-    QString mBuildVersion          = "1.9.12";
-    bool    mIsWithoutLogo         = false;
+    QString mBuildVersion          = "1.9.13";
+    bool    mIsWithoutLogo         = true;
 
     bool    mIsDrawCurrPos         = true ;
     bool    mIsDrawTargetPos       = true ;
