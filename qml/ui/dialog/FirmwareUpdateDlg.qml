@@ -134,12 +134,16 @@ NWindow{
                     id : cpu1KernelFileText
                     height: 24 * GUISetting.scale;
                     anchors.top: selFileTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: cpu1KernelFileBtn.left; anchors.rightMargin: GUISetting.margin * 2
+                    enabled: dlgModel.mCpu1KernelFile == "" ? true : false
+                    textField.text : dlgModel.mCpu1KernelFile
                 }
 
                 NButton{
                     id : cpu1KernelFileBtn
                     height: 24 * GUISetting.scale; width: 130 * GUISetting.scale
                     anchors.verticalCenter: cpu1KernelFileText.verticalCenter; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin * 2
+
+                    enabled: dlgModel.mCpu1KernelFile == "" ? true : false
 
                     text.text: qsTr("cpu1 kernel file")
 
@@ -172,12 +176,15 @@ NWindow{
                     id : cpu2KernelFileText
                     height: 24 * GUISetting.scale;
                     anchors.top: cpu1AppFileText.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: cpu2KernelFileBtn.left; anchors.rightMargin: GUISetting.margin * 2
+                    enabled: dlgModel.mCpu2KernelFile == "" ? true : false
+                    textField.text : dlgModel.mCpu2KernelFile
                 }
 
                 NButton{
                     id : cpu2KernelFileBtn
                     height: 24 * GUISetting.scale; width: 130 * GUISetting.scale
                     anchors.verticalCenter: cpu2KernelFileText.verticalCenter; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin * 2
+                    enabled: dlgModel.mCpu2KernelFile == "" ? true : false
 
                     text.text: qsTr("cpu2 kernel file")
 
@@ -294,12 +301,35 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
+                    visible: dlgModel.mDFUStep == FirmwareUpdateUiStepDef.REBOOT_VALVE
+
+                    NText{
+                        height: 24 * GUISetting.scale;
+                        anchors.top: parent.top;
+                        text : qsTr("1.Reboot the valve (4/17)")
+                    }
+
+                    NButton{
+                        height: 24 * GUISetting.scale; width: 100 * GUISetting.scale
+                        anchors.bottom: parent.bottom; anchors.right: parent.right;
+
+                        text.text: qsTr("Next")
+
+                        onClick: {
+                            dlgModel.onCommandNext()
+                        }
+                    }
+                }
+
+                Item{
+                    anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
                     visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.SELECT_FILE_PORT
 
                     NText{
                         height: 24 * GUISetting.scale;
                         anchors.top: parent.top;
-                        text : qsTr("4.Select this firmeware files and connected port (4/17)")
+                        text : qsTr("4.Select this firmeware files and connected port (5/17)")
                     }
 
                     NButton{
@@ -327,7 +357,7 @@ NWindow{
                     NText{
                         height: 24 * GUISetting.scale;
                         anchors.top: parent.top;
-                        text : qsTr("5.Start firmware update (5/17)")
+                        text : qsTr("5.Start firmware update (6/17)")
                     }
 
                     NButton{
@@ -342,16 +372,16 @@ NWindow{
                     }
                 }
 
-                Item{
-                    anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+//                Item{
+//                    anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.REBOOT_SCI_MODE
+//                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.REBOOT_SCI_MODE
 
-                    NText{
-                        anchors.verticalCenter: parent.verticalCenter
-                        text : qsTr("6.Rebooting for firmware download (6/17)")
-                    }
-                }
+//                    NText{
+//                        anchors.verticalCenter: parent.verticalCenter
+//                        text : qsTr("6.Rebooting for firmware download (6/17)")
+//                    }
+//                }
 
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
@@ -589,7 +619,7 @@ NWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter
-                        text : qsTr("Finish")
+                        text : qsTr("Finish<br>Disconnect the download adapter and reboot the valve")
 
                         visible: dlgModel.mErrMsg === ""
                     }

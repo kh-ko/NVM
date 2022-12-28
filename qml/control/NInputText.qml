@@ -66,6 +66,10 @@ Item {
                 setTextByValue(text)
                 control.changedValue(text)
             }
+            else
+            {
+                _textField.selectAll()
+            }
         }
 
         onFocusChanged: {

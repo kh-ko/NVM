@@ -801,38 +801,42 @@ public slots:
 
     void onCommandReadyFirmwareUpdate()
     {
-        IValve::eValveError err = IValve::NoError;
-        QString response;
-        bool isSucc;
+//        IValve::eValveError err = IValve::NoError;
+//        QString response;
+//        bool isSucc;
 
-        qDebug() << "[" << Q_FUNC_INFO << "]";
+//        qDebug() << "[" << Q_FUNC_INFO << "]";
 
-        isSucc = mConn.sendCmd(REQ_READY_DFU, "", REQ_READY_DFU, RES_READY_DFU_DATA_LEN, response, mTimeout, &err);
+//        isSucc = mConn.sendCmd(REQ_READY_DFU, "", REQ_READY_DFU, RES_READY_DFU_DATA_LEN, response, mTimeout, &err);
 
-        if(!isSucc && err != IValve::ResourceError)
-        {
-            isSucc = mConn.sendCmd(REQ_READY_DFU, "", REQ_READY_DFU, RES_READY_DFU_DATA_LEN, response, mTimeout, &err);
-        }
+//        if(!isSucc && err != IValve::ResourceError)
+//        {
+//            isSucc = mConn.sendCmd(REQ_READY_DFU, "", REQ_READY_DFU, RES_READY_DFU_DATA_LEN, response, mTimeout, &err);
+//        }
 
-        if(isSucc)
-        {
-            mConn.disconnectValve();
-            emit signalResultReadyFirmwareUpdate(true);
-            setIsConnecting(false, false);
-            return;
-        }
+//        if(isSucc)
+//        {
+//            mConn.disconnectValve();
+//            emit signalResultReadyFirmwareUpdate(true);
+//            setIsConnecting(false, false);
+//            return;
+//        }
 
-        if(!isSucc && err == IValve::ResourceError)
-        {
-            mConn.disconnectValve();
-            emit signalResultReadyFirmwareUpdate(false);
-            setIsConnecting(false, false);
-            return;
-        }
+//        if(!isSucc && err == IValve::ResourceError)
+//        {
+//            mConn.disconnectValve();
+//            emit signalResultReadyFirmwareUpdate(false);
+//            setIsConnecting(false, false);
+//            return;
+//        }
 
-        emit signalResultReadyFirmwareUpdate(false);
+//        emit signalResultReadyFirmwareUpdate(false);
 
-        setIsConnecting(false, true);
+//        setIsConnecting(false, true);
+
+        mConn.disconnectValve();
+        emit signalResultReadyFirmwareUpdate(true);
+        setIsConnecting(false, false);
     }
 
     void onCommandRequest(ValveRequestDto  dto)

@@ -44,7 +44,132 @@ BaseSetupWindow{
         var version03        = body.version03Combo.currentIndex
         var productNumber    = parseInt(body.productNumberInput.textField.text, 16)
 
+        body.serialNumberInput.textField.text = dialog.buildSerialNumberByGUI();
+        body.serialNumberInput.isInvalidValue = false
+
+
         dlgModel.onCommandApply(valveModel, valveType, sealingType, flangeSize, methodOfContract, bodyMaterial, commInterface, powerOption, quantifyOfSensor, version01, version02, version03, productNumber)
+    }
+
+    function containModelValue(value, model, startIdx, len)
+    {
+        for(var mi = 0; mi  < model.length; mi++)
+        {
+            if(model[mi].toUpperCase() === "UNKNOW")
+                continue;
+
+            if(value === model[mi].substr(startIdx,len))
+                return mi;
+        }
+        return -1;
+    }
+
+    function getModelValue(index, model, startIdx, len)
+    {
+        return model[index].substr(startIdx,len)
+    }
+
+    function buildSerialNumberByGUI()
+    {
+        var retSerialNumber = "";
+
+        retSerialNumber = retSerialNumber + getModelValue(body.valveModelCombo.currentIndex       , body.valveModelCombo.model      , 0, 1) + "-"
+        retSerialNumber = retSerialNumber + getModelValue(body.valveTypeCombo.currentIndex        , body.valveTypeCombo.model       , 0, 1) + "-"
+        retSerialNumber = retSerialNumber + getModelValue(body.sealingTypeCombo.currentIndex      , body.sealingTypeCombo.model     , 0, 1) + "-"
+        retSerialNumber = retSerialNumber + getModelValue(body.flangeSizeCombo.currentIndex       , body.flangeSizeCombo.model      , 0, 3) + "-"
+        retSerialNumber = retSerialNumber + getModelValue(body.methodOfContractCombo.currentIndex , body.methodOfContractCombo.model, 0, 1) + "-"
+        retSerialNumber = retSerialNumber + getModelValue(body.bodyMaterialCombo.currentIndex     , body.bodyMaterialCombo.model    , 0, 1) + "-"
+        retSerialNumber = retSerialNumber + getModelValue(body.commInterfaceCombo.currentIndex    , body.commInterfaceCombo.model   , 0, 2) + "-"
+        retSerialNumber = retSerialNumber + getModelValue(body.powerOptionCombo.currentIndex      , body.powerOptionCombo.model     , 0, 1) + "-"
+        retSerialNumber = retSerialNumber + getModelValue(body.quantifyOfSensorCombo.currentIndex , body.quantifyOfSensorCombo.model, 0, 1) + "-R"
+        retSerialNumber = retSerialNumber + getModelValue(body.version01Combo.currentIndex        , body.version01Combo.model       , 0, 1)
+        retSerialNumber = retSerialNumber + getModelValue(body.version02Combo.currentIndex        , body.version02Combo.model       , 0, 1)
+        retSerialNumber = retSerialNumber + getModelValue(body.version03Combo.currentIndex        , body.version03Combo.model       , 0, 1) + "-"
+        retSerialNumber = retSerialNumber + body.productNumberInput.textField.text
+
+        return retSerialNumber;
+    }
+
+    function setValveIDBySerialNumber(inputValue)
+    {
+        if(inputValue.length !== 20)
+        {
+            return false;
+        }
+
+        if(inputValue.substr(12, 1) !== "R")
+        {
+            return false;
+        }
+
+        //0 1 2 345 6 7 89 0 1 2 3 4 5 6789
+        //A B N 080 F S DN D 2 R 0 0 F 000E
+
+        var valveModelValue       = inputValue.substr( 0, 1)
+        var valveTypeValue        = inputValue.substr( 1, 1)
+        var sealingTypeValue      = inputValue.substr( 2, 1)
+        var flangeSizeValue       = inputValue.substr( 3, 3)
+        var methodOfContractValue = inputValue.substr( 6, 1)
+        var bodyMaterialValue     = inputValue.substr( 7, 1)
+        var commInterfaceValue    = inputValue.substr( 8, 2)
+        var powerOptionValue      = inputValue.substr(10, 1)
+        var quantifyOfSensorValue = inputValue.substr(11, 1)
+        var version01Value        = inputValue.substr(13, 1)
+        var version02Value        = inputValue.substr(14, 1)
+        var version03Value        = inputValue.substr(15, 1)
+        var productNumberValue    = inputValue.substr(16, 4)
+
+        var valveModelIdx         = containModelValue(valveModelValue      , body.valveModelCombo.model      , 0, 1)
+        var valveTypeIdx          = containModelValue(valveTypeValue       , body.valveTypeCombo.model       , 0, 1)
+        var sealingTypeIdx        = containModelValue(sealingTypeValue     , body.sealingTypeCombo.model     , 0, 1)
+        var flangeSizeIdx         = containModelValue(flangeSizeValue      , body.flangeSizeCombo.model      , 0, 3)
+        var methodOfContractIdx   = containModelValue(methodOfContractValue, body.methodOfContractCombo.model, 0, 1)
+        var bodyMaterialIdx       = containModelValue(bodyMaterialValue    , body.bodyMaterialCombo.model    , 0, 1)
+        var commInterfaceIdx      = containModelValue(commInterfaceValue   , body.commInterfaceCombo.model   , 0, 2)
+        var powerOptionIdx        = containModelValue(powerOptionValue     , body.powerOptionCombo.model     , 0, 1)
+        var quantifyOfSensorIdx   = containModelValue(quantifyOfSensorValue, body.quantifyOfSensorCombo.model, 0, 1)
+        var version01Idx          = containModelValue(version01Value       , body.version01Combo.model       , 0, 1)
+        var version02Idx          = containModelValue(version02Value       , body.version02Combo.model       , 0, 1)
+        var version03Idx          = containModelValue(version03Value       , body.version03Combo.model       , 0, 1)
+
+        if(valveModelIdx       === -1) return false;
+        if(valveTypeIdx        === -1) return false;
+        if(sealingTypeIdx      === -1) return false;
+        if(flangeSizeIdx       === -1) return false;
+        if(methodOfContractIdx === -1) return false;
+        if(bodyMaterialIdx     === -1) return false;
+        if(commInterfaceIdx    === -1) return false;
+        if(powerOptionIdx      === -1) return false;
+        if(quantifyOfSensorIdx === -1) return false;
+        if(version01Idx        === -1) return false;
+        if(version02Idx        === -1) return false;
+        if(version03Idx        === -1) return false;
+
+        if((!(productNumberValue.charAt(0) >= '0' && productNumberValue.charAt(0) <= '9') && !(productNumberValue.charAt(0) >= 'A' && productNumberValue.charAt(0) <= 'F'))
+         ||(!(productNumberValue.charAt(1) >= '0' && productNumberValue.charAt(1) <= '9') && !(productNumberValue.charAt(1) >= 'A' && productNumberValue.charAt(1) <= 'F'))
+         ||(!(productNumberValue.charAt(2) >= '0' && productNumberValue.charAt(2) <= '9') && !(productNumberValue.charAt(2) >= 'A' && productNumberValue.charAt(2) <= 'F'))
+         ||(!(productNumberValue.charAt(3) >= '0' && productNumberValue.charAt(3) <= '9') && !(productNumberValue.charAt(3) >= 'A' && productNumberValue.charAt(3) <= 'F')))
+            return false;
+
+        body.valveModelCombo.currentIndex       = valveModelIdx
+        body.valveTypeCombo.currentIndex        = valveTypeIdx
+        body.sealingTypeCombo.currentIndex      = sealingTypeIdx
+        body.flangeSizeCombo.currentIndex       = flangeSizeIdx
+        body.methodOfContractCombo.currentIndex = methodOfContractIdx
+        body.bodyMaterialCombo.currentIndex     = bodyMaterialIdx
+        body.commInterfaceCombo.currentIndex    = commInterfaceIdx
+        body.powerOptionCombo.currentIndex      = powerOptionIdx
+        body.quantifyOfSensorCombo.currentIndex = quantifyOfSensorIdx
+        body.version01Combo.currentIndex        = version01Idx
+        body.version02Combo.currentIndex        = version02Idx
+        body.version03Combo.currentIndex        = version03Idx
+
+        if(body.productNumberInput.textField.text  !== productNumberValue)
+             dlgModel.onCommandSetEdit(true)
+
+        body.productNumberInput.textField.text  = productNumberValue
+
+        return true;
     }
 
     Component.onCompleted: {
@@ -57,6 +182,7 @@ BaseSetupWindow{
         id : dlgModel
 
         onSignalEventCompletedLoad: {
+            body.serialNumberInput.textField.text   = dlgModel.mSerialNumber
             body.valveModelCombo.currentIndex       = dlgModel.mValveModel
             body.valveTypeCombo.currentIndex        = dlgModel.mValveType
             body.sealingTypeCombo.currentIndex      = dlgModel.mSealingType
@@ -79,6 +205,7 @@ BaseSetupWindow{
         id : bodyImpl
 
         Rectangle{
+            property alias serialNumberInput     : _serialNumberInput
             property alias valveModelCombo       : _valveModelCombo
             property alias valveTypeCombo        : _valveTypeCombo
             property alias sealingTypeCombo      : _sealingTypeCombo
@@ -143,7 +270,36 @@ BaseSetupWindow{
                     anchors.top: generalTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: serialNumberLabel.right; anchors.leftMargin: GUISetting.margin * 2
                     height: 24  * GUISetting.scale; width : parent.width - (GUISetting.margin + serialNumberLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
+                    visible: !dialog.unlock
                     text : dlgModel.mSerialNumber
+                }
+
+                NInputText{
+                    id : _serialNumberInput
+
+                    property bool isInvalidValue : false
+                    anchors.verticalCenter: serialNumber.verticalCenter; anchors.horizontalCenter: serialNumber.horizontalCenter
+                    height: 24  * GUISetting.scale; width : serialNumber.width
+
+                    textField.color: isInvalidValue ? "#FF0000" : "#000000" //textColor
+                    enabled: dialog.progress === 100
+                    visible: dialog.unlock
+                    //textField.text: seqItem.seqItemModel.mCommand
+
+                    onChangedValue: {
+
+                        while(value.search("-") > -1)
+                            value = value.replace("-","");
+
+                        while(value.search(" ") > -1)
+                            value = value.replace(" ","");
+
+                        _serialNumberInput.isInvalidValue = !dialog.setValveIDBySerialNumber(value)
+
+                        if( _serialNumberInput.isInvalidValue === false)
+                            textField.text = dialog.buildSerialNumberByGUI()
+
+                    }
                 }
 
                 NText{
@@ -299,7 +455,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "K : ISO-KF", "ISO : F"]
+                    model: ["Unknow", "K : ISO-KF", "F : ISO"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
