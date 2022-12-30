@@ -306,7 +306,7 @@ NWindow{
                     NText{
                         height: 24 * GUISetting.scale;
                         anchors.top: parent.top;
-                        text : qsTr("1.Reboot the valve (4/17)")
+                        text : qsTr("4.If the valve is powered on, power cycle it.If not, turn it on.(4/17)")
                     }
 
                     NButton{
@@ -329,7 +329,7 @@ NWindow{
                     NText{
                         height: 24 * GUISetting.scale;
                         anchors.top: parent.top;
-                        text : qsTr("4.Select this firmeware files and connected port (5/17)")
+                        text : qsTr("5.Select this firmware files and connected port (5/17)")
                     }
 
                     NButton{
@@ -357,7 +357,7 @@ NWindow{
                     NText{
                         height: 24 * GUISetting.scale;
                         anchors.top: parent.top;
-                        text : qsTr("5.Start firmware update (6/17)")
+                        text : qsTr("6.Start firmware update (6/17)")
                     }
 
                     NButton{
