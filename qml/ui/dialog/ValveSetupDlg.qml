@@ -25,6 +25,7 @@ BaseSetupWindow{
         dlgModel.onCommandApply(speed,
                                 body.valveTargetPosSyncCombo.currentIndex,
                                 body.valveEventSyncCombo.currentIndex,
+                                body.valveSyncModeCombo.currentIndex,
                                 body.valveLimitationCombo.currentIndex,
                                 body.valveTargetPosPowerFailCombo.currentIndex,
                                 body.valveTargetPosNetworkFailCombo.currentIndex);
@@ -44,6 +45,7 @@ BaseSetupWindow{
             body.valveSpeedInput.setValue(mValveSpeed)
             body.valveTargetPosSyncCombo.currentIndex        = mTargetPosSync
             body.valveEventSyncCombo.currentIndex            = mEventSync
+            body.valveSyncModeCombo.currentIndex             = mSyncMode
             body.valveLimitationCombo.currentIndex           = mStrokeLimitation
             body.valveTargetPosPowerFailCombo.currentIndex   = mTargetPosPowerFail
             body.valveTargetPosNetworkFailCombo.currentIndex = mTargetPosNetworkFail
@@ -62,6 +64,7 @@ BaseSetupWindow{
             property alias  valveSpeedInput                : _valveSpeedInput
             property alias  valveTargetPosSyncCombo        : _valveTargetPosSyncCombo
             property alias  valveEventSyncCombo            : _valveEventSyncCombo
+            property alias  valveSyncModeCombo             : _valveSyncModeCombo
             property alias  valveLimitationCombo           : _valveLimitationCombo
             property alias  valveTargetPosPowerFailCombo   : _valveTargetPosPowerFailCombo
             property alias  valveTargetPosNetworkFailCombo : _valveTargetPosNetworkFailCombo
@@ -122,7 +125,7 @@ BaseSetupWindow{
             Rectangle{
                 id : valveSyncItem
 
-                height: (GUISetting.margin + valveSyncTitle.height) + (GUISetting.margin + _valveTargetPosSyncCombo.height) + (GUISetting.margin + _valveEventSyncCombo.height) + GUISetting.margin
+                height: (GUISetting.margin + valveSyncTitle.height) + (GUISetting.margin + _valveTargetPosSyncCombo.height) + (GUISetting.margin + _valveEventSyncCombo.height) + (GUISetting.margin + _valveSyncModeCombo.height) + GUISetting.margin
                 anchors.top: valveSpeedItem.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin
 
                 color: "#FFFFFF"
@@ -172,6 +175,26 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _valveEventSyncCombo.verticalCenter; anchors.left: _valveEventSyncCombo.right; anchors.leftMargin: GUISetting.margin
                     text : qsTr("event to start synchronization")
+                }
+
+                NComboBox{
+                    id : _valveSyncModeCombo
+                    width: 150 * GUISetting.scale; height: 24 * GUISetting.scale
+                    anchors.top: _valveEventSyncCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    textColor: dlgModel.mErrSyncMode ? "#FF0000" : "#000000"
+                    enabled: dialog.progress === 100
+
+                    model: ["short","extended"]
+
+                    onCurrentIndexChanged: {
+                        dlgModel.onCommandSetEdit(true)
+                    }
+                }
+
+                NText{
+                    anchors.verticalCenter: _valveSyncModeCombo.verticalCenter; anchors.left: _valveSyncModeCombo.right; anchors.leftMargin: GUISetting.margin
+                    text : qsTr("synchronization mode")
                 }
             }
 

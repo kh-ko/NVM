@@ -55,7 +55,8 @@ ApplicationWindow {
         BorderImage {
             id : bgImage
             height: nwindow.height; width: nwindow.width
-            anchors.verticalCenter: parent.verticalCenter; anchors.horizontalCenter: parent.horizontalCenter
+            x:0; y : 0
+            //anchors.verticalCenter: parent.verticalCenter; anchors.horizontalCenter: parent.horizontalCenter
             source: "/image/card-flat.png"
             border.left: 2; border.top: 2
             border.right: 2; border.bottom: 2

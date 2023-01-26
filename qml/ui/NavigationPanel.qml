@@ -34,6 +34,7 @@ Rectangle {
     signal clickToolFirmwareUpdate()
     signal clickNCPASettings()
     signal clickAdvToolTest()
+    signal clickAdvBackupNRestore()
     signal clickHelpManual()
     signal clickHelpAbout()
     signal clickHelpVisitNOVASEN()
@@ -294,6 +295,17 @@ Rectangle {
                         panel.clickAdvToolTest()
                     }
                 }
+
+                /*
+                NExButtonItem{
+                    id : menuBackupNRestore
+                    anchors.bottom: parent.bottom
+                    text.text: qsTr("Backup and resotore")
+                    enabled: !GlobalUiValue.disableWinCreateBtn
+
+                    onClicked: { panel.clickAdvBackupNRestore()}
+                }
+                */
             }
 
             NExButton{

@@ -671,6 +671,7 @@ class ValveResponseValveSetupDto : public ValveResponseDto
 public:
     int mTargetPosSync        = 0;
     int mEventSync            = 0;
+    int mSyncMode             = 0;
     int mStrokeLimitation     = 0;
     int mTargetPosPowerFail   = 0;
     int mTargetPosNetworkFail = 0;
@@ -681,6 +682,7 @@ public:
     ValveResponseValveSetupDto(const ValveResponseValveSetupDto& copy) : ValveResponseDto(copy),
         mTargetPosSync       (copy.mTargetPosSync       ),
         mEventSync           (copy.mEventSync           ),
+        mSyncMode            (copy.mSyncMode            ),
         mStrokeLimitation    (copy.mStrokeLimitation    ),
         mTargetPosPowerFail  (copy.mTargetPosPowerFail  ),
         mTargetPosNetworkFail(copy.mTargetPosNetworkFail){}
@@ -693,6 +695,7 @@ public:
 
         mTargetPosSync        = other.mTargetPosSync       ;
         mEventSync            = other.mEventSync           ;
+        mSyncMode             = other.mSyncMode            ;
         mStrokeLimitation     = other.mStrokeLimitation    ;
         mTargetPosPowerFail   = other.mTargetPosPowerFail  ;
         mTargetPosNetworkFail = other.mTargetPosNetworkFail;
@@ -702,8 +705,8 @@ public:
 
     QString toString()
     {
-        return QString("%1, mTargetPosSync = %2, mEventSync = %3, mStrokeLimitation = %4, mTargetPosPowerFail = %5, mTargetPosNetworkFail = %6").arg(ValveResponseDto::toString())
-                        .arg(mTargetPosSync).arg(mEventSync).arg(mStrokeLimitation).arg(mTargetPosPowerFail).arg(mTargetPosNetworkFail);
+        return QString("%1, mTargetPosSync = %2, mEventSync = %3, mSyncMode = %4, mStrokeLimitation = %5, mTargetPosPowerFail = %6, mTargetPosNetworkFail = %7").arg(ValveResponseDto::toString())
+                        .arg(mTargetPosSync).arg(mEventSync).arg(mSyncMode).arg(mStrokeLimitation).arg(mTargetPosPowerFail).arg(mTargetPosNetworkFail);
     }
 };
 

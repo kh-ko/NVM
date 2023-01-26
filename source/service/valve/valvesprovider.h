@@ -1852,7 +1852,7 @@ public :
     void setFixed2ControlRampMode     (int     rampMode      , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_FIXED2_CTRL_RAMP_MODE ).arg(rampMode      , 1,10,QChar('0'));emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenFixed2ControlRampMode     , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));}
     void setFixed2ControlDirection    (int     ctrlDir       , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_FIXED2_CTRL_DIR       ).arg(ctrlDir       , 1,10,QChar('0'));emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenFixed2ControlDirection    , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));}
 
-    void setValveSetup(int targetPosSync, int eventSync, int strokeLimitation, int targetPosPowerFail, int targetPosNetworkFail, void * userData, int retryCnt = 0)
+    void setValveSetup(int targetPosSync, int eventSync, int syncMode, int strokeLimitation, int targetPosPowerFail, int targetPosNetworkFail, void * userData, int retryCnt = 0)
     {
         QString cmd = QString("%1%2%3%4%5%6%7%8%9").arg(REQ_WRITE_VALVE_SETUP)
                                                    .arg(targetPosSync)
@@ -1862,7 +1862,7 @@ public :
                                                    .arg(targetPosNetworkFail)
                                                    .arg(0)
                                                    .arg(eventSync)
-                                                   .arg(0);
+                                                   .arg(syncMode);
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenValveSetup, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 
@@ -4510,8 +4510,8 @@ public slots:
             // Unkown field skip (1)
             startIdx += 1;
             signalDto.mEventSync = value.mid(startIdx,1).toInt(); startIdx += 1;
-            // Unkown field skip (1)
-            startIdx += 1;
+            signalDto.mSyncMode  = value.mid(startIdx,1).toInt(); startIdx += 1;
+            // todo sync mode startIdx += 1;
 
         }while(false);
 

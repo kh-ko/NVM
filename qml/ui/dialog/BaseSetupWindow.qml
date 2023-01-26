@@ -105,7 +105,7 @@ NWindow {
     Item {
         id : contentContainer
         height: _titleBox.height + dialog.bodyHeight + statusBar.height; width: dialog.bodyWidth
-        anchors.centerIn: parent
+        x : 2; y : 2
 
         NPopupTilte{
             id : _titleBox

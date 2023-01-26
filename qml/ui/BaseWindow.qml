@@ -189,11 +189,12 @@ Window {
 
             popup.show();
         }
-        onClickToolChartAnalyzer      : { var popup = graphAnalyzeDlg.createObject(window)          ; popup.loadFromChart(chart.chartView); popup.show();}
+        onClickToolChartAnalyzer      : { var popup = graphAnalyzeDlg.createObject(window)              ; popup.loadFromChart(chart.chartView); popup.show();}
         onClickToolSequencer          : {seqTestDlg.show(); }
-        onClickToolFirmwareUpdate     : { var popup = firmwareUpdateDlg.createObject(window)        ; popup.show(); }
-        onClickAdvToolTest            : { var popup = advancedToolTestDlg.createObject(window)      ; popup.show(); }
-        onClickHelpAbout              : { var popup = helpAboutDlg.createObject(window)             ; popup.show(); }
+        onClickToolFirmwareUpdate     : { var popup = firmwareUpdateDlg.createObject(window)            ; popup.show(); }
+        onClickAdvToolTest            : { var popup = advancedToolTestDlg.createObject(window)          ; popup.show(); }
+        onClickAdvBackupNRestore      : { var popup = advancedToolBackupNRestoreDlg.createObject(window); popup.show(); }
+        onClickHelpAbout              : { var popup = helpAboutDlg.createObject(window)                 ; popup.show(); }
     }
 
     ChartPanel{
@@ -586,6 +587,12 @@ Window {
         AdvancedToolTestDlg{
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
+        }
+    }
+    Component{
+        id : advancedToolBackupNRestoreDlg
+        AdvancedToolBackupNRestoreDlg{
+
         }
     }
 

@@ -52,7 +52,7 @@ class PressureCtrlFloatSetupDlgModel : public QObject
     Q_PROPERTY(int      mProgress             READ getProgress               NOTIFY signalEventChangedProgress             )
 
 public:
-    bool     mEnableDeltaFactor   = false;
+    bool     mEnableDeltaFactor   = true;  // 무조건 enable 되도록 수정 ( 김무성 차장님 요청사항 20230126 )
     int      mAccessMode          = ValveEnumDef::ACCESS_LOCAL;
     bool     mIsRS232Test         = false;
     int      mSelControl          = ValveEnumDef::PRESSURE_CTRL_ADAPTIVE;
@@ -288,7 +288,7 @@ public slots:
     void onValveChangedFirmwareVersion()
     {
         bool result;
-        setEnableDeltaFactor(pValveSP->getFirmwareVersion().toULongLong(&result, 16) > 0x2205260298 && pValveSP->getFirmwareVersion().toULongLong(&result, 16) < 0x2208030207);
+        //setEnableDeltaFactor(pValveSP->getFirmwareVersion().toULongLong(&result, 16) > 0x2205260298 && pValveSP->getFirmwareVersion().toULongLong(&result, 16) < 0x2208030207);
 
         qDebug() << "[" << Q_FUNC_INFO << "] version = " <<  pValveSP->getFirmwareVersion();
     }

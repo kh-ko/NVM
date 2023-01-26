@@ -19,12 +19,14 @@ class ValveSetupDlgModel : public QObject
     Q_PROPERTY(int      mValveMaxSpeed           READ getValveMaxSpeed             NOTIFY signalEventChangedValveMaxSpeed          )
     Q_PROPERTY(int      mTargetPosSync           READ getTargetPosSync             NOTIFY signalEventChangedTargetPosSync          )
     Q_PROPERTY(int      mEventSync               READ getEventSync                 NOTIFY signalEventChangedEventSync              )
+    Q_PROPERTY(int      mSyncMode                READ getSyncMode                  NOTIFY signalEventChangedSyncMode               )
     Q_PROPERTY(int      mStrokeLimitation        READ getStrokeLimitation          NOTIFY signalEventChangedStrokeLimitation       )
     Q_PROPERTY(int      mTargetPosPowerFail      READ getTargetPosPowerFail        NOTIFY signalEventChangedTargetPosPowerFail     )
     Q_PROPERTY(int      mTargetPosNetworkFail    READ getTargetPosNetworkFail      NOTIFY signalEventChangedTargetPosNetworkFail   )
     Q_PROPERTY(bool     mErrValveSpeed           READ getErrValveSpeed             NOTIFY signalEventChangedErrValveSpeed          )
     Q_PROPERTY(bool     mErrTargetPosSync        READ getErrTargetPosSync          NOTIFY signalEventChangedErrTargetPosSync       )
     Q_PROPERTY(bool     mErrEventSync            READ getErrEventSync              NOTIFY signalEventChangedErrEventSync           )
+    Q_PROPERTY(bool     mErrSyncMode             READ getErrSyncMode               NOTIFY signalEventChangedErrSyncMode            )
     Q_PROPERTY(bool     mErrStrokeLimitation     READ getErrStrokeLimitation       NOTIFY signalEventChangedErrStrokeLimitation    )
     Q_PROPERTY(bool     mErrTargetPosPowerFail   READ getErrTargetPosPowerFail     NOTIFY signalEventChangedErrTargetPosPowerFail  )
     Q_PROPERTY(bool     mErrTargetPosNetworkFail READ getErrTargetPosNetworkFail   NOTIFY signalEventChangedErrTargetPosNetworkFail)
@@ -42,12 +44,14 @@ public:
     int     mValveMaxSpeed           = 1000;
     int     mTargetPosSync           = ValveEnumDef::TARGET_POS_SYNC_CLOSE;
     int     mEventSync               = ValveEnumDef::EVENT_SYNC_DEFAULT;
+    int     mSyncMode                = ValveEnumDef::SYNC_MODE_SHORT;
     int     mStrokeLimitation        = 0;
     int     mTargetPosPowerFail      = ValveEnumDef::TARGET_POS_PF_CLOSE;
     int     mTargetPosNetworkFail    = ValveEnumDef::TARGET_POS_NF_CLOSE;
     bool    mErrValveSpeed           = false;
     bool    mErrTargetPosSync        = false;
     bool    mErrEventSync            = false;
+    bool    mErrSyncMode             = false;
     bool    mErrStrokeLimitation     = false;
     bool    mErrTargetPosPowerFail   = false;
     bool    mErrTargetPosNetworkFail = false;
@@ -64,12 +68,14 @@ public:
     int     getValveMaxSpeed          (){ return mValveMaxSpeed          ; }
     int     getTargetPosSync          (){ return mTargetPosSync          ; }
     int     getEventSync              (){ return mEventSync              ; }
+    int     getSyncMode               (){ return mSyncMode               ; }
     int     getStrokeLimitation       (){ return mStrokeLimitation       ; }
     int     getTargetPosPowerFail     (){ return mTargetPosPowerFail     ; }
     int     getTargetPosNetworkFail   (){ return mTargetPosNetworkFail   ; }
     bool    getErrValveSpeed          (){ return mErrValveSpeed          ; }
     bool    getErrTargetPosSync       (){ return mErrTargetPosSync       ; }
     bool    getErrEventSync           (){ return mErrEventSync           ; }
+    bool    getErrSyncMode            (){ return mErrSyncMode            ; }
     bool    getErrStrokeLimitation    (){ return mErrStrokeLimitation    ; }
     bool    getErrTargetPosPowerFail  (){ return mErrTargetPosPowerFail  ; }
     bool    getErrTargetPosNetworkFail(){ return mErrTargetPosNetworkFail; }
@@ -86,12 +92,14 @@ public:
     void    setValveMaxSpeed          (int     value){if(mValveMaxSpeed           == value)return; mValveMaxSpeed           = value; emit signalEventChangedValveMaxSpeed          (value);}
     void    setTargetPosSync          (int     value){if(mTargetPosSync           == value)return; mTargetPosSync           = value; emit signalEventChangedTargetPosSync          (value);}
     void    setEventSync              (int     value){if(mEventSync               == value)return; mEventSync               = value; emit signalEventChangedEventSync              (value);}
+    void    setSyncMode               (int     value){if(mSyncMode                == value)return; mSyncMode                = value; emit signalEventChangedSyncMode               (value);}
     void    setStrokeLimitation       (int     value){if(mStrokeLimitation        == value)return; mStrokeLimitation        = value; emit signalEventChangedStrokeLimitation       (value);}
     void    setTargetPosPowerFail     (int     value){if(mTargetPosPowerFail      == value)return; mTargetPosPowerFail      = value; emit signalEventChangedTargetPosPowerFail     (value);}
     void    setTargetPosNetworkFail   (int     value){if(mTargetPosNetworkFail    == value)return; mTargetPosNetworkFail    = value; emit signalEventChangedTargetPosNetworkFail   (value);}
     void    setErrValveSpeed          (bool    value){if(mErrValveSpeed           == value)return; mErrValveSpeed           = value; emit signalEventChangedErrValveSpeed          (value);}
     void    setErrTargetPosSync       (bool    value){if(mErrTargetPosSync        == value)return; mErrTargetPosSync        = value; emit signalEventChangedErrTargetPosSync       (value);}
     void    setErrEventSync           (bool    value){if(mErrEventSync            == value)return; mErrEventSync            = value; emit signalEventChangedErrEventSync           (value);}
+    void    setErrSyncMode            (bool    value){if(mErrSyncMode             == value)return; mErrSyncMode             = value; emit signalEventChangedErrSyncMode            (value);}
     void    setErrStrokeLimitation    (bool    value){if(mErrStrokeLimitation     == value)return; mErrStrokeLimitation     = value; emit signalEventChangedErrStrokeLimitation    (value);}
     void    setErrTargetPosPowerFail  (bool    value){if(mErrTargetPosPowerFail   == value)return; mErrTargetPosPowerFail   = value; emit signalEventChangedErrTargetPosPowerFail  (value);}
     void    setErrTargetPosNetworkFail(bool    value){if(mErrTargetPosNetworkFail == value)return; mErrTargetPosNetworkFail = value; emit signalEventChangedErrTargetPosNetworkFail(value);}
@@ -110,12 +118,14 @@ signals:
     void signalEventChangedValveMaxSpeed          (int     value);
     void signalEventChangedTargetPosSync          (int     value);
     void signalEventChangedEventSync              (int     value);
+    void signalEventChangedSyncMode               (int     value);
     void signalEventChangedStrokeLimitation       (int     value);
     void signalEventChangedTargetPosPowerFail     (int     value);
     void signalEventChangedTargetPosNetworkFail   (int     value);
     void signalEventChangedErrValveSpeed          (bool    value);
     void signalEventChangedErrTargetPosSync       (bool    value);
     void signalEventChangedErrEventSync           (bool    value);
+    void signalEventChangedErrSyncMode            (bool    value);
     void signalEventChangedErrStrokeLimitation    (bool    value);
     void signalEventChangedErrTargetPosPowerFail  (bool    value);
     void signalEventChangedErrTargetPosNetworkFail(bool    value);
@@ -150,7 +160,6 @@ public:
         connect(&mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
         setState(eState::STATE_READ_SPEED);
-
     }
     ~ValveSetupDlgModel()
     {
@@ -212,16 +221,18 @@ public slots:
         {
             setErrTargetPosSync       (dto.mTargetPosSync        != mWriteTargetPosSync       );
             setErrEventSync           (dto.mEventSync            != mWriteEventSync           );
+            setErrSyncMode            (dto.mSyncMode             != mWriteSyncMode            );
             setErrStrokeLimitation    (dto.mStrokeLimitation     != mWriteStrokeLimit         );
             setErrTargetPosPowerFail  (dto.mTargetPosPowerFail   != mWriteTargetPosPowerFail  );
             setErrTargetPosNetworkFail(dto.mTargetPosNetworkFail != mWriteTargetPosNetworkFail);
 
-            onCommandSetEdit(getErrValveSpeed() || getErrTargetPosSync() || getErrEventSync() || getErrStrokeLimitation() || getErrTargetPosPowerFail() || getErrTargetPosNetworkFail());
+            onCommandSetEdit(getErrValveSpeed() || getErrTargetPosSync() || getErrEventSync() || getErrSyncMode() || getErrStrokeLimitation() || getErrTargetPosPowerFail() || getErrTargetPosNetworkFail());
         }
         else
         {
             setTargetPosSync       (dto.mTargetPosSync       );
             setEventSync           (dto.mEventSync           );
+            setSyncMode            (dto.mSyncMode            );
             setStrokeLimitation    (dto.mStrokeLimitation    );
             setTargetPosPowerFail  (dto.mTargetPosPowerFail  );
             setTargetPosNetworkFail(dto.mTargetPosNetworkFail);
@@ -235,12 +246,13 @@ public slots:
         setIsEdit(value);
     }
 
-    Q_INVOKABLE void onCommandApply(int speed, int targetPosSync, int eventSync, int strokeLimit, int targetPosPowerFail, int targetPosNetworkFail)
+    Q_INVOKABLE void onCommandApply(int speed, int targetPosSync, int eventSync, int syncMode, int strokeLimit, int targetPosPowerFail, int targetPosNetworkFail)
     {
         mIsWritten = true;
         mWriteSpeed = speed;
         mWriteTargetPosSync = targetPosSync;
         mWriteEventSync = eventSync;
+        mWriteSyncMode  = syncMode;
         mWriteStrokeLimit  = strokeLimit;
         mWriteTargetPosPowerFail = pValveSP->getIsSupportPFO() ? targetPosPowerFail : 0;
         mWriteTargetPosNetworkFail = pValveSP->getInterface() == ValveEnumDef::INTERFACE_LOGIC ? 0 : targetPosNetworkFail;
@@ -300,6 +312,7 @@ private:
     int  mWriteSpeed = 0;
     int  mWriteTargetPosSync = 0;
     int  mWriteEventSync = 0;
+    int  mWriteSyncMode  = 0;
     int  mWriteStrokeLimit = 0;
     int  mWriteTargetPosPowerFail = 0;
     int  mWriteTargetPosNetworkFail = 0;
@@ -361,7 +374,7 @@ public slots:
             break;
 
         case (int)eState::STATE_WRITE_SETUP:
-            pValveSP->setValveSetup(mWriteTargetPosSync, mWriteEventSync, mWriteStrokeLimit, mWriteTargetPosPowerFail, mWriteTargetPosNetworkFail, this);
+            pValveSP->setValveSetup(mWriteTargetPosSync, mWriteEventSync, mWriteSyncMode, mWriteStrokeLimit, mWriteTargetPosPowerFail, mWriteTargetPosNetworkFail, this);
             break;
         }
     }

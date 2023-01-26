@@ -481,18 +481,20 @@ private:
 
         setActualIndex(getActualIndex() + 1);
 
+        if((getActualCycles() >= getTargetCycles()) && (getActualIndex() == 0))
+        {
+            setRunState((int)eRunState::RUN_STATE_STOP);
+            emit signalEventCompletedSeqTest();
+            return;
+        }
+
         if(getActualIndex() == mSeqTestList.size() - 1)
         {
             pLSettingSP->setSequencerPerformedCnt(pLSettingSP->mSequencerPerformedCnt + 1);
             setActualCycles(getActualCycles()+1);
         }
 
-        if(getActualCycles() > getTargetCycles())
-        {
-            setRunState((int)eRunState::RUN_STATE_STOP);
-            emit signalEventCompletedSeqTest();
-            return;
-        }
+
 
         SeqTestItemModel * pNextItem = mSeqTestList.at(getActualIndex());
 

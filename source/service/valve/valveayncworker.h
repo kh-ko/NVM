@@ -436,6 +436,7 @@ class ValveEnumDef: public QObject{
     Q_ENUMS(eTargetPosAfterSync)
     Q_ENUMS(eTargetPosNetworkFail)
     Q_ENUMS(eEventSync)
+    Q_ENUMS(eSyncMode)
     Q_ENUMS(eLoadStep)
     Q_ENUMS(eLearnRunState)
     Q_ENUMS(eLearnDataSet)
@@ -591,6 +592,11 @@ public:
         EVENT_SYNC_SELECTED_CMD = 1,
         EVENT_SYNC_OPEN_CMD = 2,
         EVENT_SYNC_ANY_CMD = 3,
+    };
+
+    enum eSyncMode{
+        SYNC_MODE_SHORT    = 0,
+        SYNC_MODE_EXTEMDED = 1,
     };
 
     enum eTargetPosPowerFail{

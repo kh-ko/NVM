@@ -40,6 +40,7 @@
 #include "source/qmlmodel/firmwareupdatedlgmodel.h"
 #include "source/qmlmodel/valvepowerfailstatusdlgmodel.h"
 #include "source/qmlmodel/advancedtooltestdlgmodel.h"
+#include "source/qmlmodel/advancedtoolbackupnrestoredlgmodel.h"
 #include "source/qmlmodel/graphanalyzedlgmodel.h"
 #include "source/nchart/nchartview.h"
 //#include "source/nchart/nvoltchartview.h"
@@ -170,6 +171,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<FirmwareUpdateDlgModel>("FirmwareUpdateDlgModel", 1, 0, "FirmwareUpdateDlgModel");
     qmlRegisterType<ValvePowerFailStatusDlgModel>("ValvePowerFailStatusDlgModel", 1, 0, "ValvePowerFailStatusDlgModel");
     qmlRegisterType<AdvancedToolTestDlgModel>("AdvancedToolTestDlgModel", 1, 0, "AdvancedToolTestDlgModel");
+    qmlRegisterType<AdvancedToolBackupNRestoreDlgModel>("AdvancedToolBackupNRestoreDlgModel", 1, 0, "AdvancedToolBackupNRestoreDlgModel");
     qmlRegisterType<GraphAnalyzeDlgModel>("GraphAnalyzeDlgModel", 1, 0, "GraphAnalyzeDlgModel");
 
     //qmlRegisterType<LineChartData>("LineChartData", 1, 0, "LineChartData");

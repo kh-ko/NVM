@@ -171,7 +171,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrAdapGainFactor ? "#FF0000" : "#000000"
-                    stepValue : 0.0001; minValue: 0.0001; maxValue: 100
+                    stepValue : 0.0001; minValue: 0; maxValue: 100
                     fixedN : 4
 
                     onChangedText: {
@@ -182,7 +182,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _adapGainFactor.verticalCenter; anchors.left: _adapGainFactor.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("gain factor(0.0001 ~ 100)")
+                    text : qsTr("gain factor(0.0000 ~ 100.0000)")
                 }
 
                 NInputNumber{
@@ -194,7 +194,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrAdapDeltaFactor ? "#FF0000" : "#000000"
-                    stepValue : 0.0001; minValue: 0.0001; maxValue: 100
+                    stepValue : 0.0001; minValue: 0; maxValue: 100
                     fixedN : 4
 
                     onChangedText: {
@@ -205,7 +205,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _adapDeltaFactor.verticalCenter; anchors.left: _adapDeltaFactor.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("delta factor(0.0001 ~ 100)")
+                    text : qsTr("delta factor(0.0000 ~ 100.0000)")
                 }
 
                 NInputNumber{
@@ -334,7 +334,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrFixed1PGain ? "#FF0000" : "#000000"
-                    stepValue : 0.0001; minValue: 0.0001; maxValue: 100
+                    stepValue : 0.0001; minValue: 0; maxValue: 100
                     fixedN : 4
 
                     onChangedText: {
@@ -345,7 +345,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _fixed1PGain.verticalCenter; anchors.left: _fixed1PGain.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("P-gain(0.0001 ~ 100.0000)")
+                    text : qsTr("P-gain(0.0000 ~ 100.0000)")
                 }
 
                 NInputNumber{
@@ -495,7 +495,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrFixed2PGain ? "#FF0000" : "#000000"
-                    stepValue : 0.0001; minValue: 0.0001; maxValue: 100
+                    stepValue : 0.0001; minValue: 0; maxValue: 100
                     fixedN : 4
 
                     onChangedText: {
@@ -506,7 +506,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _fixed2PGain.verticalCenter; anchors.left: _fixed2PGain.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("P-gain(0.0001 ~ 100.0000)")
+                    text : qsTr("P-gain(0.0000 ~ 100.0000)")
                 }
 
                 NInputNumber{
