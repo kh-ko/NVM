@@ -13,7 +13,12 @@ NPopup { // khko_todo
 
     signal result(bool value)
 
+    focus: true
     contentHeight: 200 * GUISetting.scale; contentWidth: 250 * GUISetting.scale
+
+    Component.onCompleted: {
+        inputPIN.focusIn()
+    }
 
     contentItem: Item{
         id : contentContainer
@@ -59,6 +64,17 @@ NPopup { // khko_todo
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.horizontalCenter: parent.horizontalCenter
                     textField.echoMode: TextInput.Password
+
+                    onEnterClicked: {
+                        if(inputPIN.textField.text == "7071")
+                        {
+                            dialog.close();
+                            dialog.result(true);
+                            return;
+                        }
+
+                        dialog.isOK = false
+                    }
                 }
             }
 

@@ -413,7 +413,7 @@ public slots:
 
     void onValveReadedAdapRampTime(ValveResponseRampTimeDto dto)
     {
-        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << dto.mResData;
 
         if(mState != eState::STATE_READ_ADAP_RAMP_TIME || dto.mReqDto.mpRef != this)
             return;
@@ -909,7 +909,7 @@ public slots:
 
     void onValveWrittenAdapRampTime(ValveResponseDto dto)
     {
-        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << dto.mResData;
 
         if(mState != eState::STATE_WRITE_ADAP_RAMP_TIME|| dto.mReqDto.mpRef != this)
             return;

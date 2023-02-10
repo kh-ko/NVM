@@ -11,6 +11,7 @@ Item {
 
     opacity: enabled ? 1 : 0.3
 
+    signal enterClicked()
     signal changedValue(var value)
     signal changedText()
 
@@ -28,6 +29,12 @@ Item {
     function focusOut()
     {
         _textField.focus = false;
+    }
+
+    function focusIn()
+    {
+        _textField.forceActiveFocus()
+        _textField.focus = true;
     }
 
     BorderImage {
@@ -57,6 +64,7 @@ Item {
         Keys.onReleased:{
             if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter){
                 focus = false
+                control.enterClicked();
             }
         }
 
