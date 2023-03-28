@@ -925,10 +925,10 @@ private:
         file.appendLine(QString("pressure display unit : %1").arg(UNITUTIL_TO_STR(mPressureDpUnit)));
         file.appendLine(QString(" "));
         file.appendLine(QString("Record data :"));
-        file.appendLine(QString("timestamp(millisecond)    actual position    target position    actual pressure    target pressure"));
+        file.appendLine(QString("timestamp(second)         actual_position    target_position    actual_pressure    target_pressure"));
 
         qint64 firstMsec;
-        qint64 msec;
+        double msec;
         double actualPos;
         double targetPos;
         double actualPressure;
@@ -938,7 +938,7 @@ private:
 
         for(int i = 0; i < mRecordTimestampList.size(); i ++)
         {
-            msec = mRecordTimestampList[i];
+            msec = (double)mRecordTimestampList[i] / (double)1000;
             if(i == 0)
             {
                 firstMsec = msec;
@@ -950,7 +950,7 @@ private:
             actualPressure = UNITUTIL_CONVERT(getFullScaleUnit(), ((double)mRecordCurrentPressureList[i]) * mPressureConvertFactor, getPressureDpUnit());
             targetPressure = UNITUTIL_CONVERT(getFullScaleUnit(), ((double)mRecordTargetPressureList[i] ) * mPressureConvertFactor, getPressureDpUnit());
             file.appendLine(QString("%1    %2    %3    %4    %5")
-                                    .arg(msec, 22, 10, QChar('0'))
+                                    .arg(msec          , 22, 'f', 3              , QChar(' '))
                                     .arg(actualPos     , 15, 'f', posFixedN      , QChar(' '))
                                     .arg(targetPos     , 15, 'f', posFixedN      , QChar(' '))
                                     .arg(actualPressure, 15, 'f', pressureFixedN , QChar(' '))
