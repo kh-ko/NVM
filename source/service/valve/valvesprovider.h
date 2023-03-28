@@ -1755,6 +1755,7 @@ public :
         QString cmd = QString("%1%2%3").arg(REQ_WRITE_VALVE_PARAM).arg(id, 2, 10, QChar('0')).arg(value);
         QString checkString = QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(id, 2, 10, QChar('0'));
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << cmd;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenValveParam, nullptr, cmd, "", 0, retryCnt, userData));
     }
 

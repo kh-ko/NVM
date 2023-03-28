@@ -327,7 +327,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "A : APC"]
+                    model: ["Unknow", "A : APC", "M : Manual", "G : Gate", "U : UHV Gate"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -359,7 +359,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "B : Butterfly", "P : Pendulum"]
+                    model: ["Unknow", "B : Butterfly", "P : Pendulum", "C : Circular"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -423,7 +423,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "040 : DN40", "050 : DN50", "063 : DN63" , "080 : DN80" , "100 : DN100" , "160 : DN160" , "200 : DN200" , "250 : DN250", "025 : DN25"]
+                    model: ["Unknow", "040 : DN40", "050 : DN50", "063 : DN63" , "080 : DN80" , "100 : DN100" , "160 : DN160" , "200 : DN200" , "250 : DN250", "025 : DN25", "320 : DN320"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -455,7 +455,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "K : ISO-KF", "F : ISO"]
+                    model: ["Unknow", "K : ISO-KF", "F : ISO", "C : CF-F"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -487,7 +487,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "A : Aluminum", "S : SUS"]
+                    model: ["Unknow", "A : Aluminum", "S : SUS304", "L : SUS316L"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -519,7 +519,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "R2 : RS-232", "R3 : RS-232 with analog outputs", "R4 : RS-485", "LO : Logic", "DN : DeviceNet", "PB : Profibus", "EN : Ethernet", "CC : CC-Link", "EC : EtherCAT"]
+                    model: ["Unknow", "R2 : RS-232", "R3 : RS-232 with analog outputs", "R4 : RS-485", "LO : Logic", "DN : DeviceNet", "PB : Profibus", "EN : Ethernet", "CC : CC-Link", "EC : EtherCAT", "LL : Legacy Logic"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)

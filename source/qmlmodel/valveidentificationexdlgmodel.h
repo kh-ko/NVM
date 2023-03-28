@@ -248,6 +248,8 @@ public slots:
         if(mState != eState::STATE_READ_SERIALNUM || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mResData;
+
         setErrMsg(dto.mErrMsg);
 
         if(!dto.mIsSucc)
@@ -267,6 +269,8 @@ public slots:
 
         if(id != convertParamID(mState) || dto.mReqDto.mpRef != this)
             return;
+
+         qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mResData;
 
         setErrMsg(dto.mErrMsg);
 
