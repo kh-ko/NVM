@@ -131,7 +131,7 @@ public slots:
                     break;
                 }
 
-                sec           = col[0].trimmed().toDouble() / 1000;
+                sec           = col[0].trimmed().toDouble();// / 1000;
                 posCurr        = col[1].trimmed().toDouble();
                 posTarget      = col[2].trimmed().toDouble();
                 pressureCurr   = col[3].trimmed().toDouble();

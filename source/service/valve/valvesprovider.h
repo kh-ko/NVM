@@ -372,6 +372,21 @@ private:
     qint64      mValveSpeed         = 0;
     int         mValveMaxSpeed      = 0;
     int         mPressureCtrlMode   = ValveEnumDef::PRESSURE_CTRL_ADAPTIVE;
+    QString     mAdaptiveGainFactor = "0";
+    QString     mAdaptiveDeltaFactor= "0";
+    QString     mAdaptiveSensorDelay= "0";
+    QString     mAdaptiveRampTime   = "0";
+    int         mAdaptiveRampMode   = 0;
+    QString     mFixed1PGain        = "0";
+    QString     mFixed1IGain        = "0";
+    QString     mFixed1RampTime     = "0";
+    int         mFixed1RampMode     = 0;
+    int         mFixed1Dir          = 0;
+    QString     mFixed2PGain        = "0";
+    QString     mFixed2IGain        = "0";
+    QString     mFixed2RampTime     = "0";
+    int         mFixed2RampMode     = 0;
+    int         mFixed2Dir          = 0;
     int         mAccess             = ValveEnumDef::ACCESS_REMOTE;
     int         mMode               = ValveEnumDef::MODE_OPEN;
     int         mControlMode        = ValveEnumDef::MODE_POSITION;
@@ -453,6 +468,21 @@ public:
     qint64      getValveSpeed                   (){ return mValveSpeed        ;}
     int         getValveMaxSpeed                (){ return mValveMaxSpeed     ;}
     int         getPressureCtrlMode             (){ return mPressureCtrlMode  ;}
+    QString     getAdaptiveGainFactor           (){ return mAdaptiveGainFactor ;}
+    QString     getAdaptiveDeltaFactor          (){ return mAdaptiveDeltaFactor;}
+    QString     getAdaptiveSensorDelay          (){ return mAdaptiveSensorDelay;}
+    QString     getAdaptiveRampTime             (){ return mAdaptiveRampTime   ;}
+    int         getAdaptiveRampMode             (){ return mAdaptiveRampMode   ;}
+    QString     getFixed1PGain                  (){ return mFixed1PGain        ;}
+    QString     getFixed1IGain                  (){ return mFixed1IGain        ;}
+    QString     getFixed1RampTime               (){ return mFixed1RampTime     ;}
+    int         getFixed1RampMode               (){ return mFixed1RampMode     ;}
+    int         getFixed1Dir                    (){ return mFixed1Dir          ;}
+    QString     getFixed2PGain                  (){ return mFixed2PGain        ;}
+    QString     getFixed2IGain                  (){ return mFixed2IGain        ;}
+    QString     getFixed2RampTime               (){ return mFixed2RampTime     ;}
+    int         getFixed2RampMode               (){ return mFixed2RampMode     ;}
+    int         getFixed2Dir                    (){ return mFixed2Dir          ;}
     int         getAccess                       (){ return mAccess            ;}
     int         getMode                         (){ return mMode              ;}
     int         getControlMode                  (){ return mControlMode       ;}
@@ -602,6 +632,21 @@ public:
     void        setValveSpeed                   (qint64      value){if(mValveSpeed         == value) return; mValveSpeed         = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedValveSpeed        ();}
     void        setValveMaxSpeed                (int         value){if(mValveMaxSpeed      == value) return; mValveMaxSpeed      = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedValveMaxSpeed     ();}
     void        setPressureCtrlMode             (int         value){if(mPressureCtrlMode   == value) return; mPressureCtrlMode   = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedPressureCtrlMode  ();}
+    void        setAdaptiveGainFactor           (QString     value){if(mAdaptiveGainFactor == value) return; mAdaptiveGainFactor = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setAdaptiveDeltaFactor          (QString     value){if(mAdaptiveDeltaFactor== value) return; mAdaptiveDeltaFactor= value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setAdaptiveSensorDelay          (QString     value){if(mAdaptiveSensorDelay== value) return; mAdaptiveSensorDelay= value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setAdaptiveRampTime             (QString     value){if(mAdaptiveRampTime   == value) return; mAdaptiveRampTime   = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setAdaptiveRampMode             (int         value){if(mAdaptiveRampMode   == value) return; mAdaptiveRampMode   = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1PGain                  (QString     value){if(mFixed1PGain        == value) return; mFixed1PGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1IGain                  (QString     value){if(mFixed1IGain        == value) return; mFixed1IGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1RampTime               (QString     value){if(mFixed1RampTime     == value) return; mFixed1RampTime     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1RampMode               (int         value){if(mFixed1RampMode     == value) return; mFixed1RampMode     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1Dir                    (int         value){if(mFixed1Dir          == value) return; mFixed1Dir          = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2PGain                  (QString     value){if(mFixed2PGain        == value) return; mFixed2PGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2IGain                  (QString     value){if(mFixed2IGain        == value) return; mFixed2IGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2RampTime               (QString     value){if(mFixed2RampTime     == value) return; mFixed2RampTime     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2RampMode               (int         value){if(mFixed2RampMode     == value) return; mFixed2RampMode     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2Dir                    (int         value){if(mFixed2Dir          == value) return; mFixed2Dir          = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
     void        setAccess                       (int         value){if(mAccess             == value) return; mAccess             = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedAccess            ();}
     void        setMode                         (int         value){if(mMode               == value) return; mMode               = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedMode              ();}
     void        setControlMode                  (int         value){if(mControlMode        == value) return; mControlMode        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedControlMode       ();}
@@ -3568,7 +3613,8 @@ public slots:
             else
             {
                 setLoadProgress(ValveEnumDef::LOAD_DP_CONFIG);
-                readSelectControlMode(this);
+                // khko_edit readSelectControlMode(this);
+                readAdaptiveControlGainFactor(this);
             }
         }
 
@@ -3576,6 +3622,617 @@ public slots:
         {
             emit signalEventReadedDisplayConfig(signalDto);
         }
+    }
+
+    static void staticProcReadAdaptiveControlGainFactor(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlGainFactor(pResData);}
+    bool procReadAdaptiveControlGainFactor(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseGainFactorDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mGainFactor = value;
+            setAdaptiveGainFactor(value);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_DP_CONFIG)
+        {
+            if(signalDto.mIsSucc == false && !signalDto.mIsNetworkErr)
+            {
+                readSelectControlMode(this);
+            }
+            else if(signalDto.mIsSucc == false)
+            {
+                readAdaptiveControlGainFactor(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_ADAP_GAIN_FACTOR);
+                readAdaptiveControlDeltaFactor(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedAdapGainFactor(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadAdaptiveControlDeltaFactor(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlDeltaFactor(pResData);}
+    bool procReadAdaptiveControlDeltaFactor(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseDeltaFactorDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mDeltaFactor = value;
+            setAdaptiveDeltaFactor(value);
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_ADAP_GAIN_FACTOR)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readAdaptiveControlDeltaFactor(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_ADAP_DELTA_FACTOR);
+                readAdaptiveControlSensorDelay(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedAdapDeltaFactor(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadAdaptiveControlSensorDelay(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlSensorDelay(pResData);}
+    bool procReadAdaptiveControlSensorDelay(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSensorDelayDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mSensorDelay = value;
+            setAdaptiveSensorDelay(value);
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_ADAP_DELTA_FACTOR)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readAdaptiveControlSensorDelay(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_ADAP_SENSOR_DELAY);
+                readAdaptiveControlRampTime(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedAdapSensorDelay(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadAdaptiveControlRampTime(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlRampTime(pResData);}
+    bool procReadAdaptiveControlRampTime(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseRampTimeDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mRampTime = value;
+            setAdaptiveRampTime(value);
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_ADAP_SENSOR_DELAY)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readAdaptiveControlRampTime(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_ADAP_RAMP_TIME);
+                readAdaptiveControlRampMode(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedAdapRampTime(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadAdaptiveControlRampMode(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlRampMode(pResData);}
+    bool procReadAdaptiveControlRampMode(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseRampModeDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            int startIdx = 0;
+
+            signalDto.mRampMode = value.mid(startIdx,1).toInt(); startIdx += 1;
+            setAdaptiveRampMode(signalDto.mRampMode);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_ADAP_RAMP_TIME)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readAdaptiveControlRampMode(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_ADAP_RAMP_MODE);
+                readFixed1ControlPGain(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedAdapRampMode(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed1ControlPGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlPGain(pResData);}
+    bool procReadFixed1ControlPGain(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponsePGainDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mPGain = value;
+            setFixed1PGain(value);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_ADAP_RAMP_MODE)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed1ControlPGain(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED1_P_GAIN);
+                readFixed1ControlIGain(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed1PGain(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed1ControlIGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlIGain(pResData);}
+    bool procReadFixed1ControlIGain(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseIGainDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mIGain = value;
+            setFixed1IGain(value);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED1_P_GAIN)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed1ControlIGain(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED1_I_GAIN);
+                readFixed1ControlRampTime(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed1IGain(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed1ControlRampTime(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlRampTime(pResData);}
+    bool procReadFixed1ControlRampTime(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseRampTimeDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mRampTime = value;
+            setFixed1RampTime(value);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED1_I_GAIN)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed1ControlRampTime(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED1_RAMP_TIME);
+                readFixed1ControlRampMode(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed1RampTime(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed1ControlRampMode(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlRampMode(pResData);}
+    bool procReadFixed1ControlRampMode(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseRampModeDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            int startIdx = 0;
+
+            signalDto.mRampMode = value.mid(startIdx,1).toInt(); startIdx += 1;
+            setFixed1RampMode(signalDto.mRampMode);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED1_RAMP_TIME)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed1ControlRampMode(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED1_RAMP_MODE);
+                readFixed1ControlDirection(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed1RampMode(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed1ControlDirection(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlDirection(pResData);}
+    bool procReadFixed1ControlDirection(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseCtrlDirDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            int startIdx = 0;
+
+            signalDto.mControlDir = value.mid(startIdx,1).toInt(); startIdx += 1;
+            setFixed1Dir(signalDto.mControlDir);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED1_RAMP_MODE)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed1ControlDirection(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED1_CTRL_DIR);
+                readFixed2ControlPGain(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed1CtrlDir(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed2ControlPGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlPGain(pResData);}
+    bool procReadFixed2ControlPGain(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponsePGainDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mPGain = value;
+            setFixed2PGain(value);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED1_CTRL_DIR)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed2ControlPGain(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED2_P_GAIN);
+                readFixed2ControlIGain(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed2PGain(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed2ControlIGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlIGain(pResData);}
+    bool procReadFixed2ControlIGain(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseIGainDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mIGain = value;
+            setFixed2IGain(value);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED2_P_GAIN)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed2ControlIGain(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED2_I_GAIN);
+                readFixed2ControlRampTime(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed2IGain(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed2ControlRampTime(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlRampTime(pResData);}
+    bool procReadFixed2ControlRampTime(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseRampTimeDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mRampTime = value;
+            setFixed2RampTime(value);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED2_I_GAIN)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed2ControlRampTime(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED2_RAMP_TIME);
+                readFixed2ControlRampMode(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed2RampTime(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed2ControlRampMode(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlRampMode(pResData);}
+    bool procReadFixed2ControlRampMode(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseRampModeDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            int startIdx = 0;
+
+            signalDto.mRampMode = value.mid(startIdx,1).toInt(); startIdx += 1;
+            setFixed2RampMode(signalDto.mRampMode);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED2_RAMP_TIME)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed2ControlRampMode(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED2_RAMP_MODE);
+                readFixed2ControlDirection(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed2RampMode(signalDto);
+        }
+
+        return signalDto.mIsSucc;
+    }
+
+    static void staticProcReadFixed2ControlDirection(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlDirection(pResData);}
+    bool procReadFixed2ControlDirection(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseCtrlDirDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            int startIdx = 0;
+
+            signalDto.mControlDir = value.mid(startIdx,1).toInt(); startIdx += 1;
+            setFixed2Dir(signalDto.mControlDir);
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED2_RAMP_MODE)
+        {
+            if(signalDto.mIsSucc == false)
+            {
+                readFixed2ControlDirection(this);
+            }
+            else
+            {
+                setLoadProgress(ValveEnumDef::LOAD_FIXED2_CTRL_DIR);
+                readSelectControlMode(this);
+            }
+        }
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedFixed2CtrlDir(signalDto);
+        }
+
+        return signalDto.mIsSucc;
     }
 
     static void staticProcReadPressureCtrlConfig(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadPressureCtrlConfig(pResData);}
@@ -3655,7 +4312,7 @@ public slots:
 
         }while(false);
 
-        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_DP_CONFIG)
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_FIXED2_CTRL_DIR)
         {
             if(signalDto.mIsSucc == false && !signalDto.mIsNetworkErr)
             {
@@ -3675,406 +4332,6 @@ public slots:
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventReadedSelControlMode(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadAdaptiveControlGainFactor(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlGainFactor(pResData);}
-    bool procReadAdaptiveControlGainFactor(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseGainFactorDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mGainFactor = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedAdapGainFactor(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadAdaptiveControlDeltaFactor(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlDeltaFactor(pResData);}
-    bool procReadAdaptiveControlDeltaFactor(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseDeltaFactorDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mDeltaFactor = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedAdapDeltaFactor(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadAdaptiveControlSensorDelay(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlSensorDelay(pResData);}
-    bool procReadAdaptiveControlSensorDelay(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseSensorDelayDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mSensorDelay = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedAdapSensorDelay(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadAdaptiveControlRampTime(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlRampTime(pResData);}
-    bool procReadAdaptiveControlRampTime(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseRampTimeDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mRampTime = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedAdapRampTime(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadAdaptiveControlRampMode(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadAdaptiveControlRampMode(pResData);}
-    bool procReadAdaptiveControlRampMode(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseRampModeDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            int startIdx = 0;
-
-            signalDto.mRampMode = value.mid(startIdx,1).toInt(); startIdx += 1;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedAdapRampMode(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed1ControlPGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlPGain(pResData);}
-    bool procReadFixed1ControlPGain(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponsePGainDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mPGain = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed1PGain(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed1ControlIGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlIGain(pResData);}
-    bool procReadFixed1ControlIGain(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseIGainDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mIGain = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed1IGain(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed1ControlRampTime(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlRampTime(pResData);}
-    bool procReadFixed1ControlRampTime(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseRampTimeDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mRampTime = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed1RampTime(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed1ControlRampMode(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlRampMode(pResData);}
-    bool procReadFixed1ControlRampMode(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseRampModeDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            int startIdx = 0;
-
-            signalDto.mRampMode = value.mid(startIdx,1).toInt(); startIdx += 1;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed1RampMode(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed1ControlDirection(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed1ControlDirection(pResData);}
-    bool procReadFixed1ControlDirection(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseCtrlDirDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            int startIdx = 0;
-
-            signalDto.mControlDir = value.mid(startIdx,1).toInt(); startIdx += 1;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed1CtrlDir(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed2ControlPGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlPGain(pResData);}
-    bool procReadFixed2ControlPGain(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponsePGainDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mPGain = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed2PGain(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed2ControlIGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlIGain(pResData);}
-    bool procReadFixed2ControlIGain(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseIGainDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mIGain = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed2IGain(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed2ControlRampTime(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlRampTime(pResData);}
-    bool procReadFixed2ControlRampTime(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseRampTimeDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            signalDto.mRampTime = value;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed2RampTime(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed2ControlRampMode(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlRampMode(pResData);}
-    bool procReadFixed2ControlRampMode(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseRampModeDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            int startIdx = 0;
-
-            signalDto.mRampMode = value.mid(startIdx,1).toInt(); startIdx += 1;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed2RampMode(signalDto);
-        }
-
-        return signalDto.mIsSucc;
-    }
-
-    static void staticProcReadFixed2ControlDirection(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadFixed2ControlDirection(pResData);}
-    bool procReadFixed2ControlDirection(void * pResData)
-    {
-        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
-        ValveResponseCtrlDirDto signalDto(*pResDto);
-
-        do{
-            if(!signalDto.mIsSucc)
-            {
-                break;
-            }
-
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
-
-            int startIdx = 0;
-
-            signalDto.mControlDir = value.mid(startIdx,1).toInt(); startIdx += 1;
-
-        }while(false);
-
-        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
-        {
-            emit signalEventReadedFixed2CtrlDir(signalDto);
         }
 
         return signalDto.mIsSucc;

@@ -919,6 +919,40 @@ private:
         file.appendLine(QString(" "));
         file.appendLine(QString("---------------------------------------------"));
         file.appendLine(QString(" "));
+        file.appendLine(QString("Pressure ctrl mode    : %1").arg(mCtrlAlgo == ValveEnumDef::PRESSURE_CTRL_ADAPTIVE ? "Adaptive" : mCtrlAlgo == ValveEnumDef::PRESSURE_CTRL_FIXED_DOWN ? "Fixed" : "etc"));
+        if(mCtrlAlgo == (int)ValveEnumDef::PRESSURE_CTRL_ADAPTIVE)
+        {
+            file.appendLine(QString("Adaptive Gain Factor  : %1").arg(pValveSP->getAdaptiveGainFactor()));
+            file.appendLine(QString("Adaptive Delta Factor : %1").arg(pValveSP->getAdaptiveDeltaFactor()));
+            file.appendLine(QString("Adaptive Sensor Delay : %1").arg(pValveSP->getAdaptiveSensorDelay()));
+            file.appendLine(QString("Adaptive Ramp Time    : %1").arg(pValveSP->getAdaptiveRampTime()));
+            file.appendLine(QString("Adaptive Ramp Mode    : %1").arg(pValveSP->getAdaptiveRampMode() == 0 ? "constant time" : "constant slope"));
+        }
+        else if(mCtrlAlgo == (int)ValveEnumDef::PRESSURE_CTRL_FIXED_DOWN)
+        {
+            file.appendLine(QString("Fixed P Gain          : %1").arg(pValveSP->getFixed1PGain()));
+            file.appendLine(QString("Fixed I Gain          : %1").arg(pValveSP->getFixed1IGain()));
+            file.appendLine(QString("Fixed Ramp Time       : %1").arg(pValveSP->getFixed1RampTime()));
+            file.appendLine(QString("Fixed Ramp Mode       : %1").arg(pValveSP->getFixed1RampMode() == 0 ? "constant time" : "constant slope"));
+            file.appendLine(QString("Fixed Direction       : %1").arg(pValveSP->getFixed1Dir() == 0 ? "downstream": "upstream"));
+        }
+        else if(mCtrlAlgo == (int)ValveEnumDef::PRESSURE_CTRL_FIXED_UP)
+        {
+            file.appendLine(QString("Fixed P Gain          : %1").arg(pValveSP->getFixed2PGain()));
+            file.appendLine(QString("Fixed I Gain          : %1").arg(pValveSP->getFixed2IGain()));
+            file.appendLine(QString("Fixed Ramp Time       : %1").arg(pValveSP->getFixed2RampTime()));
+            file.appendLine(QString("Fixed Ramp Mode       : %1").arg(pValveSP->getFixed2RampMode() == 0 ? "constant time" : "constant slope"));
+            file.appendLine(QString("Fixed Direction       : %1").arg(pValveSP->getFixed2Dir() == 0 ? "downstream": "upstream"));
+        }
+        else
+        {
+            file.appendLine(QString("Unknow"));
+            file.appendLine(QString("Unknow"));
+            file.appendLine(QString("Unknow"));
+            file.appendLine(QString("Unknow"));
+            file.appendLine(QString("Unknow"));
+        }
+
         file.appendLine(QString("Position resolution   : %1").arg(mPosResolution));
         file.appendLine(QString("Sensor offset         : %1 mv").arg((double)mSensorOffset/100.0, 10, 'f', 2, QChar(' ')));
         file.appendLine(QString("Sensor full scale     : %1 %2").arg(mFullScale).arg(UNITUTIL_TO_STR(mFullScaleUnit)));
