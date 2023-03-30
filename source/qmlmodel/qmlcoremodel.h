@@ -984,7 +984,7 @@ private:
             actualPressure = UNITUTIL_CONVERT(getFullScaleUnit(), ((double)mRecordCurrentPressureList[i]) * mPressureConvertFactor, getPressureDpUnit());
             targetPressure = UNITUTIL_CONVERT(getFullScaleUnit(), ((double)mRecordTargetPressureList[i] ) * mPressureConvertFactor, getPressureDpUnit());
             file.appendLine(QString("%1    %2    %3    %4    %5")
-                                    .arg(msec          , 22, 'f', 3              , QChar(' '))
+                                    .arg(msec          , 22, 'f', 3              , QChar('0'))
                                     .arg(actualPos     , 15, 'f', posFixedN      , QChar(' '))
                                     .arg(targetPos     , 15, 'f', posFixedN      , QChar(' '))
                                     .arg(actualPressure, 15, 'f', pressureFixedN , QChar(' '))
