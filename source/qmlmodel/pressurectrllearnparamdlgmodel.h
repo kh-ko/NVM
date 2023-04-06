@@ -292,6 +292,7 @@ public slots:
 
         do{
             QString value = out.readLine();
+            value.replace(",","");
 
             if(readIdx <= mEndParamIdx )
             {
@@ -326,7 +327,7 @@ public slots:
 
         for(int i = 0; i < mpParamList.size(); i ++)
         {
-            file.appendLine(QString("%1").arg(mpParamList[i]->getValueText()));
+            file.appendLine(QString("%1").arg(mpParamList[i]->getValueText().insert(3, QChar(','))));
         }
 
         setErrMsg2("");

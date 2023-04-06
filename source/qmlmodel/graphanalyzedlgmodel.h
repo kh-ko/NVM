@@ -123,6 +123,7 @@ public slots:
 
             if((lineIdx >= pointStartLine) && pointStartLine != -1)
             {
+                line = line.trimmed();
                 QStringList col = line.split(QRegExp("[\\s]+"));
 
                 if(col.size() != 5)
