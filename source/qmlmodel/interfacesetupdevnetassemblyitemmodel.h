@@ -7,6 +7,7 @@
 class InterfaceSetupDevNetAssemblyItemModel : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool    mEnable     READ getEnable     NOTIFY signalEventChangedEnable    )
     Q_PROPERTY(bool    mIsSelected READ getIsSelected NOTIFY signalEventChangedIsSelected)
     Q_PROPERTY(int     mSeq        READ getSeq        NOTIFY signalEventChangedSeq       )
     Q_PROPERTY(int     mIndex      READ getIndex      NOTIFY signalEventChangedIndex     )
@@ -17,6 +18,7 @@ class InterfaceSetupDevNetAssemblyItemModel : public QObject
     Q_PROPERTY(int     mDepSeq     READ getDepSeq     NOTIFY signalEventChangedDepSeq    )
 
 public:
+    bool    mEnable    ;
     bool    mIsSelected;
     int     mSeq       ;
     int     mIndex     ;
@@ -26,6 +28,7 @@ public:
     QString mAddInfo   ;
     int     mDepSeq    ;
 
+    bool    getEnable    (){return mEnable    ;}
     bool    getIsSelected(){return mIsSelected;}
     int     getSeq       (){return mSeq       ;}
     int     getIndex     (){return mIndex     ;}
@@ -35,6 +38,7 @@ public:
     QString getAddInfo   (){return mAddInfo   ;}
     int     getDepSeq    (){return mDepSeq    ;}
 
+    void setEnable    (bool    value){if(mEnable     == value)return; mEnable     = value; emit signalEventChangedEnable    (value);}
     void setIsSelected(bool    value){if(mIsSelected == value)return; mIsSelected = value; if(value == false) setIndex(-1); emit signalEventChangedIsSelected(value);}
     void setSeq       (int     value){if(mSeq        == value)return; mSeq        = value; emit signalEventChangedSeq       (value);}
     void setIndex     (int     value){if(mIndex      == value)return; mIndex      = value; emit signalEventChangedIndex     (value);}
@@ -45,6 +49,7 @@ public:
     void setDepSeq    (int     value){if(mDepSeq     == value)return; mDepSeq     = value; emit signalEventChangedDepSeq    (value);}
 
 signals:
+    void signalEventChangedEnable    (bool    value);
     void signalEventChangedIsSelected(bool    value);
     void signalEventChangedSeq       (int     value);
     void signalEventChangedIndex     (int     value);
@@ -59,6 +64,7 @@ public:
     {}
     explicit InterfaceSetupDevNetAssemblyItemModel(DNetAssemblyItem item, QObject *parent = nullptr): QObject(parent)
     {
+        mEnable     = true;
         mIsSelected = false;
         mSeq        = item.mSeq    ;
         mIndex      = -1           ;

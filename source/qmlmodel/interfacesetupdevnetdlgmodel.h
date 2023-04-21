@@ -689,6 +689,11 @@ public slots:
         setState((eState)(mState + 1));
     }
 
+    Q_INVOKABLE bool onCommandGetIsSelDummy()
+    {
+        return (mInputTable.at(mInputTable.size()-1)->getIsSelected() || mOutputTable.at(mOutputTable.size()-1)->getIsSelected());
+    }
+
     Q_INVOKABLE int onCommandGetInputAssemblyItemCount()
     {
         return mInputTable.size();
@@ -713,6 +718,8 @@ public slots:
         {
             pDependentItem->setIsSelected(!isSelect);
         }
+
+        mpQmlInDummyItem->setIsSelected(!isInputEvenBytes());
 
         int nextIdx = 0;
 
@@ -750,6 +757,8 @@ public slots:
         {
             pDependentItem->setIsSelected(!isSelect);
         }
+
+        mpQmlOutDummyItem->setIsSelected(!isOutputEvenBytes());
 
         int nextIdx = 0;
 
@@ -1082,7 +1091,9 @@ private:
     eState mState         = eState::STATE_READ_MAC;
 
     QList<InterfaceSetupDevNetAssemblyItemModel *>mInputTable;
+    InterfaceSetupDevNetAssemblyItemModel * mpQmlInDummyItem;
     QList<InterfaceSetupDevNetAssemblyItemModel *>mOutputTable;
+    InterfaceSetupDevNetAssemblyItemModel * mpQmlOutDummyItem;
 
     bool    mIsWritten            = false;
     int     mWriteMAC             = 0;
@@ -1330,7 +1341,7 @@ private:
     {
         quint32 maskedValue = value.toUInt(nullptr, 16);
 
-        for(quint32 shift = 0; shift < 32 && shift < (quint32)mInputTable.size(); shift++)
+        for(quint32 shift = 0; shift < 32 && shift < (quint32)mInputTable.size()-1; shift++)
         {
             quint32 mask = (0x00000001 << shift) & 0xFFFFFFFF;
             onCommandSelectInputAssemblyItem(shift + 1, (maskedValue & mask) != 0);
@@ -1341,7 +1352,7 @@ private:
     {
         quint32 maskedValue = value.toUInt(nullptr, 16);
 
-        for(quint32 shift = 0; shift < 32 && shift < (quint32)mOutputTable.size(); shift++)
+        for(quint32 shift = 0; shift < 32 && shift < (quint32)mOutputTable.size()-1; shift++)
         {
             quint32 mask = (0x00000001 << shift) & 0xFFFFFFFF;
             onCommandSelectOutputAssemblyItem(shift + 1, (maskedValue & mask) != 0);
@@ -1433,7 +1444,7 @@ private:
         quint32 value = 0;
         quint32 mask = 0x00000001;
 
-        for(int idx = 0; idx < mInputTable.size(); idx++)
+        for(int idx = 0; idx < mInputTable.size()-1; idx++)
         {
             if(mInputTable.at(idx)->getIsSelected())
                 value = value | ((mask << idx) & 0xFFFFFFFF);
@@ -1445,7 +1456,7 @@ private:
         quint32 value = 0;
         quint32 mask = 0x00000001;
 
-        for(int idx = 0; idx < mOutputTable.size(); idx++)
+        for(int idx = 0; idx < mOutputTable.size()-1; idx++)
         {
             if(mOutputTable.at(idx)->getIsSelected())
                 value = value | ((mask << idx) & 0xFFFFFFFF);
@@ -1476,6 +1487,30 @@ private:
         return precision;
     }
 
+    bool isInputEvenBytes()
+    {
+        int len = 0;
+
+        for(int i = 0; i < mInputTable.size() - 1; i ++ )
+        {
+            InterfaceSetupDevNetAssemblyItemModel * pItem = mInputTable.at(i);
+           if(pItem->getIsSelected()){ len = len + pItem->getLength(); }
+        }
+        return (len % 2) == 0;
+    }
+
+    bool isOutputEvenBytes()
+    {
+        int len = 0;
+
+        for(int i = 0; i < mOutputTable.size() - 1; i ++ )
+        {
+            InterfaceSetupDevNetAssemblyItemModel * pItem = mOutputTable.at(i);
+           if(pItem->getIsSelected()){ len = len + pItem->getLength(); }
+        }
+        return (len % 2) == 0;
+    }
+
     void loadAssemblyTable()
     {
         int itemCount;
@@ -1487,6 +1522,16 @@ private:
             InterfaceSetupDevNetAssemblyItemModel * pQmlItem = new InterfaceSetupDevNetAssemblyItemModel(item, this);
             mInputTable.append(pQmlItem);
         }
+        mpQmlInDummyItem = new InterfaceSetupDevNetAssemblyItemModel(this);
+        mpQmlInDummyItem->setEnable(false);
+        mpQmlInDummyItem->setSeq    (mInputTable.at(mInputTable.size()-1)->getSeq() + 1);
+        mpQmlInDummyItem->setIndex  (-1);
+        mpQmlInDummyItem->setName   ("dummy");
+        mpQmlInDummyItem->setLength (1);
+        mpQmlInDummyItem->setType   ("INT");
+        mpQmlInDummyItem->setAddInfo("dummy parameter");
+        mpQmlInDummyItem->setDepSeq (0);
+        mInputTable.append(mpQmlInDummyItem);
 
         itemCount = pConfigSP->mOutputAssemblyTable.size();
 
@@ -1495,6 +1540,16 @@ private:
             InterfaceSetupDevNetAssemblyItemModel * pQmlItem = new InterfaceSetupDevNetAssemblyItemModel(item, this);
             mOutputTable.append(pQmlItem);
         }
+        mpQmlOutDummyItem = new InterfaceSetupDevNetAssemblyItemModel(this);
+        mpQmlOutDummyItem->setEnable(false);
+        mpQmlOutDummyItem->setSeq    (mOutputTable.at(mOutputTable.size()-1)->getSeq() + 1);
+        mpQmlOutDummyItem->setIndex  (-1);
+        mpQmlOutDummyItem->setName   ("dummy");
+        mpQmlOutDummyItem->setLength (1);
+        mpQmlOutDummyItem->setType   ("INT");
+        mpQmlOutDummyItem->setAddInfo("dummy parameter");
+        mpQmlOutDummyItem->setDepSeq (0);
+        mOutputTable.append(mpQmlOutDummyItem);
     }
 
     QStringList createEDSContents()
@@ -1519,8 +1574,9 @@ private:
             }
         }
 
-        if((inputLength % 2) != 0)  // 바이트 수는 짝수만 설정가능
-            inputLength = inputLength + 1;
+        //if((inputLength % 2) != 0)  // 바이트 수는 짝수만 설정가능
+        //    inputLength = inputLength + 1;
+
 
         foreach(InterfaceSetupDevNetAssemblyItemModel * pItem, mOutputTable)
         {
@@ -1535,8 +1591,8 @@ private:
             }
         }
 
-        if((outputLength % 2) != 0)  // 바이트 수는 짝수만 설정가능
-            outputLength = outputLength + 1;
+        //if((outputLength % 2) != 0)  // 바이트 수는 짝수만 설정가능
+        //    outputLength = outputLength + 1;
 
         file.setFileName(QString("%1/ref_sample/eds_sample.txt").arg(QApplication::applicationDirPath()));
         file.open(QFile::ReadOnly);

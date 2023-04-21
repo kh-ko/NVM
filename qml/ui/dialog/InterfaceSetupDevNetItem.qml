@@ -22,6 +22,8 @@ RowLayout {
 
     signal clickedCheckBox()
 
+    opacity: enabled ? 1.0 : 0.3
+
     Rectangle{
         Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
 

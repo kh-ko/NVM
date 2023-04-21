@@ -129,5 +129,6 @@
         <file>ui/dialog/InterfaceStatusDevNetItem.qml</file>
         <file>image/icon-minimized.png</file>
         <file>ui/dialog/AdvancedToolBackupNRestoreDlg.qml</file>
+        <file>ui/dialog/NoticeDlg.qml</file>
     </qresource>
 </RCC>

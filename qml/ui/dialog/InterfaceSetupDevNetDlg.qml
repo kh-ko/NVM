@@ -24,6 +24,12 @@ BaseSetupWindow{
     isEdit      : dlgModel.mIsEdit
     //bodyWidth   : 500
 
+    function openNoticeDlg()
+    {
+        var popup = noticeDlg.createObject(dialog)
+        popup.open();
+    }
+
     function commit()
     {
         var macAddr         = parseInt(body.macAddr.textField.text)
@@ -85,8 +91,10 @@ BaseSetupWindow{
             for(i = 1; i <= rowCount; i ++)
             {
                 var itemAssemblyData = dlgModel.onCommandGetInputAssemblyItem(i);
+
                 iAssemblyListModel.append({"itemAssemblyData": itemAssemblyData})
             }
+            console.debug("end");
 
             rowCount = dlgModel.onCommandGetOutputAssemblyItemCount()
 
@@ -617,7 +625,7 @@ BaseSetupWindow{
                                 anchors.top: parent.top
 
                                 isHeader  : false;
-                                enabled: dlgModel.mProgress == 100 ? true : false
+                                enabled: dlgModel.mProgress == 100 &&  parent.assemblyData.mEnable ? true : false
 
                                 itemSeq    : parent.assemblyData.mSeq
                                 isSelected : parent.assemblyData.mIsSelected
@@ -691,7 +699,7 @@ BaseSetupWindow{
                                 anchors.top: parent.top
 
                                 isHeader  : false;
-                                enabled: dlgModel.mProgress == 100 ? true : false
+                                enabled: dlgModel.mProgress == 100 &&  parent.assemblyData.mEnable ? true : false
 
                                 itemSeq    : parent.assemblyData.mSeq
                                 isSelected : parent.assemblyData.mIsSelected
@@ -740,13 +748,20 @@ BaseSetupWindow{
                         }
 
                         onClick: {
-                            if(dialog.access !== ValveEnumDef.ACCESS_LOCAL && dialog.isRS232Test == false)
-                            {
-                                dialog.openChangeAccessDlg()
-                                return;
-                            }
 
-                            dialog.commit()
+                            if(dlgModel.onCommandGetIsSelDummy())
+                            {
+                                dialog.openNoticeDlg();
+                            }
+                            else
+                            {
+                                if(dialog.access !== ValveEnumDef.ACCESS_LOCAL && dialog.isRS232Test == false)
+                                {
+                                    dialog.openChangeAccessDlg()
+                                    return;
+                                }
+                                dialog.commit()
+                            }
                         }
                     }
 
@@ -763,6 +778,22 @@ BaseSetupWindow{
                         }
                     }
                 }
+            }
+        }
+    }
+
+    Component{
+        id : noticeDlg
+        NoticeDlg{
+            msg : qsTr("Added a dummy parameter to match even bytes.")
+
+            onSignalConfirm: {
+                if(dialog.access !== ValveEnumDef.ACCESS_LOCAL && dialog.isRS232Test == false)
+                {
+                    dialog.openChangeAccessDlg()
+                    return;
+                }
+                dialog.commit()
             }
         }
     }
