@@ -221,7 +221,10 @@ Window {
         convertedSensorFullScale : model.mConvertedFullScale
         convertedCurrPressure    : model.mConvertedRTPressure
         convertedTargetPressure  : model.mConvertedTPressure
+        minPressure              : model.mMinMainPressureChart
+        maxPressure              : model.mMaxMainPressureChart
         fixedN                   : model.mPressureFixedN > 8 ? 8 : model.mPressureFixedN
+        autoScaleMinMargin       : model.mAutoScaleMinMargin
         pressureDecades          : model.mPressureDecades
         isRecord                 : model.mIsRecord
         recordTime               : model.mRecordTime
@@ -232,7 +235,34 @@ Window {
         onClickAnalyze: {
             var popup = graphAnalyzeDlg.createObject(window);
 
-            popup.loadFromChart(chart.chartView); popup.show();}
+            popup.loadFromChart(chart.chartView); popup.show();
+        }
+
+        MouseArea {
+            anchors.top: parent.top; anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.chart_ctrlbox_height + GUISetting.margin
+            acceptedButtons: Qt.RightButton
+
+            onPressed: {
+                focus = true
+            }
+
+            onClicked: {
+                if (mouse.button === Qt.RightButton)
+                    contextMenu.open()
+            }
+
+            Menu {
+                id: contextMenu
+
+                MenuItem {
+                    text: qsTr("Set pressure graph(min/max)")
+                    onTriggered: {
+                        var popup = graphMinMaxDlg.createObject(window);
+                        popup.show();
+                    }
+                }
+            }
+        }
     }
 
     RowLayout{
@@ -674,6 +704,57 @@ Window {
             valveID    : model.mValveID
         }
     }
+
+    Component{
+        id : graphMinMaxDlg
+        GraphMinMaxDlg
+        {
+            minPressureChart : model.mMinMainPressureChart
+            maxPressureChart : model.mMaxMainPressureChart
+            pressureFixedN   : model.mPressureFixedN
+            strUnit : model.mPressureDpUnit === ValveEnumDef.PRESSURE_UNIT_PA    ? "pa"  :
+                      model.mPressureDpUnit === ValveEnumDef.PRESSURE_UNIT_BAR   ? "bar"  :
+                      model.mPressureDpUnit === ValveEnumDef.PRESSURE_UNIT_MBAR  ? "mbar" :
+                      model.mPressureDpUnit === ValveEnumDef.PRESSURE_UNIT_UBAR  ? "ubar" :
+                      model.mPressureDpUnit === ValveEnumDef.PRESSURE_UNIT_TORR  ? "Torr" :
+                      model.mPressureDpUnit === ValveEnumDef.PRESSURE_UNIT_MTORR ? "mTorr":
+                      model.mPressureDpUnit === ValveEnumDef.PRESSURE_UNIT_ATM   ? "atm"  :
+                      model.mPressureDpUnit === ValveEnumDef.PRESSURE_UNIT_PSI   ? "psi"  :
+                      model.mPressureDpUnit === ValveEnumDef.PRESSURE_UNIT_PSF   ? "psf"  : ""
+
+            onSignalChangedMinMax: {
+                model.onCommandSetMinMaxPressureChart(min, max)
+            }
+        }
+    }
+    //
+    //Component{
+    //    id : pressurePrecisionDlg
+    //    PressurePrecisionDlg
+    //    {
+    //        minPressureFixedN: model.mMinPressureFixedN
+    //        userPressureFixedN: model.mUserPressureFixedN
+    //
+    //        onSignalChangedPrecision: {
+    //            model.onCommandSetUserPressureFixedN(precisionValue)
+    //        }
+    //    }
+    //}
+    //
+    //Component{
+    //    id : autoScaleMarginDlg
+    //
+    //    AutoScaleMarginDlg
+    //    {
+    //        autoScaleMargin: model.mAutoScaleMinMargin
+    //
+    //        onSignalChangedAutoScaleMargin:{
+    //            model.onCommandSetAutoScaleMinMargin(marginValue)
+    //        }
+    //    }
+    //}
+
+
 }
 
 

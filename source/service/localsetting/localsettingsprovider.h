@@ -22,6 +22,10 @@
 #define ENABLE_SLOT_LSETTING_CHANGED_IS_AUTOSCALE_POS        connect(LocalSettingSProvider::getInstance(), SIGNAL(signalEventChangedIsAutoScalePos       ()), this, SLOT(onLSettingChangedIsAutoScalePos       ()))
 #define ENABLE_SLOT_LSETTING_CHANGED_IS_AUTOSCALE_PRESSURE   connect(LocalSettingSProvider::getInstance(), SIGNAL(signalEventChangedIsAutoScalePressure  ()), this, SLOT(onLSettingChangedIsAutoScalePressure  ()))
 #define ENABLE_SLOT_LSETTING_CHANGED_CHART_MSEC              connect(LocalSettingSProvider::getInstance(), SIGNAL(signalEventChangedChartMSec            ()), this, SLOT(onLSettingChangedChartMSec            ()))
+//#define ENABLE_SLOT_LSETTING_CHANGED_MIN_PRESSURE_CHART      connect(LocalSettingSProvider::getInstance(), SIGNAL(signalEventChangedMinMainPressureChart ()), this, SLOT(onLSettingChangedMinMainPressureChart ()))
+//#define ENABLE_SLOT_LSETTING_CHANGED_MAX_PRESSURE_CHART      connect(LocalSettingSProvider::getInstance(), SIGNAL(signalEventChangedMaxMainPressureChart ()), this, SLOT(onLSettingChangedMaxMainPressureChart ()))
+#define ENABLE_SLOT_LSETTING_CHANGED_USER_PRESSURE_FIXED_N   connect(LocalSettingSProvider::getInstance(), SIGNAL(signalEventChangedUserPressureFixedN   ()), this, SLOT(onLSettingChangedUserPressureFixedN   ()))
+#define ENABLE_SLOT_LSETTING_CHANGED_AUTOSCALE_MIN_MARGIN    connect(LocalSettingSProvider::getInstance(), SIGNAL(signalEventChangedAutoScaleMinMargin   ()), this, SLOT(onLSettingChangedAutoScaleMinMargin   ()))
 #define ENABLE_SLOT_LSETTING_CHANGED_SEQ_PERFORMED_CNT       connect(LocalSettingSProvider::getInstance(), SIGNAL(signalEventChangedSequencerPerformedCnt()), this, SLOT(onLSettingChangedSequencerPerformedCnt()))
 #define ENABLE_SLOT_LSETTING_CHANGED_DEV_MODE_IS_ON          connect(LocalSettingSProvider::getInstance(), SIGNAL(signalEventChangedDevModeIsOn          ()), this, SLOT(onLSettingChangedDevModeIsOn          ()))
 
@@ -39,6 +43,10 @@ private:
     const QString mIsDrawTargetPressureKey  = "display/is_draw_target_pressure";
     const QString mIsAutoScalePosKey        = "display/is_auto_scale_posKey"   ;
     const QString mIsAutoScalePressureKey   = "display/is_auto_scale_pressure" ;
+    //const QString mMinMainPressureChartKey  = "display/min_pressure_chart"     ;
+    //const QString mMaxMainPressureChartKey  = "display/max_pressure_chart"     ;
+    const QString mUserPressureFixedNKey    = "display/user_pressure_percision";
+    const QString mAutoScaleMinMarginKey    = "display/auto_scale_min_margin"  ;
     const QString mChartMSecKey             = "display/chart_msec"             ;
     const QString mSequencerPerformedCntKey = "sequencer/performedcounter"     ;
     const QString mDevModeIsOnKey           = "dev/is_on"                      ;
@@ -59,7 +67,7 @@ public:
     QList<int> mChartMSecOption = {30000, 60000, 120000, 300000};
 
     qint64  mMonitoringCycle       = 10;
-    QString mBuildVersion          = "1.9.23";
+    QString mBuildVersion          = "1.9.24";
     bool    mIsWithoutLogo         = true;
 
     bool    mIsDrawCurrPos         = true ;
@@ -69,6 +77,10 @@ public:
     bool    mIsAutoScalePos        = false;
     bool    mIsAutoScalePressure   = false;
     qint64  mChartMSec             = 30000;
+    //double  mMinMainPressureChart  = 0;
+    //double  mMaxMainPressureChart  = 0;
+    int     mUserPressureFixedN    = 0;
+    double  mAutoScaleMinMargin    = 0.1f;
     qint64  mSequencerPerformedCnt = 0;
     bool    mDevModeIsOn           = false;
 
@@ -108,6 +120,10 @@ public:
     void setIsAutoScalePos       (bool   value){ CHECK_FALSE_RETURN(mIsRunning); internalSetIsAutoScalePos       (value); emit signalEventChangedIsAutoScalePos       ();}
     void setIsAutoScalePressure  (bool   value){ CHECK_FALSE_RETURN(mIsRunning); internalSetIsAutoScalePressure  (value); emit signalEventChangedIsAutoScalePressure  ();}
     void setChartMSec            (qint64 value){ CHECK_FALSE_RETURN(mIsRunning); internalSetChartMSec            (value); emit signalEventChangedChartMSec            ();}
+    //void setMinMainPressureChart (double value){ CHECK_FALSE_RETURN(mIsRunning); internalMinMainPressureChart    (value); emit signalEventChangedMinMainPressureChart ();}
+    //void setMaxMainPressureChart (double value){ CHECK_FALSE_RETURN(mIsRunning); internalMaxMainPressureChart    (value); emit signalEventChangedMaxMainPressureChart ();}
+    void setUserPressureFixedN   (int    value){ CHECK_FALSE_RETURN(mIsRunning); internalUserPressureFixedN      (value); emit signalEventChangedUserPressureFixedN   ();}
+    void setAutoScaleMinMargin   (double value){ CHECK_FALSE_RETURN(mIsRunning); internalAutoScaleMinMargin      (value); emit signalEventChangedAutoScaleMinMargin   ();}
     void setSequencerPerformedCnt(qint64 value){ CHECK_FALSE_RETURN(mIsRunning); internalSetSequencerPerformedCnt(value); emit signalEventChangedSequencerPerformedCnt();}
     void setDevModeIsOn          (bool   value){ CHECK_FALSE_RETURN(mIsRunning); internalSetDevModeIsOn          (value); emit signalEventChangedDevModeIsOn          ();}
 
@@ -151,9 +167,12 @@ private:
         mIsAutoScalePos        = mpSetting->value(mIsAutoScalePosKey       , false).toBool()    ;
         mIsAutoScalePressure   = mpSetting->value(mIsAutoScalePressureKey  , false).toBool()    ;
         mChartMSec             = mpSetting->value(mChartMSecKey            , 30000).toLongLong();
+        //mMinMainPressureChart  = mpSetting->value(mMinMainPressureChartKey , 0    ).toDouble()  ;
+        //mMaxMainPressureChart  = mpSetting->value(mMaxMainPressureChartKey , 0    ).toDouble()  ;
+        mUserPressureFixedN    = mpSetting->value(mUserPressureFixedNKey   , 0    ).toUInt()    ;
+        mAutoScaleMinMargin    = mpSetting->value(mAutoScaleMinMarginKey   , 0.1  ).toDouble()  ;
         mSequencerPerformedCnt = mpSetting->value(mSequencerPerformedCntKey, 0    ).toLongLong();
         mDevModeIsOn           = mpSetting->value(mDevModeIsOnKey          , false).toBool()    ;
-
 
         internalSetMonitoringCycle      (mMonitoringCycle      );
         internalSetIsDrawCurrPos        (mIsDrawCurrPos        );
@@ -163,6 +182,10 @@ private:
         internalSetIsAutoScalePos       (mIsAutoScalePos       );
         internalSetIsAutoScalePressure  (mIsAutoScalePressure  );
         internalSetChartMSec            (mChartMSec            );
+        //internalMinMainPressureChart    (mMinMainPressureChart );
+        //internalMaxMainPressureChart    (mMaxMainPressureChart );
+        internalUserPressureFixedN      (mUserPressureFixedN   );
+        internalAutoScaleMinMargin      (mAutoScaleMinMargin   );
         internalSetSequencerPerformedCnt(mSequencerPerformedCnt);
         internalSetDevModeIsOn          (mDevModeIsOn          );
     }
@@ -175,6 +198,10 @@ private:
     void internalSetIsAutoScalePos       (bool   value){ mIsAutoScalePos        = value; mpSetting->setValue(mIsAutoScalePosKey       , value);}
     void internalSetIsAutoScalePressure  (bool   value){ mIsAutoScalePressure   = value; mpSetting->setValue(mIsAutoScalePressureKey  , value);}
     void internalSetChartMSec            (qint64 value){ mChartMSec             = value; mpSetting->setValue(mChartMSecKey            , value);}
+    //void internalMinMainPressureChart    (double value){ mMinMainPressureChart  = value; mpSetting->setValue(mMinMainPressureChartKey , value);}
+    //void internalMaxMainPressureChart    (double value){ mMaxMainPressureChart  = value; mpSetting->setValue(mMaxMainPressureChartKey , value);}
+    void internalUserPressureFixedN      (int    value){ mUserPressureFixedN    = value; mpSetting->setValue(mUserPressureFixedNKey   , value);}
+    void internalAutoScaleMinMargin      (double value){ mAutoScaleMinMargin    = value; mpSetting->setValue(mAutoScaleMinMarginKey   , value);}
     void internalSetSequencerPerformedCnt(qint64 value){ mSequencerPerformedCnt = value; mpSetting->setValue(mSequencerPerformedCntKey, value);}
     void internalSetDevModeIsOn          (bool   value){ mDevModeIsOn           = value; mpSetting->setValue(mDevModeIsOnKey          , value);}
 
@@ -189,6 +216,10 @@ signals:
     void signalEventChangedIsAutoScalePos       ();
     void signalEventChangedIsAutoScalePressure  ();
     void signalEventChangedChartMSec            ();
+    //void signalEventChangedMinMainPressureChart ();
+    //void signalEventChangedMaxMainPressureChart ();
+    void signalEventChangedUserPressureFixedN   ();
+    void signalEventChangedAutoScaleMinMargin   ();
     void signalEventChangedSequencerPerformedCnt();
     void signalEventChangedDevModeIsOn          ();
 };

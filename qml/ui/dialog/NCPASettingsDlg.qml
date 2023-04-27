@@ -22,6 +22,8 @@ BaseSetupWindow{
 
     function commit()
     {
+        var userPressurePrecisionValue = parseInt(body.userPressurePrecision.textField.text)
+        var autoScaleMinMarginRatiovalue = parseFloat(body.autoScaleMinMarginRatio.textField.text)
         var posResolutionIdx       = body.posResolutionCombo.currentIndex + 1
         var pressureDpUnitIdx      = body.pressureDpUnitCombo.currentIndex
         var isDrawCurrPos          = body.posDrawCurrCombo.currentIndex        === 0 ? false : true
@@ -34,7 +36,7 @@ BaseSetupWindow{
         var isAutoScalePressure    = body.pressureAutoScaleCombo.currentIndex  === 0 ? false : true
         var chartTimeIdx           = body.chartTimeCombo.currentIndex
 
-        dlgModel.onCommandApply(posResolutionIdx, pressureDpUnitIdx, isDrawCurrPos, isDrawTargetPos, isDrawCurrPressure, isDrawTargetPressure, pressureAxisMappingIdx, pressureDecadesIdx, isAutoScalePos, isAutoScalePressure, chartTimeIdx)
+        dlgModel.onCommandApply(posResolutionIdx, pressureDpUnitIdx, isDrawCurrPos, isDrawTargetPos, isDrawCurrPressure, isDrawTargetPressure, pressureAxisMappingIdx, pressureDecadesIdx, isAutoScalePos, isAutoScalePressure, chartTimeIdx, userPressurePrecisionValue, autoScaleMinMarginRatiovalue)
     }
 
     Component.onCompleted: {
@@ -47,6 +49,8 @@ BaseSetupWindow{
         id : dlgModel
 
         onSignalEventCompletedLoad: {
+            body.userPressurePrecision.setValue(dlgModel.mUserPressureFixedN)
+            body.autoScaleMinMarginRatio.setValue(dlgModel.mAutoScaleMinMargin)
             body.posResolutionCombo.currentIndex       = dlgModel.mPosResolutionIdx - 1
             body.pressureDpUnitCombo.currentIndex      = dlgModel.mPressureDpUnitIdx
             body.posDrawCurrCombo.currentIndex         = dlgModel.mIsDrawCurrPos        ? 1 : 0
@@ -78,6 +82,8 @@ BaseSetupWindow{
             property alias posAutoScaleCombo        : _posAutoScaleCombo
             property alias pressureAutoScaleCombo   : _pressureAutoScaleCombo
             property alias chartTimeCombo           : _chartTimeCombo
+            property alias userPressurePrecision    : _userPressurePrecision
+            property alias autoScaleMinMarginRatio  : _autoScaleMinMarginRatio
             property real  guiScale                 : GUISetting.scale
 
             height: (GUISetting.line_margin + posIndiItem.height) + (GUISetting.line_margin + posChartItem.height) + (GUISetting.line_margin + chartTimeItem.height) + (GUISetting.line_margin + btnBox.height + GUISetting.line_margin)
@@ -173,7 +179,9 @@ BaseSetupWindow{
                         + (GUISetting.margin + emptyItem01.height        )
                         + (GUISetting.margin + _posAutoScaleCombo.height )
                         + (GUISetting.margin + emptyItem02.height        )
-                        + (GUISetting.margin + emptyItem03.height        )+ GUISetting.margin;
+                        + (GUISetting.margin + emptyItem03.height        )
+                        + (GUISetting.margin + emptyItem04.height        )
+                        + (GUISetting.margin + emptyItem05.height        ) + GUISetting.margin;
                 width: ((parent.width - (GUISetting.line_margin * 3)) / 2)
                 anchors.top: posIndiItem.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin;
 
@@ -262,6 +270,18 @@ BaseSetupWindow{
                     id : emptyItem03
                     width: 50* GUISetting.scale; height: 24* GUISetting.scale
                     anchors.top: emptyItem02.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                }
+
+                Item{
+                    id : emptyItem04
+                    width: 50* GUISetting.scale; height: 24* GUISetting.scale
+                    anchors.top: emptyItem03.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                }
+
+                Item{
+                    id : emptyItem05
+                    width: 50* GUISetting.scale; height: 24* GUISetting.scale
+                    anchors.top: emptyItem04.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                 }
             }
 
@@ -384,6 +404,46 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _pressureDecadesCombo.verticalCenter; anchors.left: _pressureDecadesCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
                     text : qsTr("decades")
+                }
+
+                NInputNumber{
+                    id : _userPressurePrecision
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    anchors.top: _pressureDecadesCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    textField.validator: IntValidator{}
+                    textField.color: "#000000"
+                    stepValue : 0.0001; minValue: 0; maxValue: 8
+                    fixedN : 0
+
+                    onChangedText: {
+                        dlgModel.onCommandSetEdit(true)
+                    }
+                }
+
+                NText{
+                    anchors.verticalCenter: _userPressurePrecision.verticalCenter; anchors.left: _userPressurePrecision.right; anchors.leftMargin: GUISetting.margin
+                    text : qsTr("floating point precision")
+                }
+
+                NInputNumber{
+                    id : _autoScaleMinMarginRatio
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    anchors.top: _userPressurePrecision.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    textField.validator: DoubleValidator{}
+                    textField.color: "#000000"
+                    stepValue : 0.0001; minValue: 0.1; maxValue: 100
+                    fixedN : 1
+
+                    onChangedText: {
+                        dlgModel.onCommandSetEdit(true)
+                    }
+                }
+
+                NText{
+                    anchors.verticalCenter: _autoScaleMinMarginRatio.verticalCenter; anchors.left: _autoScaleMinMarginRatio.right; anchors.leftMargin: GUISetting.margin
+                    text : qsTr("auto scale<br>minimum margin ratio")
                 }
             }
 

@@ -34,6 +34,7 @@ class NChartView : public QQuickPaintedItem
     Q_PROPERTY(bool    mY02Draw              READ getY02Draw              WRITE setY02Draw              NOTIFY signalEventChangedY02Draw             )
     Q_PROPERTY(bool    mY02DashDraw          READ getY02DashDraw          WRITE setY02DashDraw          NOTIFY signalEventChangedY02DashDraw         )
 
+    Q_PROPERTY(double  mAutoScaleMinMargin   READ getAutoScaleMinMargin   WRITE setAutoScaleMinMargin   NOTIFY signalEventChangedAutoScaleMinMargin  )
     Q_PROPERTY(double  mMiniumScale          READ getMiniumScale          WRITE setMiniumScale          NOTIFY signalEventChangedMiniumScale         )
     Q_PROPERTY(double  mXRange               READ getXRange               WRITE setXRange               NOTIFY signalEventChangedXRange              )
 
@@ -87,7 +88,8 @@ public:
     bool    mYAxis02Log        = false;
     bool    mY02Draw           = true ;
     bool    mY02DashDraw       = true ;
-    double  mMiniumScale        = -1  ;
+    double  mAutoScaleMinMargin= 0.3  ;
+    double  mMiniumScale       = -1  ;
     double  mXRange            = 30   ;
     bool    mPause             = false;
     bool    mDebug             = false;
@@ -112,6 +114,7 @@ public:
     bool    getYAxis02Log       (){ return mYAxis02Log       ; }
     bool    getY02Draw          (){ return mY02Draw          ; }
     bool    getY02DashDraw      (){ return mY02DashDraw      ; }
+    double  getAutoScaleMinMargin(){ return mAutoScaleMinMargin ;}
     double  getMiniumScale      (){ return mMiniumScale      ; }
     double  getXRange           (){ return mXRange           ; }
     bool    getPause            (){ return mPause            ; }
@@ -137,6 +140,7 @@ public:
     void setYAxis02Log       (bool    value){ if(mYAxis02Log        == value) return; mYAxis02Log        = value; emit signalEventChangedYAxis02Log       (value);}
     void setY02Draw          (bool    value){ if(mY02Draw           == value) return; mY02Draw           = value; emit signalEventChangedY02Draw          (value);}
     void setY02DashDraw      (bool    value){ if(mY02DashDraw       == value) return; mY02DashDraw       = value; emit signalEventChangedY02DashDraw      (value);}
+    void setAutoScaleMinMargin(double value){ if(mAutoScaleMinMargin== value) return; mAutoScaleMinMargin= value; emit signalEventChangedAutoScaleMinMargin(value);}
     void setMiniumScale      (double  value){ if(mMiniumScale       == value) return; mMiniumScale       = value; emit signalEventChangedMiniumScale      (value);}
     void setXRange           (double  value){ if(mXRange            == value) return; mXRange            = value; emit signalEventChangedXRange           (value);}
     void setPause            (bool    value){ if(mPause             == value) return; mPause             = value; emit signalEventChangedPause            (value); procPauseData();}
@@ -163,6 +167,7 @@ signals:
     void signalEventChangedYAxis02Log       (bool    value);
     void signalEventChangedY02Draw          (bool    value);
     void signalEventChangedY02DashDraw      (bool    value);
+    void signalEventChangedAutoScaleMinMargin(double value);
     void signalEventChangedMiniumScale      (double  value);
     void signalEventChangedXRange           (double  value);
     void signalEventChangedPause            (bool    value);
@@ -589,8 +594,10 @@ private:
 
         diff = foundMax - foundMin;
 
-        procMax = foundMax + diff * 0.1;
-        procMin = foundMin - diff * 0.1;
+        //procMax = foundMax + diff * 0.1;
+        //procMin = foundMin - diff * 0.1;
+        procMax = foundMax + diff * mAutoScaleMinMargin;
+        procMin = foundMin - diff * mAutoScaleMinMargin;
     }
 
     void setYAxisRange(int axisIdx, bool drawLine, bool drawDash, bool autoScale, bool logarithmic, int logDecades, double min, double max)

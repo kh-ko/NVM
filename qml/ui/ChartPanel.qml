@@ -35,7 +35,10 @@ Rectangle {
     property var convertedSensorFullScale
     property var convertedCurrPressure
     property var convertedTargetPressure
+    property var minPressure
+    property var maxPressure
     property var fixedN
+    property var autoScaleMinMargin
     property var pressureDecades
     property var isRecord
     property var recordTime
@@ -98,8 +101,10 @@ Rectangle {
             mY01DashDraw       : panel.isTargetPosDraw
 
             mYAxis02Title      : qsTr("Pressure (") + strUnit + ")"
-            mYAxis02Min        : 0
-            mYAxis02Max        : panel.convertedSensorFullScale
+            //mYAxis02Min        : 0
+            //mYAxis02Max        : panel.convertedSensorFullScale
+            mYAxis02Min        : panel.minPressure
+            mYAxis02Max        : panel.maxPressure
             mYAxis02LogDecades : panel.pressureDecades
             mYAxis02Factor     : panel.pressureConvertFactor
             mYAxis02Precision  : 8
@@ -108,6 +113,7 @@ Rectangle {
             mY02Draw           : panel.isCurrPressureDraw
             mY02DashDraw       : panel.isTargetPressureDraw
 
+            mAutoScaleMinMargin: panel.autoScaleMinMargin
             mMiniumScale       : Math.pow(10, (panel.fixedN * -1)) * 10
             mXRange            : panel.xRange * 0.001
 

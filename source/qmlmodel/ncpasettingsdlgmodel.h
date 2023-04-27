@@ -23,6 +23,8 @@ class NCPASettingsDlgModel : public QObject
     Q_PROPERTY(bool     mIsAutoScalePos          READ getIsAutoScalePos          NOTIFY signalEventChangedIsAutoScalePos         )
     Q_PROPERTY(bool     mIsAutoScalePressure     READ getIsAutoScalePressure     NOTIFY signalEventChangedIsAutoScalePressure    )
     Q_PROPERTY(int      mChartMSecIdx            READ getChartMSecIdx            NOTIFY signalEventChangedChartMSecIdx           )
+    Q_PROPERTY(int      mUserPressureFixedN      READ getUserPressureFixedN      NOTIFY signalEventChangedUserPressureFixedN     )
+    Q_PROPERTY(double   mAutoScaleMinMargin      READ getAutoScaleMinMargin      NOTIFY signalEventChangedAutoScaleMinMargin     )
     Q_PROPERTY(bool     mErrPosResolution        READ getErrPosResolution        NOTIFY signalEventChangedErrPosResolution       )
     Q_PROPERTY(bool     mErrPressureDpUnit       READ getErrPressureDpUnit       NOTIFY signalEventChangedErrPressureDpUnit      )
     Q_PROPERTY(bool     mErrIsDrawCurrPos        READ getErrIsDrawCurrPos        NOTIFY signalEventChangedErrIsDrawCurrPos       )
@@ -52,6 +54,8 @@ public:
     bool    mIsAutoScalePos           = false;
     bool    mIsAutoScalePressure      = false;
     int     mChartMSecIdx             = 0;
+    int     mUserPressureFixedN       = 0;
+    double  mAutoScaleMinMargin       = 0.1;
     bool    mErrPosResolution         = false;
     bool    mErrPressureDpUnit        = false;
     bool    mErrIsDrawCurrPos         = false;
@@ -80,6 +84,8 @@ public:
     bool    getIsAutoScalePos         (){ return mIsAutoScalePos         ;}
     bool    getIsAutoScalePressure    (){ return mIsAutoScalePressure    ;}
     int     getChartMSecIdx           (){ return mChartMSecIdx           ;}
+    int     getUserPressureFixedN     (){ return mUserPressureFixedN     ;}
+    double  getAutoScaleMinMargin     (){ return mAutoScaleMinMargin     ;}
     bool    getErrPosResolution       (){ return mErrPosResolution       ;}
     bool    getErrPressureDpUnit      (){ return mErrPressureDpUnit      ;}
     bool    getErrIsDrawCurrPos       (){ return mErrIsDrawCurrPos       ;}
@@ -108,6 +114,8 @@ public:
     void    setIsAutoScalePos         (bool    value){ if(mIsAutoScalePos          == value)return; mIsAutoScalePos          = value; emit signalEventChangedIsAutoScalePos         (value);}
     void    setIsAutoScalePressure    (bool    value){ if(mIsAutoScalePressure     == value)return; mIsAutoScalePressure     = value; emit signalEventChangedIsAutoScalePressure    (value);}
     void    setChartMSecIdx           (int     value){ if(mChartMSecIdx            == value)return; mChartMSecIdx            = value; emit signalEventChangedChartMSecIdx           (value);}
+    void    setUserPressureFixedN     (int     value){ if(mUserPressureFixedN      == value)return; mUserPressureFixedN      = value; emit signalEventChangedUserPressureFixedN     (value);}
+    void    setAutoScaleMinMargin     (double  value){ if(mAutoScaleMinMargin      == value)return; mAutoScaleMinMargin      = value; emit signalEventChangedAutoScaleMinMargin     (value);}
     void    setErrPosResolution       (bool    value){ if(mErrPosResolution        == value)return; mErrPosResolution        = value; emit signalEventChangedErrPosResolution       (value);}
     void    setErrPressureDpUnit      (bool    value){ if(mErrPressureDpUnit       == value)return; mErrPressureDpUnit       = value; emit signalEventChangedErrPressureDpUnit      (value);}
     void    setErrIsDrawCurrPos       (bool    value){ if(mErrIsDrawCurrPos        == value)return; mErrIsDrawCurrPos        = value; emit signalEventChangedErrIsDrawCurrPos       (value);}
@@ -137,6 +145,8 @@ signals:
     void signalEventChangedIsAutoScalePos         (bool    value);
     void signalEventChangedIsAutoScalePressure    (bool    value);
     void signalEventChangedChartMSecIdx           (int     value);
+    void signalEventChangedUserPressureFixedN     (int     value);
+    void signalEventChangedAutoScaleMinMargin     (double  value);
     void signalEventChangedErrPosResolution       (bool    value);
     void signalEventChangedErrPressureDpUnit      (bool    value);
     void signalEventChangedErrIsDrawCurrPos       (bool    value);
@@ -168,6 +178,8 @@ public:
         setIsAutoScalePos      (pLSettingSP->mIsAutoScalePos      );
         setIsAutoScalePressure (pLSettingSP->mIsAutoScalePressure );
         setChartMSecIdx        (pLSettingSP->convertChartMSecValueToIdx(pLSettingSP->mChartMSec));
+        setUserPressureFixedN  (pLSettingSP->mUserPressureFixedN  );
+        setAutoScaleMinMargin  (pLSettingSP->mAutoScaleMinMargin  );
 
         onValveChangedAccess();
         onValveChangedIsRS232Test();
@@ -231,7 +243,7 @@ public slots:
         setIsEdit(value);
     }
 
-    Q_INVOKABLE void onCommandApply(int posResolutionIdx, int pressureDpUnitIdx, bool isDrawCurrPos, bool isDrawTargetPos, bool isDrawCurrPressure, bool isDrawTargetPressure, int pressureAxisMappingIdx, int pressureDecadesIdx, bool isAutoScalePos, bool isAutoScalePressure, int chartMSecIdx)
+    Q_INVOKABLE void onCommandApply(int posResolutionIdx, int pressureDpUnitIdx, bool isDrawCurrPos, bool isDrawTargetPos, bool isDrawCurrPressure, bool isDrawTargetPressure, int pressureAxisMappingIdx, int pressureDecadesIdx, bool isAutoScalePos, bool isAutoScalePressure, int chartMSecIdx, int userPressurePrecision, double autoScaleMinMarginRatio)
     {
         mIsWritten       = true;
 
@@ -242,6 +254,8 @@ public slots:
         pLSettingSP->setIsAutoScalePos(isAutoScalePos);
         pLSettingSP->setIsAutoScalePressure(isAutoScalePressure);
         pLSettingSP->setChartMSec(pLSettingSP->convertChartMSecIdxToValue(chartMSecIdx));
+        pLSettingSP->setUserPressureFixedN(userPressurePrecision);
+        pLSettingSP->setAutoScaleMinMargin(autoScaleMinMarginRatio);
 
         int posResolution = pValveSP->convertPosResolutionIdxToValue(posResolutionIdx);
         int pressureDecades = pValveSP->convertPressureDecadesIdxToValue(pressureDecadesIdx);
@@ -312,6 +326,8 @@ private:
             setIsAutoScalePos      (pLSettingSP->mIsAutoScalePos      );
             setIsAutoScalePressure (pLSettingSP->mIsAutoScalePressure );
             setChartMSecIdx        (pLSettingSP->convertChartMSecValueToIdx(pLSettingSP->mChartMSec));
+            setUserPressureFixedN  (pLSettingSP->mUserPressureFixedN  );
+            setAutoScaleMinMargin  (pLSettingSP->mAutoScaleMinMargin  );
         }
         else if(state == eState::STATE_WRITE)
         {

@@ -130,5 +130,9 @@
         <file>image/icon-minimized.png</file>
         <file>ui/dialog/AdvancedToolBackupNRestoreDlg.qml</file>
         <file>ui/dialog/NoticeDlg.qml</file>
+        <file>ui/dialog/GraphMinMaxDlg.qml</file>
+        <file>ui/dialog/PressurePrecisionDlg.qml</file>
+        <file>ui/dialog/AutoScaleMarginDlg.qml</file>
+        <file>ui/dialog/FirmwareUpdateViaNetworkDlg.qml</file>
     </qresource>
 </RCC>

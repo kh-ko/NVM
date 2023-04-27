@@ -73,6 +73,11 @@ class QmlCoreModel : public QObject
     Q_PROPERTY(bool    mIsPressureAutoScaling READ getIsPressureAutoScaling NOTIFY signalEventChangedIsPressureAutoScaling )
     Q_PROPERTY(bool    mIsPressureLogType     READ getIsPressureLogType     NOTIFY signalEventChangedIsPressureLogType     )
     Q_PROPERTY(int     mPressureDecades       READ getPressureDecades       NOTIFY signalEventChangedPressureDecades       )
+    Q_PROPERTY(double  mMinMainPressureChart  READ getMinMainPressureChart  NOTIFY signalEventChangedMinMainPressureChart  )
+    Q_PROPERTY(double  mMaxMainPressureChart  READ getMaxMainPressureChart  NOTIFY signalEventChangedMaxMainPressureChart  )
+    Q_PROPERTY(int     mUserPressureFixedN    READ getUserPressureFixedN    NOTIFY signalEventChangedUserPressureFixedN    )
+    Q_PROPERTY(int     mMinPressureFixedN     READ getMinPressureFixedN     NOTIFY signalEventChangedMinPressureFixedN     )
+    Q_PROPERTY(double  mAutoScaleMinMargin    READ getAutoScaleMinMargin    NOTIFY signalEventChangedAutoScaleMinMargin    )
     Q_PROPERTY(double  mConvertedFullScale    READ getConvertedFullScale    NOTIFY signalEventChangedConvertedFullScale    )
     Q_PROPERTY(double  mConvertedTPressure    READ getConvertedTPressure    NOTIFY signalEventChangedConvertedTPressure    )
     Q_PROPERTY(double  mConvertedRTPressure   READ getConvertedRTPressure   NOTIFY signalEventChangedConvertedRTPressure   )
@@ -158,6 +163,11 @@ public:
     bool     mIsPressureAutoScaling = false                               ;
     bool     mIsPressureLogType     = false                               ;
     int      mPressureDecades       = 5                                   ;
+    double   mMinMainPressureChart  = 0                                   ;
+    double   mMaxMainPressureChart  = 1                                   ;
+    double   mAutoScaleMinMargin    = 0.3f                                ;
+    int      mUserPressureFixedN    = 0                                   ;
+    int      mMinPressureFixedN     = 0                                   ;
     double   mConvertedFullScale    = 1000000                             ;
     double   mConvertedTPressure    = 0.0000001                           ;
     double   mConvertedRTPressure   = 0.0000001                           ;
@@ -173,7 +183,7 @@ public:
     double   mSetPoint04Pressure    = 0;
     double   mSetPoint05Pressure    = 0;
     double   mSetPoint06Pressure    = 0;
-    int      mPressureFixedN        = 0                                   ;
+    //int      mPressureFixedN        = 0                                   ;
     bool     mIsRecord              = false                               ;
     qint64   mRecordStartTime       = 0                                   ;
     qint64   mRecordCurrTime        = 0                                   ;
@@ -236,6 +246,11 @@ public:
     bool    getIsPressureAutoScaling(){ return mIsPressureAutoScaling    ;}
     bool    getIsPressureLogType    (){ return mIsPressureLogType        ;}
     int     getPressureDecades      (){ return mPressureDecades          ;}
+    double  getMinMainPressureChart (){ return mMinMainPressureChart     ;}
+    double  getMaxMainPressureChart (){ return mMaxMainPressureChart     ;}
+    double  getAutoScaleMinMargin   (){ return mAutoScaleMinMargin       ;}
+    int     getUserPressureFixedN   (){ return mUserPressureFixedN       ;}
+    int     getMinPressureFixedN    (){ return mMinPressureFixedN        ;}
     double  getConvertedFullScale   (){ return mConvertedFullScale       ;}
     double  getConvertedTPressure   (){ return mConvertedTPressure       ;}
     double  getConvertedRTPressure  (){ return mConvertedRTPressure      ;}
@@ -251,7 +266,7 @@ public:
     double  getSetPoint04Pressure   (){ return mSetPoint04Pressure       ;}
     double  getSetPoint05Pressure   (){ return mSetPoint05Pressure       ;}
     double  getSetPoint06Pressure   (){ return mSetPoint06Pressure       ;}
-    int     getPressureFixedN       (){ return mPressureFixedN           ;}
+    int     getPressureFixedN       (){ return mMinPressureFixedN > mUserPressureFixedN? mMinPressureFixedN : mUserPressureFixedN;}
     bool    getIsRecord             (){ return mIsRecord                 ;}
     qint64  getRecordTime           (){ return (mRecordCurrTime - mRecordStartTime);}
 
@@ -309,6 +324,11 @@ public:
     void setIsPressureAutoScaling(bool              value){ if(mIsPressureAutoScaling == value) return; mIsPressureAutoScaling = value; emit signalEventChangedIsPressureAutoScaling(value);}
     void setIsPressureLogType    (bool              value){ if(mIsPressureLogType     == value) return; mIsPressureLogType     = value; emit signalEventChangedIsPressureLogType    (value);}
     void setPressureDecades      (int               value){ if(mPressureDecades       == value) return; mPressureDecades       = value; emit signalEventChangedPressureDecades      (value);}
+    void setMinMainPressureChart (double            value){ if(mMinMainPressureChart  == value) return; mMinMainPressureChart  = value; emit signalEventChangedMinMainPressureChart (value);}
+    void setMaxMainPressureChart (double            value){ if(mMaxMainPressureChart  == value) return; mMaxMainPressureChart  = value; emit signalEventChangedMaxMainPressureChart (value);}
+    void setAutoScaleMinMargin   (double            value){ if(mAutoScaleMinMargin    == value) return; mAutoScaleMinMargin    = value; emit signalEventChangedAutoScaleMinMargin   (value);}
+    void setUserPressureFixedN   (int               value){ if(mUserPressureFixedN    == value) return; mUserPressureFixedN    = value; emit signalEventChangedUserPressureFixedN   (value);emit signalEventChangedPressureFixedN(getPressureFixedN());}
+    void setMinPressureFixedN    (int               value){ if(mMinPressureFixedN     == value) return; mMinPressureFixedN     = value; emit signalEventChangedMinPressureFixedN    (value);emit signalEventChangedPressureFixedN(getPressureFixedN());}
     void setConvertedFullScale   (double            value){ if(mConvertedFullScale    == value) return; mConvertedFullScale    = value; emit signalEventChangedConvertedFullScale   (value);}
     void setConvertedTPressure   (double            value){ if(mConvertedTPressure    == value) return; mConvertedTPressure    = value; emit signalEventChangedConvertedTPressure   (value);}
     void setConvertedRTPressure  (double            value){ if(mConvertedRTPressure   == value) return; mConvertedRTPressure   = value; emit signalEventChangedConvertedRTPressure  (value);}
@@ -324,7 +344,7 @@ public:
     void setSetPoint04Pressure   (double            value){ if(mSetPoint04Pressure    == value) return; mSetPoint04Pressure    = value; emit signalEventChangedSetPoint04Pressure   (value);}
     void setSetPoint05Pressure   (double            value){ if(mSetPoint05Pressure    == value) return; mSetPoint05Pressure    = value; emit signalEventChangedSetPoint05Pressure   (value);}
     void setSetPoint06Pressure   (double            value){ if(mSetPoint06Pressure    == value) return; mSetPoint06Pressure    = value; emit signalEventChangedSetPoint06Pressure   (value);}
-    void setPressureFixedN       (int               value){ if(mPressureFixedN        == value) return; mPressureFixedN        = value; emit signalEventChangedPressureFixedN       (value);}
+    //void setPressureFixedN       (int               value){ if(mPressureFixedN        == value) return; mPressureFixedN        = value; }
     void setSensorFullScale      (int unit, double  value){ if(mFullScaleUnit == unit && mFullScale == value) return; mFullScaleUnit = unit; mFullScale = value; emit signalEventChangedFullScaleUnit(unit); emit signalEventChangedFullScale(value);}
     void setIsRecord             (bool              value){ if(mIsRecord              == value) return; mIsRecord              = value; emit signalEventChangedIsRecord             (value);}
     void setRecordTime           (qint64            value){                                             mRecordCurrTime        = value; emit signalEventChangedRecordTime           (getRecordTime());}
@@ -388,6 +408,11 @@ signals:
     void signalEventChangedIsPressureAutoScaling(bool    value);
     void signalEventChangedIsPressureLogType    (bool    value);
     void signalEventChangedPressureDecades      (int     value);
+    void signalEventChangedMinMainPressureChart (double  value);
+    void signalEventChangedMaxMainPressureChart (double  value);
+    void signalEventChangedAutoScaleMinMargin   (double  value);
+    void signalEventChangedUserPressureFixedN   (int     value);
+    void signalEventChangedMinPressureFixedN    (int     value);
     void signalEventChangedConvertedFullScale   (double  value);
     void signalEventChangedConvertedTPressure   (double  value);
     void signalEventChangedConvertedRTPressure  (double  value);
@@ -481,6 +506,10 @@ public slots:
         ENABLE_SLOT_LSETTING_CHANGED_IS_AUTOSCALE_POS;
         ENABLE_SLOT_LSETTING_CHANGED_IS_AUTOSCALE_PRESSURE;
         ENABLE_SLOT_LSETTING_CHANGED_CHART_MSEC;
+        //ENABLE_SLOT_LSETTING_CHANGED_MIN_PRESSURE_CHART;
+        //ENABLE_SLOT_LSETTING_CHANGED_MAX_PRESSURE_CHART;
+        ENABLE_SLOT_LSETTING_CHANGED_USER_PRESSURE_FIXED_N;
+        ENABLE_SLOT_LSETTING_CHANGED_AUTOSCALE_MIN_MARGIN;
 
         ENABLE_SLOT_VALVE_READED_VALVE_STATUS;
 
@@ -499,6 +528,10 @@ public slots:
         onLSettingChangedIsAutoScalePos      ();
         onLSettingChangedIsAutoScalePressure ();
         onLSettingChangedChartMSec           ();
+        //onLSettingChangedMinMainPressureChart();
+        //onLSettingChangedMaxMainPressureChart();
+        onLSettingChangedUserPressureFixedN  ();
+        onLSettingChangedAutoScaleMinMargin  ();
     }
 
     void onValveChangedIsConnected            (bool    value){ setIsValeConnect(value);if(value)mConMSec = QDateTime::currentDateTime().toMSecsSinceEpoch();}
@@ -565,6 +598,10 @@ public slots:
     void onLSettingChangedIsAutoScalePos      (             ){ setIsPosAutoScaling     (pLSettingSP->mIsAutoScalePos)                                  ;}
     void onLSettingChangedIsAutoScalePressure (             ){ setIsPressureAutoScaling(pLSettingSP->mIsAutoScalePressure)                             ;}
     void onLSettingChangedChartMSec           (             ){ setChartMSec            (pLSettingSP->mChartMSec)                                       ;}
+    //void onLSettingChangedMinMainPressureChart(             ){ setMinMainPressureChart (pLSettingSP->mMinMainPressureChart)                            ;}
+    //void onLSettingChangedMaxMainPressureChart(             ){ setMaxMainPressureChart (pLSettingSP->mMaxMainPressureChart)                            ;}
+    void onLSettingChangedUserPressureFixedN  (             ){ setUserPressureFixedN   (pLSettingSP->mUserPressureFixedN)                              ;}
+    void onLSettingChangedAutoScaleMinMargin  (             ){ setAutoScaleMinMargin   (pLSettingSP->mAutoScaleMinMargin)                              ;}
 
     void onValveChangedLoadProgress(int value)
     {
@@ -584,7 +621,7 @@ public slots:
         {
             int precision = pValveSP->getS01FullScalePrec() + UNITUTIL_ADD_PRECISION(pValveSP->getS01SullScaleUnit(), pValveSP->getPressureDpUnit());
             precision = precision < 0 ? 0 : precision > 6 ? 6 : precision;
-            setPressureFixedN(precision);
+            setMinPressureFixedN(precision);
         }
 
         if(pValveSP->getSensorOperation() != ValveEnumDef::SENSOROP_01_SENSOR_01_INPUT && pValveSP->getSensorOperation() != ValveEnumDef::SENSOROP_02_SENSOR_LOW_02_HIGHT_01)
@@ -602,7 +639,7 @@ public slots:
         {
             int precision = pValveSP->getS02FullScalePrec() + UNITUTIL_ADD_PRECISION(pValveSP->getS02SullScaleUnit(), pValveSP->getPressureDpUnit());
             precision = precision < 0 ? 0 : precision > 6 ? 6 : precision;
-            setPressureFixedN(precision);
+            setMinPressureFixedN(precision);
         }
 
         if(pValveSP->getSensorOperation() != ValveEnumDef::SENSOROP_01_SENSOR_02_INPUT && pValveSP->getSensorOperation() != ValveEnumDef::SENSOROP_02_SENSOR_LOW_01_HIGHT_02)
@@ -816,6 +853,22 @@ public slots:
         pValveSP->softClose(this);
     }
 
+    Q_INVOKABLE void onCommandSetMinMaxPressureChart(double min, double max)
+    {
+        setMinMainPressureChart(min);
+        setMaxMainPressureChart(max);
+    }
+
+    //Q_INVOKABLE void onCommandSetUserPressureFixedN(int value)
+    //{
+    //    setUserPressureFixedN(value);
+    //}
+
+    //Q_INVOKABLE void onCommandSetAutoScaleMinMargin(double value)
+    //{
+    //    setAutoScaleMinMargin(value);
+    //}
+
 public:
     explicit QmlCoreModel(QObject *parent = nullptr): QObject(parent)
     {
@@ -831,7 +884,24 @@ public:
 private:
     void convertFullScale()
     {
+        static double lastConvertedFullScale = 0.0f;
+
         double convertedFullScale  = UNITUTIL_CONVERT(getFullScaleUnit(), getFullScale(), getPressureDpUnit());
+
+        //if(getMaxMainPressureChart() == 0)
+        //{
+        //    pLSettingSP->setMinMainPressureChart(0);
+        //    pLSettingSP->setMaxMainPressureChart(convertedFullScale);
+            //setMinMainPressureChart(0);
+            //setMaxMainPressureChart(convertedFullScale);
+        //}
+        if(lastConvertedFullScale != convertedFullScale)
+        {
+            setMinMainPressureChart(0);
+            setMaxMainPressureChart(convertedFullScale);
+        }
+
+        lastConvertedFullScale = convertedFullScale;
         //int pressureFixedN = MATHUTIL_LOG10ROUND(mStdFullScale) - MATHUTIL_LOG10ROUND(convertedFullScale);
         //pressureFixedN = pressureFixedN > 0 ? pressureFixedN : 0;
         //QString strFullScale = QString("%1").arg(convertedFullScale, 0, 'f', 18);
