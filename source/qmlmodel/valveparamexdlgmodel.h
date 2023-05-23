@@ -27,7 +27,7 @@ public:
     // khko : edit int to qstring //int     mValue     = 0;
     QString mValue     = "";
     QString mDesc      = "";
-    quint32 mIntValue  = 0;
+    qint32  mIntValue  = 0;
 
     bool    getIsPresent(){ return mIsPresent; }
     bool    getIsEdit   (){ return mIsEdit   ; }
@@ -42,8 +42,8 @@ public:
     void    setIsErr    (bool    value){ if(mIsErr     == value) return; mIsErr     = value; emit signalEventChangedIsErr    (value         );}
     void    setId       (int     value){ if(mId        == value) return; mId        = value; emit signalEventChangedTextID   (getTextID()   );}
     // khko : edit int to qstring //void    setValue    (int    value){ if(mValue     == value) return; mValue     = value; emit signalEventChangedTextValue(getTextValue());}
-    void    setValue    (QString value){ if(mValue     == value) return; mValue     = value; mIntValue = value.toUInt(); emit signalEventChangedTextValue(getTextValue());}
-    void    setValue    (quint32 value){setValue(QString("%1").arg(value)); }
+    void    setValue    (QString value){ if(mValue     == value) return; mValue     = value; mIntValue = value.toInt(); emit signalEventChangedTextValue(getTextValue());}
+    void    setValue    (qint32  value){setValue(QString("%1").arg(value)); }
     void    setDesc     (QString value){ if(mDesc      == value) return; mDesc      = value; emit signalEventChangedDesc     (value         );}
     void    reset()
     {
@@ -51,7 +51,7 @@ public:
     }
 
 public slots:
-    Q_INVOKABLE void editValue(quint32 value)
+    Q_INVOKABLE void editValue(qint32 value)
     {
         setValue(QString("%1").arg(value));
         setIsEdit(true);
@@ -202,7 +202,17 @@ public slots:
 
         setErrMsg("");
 
-        setParamByController(dto.mIsSucc, id, dto.mValue.toUInt(nullptr, 16));
+        int tempValue;
+        if(dto.mValue.contains("-"))
+        {
+            tempValue = dto.mValue.replace("-","0").toInt(nullptr, 16) * -1;
+        }
+        else
+        {
+            tempValue = dto.mValue.toInt(nullptr, 16);
+        }
+
+        setParamByController(dto.mIsSucc, id, tempValue);
 
         emit signalEventProcIdx(convertParamID(mState));
 
@@ -365,10 +375,20 @@ public slots:
         do{
             QString value = out.readLine();
             int id = value.mid(0,2).toInt();
+            int tempValue;
+            value = value.mid(2,value.length() - 2);
 
             if(id < 100)
             {
-                setParamByFile(true, id, value.mid(2,value.length() - 2).toUInt(nullptr, 16));
+                if(value.contains("-"))
+                {
+                    tempValue = value.replace("-","0").toInt(nullptr, 16) * -1;
+                }
+                else
+                {
+                    tempValue = value.toInt(nullptr, 16);
+                }
+                setParamByFile(true, id, tempValue);
             }
 
             emit signalEventProcIdx(id);
@@ -399,7 +419,14 @@ public slots:
         {
             if(mpParamList[i]->getIsPresent() && mpParamList[i]->getTextValue().length() > 0)
             {
-                file.appendLine(QString("%1%2").arg(mpParamList[i]->getTextID()).arg(QString("%1").arg(mpParamList[i]->mIntValue, 6, 16, QChar('0'))));
+                if(mpParamList[i]->mIntValue < 0)
+                {
+                    file.appendLine(QString("%1-%2").arg(mpParamList[i]->getTextID()).arg(QString("%1").arg(mpParamList[i]->mIntValue * -1, 5, 16, QChar('0'))));
+                }
+                else
+                {
+                    file.appendLine(QString("%1%2").arg(mpParamList[i]->getTextID()).arg(QString("%1").arg(mpParamList[i]->mIntValue, 6, 16, QChar('0'))));
+                }
                 emit signalEventProcIdx(i);
             }
         }
@@ -554,7 +581,15 @@ public slots:
             {
                 if(mpParamList[convertParamID(mState)]->getIsPresent() && mpParamList[convertParamID(mState)]->getIsEdit())
                 {
-                    pValveSP->setValveParam(convertParamID(mState), QString("%1").arg(mpParamList[convertParamID(mState)]->mIntValue, 6, 16, QChar('0')) , this);
+                    if(mpParamList[convertParamID(mState)]->mIntValue < 0)
+                    {
+                        pValveSP->setValveParam(convertParamID(mState), QString("-%1").arg(mpParamList[convertParamID(mState)]->mIntValue * -1, 5, 16, QChar('0')) , this);
+                    }
+                    else
+                    {
+                        pValveSP->setValveParam(convertParamID(mState), QString("%1").arg(mpParamList[convertParamID(mState)]->mIntValue, 6, 16, QChar('0')) , this);
+                    }
+
                     return;
                 }
             }
@@ -587,17 +622,18 @@ private:
         return 0;
     }
 
-    void setParamByController(bool isPresent, int paramID, quint32 paramValue)
+    void setParamByController(bool isPresent, int paramID, qint32 paramValue)
     {
         mpParamList[paramID]->setIsPresent(isPresent);
         //mpParamList[paramID]->setValue(isPresent ? paramValue : "000000");
         mpParamList[paramID]->setValue(isPresent ? paramValue : 0);
 
         mpParamList[paramID]->setIsErr(mpParamList[paramID]->getIsEdit() && mpParamList[paramID]->mIntValue != paramValue && isPresent);
+
         mpParamList[paramID]->setIsEdit(false);
     }
 
-    void setParamByFile(bool isPresent, int paramID, quint32 paramValue)
+    void setParamByFile(bool isPresent, int paramID, qint32 paramValue)
     {
         if( mpParamList[paramID]->getIsPresent() == false)
             return;

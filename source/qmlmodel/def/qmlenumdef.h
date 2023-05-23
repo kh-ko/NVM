@@ -29,6 +29,7 @@ public:
         SEQ_TYPE_CLOSE    = 1,
         SEQ_TYPE_POSITION = 2,
         SEQ_TYPE_CUSTOM   = 3,
+        SEQ_TYPE_PRESSURE = 4,
     };
 };
 #endif // QMLENUMDEF_H

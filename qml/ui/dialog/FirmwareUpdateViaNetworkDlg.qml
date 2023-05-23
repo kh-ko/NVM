@@ -6,8 +6,8 @@ import "../../control/."
 import ValveEnumDef 1.0
 import FontManager 1.0
 import GUISetting 1.0
-import FirmwareUpdateDlgModel 1.0
-import FirmwareUpdateUiStepDef 1.0
+import FirmwareUpdateViaNetworkDlgModel 1.0
+import FirmwareUpdateViaNetworkUiStepDef 1.0
 
 NWindow{
     id : nwindow
@@ -23,7 +23,7 @@ NWindow{
         popup.open();
     }
 
-    FirmwareUpdateDlgModel{
+    FirmwareUpdateViaNetworkDlgModel{
         id : dlgModel
 
         Component.onCompleted: {
@@ -45,7 +45,7 @@ NWindow{
             enableMinimizeBtn: true
 
             onClickClose: {
-                if(dlgModel.mDFUStep > FirmwareUpdateUiStepDef.START_UPDATE && dlgModel.mDFUStep < FirmwareUpdateUiStepDef.COMPLETE)
+                if(dlgModel.mDFUStep > FirmwareUpdateViaNetworkUiStepDef.START_UPDATE && dlgModel.mDFUStep < FirmwareUpdateViaNetworkUiStepDef.COMPLETE)
                     showErrMessage(qsTr("can not close in updating"))
                 else
                     close()
@@ -115,10 +115,10 @@ NWindow{
                 id : selFileItem
 
                 height: (GUISetting.margin + selFileTitle.height)
-                        + (GUISetting.margin + cpu1KernelFileText.height)
-                        + (GUISetting.margin + cpu1AppFileText.height)
-                        + (GUISetting.margin + cpu2KernelFileText.height)
-                        + (GUISetting.margin + cpu2AppFileText.height) + GUISetting.margin;
+                        + (GUISetting.margin + cpu1KernelLabel.height)
+                        + (GUISetting.margin + cpu2KernelLabel.height)
+                        + (GUISetting.margin + cpu1AppLabel.height)
+                        + (GUISetting.margin + cpu2AppLabel.height) + GUISetting.margin;
                 anchors.top: selComItem.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin;
 
                 color: "#FFFFFF"
@@ -130,86 +130,91 @@ NWindow{
                     text : qsTr("Download status")
                 }
 
-                NInputText{
-                    id : cpu1KernelFileText
-                    height: 24 * GUISetting.scale;
-                    anchors.top: selFileTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: cpu1KernelFileBtn.left; anchors.rightMargin: GUISetting.margin * 2
-                    enabled: dlgModel.mCpu1KernelFile == "" ? true : false
-                    textField.text : dlgModel.mCpu1KernelFile
+                NText{
+                    id : cpu1KernelLabel
+                    height: 24 * GUISetting.scale; width: 100 * GUISetting.scale
+                    anchors.top: selFileTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    verticalAlignment: Text.AlignVCenter
+                    text : qsTr("cpu1 kernel file")
                 }
 
-                NButton{
-                    id : cpu1KernelFileBtn
-                    height: 24 * GUISetting.scale; width: 130 * GUISetting.scale
-                    anchors.verticalCenter: cpu1KernelFileText.verticalCenter; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin * 2
+                Rectangle{
+                    height: 24 * GUISetting.scale;
+                    anchors.verticalCenter: cpu1KernelLabel.verticalCenter; anchors.left: cpu1KernelLabel.right; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    enabled: dlgModel.mCpu1KernelFile == "" ? true : false
+                    color: "#E4E4E4"
 
-                    text.text: qsTr("cpu1 kernel file")
+                    Rectangle{
+                        height: 24 * GUISetting.scale; width: parent.width * dlgModel.mFtpProgressCpu1Kernel
+                        anchors.left: parent.left;
 
-                    onClick: {
-                        rFileDialog.selCpu = 1
-                        rFileDialog.open()
+                        color : "#24A7FF"
                     }
                 }
 
-                NInputText{
-                    id : cpu1AppFileText
-                    height: 24 * GUISetting.scale;
-                    anchors.top: cpu1KernelFileText.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: cpu1AppFileBtn.left; anchors.rightMargin: GUISetting.margin * 2
+                NText{
+                    id : cpu2KernelLabel
+                    height: 24 * GUISetting.scale; width: 100 * GUISetting.scale
+                    anchors.top: cpu1KernelLabel.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    verticalAlignment: Text.AlignVCenter
+                    text : qsTr("cpu2 kernel file")
                 }
 
-                NButton{
-                    id : cpu1AppFileBtn
-                    height: 24 * GUISetting.scale; width: 130 * GUISetting.scale
-                    anchors.verticalCenter: cpu1AppFileText.verticalCenter; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin * 2
+                Rectangle{
+                    height: 24 * GUISetting.scale;
+                    anchors.verticalCenter: cpu2KernelLabel.verticalCenter; anchors.left: cpu2KernelLabel.right; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    text.text: qsTr("cpu1 App file")
+                    color: "#E4E4E4"
 
-                    onClick: {
-                        rFileDialog.selCpu = 2
-                        rFileDialog.open()
+                    Rectangle{
+                        height: 24 * GUISetting.scale; width: parent.width * dlgModel.mFtpProgressCpu2Kernel
+                        anchors.left: parent.left;
+
+                        color : "#24A7FF"
                     }
                 }
 
-                NInputText{
-                    id : cpu2KernelFileText
-                    height: 24 * GUISetting.scale;
-                    anchors.top: cpu1AppFileText.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: cpu2KernelFileBtn.left; anchors.rightMargin: GUISetting.margin * 2
-                    enabled: dlgModel.mCpu2KernelFile == "" ? true : false
-                    textField.text : dlgModel.mCpu2KernelFile
+                NText{
+                    id : cpu1AppLabel
+                    height: 24 * GUISetting.scale; width: 100 * GUISetting.scale
+                    anchors.top: cpu2KernelLabel.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    verticalAlignment: Text.AlignVCenter
+                    text : qsTr("cpu1 App file")
                 }
 
-                NButton{
-                    id : cpu2KernelFileBtn
-                    height: 24 * GUISetting.scale; width: 130 * GUISetting.scale
-                    anchors.verticalCenter: cpu2KernelFileText.verticalCenter; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin * 2
-                    enabled: dlgModel.mCpu2KernelFile == "" ? true : false
+                Rectangle{
+                    height: 24 * GUISetting.scale;
+                    anchors.verticalCenter: cpu1AppLabel.verticalCenter; anchors.left: cpu1AppLabel.right; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    text.text: qsTr("cpu2 kernel file")
+                    color: "#E4E4E4"
 
-                    onClick: {
-                        rFileDialog.selCpu = 3
-                        rFileDialog.open()
+                    Rectangle{
+                        height: 24 * GUISetting.scale; width: parent.width * dlgModel.mFtpProgressCpu1App
+                        anchors.left: parent.left;
+
+                        color : "#24A7FF"
                     }
                 }
 
-                NInputText{
-                    id : cpu2AppFileText
-                    height: 24 * GUISetting.scale;
-                    anchors.top: cpu2KernelFileText.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: cpu2AppFileBtn.left; anchors.rightMargin: GUISetting.margin * 2
+                NText{
+                    id : cpu2AppLabel
+                    height: 24 * GUISetting.scale; width: 100 * GUISetting.scale
+                    anchors.top: cpu1AppLabel.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    verticalAlignment: Text.AlignVCenter
+                    text : qsTr("cpu2 App file")
                 }
 
-                NButton{
-                    id : cpu2AppFileBtn
-                    height: 24 * GUISetting.scale; width: 130 * GUISetting.scale
-                    anchors.verticalCenter: cpu2AppFileText.verticalCenter; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin * 2
+                Rectangle{
+                    height: 24 * GUISetting.scale;
+                    anchors.verticalCenter: cpu2AppLabel.verticalCenter; anchors.left: cpu2AppLabel.right; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    text.text: qsTr("cpu2 App file")
+                    color: "#E4E4E4"
 
-                    onClick: {
-                        rFileDialog.selCpu = 4
-                        rFileDialog.open()
+                    Rectangle{
+                        height: 24 * GUISetting.scale; width: parent.width * dlgModel.mFtpProgressCpu2App
+                        anchors.left: parent.left;
+
+                        color : "#24A7FF"
                     }
                 }
             }
@@ -232,7 +237,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep == FirmwareUpdateUiStepDef.DISCONNECT_CABLE
+                    visible: dlgModel.mDFUStep == FirmwareUpdateViaNetworkUiStepDef.DISCONNECT_CABLE
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -255,7 +260,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CONNECT_ADAPTER
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CONNECT_ADAPTER
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -278,7 +283,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CONNECT_CABLE
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CONNECT_CABLE
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -301,7 +306,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep == FirmwareUpdateUiStepDef.REBOOT_VALVE
+                    visible: dlgModel.mDFUStep == FirmwareUpdateViaNetworkUiStepDef.REBOOT_VALVE
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -324,7 +329,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.SELECT_FILE_PORT
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.DOWNLOAD_FILE
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -348,7 +353,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.START_UPDATE
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.START_UPDATE
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -363,7 +368,7 @@ NWindow{
                         text.text: qsTr("Update")
 
                         onClick: {
-                            dlgModel.onCommandUpdate(comportCombo.displayText, cpu1KernelFileText.textField.text, cpu1AppFileText.textField.text, cpu2KernelFileText.textField.text, cpu2AppFileText.textField.text)
+                            dlgModel.onCommandUpdate(comportCombo.displayText)
                         }
                     }
                 }
@@ -382,7 +387,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CONNECT_SERIAL
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CONNECT_SERIAL
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter
@@ -393,7 +398,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU1_DN_KERNEL
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU1_DN_KERNEL
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -422,7 +427,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU1_ERASE
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU1_ERASE
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter
@@ -433,7 +438,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU1_DN_APP
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU1_DN_APP
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -462,7 +467,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU1_VERIFY
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU1_VERIFY
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -491,7 +496,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU1_RESET
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU1_RESET
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter
@@ -502,7 +507,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU2_DN_KERNEL
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU2_DN_KERNEL
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -531,7 +536,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU2_ERASE
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU2_ERASE
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter
@@ -542,7 +547,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU2_DN_APP
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU2_DN_APP
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -571,7 +576,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU2_VERIFY
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU2_VERIFY
 
                     NText{
                         height: 24 * GUISetting.scale;
@@ -600,7 +605,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.CPU2_RESET
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.CPU2_RESET
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter
@@ -611,7 +616,7 @@ NWindow{
                 Item{
                     anchors.top: statusTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: dlgModel.mDFUStep === FirmwareUpdateUiStepDef.COMPLETE
+                    visible: dlgModel.mDFUStep === FirmwareUpdateViaNetworkUiStepDef.COMPLETE
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter

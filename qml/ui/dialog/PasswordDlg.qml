@@ -112,7 +112,7 @@ NPopup { // khko_todo
                     Layout.fillWidth: true
                     Layout.preferredWidth: 1
 
-                    text.text: qsTr("Cancle")
+                    text.text: qsTr("Cancel")
 
                     onClick: {
                         dialog.close();

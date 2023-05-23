@@ -7,6 +7,7 @@ Rectangle {
     id : control
 
     property bool  enableMinimizeBtn : false
+    property bool  enableCloseBtn : true
     property alias title : titleText.text
 
     property NWindow root : null
@@ -75,6 +76,7 @@ Rectangle {
 
     Rectangle{
         id : closeBtn
+        visible: enableCloseBtn
         width: parent.height; height: parent.height
         anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
         color: mouseArea.containsPress ? "#29FFFFFF" : mouseArea.containsMouse ? "#19FFFFFF" : "#00FFFFFF"

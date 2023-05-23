@@ -16,6 +16,7 @@ Rectangle {
     property var    isSimulation
     property var    isTestMode
     property var    isFieldBusError
+    property var    isSaving
     property var    isFirmwareError
     property var    unknowInterface
     property var    noSensorSignal
@@ -37,6 +38,23 @@ Rectangle {
         anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
         isBold: true
         text : qsTr("Valve status")
+    }
+
+    NCircleIndicator{
+        id : isSavingMark
+        width: GUISetting.on_indi_width; height: GUISetting.on_indi_height
+        anchors.verticalCenter: title.verticalCenter; anchors.left: title.right; anchors.leftMargin: GUISetting.margin
+
+        color: "#FF0000"
+        visible: panel.isSaving
+    }
+
+    NText{
+        id : isSaving
+        anchors.verticalCenter: isSavingMark.verticalCenter; anchors.left: isSavingMark.right; anchors.leftMargin: GUISetting.margin
+        color : "#D0FF0000"
+        text : qsTr("saving data ")
+        visible: panel.isSaving
     }
 
     NScrollView{

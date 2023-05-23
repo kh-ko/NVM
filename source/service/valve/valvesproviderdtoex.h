@@ -1840,6 +1840,7 @@ public:
     bool      mEnablePFO        ;
     bool      mTestMode         ;
     bool      mFieldBusError    ;
+    bool      mIsSaving         ;
     bool      mFirmwareError    ;
     bool      mUnknowInterface  ;
     bool      mNoSensorSignal   ;
@@ -1874,6 +1875,7 @@ public:
         mEnablePFO      (copy.mEnablePFO        ),
         mTestMode       (copy.mTestMode         ),
         mFieldBusError  (copy.mFieldBusError    ),
+        mIsSaving       (copy.mIsSaving         ),
         mFirmwareError  (copy.mFirmwareError    ),
         mUnknowInterface(copy.mUnknowInterface  ),
         mNoSensorSignal (copy.mNoSensorSignal   ),
@@ -1910,6 +1912,7 @@ public:
         mEnablePFO       = other.mEnablePFO        ;
         mTestMode        = other.mTestMode         ;
         mFieldBusError   = other.mFieldBusError    ;
+        mIsSaving        = other.mIsSaving         ;
         mFirmwareError   = other.mFirmwareError    ;
         mUnknowInterface = other.mUnknowInterface  ;
         mNoSensorSignal  = other.mNoSensorSignal   ;

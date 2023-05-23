@@ -175,7 +175,8 @@ BaseSetupWindow{
                                         text: seqItem.seqItemModel.mItemType == QmlEnumDef.SEQ_TYPE_OPEN     ? qsTr("Open"       ) :
                                               seqItem.seqItemModel.mItemType == QmlEnumDef.SEQ_TYPE_CLOSE    ? qsTr("Close"      ) :
                                               seqItem.seqItemModel.mItemType == QmlEnumDef.SEQ_TYPE_POSITION ? qsTr("Position(%)") :
-                                              seqItem.seqItemModel.mItemType == QmlEnumDef.SEQ_TYPE_CUSTOM   ? qsTr("Custom"     ) : ""
+                                              seqItem.seqItemModel.mItemType == QmlEnumDef.SEQ_TYPE_CUSTOM   ? qsTr("Custom"     ) :
+                                              seqItem.seqItemModel.mItemType == QmlEnumDef.SEQ_TYPE_PRESSURE ? qsTr("Pressure(%)") : ""
                                     }
 
                                     NInputNumber{
@@ -195,10 +196,29 @@ BaseSetupWindow{
                                         }
                                     }
 
+                                    NInputNumber{
+                                        id : pressureInput
+                                        height: 24 * GUISetting.scale; width: 100 * GUISetting.scale
+                                        anchors.verticalCenter: parent.verticalCenter; anchors.left: commandLabel.right; anchors.leftMargin: GUISetting.margin;
+                                        visible: seqItem.seqItemModel.mItemType == QmlEnumDef.SEQ_TYPE_PRESSURE
+                                        textField.validator: DoubleValidator{}
+                                        stepValue : 1; minValue: 0; maxValue: 100
+                                        fixedN : 4
+
+                                        textField.text: seqItem.seqItemModel.mPressurePct.toFixed(fixedN)
+
+                                        onChangedValue: {
+                                            seqItem.seqItemModel.onCommandSetPressurePct(value)
+                                            dlgModel.onCommandSetIsEdit(true)
+                                        }
+                                    }
+
                                     NInputText{
                                         id : valveInput
                                         height: 24 * GUISetting.scale
-                                        anchors.verticalCenter: parent.verticalCenter; anchors.left: posInput.visible ? posInput.right : commandLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin * 2
+                                        anchors.verticalCenter: parent.verticalCenter;
+                                        anchors.left: posInput.visible ? posInput.right : pressureInput.visible ? pressureInput.right : commandLabel.right;
+                                        anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin * 2
 
                                         enabled: dlgModel.mRunState == 0 && (seqItem.seqItemModel.mItemType == QmlEnumDef.SEQ_TYPE_CUSTOM)
 
@@ -330,6 +350,25 @@ BaseSetupWindow{
                                         }
 
                                         MenuItem {
+                                            text: qsTr("pressure")
+                                            enabled: dlgModel.mRunState == 0
+                                            onTriggered: {
+                                                for(var i = 0; i < itemModel.count; i ++)
+                                                {
+                                                    var item = itemModel.get(i)
+
+                                                    if(item.pItemModel === seqItem.seqItemModel)
+                                                    {
+
+                                                        dlgModel.onCommandInsertItem(i, QmlEnumDef.SEQ_TYPE_PRESSURE)
+                                                        dlgModel.onCommandSetIsEdit(true)
+                                                        return;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        MenuItem {
                                             text: qsTr("custom")
                                             enabled: dlgModel.mRunState == 0
                                             onTriggered: {
@@ -399,6 +438,24 @@ BaseSetupWindow{
                                                     if(item.pItemModel === seqItem.seqItemModel)
                                                     {
                                                         dlgModel.onCommandInsertItem(i + 1, QmlEnumDef.SEQ_TYPE_POSITION)
+                                                        dlgModel.onCommandSetIsEdit(true)
+                                                        return;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        MenuItem {
+                                            text: qsTr("pressure")
+                                            enabled: dlgModel.mRunState == 0
+                                            onTriggered: {
+                                                for(var i = 0; i < itemModel.count; i ++)
+                                                {
+                                                    var item = itemModel.get(i)
+
+                                                    if(item.pItemModel === seqItem.seqItemModel)
+                                                    {
+                                                        dlgModel.onCommandInsertItem(i + 1, QmlEnumDef.SEQ_TYPE_PRESSURE)
                                                         dlgModel.onCommandSetIsEdit(true)
                                                         return;
                                                     }

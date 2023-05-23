@@ -38,6 +38,7 @@
 #include "source/qmlmodel/setpointpositiondlgmodel.h"
 #include "source/qmlmodel/sequencerdlgmodel.h"
 #include "source/qmlmodel/firmwareupdatedlgmodel.h"
+#include "source/qmlmodel/firmwareupdatevianetworkdlgmodel.h"
 #include "source/qmlmodel/valvepowerfailstatusdlgmodel.h"
 #include "source/qmlmodel/advancedtooltestdlgmodel.h"
 #include "source/qmlmodel/advancedtoolbackupnrestoredlgmodel.h"
@@ -77,6 +78,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<QmlEnumDef>("QmlEnumDef", 1, 0, "QmlEnumDef", "");
     qmlRegisterUncreatableType<ValveEnumDef>("ValveEnumDef", 1, 0, "ValveEnumDef", "");
     qmlRegisterUncreatableType<FirmwareUpdateUiStepDef>("FirmwareUpdateUiStepDef", 1, 0, "FirmwareUpdateUiStepDef", "");
+    qmlRegisterUncreatableType<FirmwareUpdateViaNetworkUiStepDef>("FirmwareUpdateViaNetworkUiStepDef", 1, 0, "FirmwareUpdateViaNetworkUiStepDef", "");
     //sqmlRegisterUncreatableType<PressureCtrlLearnParamEnumDef>("PressureCtrlLearnParamEnumDef", 1, 0, "PressureCtrlLearnParamEnumDef", "");
 
     qRegisterMetaType<ValveRequestDto>();
@@ -169,6 +171,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<SequencerDlgModel>("SequencerDlgModel", 1, 0, "SequencerDlgModel");
     qmlRegisterType<SeqTestItemModel>("SeqTestItemModel", 1, 0, "SeqTestItemModel");
     qmlRegisterType<FirmwareUpdateDlgModel>("FirmwareUpdateDlgModel", 1, 0, "FirmwareUpdateDlgModel");
+    qmlRegisterType<FirmwareUpdateViaNetworkDlgModel>("FirmwareUpdateViaNetworkDlgModel", 1, 0, "FirmwareUpdateViaNetworkDlgModel");
     qmlRegisterType<ValvePowerFailStatusDlgModel>("ValvePowerFailStatusDlgModel", 1, 0, "ValvePowerFailStatusDlgModel");
     qmlRegisterType<AdvancedToolTestDlgModel>("AdvancedToolTestDlgModel", 1, 0, "AdvancedToolTestDlgModel");
     qmlRegisterType<AdvancedToolBackupNRestoreDlgModel>("AdvancedToolBackupNRestoreDlgModel", 1, 0, "AdvancedToolBackupNRestoreDlgModel");

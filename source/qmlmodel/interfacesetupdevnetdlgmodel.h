@@ -312,6 +312,7 @@ public:
         ENABLE_SLOT_VALVE_CHANGED_ACCESS                      ;
         ENABLE_SLOT_VALVE_CHANGED_IS_RS232_TEST               ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_MAC              ;
+        ENABLE_SLOT_VALVE_READED_VALVE_PARAM                  ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_BAUDRATE         ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_POS_UNIT         ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_POS_GAIN         ;
@@ -343,7 +344,7 @@ public:
         mTimer.setSingleShot(true);
         connect(&mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
-        setState(eState::STATE_READ_MAC);
+        setState(eState::STATE_READ_VALVE_TYPE);
     }
     ~InterfaceSetupDevNetDlgModel()
     {
@@ -359,6 +360,25 @@ public slots:
     void onValveChangedIsRS232Test()
     {
         setIsRS232Test(pValveSP->getIsRS232Test());
+    }
+
+    void onValveReadedValveParam(ValveResponseValveParamDto dto)
+    {
+        if(mState != eState::STATE_READ_VALVE_TYPE || dto.mReqDto.mpRef != this)
+            return;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(!dto.mIsSucc/* || dto.mMacAddr > 100*/)
+        {
+            setState(mState);
+            return;
+        }
+
+        qDebug() << "[" << Q_FUNC_INFO << "] readed param = " << dto.mValue;
+        mReadedValveType = dto.mValue.toInt();
+
+        setState((eState)(mState + 1));
     }
 
     void onValveReadedInterfaceCfgDNetMAC(ValveResponseInterfaceConfigDNetMacDto dto)
@@ -1073,7 +1093,8 @@ private:
         STATE_WRITE_OUT_ASS       = STATE_WRITE_IN_ASS        + 1,
         STATE_WRITE_DI            = STATE_WRITE_OUT_ASS       + 1,
         STATE_WRITE_DO            = STATE_WRITE_DI            + 1,
-        STATE_READ_MAC            = STATE_WRITE_DO            + 1,
+        STATE_READ_VALVE_TYPE     = STATE_WRITE_DO            + 1,
+        STATE_READ_MAC            = STATE_READ_VALVE_TYPE     + 1,
         STATE_READ_BAUDRATE       = STATE_READ_MAC            + 1,
         STATE_READ_POS_UNIT       = STATE_READ_BAUDRATE       + 1,
         STATE_READ_POS_GAIN       = STATE_READ_POS_UNIT       + 1,
@@ -1112,6 +1133,7 @@ private:
     int     mWriteDOFunction      = 0;
     int     mWriteDOPolarity      = 0;
 
+    int     mReadedValveType       = 0; // 0 = unknow, 1 = Butterfly, 2 = Pendulum
     int     mReadedMAC             = 0;
     int     mReadedBaudrateIdx     = 0;
     QString mReadedPosUnit         = "1001";
@@ -1150,7 +1172,7 @@ private:
 
         progress = ((mState) * 100) / STATE_READY;
 
-        if(mState >= STATE_READ_MAC && mState <= STATE_READ_DO)
+        if(mState >= STATE_READ_VALVE_TYPE && mState <= STATE_READ_DO)
         {
             strStatus = "loading";
         }
@@ -1207,6 +1229,7 @@ public slots:
             }
             pValveSP->setInterfaceConfigDNetDo(mWriteDOActivation, mWriteDOFunction, mWriteDOPolarity , this);
             break;
+        case (int)STATE_READ_VALVE_TYPE    : if(mReadedValveType    != 0                                                               ){setState((eState)(mState + 1), true); return;} pValveSP->readValveParam                  (1, this); break;
         case (int)STATE_READ_MAC           : if(mReadedMAC          == mWriteMAC          && mErrMacAddr         == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetMac         (this); break;
         case (int)STATE_READ_BAUDRATE      : if(mReadedBaudrateIdx  == mWriteBaudrateIdx  && mErrBaudrateIdx     == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
         case (int)STATE_READ_POS_UNIT      : if(mReadedPosUnit      == mWritePosUnit      && mErrPositionUnitIdx == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetPosUnit     (this); break;
@@ -1617,20 +1640,38 @@ private:
             else if(line.contains("Revision"   )){line.append(QString(" %1;").arg("0.0"                                           ));}
             else if(line.contains("VendCode"   )){line.append(QString(" %1;").arg("0"                                             ));}
             else if(line.contains("VendName"   )){line.append(QString(" %1;").arg("\"NOVASEN\""                                   ));}
-            else if(line.contains("ProdTypeStr")){line.append(QString(" %1;").arg("\"\""                                          ));}
+            else if(line.contains("ProdTypeStr")){line.append(QString(" %1;").arg("\"Generic\""                                   ));}
             else if(line.contains("ProdType"   )){line.append(QString(" %1;").arg("0"                                             ));}
-            else if(line.contains("ProdCode"   )){line.append(QString(" %1;").arg("0"                                             ));}
+            // 버터 플라이는 100, 팬들럼 200
+            else if(line.contains("ProdCode"   ))
+            {
+                switch(mReadedValveType)
+                {
+                case 1:line.append(QString(" %1;").arg("100")); break;
+                case 2:line.append(QString(" %1;").arg("200")); break;
+                default:line.append(QString(" %1;").arg("0")); break;
+                }
+            }
             else if(line.contains("MajRev"     )){line.append(QString(" %1;").arg("0"                                             ));}
             else if(line.contains("MinRev"     )){line.append(QString(" %1;").arg("0"                                             ));}
-            else if(line.contains("ProdName"   )){line.append(QString(" %1;").arg("\"NOVASEN_APC_VALVE\""                         ));}
+            // 버터 플라이 / 팬들럼
+            else if(line.contains("ProdName"   ))
+            {
+                switch(mReadedValveType)
+                {
+                case 1:line.append(QString(" %1;").arg("\"NOVASEN_APC_BUTTERFLY_VALVE\"")); break;
+                case 2:line.append(QString(" %1;").arg("\"NOVASEN_APC_PENDULUM_VALVE\"")); break;
+                default:line.append(QString(" %1;").arg("\"NOVASEN_APC_VALVE\""));
+                }
+            }
             else if(line.contains("Catalog"    )){line.append(QString(" %1;").arg("\"0\""                                         ));}
             else if(line.contains("Default"    )){line.append(QString(" %1;").arg("0x0001"                                        ));}
             else if(line.contains("PollInfo"   )){line.append(QString(" %1;").arg("0x0001,1,1"                                    ));}
-            else if(line.contains("StrobeInfo" )){line.append(QString(" %1;").arg("0x0002,1,1"                                    ));}
-            else if(line.contains("COSInfo"    )){line.append(QString(" %1;").arg("0x0004,1,1"                                    ));}
-            else if(line.contains("CyclicInfo" )){line.append(QString(" %1;").arg("0x0008,1,1"                                    ));}
-            else if(line.contains("Input1"     )){line.append(QString(" %1,0,0x000F,\"Input Assembly 1\",6,\"20 02 24 01 30 03\",\"%2\";").arg(inputLength).arg(inputObjectNames));}
-            else if(line.contains("Output1"    )){line.append(QString(" %1,0,0x000F,\"Output Assembly 2\",6,\"20 02 24 02 30 03\",\"%2\";").arg(outputLength).arg(outputObjectNames));}
+            //else if(line.contains("StrobeInfo" )){line.append(QString(" %1;").arg("0x0002,1,1"                                    ));}
+            //else if(line.contains("COSInfo"    )){line.append(QString(" %1;").arg("0x0004,1,1"                                    ));}
+            //else if(line.contains("CyclicInfo" )){line.append(QString(" %1;").arg("0x0008,1,1"                                    ));}
+            else if(line.contains("Input1"     )){line.append(QString(" %1,0,0x000F,\"Input Assembly 1\",6,\"20 04 24 64 30 03\",\"%2\";").arg(inputLength).arg(inputObjectNames));}
+            else if(line.contains("Output1"    )){line.append(QString(" %1,0,0x000F,\"Output Assembly 2\",6,\"20 04 24 96 30 03\",\"%2\";").arg(outputLength).arg(outputObjectNames));}
 
             contents.append(line);
 

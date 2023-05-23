@@ -51,6 +51,7 @@ class QmlCoreModel : public QObject
     Q_PROPERTY(bool    mIsTestMode            READ getIsTestMode            NOTIFY signalEventChangedIsTestMode            )
     Q_PROPERTY(bool    mIsRS232Test           READ getIsRS232Test           NOTIFY signalEventChangedIsRS232Test           )
     Q_PROPERTY(bool    mFieldBusError         READ getFieldBusError         NOTIFY signalEventChangedFieldBusError         )
+    Q_PROPERTY(bool    mIsSaving              READ getIsSaving              NOTIFY signalEventChangedIsSaving              )
     Q_PROPERTY(bool    mFirmwareError         READ getFirmwareError         NOTIFY signalEventChangedFirmwareError         )
     Q_PROPERTY(bool    mUnknowInterface       READ getUnknowInterface       NOTIFY signalEventChangedUnknowInterface       )
     Q_PROPERTY(bool    mNoSensorSignal        READ getNoSensorSignal        NOTIFY signalEventChangedNoSensorSignal        )
@@ -141,6 +142,7 @@ public:
     bool     mIsTestMode            = false                               ;
     bool     mIsRS232Test           = false                               ;
     bool     mFieldBusError         = false                               ;
+    bool     mIsSaving              = false                               ;
     bool     mFirmwareError         = false                               ;
     bool     mUnknowInterface       = false                               ;
     bool     mNoSensorSignal        = false                               ;
@@ -224,6 +226,7 @@ public:
     bool    getIsTestMode           (){ return mIsTestMode               ;}
     bool    getIsRS232Test          (){ return mIsRS232Test              ;}
     bool    getFieldBusError        (){ return mFieldBusError            ;}
+    bool    getIsSaving             (){ return mIsSaving                 ;}
     bool    getFirmwareError        (){ return mFirmwareError            ;}
     bool    getUnknowInterface      (){ return mUnknowInterface          ;}
     bool    getNoSensorSignal       (){ return mNoSensorSignal           ;}
@@ -302,6 +305,7 @@ public:
     void setIsTestMode           (bool              value){ if(mIsTestMode            == value) return; mIsTestMode            = value; emit signalEventChangedIsTestMode           (value);}
     void setIsRS232Test          (bool              value){ if(mIsRS232Test           == value) return; mIsRS232Test           = value; emit signalEventChangedIsRS232Test          (value);}
     void setFieldBusError        (bool              value){ if(mFieldBusError         == value) return; mFieldBusError         = value; emit signalEventChangedFieldBusError        (value);}
+    void setIsSaving             (bool              value){ if(mIsSaving              == value) return; mIsSaving              = value; emit signalEventChangedIsSaving             (value);}
     void setFirmwareError        (bool              value){ if(mFirmwareError         == value) return; mFirmwareError         = value; emit signalEventChangedFirmwareError        (value);}
     void setUnknowInterface      (bool              value){ if(mUnknowInterface       == value) return; mUnknowInterface       = value; emit signalEventChangedUnknowInterface      (value);}
     void setNoSensorSignal       (bool              value){ if(mNoSensorSignal        == value) return; mNoSensorSignal        = value; emit signalEventChangedNoSensorSignal       (value);}
@@ -386,6 +390,7 @@ signals:
     void signalEventChangedIsTestMode           (bool    value);
     void signalEventChangedIsRS232Test          (bool    value);
     void signalEventChangedFieldBusError        (bool    value);
+    void signalEventChangedIsSaving             (bool    value);
     void signalEventChangedFirmwareError        (bool    value);
     void signalEventChangedUnknowInterface      (bool    value);
     void signalEventChangedNoSensorSignal       (bool    value);
@@ -456,6 +461,7 @@ public slots:
         ENABLE_SLOT_VALVE_CHANGED_IS_RS232_TEST;
         ENABLE_SLOT_VALVE_CHANGED_FIELDBUS_ERR;
         ENABLE_SLOT_VALVE_CHANGED_FIRMWARE_ERR;
+        ENABLE_SLOT_VALVE_CHANGED_IS_SAVING;
         ENABLE_SLOT_VALVE_CHANGED_UNKNOW_INTERFACE;
         ENABLE_SLOT_VALVE_CHANGED_NO_SENSOR_SIG   ;
         ENABLE_SLOT_VALVE_CHANGED_NO_ANALOG_SIG   ;
@@ -558,6 +564,7 @@ public slots:
     void onValveChangedIsTestMode             (             ){ setIsTestMode(pValveSP->getIsTestMode())                                                ;}
     void onValveChangedIsRS232Test            (             ){ setIsRS232Test(pValveSP->getIsRS232Test())                                              ;}
     void onValveChangedFieldBusError          (             ){ setFieldBusError(pValveSP->getFieldBusError())                                          ;}
+    void onValveChangedIsSaving               (             ){ setIsSaving(pValveSP->getIsSaving())                                                    ;}
     void onValveChangedFirmwareError          (             ){ setFirmwareError(pValveSP->getFirmwareError())                                          ;}
     void onValveChangedUnknowInterface        (             ){ setUnknowInterface(pValveSP->getUnknowInterface())                                      ;}
     void onValveChangedNoSensorSignal         (             ){ setNoSensorSignal (pValveSP->getNoSensorSignal ())                                      ;}

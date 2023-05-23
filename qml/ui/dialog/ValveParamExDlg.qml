@@ -361,7 +361,7 @@ NWindow{ // khko_todo
                             textField.validator: IntValidator{} // RegExpValidator { regExp: /[0-9A-Fa-f]{0,8}/ } //IntValidator{}
                             textField.color: parent.parent.paramItemModel.mIsErr ? "#FF0000" : parent.parent.paramItemModel.mIsEdit ? "#24A7FF" : "#000000"
                             textField.text: parent.parent.paramTextValue
-                            stepValue : 1; minValue: 0; maxValue: 4294967295
+                            stepValue : 1; minValue: -1048575; maxValue: 1048575
                             //isHexMode : true
                             fixedN : 0
                             //padN   : 6

@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.5
+//import QtQuick.Controls 2.5
 import QtQuick.Window 2.12
 import QmlCoreModel 1.0
 import "./."
@@ -192,6 +192,7 @@ Window {
         onClickToolChartAnalyzer      : { var popup = graphAnalyzeDlg.createObject(window)              ; popup.loadFromChart(chart.chartView); popup.show();}
         onClickToolSequencer          : {seqTestDlg.show(); }
         onClickToolFirmwareUpdate     : { var popup = firmwareUpdateDlg.createObject(window)            ; popup.show(); }
+        onClickToolFirmwareUpdateViaNet: { var popup = firmwareUpdateViaNetDlg.createObject(window)     ; popup.show(); }
         onClickAdvToolTest            : { var popup = advancedToolTestDlg.createObject(window)          ; popup.show(); }
         onClickAdvBackupNRestore      : { var popup = advancedToolBackupNRestoreDlg.createObject(window); popup.show(); }
         onClickHelpAbout              : { var popup = helpAboutDlg.createObject(window)                 ; popup.show(); }
@@ -281,6 +282,7 @@ Window {
             isSimulation      : model.mIsSimulation
             isTestMode        : model.mIsTestMode
             isFieldBusError   : model.mFieldBusError
+            isSaving          : model.mIsSaving
             isFirmwareError   : model.mFirmwareError
             unknowInterface   : model.mUnknowInterface
             noSensorSignal    : model.mNoSensorSignal
@@ -692,6 +694,14 @@ Window {
         id : firmwareUpdateDlg
 
         FirmwareUpdateDlg
+        {
+        }
+    }
+
+    Component{
+        id : firmwareUpdateViaNetDlg
+
+        FirmwareUpdateViaNetworkDlg
         {
         }
     }

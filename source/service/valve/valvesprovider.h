@@ -48,6 +48,7 @@
 #define ENABLE_SLOT_VALVE_CHANGED_ENABLE_PFO                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedEnablePFO                      (                                                )), this, SLOT(onValveChangedEnablePFO                    (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_IS_TEST_MODE                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedIsTestMode                     (                                                )), this, SLOT(onValveChangedIsTestMode                   (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_FIELDBUS_ERR                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedFieldBusError                  (                                                )), this, SLOT(onValveChangedFieldBusError                (                                                  )))
+#define ENABLE_SLOT_VALVE_CHANGED_IS_SAVING                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedIsSaving                       (                                                )), this, SLOT(onValveChangedIsSaving                     (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_FIRMWARE_ERR                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedFirmwareError                  (                                                )), this, SLOT(onValveChangedFirmwareError                (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_UNKNOW_INTERFACE                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedUnknowInterface                (                                                )), this, SLOT(onValveChangedUnknowInterface              (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_NO_SENSOR_SIG                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedNoSensorSignal                 (                                                )), this, SLOT(onValveChangedNoSensorSignal               (                                                  )))
@@ -408,6 +409,7 @@ private:
     bool        mEnablePFO          = false;
     bool        mIsTestMode         = false;
     bool        mFieldBusError      = false;
+    bool        mIsSaving           = false;
     bool        mFirmwareError      = false;
     bool        mUnknowInterface    = false;
     bool        mNoSensorSignal     = false;
@@ -504,6 +506,7 @@ public:
     bool        getEnablePFO                    (){ return mEnablePFO         ;}
     bool        getIsTestMode                   (){ return mIsTestMode        ;}
     bool        getFieldBusError                (){ return mFieldBusError     ;}
+    bool        getIsSaving                     (){ return mIsSaving          ;}
     bool        getFirmwareError                (){ return mFirmwareError     ;}
     bool        getUnknowInterface              (){ return mUnknowInterface   ;}
     bool        getNoSensorSignal               (){ return mNoSensorSignal    ;}
@@ -584,6 +587,7 @@ public:
         emit signalEventChangedEnablePFO         (     );
         emit signalEventChangedIsTestMode        (     );
         emit signalEventChangedFieldBusError     (     );
+        emit signalEventChangedIsSaving          (     );
         emit signalEventChangedFirmwareError     (     );
         emit signalEventChangedUnknowInterface   (     );
         emit signalEventChangedNoSensorSignal    (     );
@@ -666,6 +670,7 @@ public:
     void        setEnablePFO                    (bool        value){if(mEnablePFO          == value) return; mEnablePFO          = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedEnablePFO         ();}
     void        setIsTestMode                   (bool        value){if(mIsTestMode         == value) return; mIsTestMode         = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedIsTestMode        ();}
     void        setFieldBusError                (bool        value){if(mFieldBusError      == value) return; mFieldBusError      = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedFieldBusError     ();}
+    void        setIsSaving                     (bool        value){if(mIsSaving           == value) return; mIsSaving           = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedIsSaving          ();}
     void        setFirmwareError                (bool        value){if(mFirmwareError      == value) return; mFirmwareError      = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedFirmwareError     ();}
     void        setUnknowInterface              (bool        value){if(mUnknowInterface    == value) return; mUnknowInterface    = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedUnknowInterface   ();}
     void        setNoSensorSignal               (bool        value){if(mNoSensorSignal     == value) return; mNoSensorSignal     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedNoSensorSignal    ();}
@@ -745,6 +750,7 @@ signals:
     void signalEventChangedEnablePFO                    (             );
     void signalEventChangedIsTestMode                   (             );
     void signalEventChangedFieldBusError                (             );
+    void signalEventChangedIsSaving                     (             );
     void signalEventChangedFirmwareError                (             );
     void signalEventChangedUnknowInterface              (             );
     void signalEventChangedNoSensorSignal               (             );
@@ -4610,7 +4616,9 @@ public slots:
             signalDto.mTestMode        = (flags & DEVSTATUS_TEST_MODE_MASK ) != 0;
 
             // error
-            signalDto.mFieldBusError   = value.mid(startIdx,1).toInt() == 1; startIdx += 1;
+            flags = convertAbcNumberToInt(value.mid(startIdx,1)); startIdx += 1;
+            signalDto.mFieldBusError   = (flags & FIELDBUS_ERR_ORIGINAL_MASK ) != 0;//value.mid(startIdx,1).toInt() == 1; startIdx += 1;
+            signalDto.mIsSaving        = (flags & FIELDBUS_ERR_SAVING_MASK   ) != 0;//value.mid(startIdx,1).toInt() == 1; startIdx += 1;
 
             // warring mask
             flags = convertAbcNumberToInt(value.mid(startIdx,1)); startIdx += 1;
@@ -4647,6 +4655,7 @@ public slots:
             setEnablePFO        (signalDto.mEnablePFO        );
             setIsTestMode       (signalDto.mTestMode         );
             setFieldBusError    (signalDto.mFieldBusError    );
+            setIsSaving         (signalDto.mIsSaving         );
             setFirmwareError    (signalDto.mFirmwareError    );
             setUnknowInterface  (signalDto.mUnknowInterface  );
             setNoSensorSignal   (signalDto.mNoSensorSignal   );

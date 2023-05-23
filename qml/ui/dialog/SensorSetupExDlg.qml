@@ -356,7 +356,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS01FullScale ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 0; maxValue: 100000
+                    stepValue : 1; minValue: 0; maxValue: 999999
                     fixedN : 4
 
                     visible: _s01Source.currentIndex != 0 && _s01Selection.currentIndex != 0
@@ -883,7 +883,7 @@ BaseSetupWindow{
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS02FullScale ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 0; maxValue: 100000
+                    stepValue : 1; minValue: 0; maxValue: 999999
                     fixedN : 4
 
                     visible: _s02Source.currentIndex != 0 && _s02Selection.currentIndex != 0

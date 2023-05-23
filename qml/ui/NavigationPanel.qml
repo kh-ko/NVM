@@ -32,6 +32,7 @@ Rectangle {
     signal clickToolChartAnalyzer()
     signal clickToolSequencer()
     signal clickToolFirmwareUpdate()
+    signal clickToolFirmwareUpdateViaNet()
     signal clickNCPASettings()
     signal clickAdvToolTest()
     signal clickAdvBackupNRestore()
@@ -248,11 +249,20 @@ Rectangle {
 
                 NExButtonItem{
                     id : menuToolsFU
-                    anchors.bottom: parent.bottom
-                    text.text: qsTr("Firmware update")
+                    anchors.bottom: menuToolsFUNet.top
+                    text.text: qsTr("FU (local)")
                     enabled: !GlobalUiValue.disableWinCreateBtn
                     visible: true
                     onClicked:{ panel.clickToolFirmwareUpdate() }
+                }
+
+                NExButtonItem{
+                    id : menuToolsFUNet
+                    anchors.bottom: parent.bottom
+                    text.text: qsTr("FU (network)")
+                    enabled: !GlobalUiValue.disableWinCreateBtn
+                    visible: true
+                    onClicked:{ panel.clickToolFirmwareUpdateViaNet() }
                 }
             }
 

@@ -36,6 +36,7 @@ class SeqTestItemModel : public QObject
     Q_PROPERTY(int     mRcvCount     READ getRcvCount     NOTIFY signalEventChangedRcvCount    )
     Q_PROPERTY(int     mItemType     READ getItemType     NOTIFY signalEventChangedItemType    )
     Q_PROPERTY(double  mPositionPct  READ getPositionPct  NOTIFY signalEventChangedPositionPct )
+    Q_PROPERTY(double  mPressurePct  READ getPressurePct  NOTIFY signalEventChangedPressurePct )
     Q_PROPERTY(QString mCommand      READ getCommand      NOTIFY signalEventChangedCommand     )
     Q_PROPERTY(int     mDelayMSec    READ getDelayMSec    NOTIFY signalEventChangedDelayMSec   )
 
@@ -46,6 +47,7 @@ public:
     int     mRcvCount  = 0;
     int     mItemType  = QmlEnumDef::SEQ_TYPE_CUSTOM;
     double  mPositionPct = 0;
+    double  mPressurePct = 0;
     QString mCommand   = "";
     int     mDelayMSec = 1000;
 
@@ -55,6 +57,7 @@ public:
     int     getRcvCount   (){ return mRcvCount   ;}
     int     getItemType   (){ return mItemType   ;}
     double  getPositionPct(){ return mPositionPct;}
+    double  getPressurePct(){ return mPressurePct;}
     QString getCommand    (){ return mCommand    ;}
     int     getDelayMSec  (){ return mDelayMSec  ;}
 
@@ -72,9 +75,10 @@ public:
         emit signalEventChangedItemType (value);
 
         switch (value) {
-        case (int)QmlEnumDef::SEQ_TYPE_OPEN    : setCommand("R:100000");break;
-        case (int)QmlEnumDef::SEQ_TYPE_CLOSE   : setCommand("R:000000");break;
+        case (int)QmlEnumDef::SEQ_TYPE_OPEN    : setCommand("O:")      ;break;
+        case (int)QmlEnumDef::SEQ_TYPE_CLOSE   : setCommand("C:")      ;break;
         case (int)QmlEnumDef::SEQ_TYPE_POSITION: setPositionPct(0)     ;break;
+        case (int)QmlEnumDef::SEQ_TYPE_PRESSURE: setPressurePct(0)     ;break;
         case (int)QmlEnumDef::SEQ_TYPE_CUSTOM  : setCommand(""        );break;
         }
     }
@@ -85,6 +89,14 @@ public:
         emit signalEventChangedPositionPct(value);
 
         setCommand(QString("R:%1").arg(qRound(value * 1000), 6, 10, QChar('0')));
+    }
+    void    setPressurePct(double value)
+    {
+        mPressurePct = value;
+
+        emit signalEventChangedPressurePct(value);
+
+        setCommand(QString("S:%1").arg(qRound(value * 10000), 8, 10, QChar('0')));
     }
     void    setCommand    (QString value){if(mCommand   == value)return; mCommand     = value; emit signalEventChangedCommand    (value);}
     void    setDelayMSec  (int     value){if(mDelayMSec == value)return; mDelayMSec   = value; emit signalEventChangedDelayMSec  (value);}
@@ -114,6 +126,11 @@ public slots:
         setPositionPct(posPct);
     }
 
+    Q_INVOKABLE void onCommandSetPressurePct(double pressurePct)
+    {
+        setPressurePct(pressurePct);
+    }
+
     Q_INVOKABLE void onCommandSetCommand(QString cmd)
     {
         setCommand(cmd);
@@ -131,6 +148,7 @@ signals:
     void signalEventChangedErrCount   (int     value);
     void signalEventChangedItemType   (int     value);
     void signalEventChangedPositionPct(double  value);
+    void signalEventChangedPressurePct(double  value);
     void signalEventChangedCommand    (QString value);
     void signalEventChangedDelayMSec  (int     value);
 
@@ -151,6 +169,10 @@ public:
         {
             setPositionPct(command.mid(2).toDouble() / 1000.0);
         }
+        else if(itemType == QmlEnumDef::SEQ_TYPE_PRESSURE)
+        {
+            setPressurePct(command.mid(2).toDouble() / 10000.0);
+        }
         setDelayMSec(delayMSec);
     }
     ~SeqTestItemModel()
@@ -162,6 +184,7 @@ class SequencerDlgModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int      mAccessMode        READ getAccessMode        NOTIFY signalEventChangedAccessMode       )
+    Q_PROPERTY(int      mMode              READ getMode              NOTIFY signalEventChangedMode                  )
     Q_PROPERTY(bool     mIsRS232Test       READ getIsRS232Test       NOTIFY signalEventChangedIsRS232Test      )
     Q_PROPERTY(int      mRunState          READ getRunState          NOTIFY signalEventChangedRunState         )
     Q_PROPERTY(qint64   mTargetCycles      READ getTargetCycles      NOTIFY signalEventChangedTargetCycles     )
@@ -181,6 +204,7 @@ public:
     };
 
     int     mAccessMode        = ValveEnumDef::ACCESS_LOCAL;
+    int     mMode              = ValveEnumDef::MODE_INIT;
     bool    mIsRS232Test       = false;
     int     mRunState          = eRunState::RUN_STATE_STOP;
     qint64  mTargetCycles      = 100;
@@ -193,6 +217,7 @@ public:
     int     mProgress          = 0 ;
 
     int     getAccessMode       (){ return mAccessMode       ;}
+    int     getMode             (){ return mMode             ;}
     bool    getIsRS232Test      (){ return mIsRS232Test      ;}
     int     getRunState         (){ return mRunState         ;}
     qint64  getTargetCycles     (){ return mTargetCycles     ;}
@@ -205,6 +230,7 @@ public:
     int     getProgress         (){ return mProgress         ;}
 
     void    setAccessMode       (int     value){ if(mAccessMode        == value)return; mAccessMode        = value; emit signalEventChangedAccessMode       (value);}
+    void    setMode             (int     value){ if(mMode              == value)return; mMode              = value; emit signalEventChangedMode             (value);}
     void    setIsRS232Test      (bool    value){ if(mIsRS232Test       == value)return; mIsRS232Test       = value; emit signalEventChangedIsRS232Test      (value);}
     void    setRunState         (int     value){ if(mRunState          == value)return; mRunState          = value; emit signalEventChangedRunState         (value);}
     void    setTargetCycles     (qint64  value){ if(mTargetCycles      == value)return; mTargetCycles      = value; emit signalEventChangedTargetCycles     (value);}
@@ -226,6 +252,7 @@ public:
 
 signals:
     void signalEventChangedAccessMode       (int     value);
+    void signalEventChangedMode             (int     value);
     void signalEventChangedIsRS232Test      (bool    value);
     void signalEventChangedRunState         (int     value);
     void signalEventChangedTargetCycles     (qint64  value);
@@ -244,11 +271,13 @@ public:
     explicit SequencerDlgModel(QObject *parent = nullptr): QObject(parent)
     {
         ENABLE_SLOT_VALVE_CHANGED_ACCESS;
+        ENABLE_SLOT_VALVE_CHANGED_MODE;
         ENABLE_SLOT_VALVE_CHANGED_IS_RS232_TEST;
         //ENABLE_SLOT_VALVE_WRITTEN_CUSTOM_REQUEST;
         ENABLE_SLOT_LSETTING_CHANGED_SEQ_PERFORMED_CNT;
 
         onValveChangedAccess();
+        onValveChangedMode();
         onValveChangedIsRS232Test();
         onLSettingChangedSequencerPerformedCnt();
 
@@ -266,6 +295,11 @@ public slots:
     void onValveChangedAccess()
     {
         setAccessMode(pValveSP->getAccess());
+    }
+
+    void onValveChangedMode()
+    {
+        setMode(pValveSP->getMode());
     }
 
     void onValveChangedIsRS232Test()
@@ -481,6 +515,18 @@ private:
 
         setActualIndex(getActualIndex() + 1);
 
+        SeqTestItemModel * pNextItem = mSeqTestList.at(getActualIndex());
+
+        if((getMode() == ValveEnumDef::MODE_POWER_FAILURE ||
+            getMode() == ValveEnumDef::MODE_SAFETY        ||
+            getMode() == ValveEnumDef::MODE_FATAL_ERROR     ) ||
+           (getAccessMode() != ValveEnumDef::ACCESS_LOCAL && pNextItem->getItemType() != QmlEnumDef::SEQ_TYPE_CUSTOM))
+        {
+            setRunState((int)eRunState::RUN_STATE_STOP);
+            emit signalEventCompletedSeqTest();
+            return;
+        }
+
         if((getActualCycles() >= getTargetCycles()) && (getActualIndex() == 0))
         {
             setRunState((int)eRunState::RUN_STATE_STOP);
@@ -493,10 +539,6 @@ private:
             pLSettingSP->setSequencerPerformedCnt(pLSettingSP->mSequencerPerformedCnt + 1);
             setActualCycles(getActualCycles()+1);
         }
-
-
-
-        SeqTestItemModel * pNextItem = mSeqTestList.at(getActualIndex());
 
         QString command = pNextItem->getCommand();
         pNextItem->setSentCount(pNextItem->getSentCount() + 1);

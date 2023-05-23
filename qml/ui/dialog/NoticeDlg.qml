@@ -17,6 +17,7 @@ NPopup {
     contentItem: Item{
         NPopupTilte{
             id : titleBox
+            enableCloseBtn : false
             title: qsTr("Notice")
 
             onClickClose: {
@@ -52,7 +53,7 @@ NPopup {
 
                     bgColor: "#24A7FF"
                     text.color: "#FFFFFF"
-                    text.text: qsTr("Confirm")
+                    text.text: qsTr("OK")
 
                     onClick: {
                         dialog.signalConfirm();
