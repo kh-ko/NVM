@@ -36,7 +36,8 @@ BaseSetupWindow{
 
         function commit()
         {
-            wFileDialog.open()
+            dlgModel.onCommandExportSetting()
+            //wFileDialog.open()
         }
     }
 
@@ -55,6 +56,7 @@ BaseSetupWindow{
 
         function commit()
         {
+
             rFileDialog.open()
         }
     }
@@ -68,6 +70,10 @@ BaseSetupWindow{
 
     AdvancedToolBackupNRestoreDlgModel{
         id : dlgModel
+
+        onSignalEventCompletedExport: {
+            wFileDialog.open()
+        }
     }
 
     Component{
@@ -106,6 +112,7 @@ BaseSetupWindow{
                     width: 150 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: backupTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                     text.text: qsTr("Export valve settings")
+                    enabled: dialog.progress === 100
                     onClick: {
                         if(dlgModel.mAccessMode !== ValveEnumDef.ACCESS_LOCAL && !dlgModel.mIsRS232Test)
                         {
@@ -138,6 +145,7 @@ BaseSetupWindow{
                     id : restoreBtn
                     width: 150 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: restoreTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    enabled: dialog.progress === 100
                     text.text: qsTr("Import valve settings")
 
                     onClick: {
@@ -157,13 +165,14 @@ BaseSetupWindow{
 
     FileDialog{
         id: wFileDialog
-            title: qsTr("Write valve settings as")
+            title: qsTr("Export settings")
             //folder: "./"
             fileMode: FileDialog.SaveFile
             nameFilters: ["Text files (*.txt)"]
 
             onAccepted: {
-                dlgModel.onCommandWriteToFile(currentFile.toString().split("///")[1])
+                dlgModel.onCommandSaveFile(currentFile.toString().split("///")[1])
+                //dlgModel.onCommandExportSetting(currentFile.toString().split("///")[1])
             }
             onRejected: {
             }
@@ -172,13 +181,13 @@ BaseSetupWindow{
 
     FileDialog{
         id: rFileDialog
-            title: qsTr("Read valve settings from file")
+            title: qsTr("Import settings")
             //folder: "./"
             fileMode: FileDialog.OpenFile
             nameFilters: ["Text files (*.txt)"]
 
             onAccepted: {
-                dlgModel.onCommandReadFromFile(currentFile.toString().split("///")[1])
+                dlgModel.onCommandImportSetting(currentFile.toString().split("///")[1])
             }
             onRejected: {
             }

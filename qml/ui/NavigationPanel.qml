@@ -294,7 +294,7 @@ Rectangle {
 
                 NExButtonItem{
                     id : menuTest
-                    anchors.bottom: parent.bottom
+                    anchors.bottom: menuBackupNRestore.top
                     text.text: qsTr("Test")
                     enabled: !GlobalUiValue.disableWinCreateBtn
 
@@ -306,7 +306,6 @@ Rectangle {
                     }
                 }
 
-                /*
                 NExButtonItem{
                     id : menuBackupNRestore
                     anchors.bottom: parent.bottom
@@ -315,7 +314,6 @@ Rectangle {
 
                     onClicked: { panel.clickAdvBackupNRestore()}
                 }
-                */
             }
 
             NExButton{
