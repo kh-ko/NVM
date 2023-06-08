@@ -309,7 +309,7 @@ public slots:
 
     void onValveWrittenCustomRequest(ValveResponseDto dto)
     {
-        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << dto.mReqDto.mReqCommand << "," << dto.mResData;
 
         if(dto.mIsSucc == false)
         {
@@ -426,6 +426,16 @@ public slots:
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_05), QString("%1").arg(REQ_WRITE_SETPOINT_05)); mExportCmdList.append(tempItem);
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_06), QString("%1").arg(REQ_WRITE_SETPOINT_06)); mExportCmdList.append(tempItem);
 
+        /* valve params*/
+        tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_START));
+        tempItem.mValue = ""; mExportCmdList.append(tempItem);
+        for(int i = 18; i < 100; i ++)
+        {
+            tempItem.setCommand(QString("%1%2").arg(REQ_READ_VALVE_PARAM).arg(i, 2, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(i, 2, 10, QChar('0'))); mExportCmdList.append(tempItem);
+        }
+        tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_END));
+        tempItem.mValue = ""; mExportCmdList.append(tempItem);
+
         /* Pressure control learn param */
         for(int i = 0; i < 103; i ++)
         {
@@ -474,7 +484,7 @@ public slots:
         case ValveEnumDef::INTERFACE_ETHERCAT:/* Interface ether cat*/
             tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_CONFIG_ETHCAT_DI ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_ETHCAT_DI )); mExportCmdList.append(tempItem);
             tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_CONFIG_ETHCAT_DO ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_ETHCAT_DO )); mExportCmdList.append(tempItem);
-            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_CFG_ETHCAT_DEV_ID), QString("%1").arg(REQ_WRITE_INTERFACE_CFG_ETHCAT_DEV_ID)); mExportCmdList.append(tempItem);
+            //tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_CFG_ETHCAT_DEV_ID), QString("%1").arg(REQ_WRITE_INTERFACE_CFG_ETHCAT_DEV_ID)); mExportCmdList.append(tempItem);
             for(int i = 0; i < 12; i ++)
             {
                 tempItem.setCommand(QString("%1%2").arg(REQ_READ_INTERFACE_CFG_ETHCAT_PDO_DATA_TYPE).arg(i,2,10,QChar('0')), QString("%1%2").arg(REQ_WRITE_INTERFACE_CFG_ETHCAT_PDO_DATA_TYPE).arg(i,2,10,QChar('0'))); mExportCmdList.append(tempItem);
@@ -495,7 +505,17 @@ public slots:
         {
         case STATE_EXPORT_SENSOR_CHECK        : pValveSP->readSensorExSelection(this);                                       break;
         case STATE_EXPORT_PRESSURE_CTRL_CHECK : pValveSP->readSelectControlMode(this);                                       break;
-        case STATE_EXPORT_SETTING             : pValveSP->customRequest(mExportCmdList.at(mExportCmdIdx).mReadCommand, this);break;
+        case STATE_EXPORT_SETTING:
+            if(mExportCmdList.at(mExportCmdIdx).mReadCommand == "-")
+            {
+                mExportCmdIdx++;
+                setState(mState);
+            }
+            else
+            {
+                pValveSP->customRequest(mExportCmdList.at(mExportCmdIdx).mReadCommand, this);
+            }
+            break;
         case STATE_IMPORT_SETTING             : pValveSP->customRequest(mImportCmdList.at(mImportCmdIdx), this);             break;
         }
     }
