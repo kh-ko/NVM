@@ -226,6 +226,7 @@ public slots:
 
     void onValveWrittenLearnRun(ValveResponseDto dto)
     {
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mResData;
         if(mState != eState::STATE_WRITE_LEARN  || dto.mReqDto.mpRef != this)
             return;
 

@@ -160,6 +160,10 @@ Window {
             {
                 popup = interfaceSetupRS232Dlg.createObject(window);
             }
+            else if(model.mInterface === ValveEnumDef.INTERFACE_ETHERNET || model.mInterface === ValveEnumDef.INTERFACE_ETHERNET_WITH_ANALOGOUTPUT)
+            {
+                popup = interfaceSetupEtherNETDlg.createObject(window);
+            }
             else
             {
                 popup = interfaceSetupLogicDlg.createObject(window);
@@ -177,7 +181,7 @@ Window {
             {
                 popup = interfaceStatusDNetDlg.createObject(window);
             }
-            else if(model.mInterface === ValveEnumDef.INTERFACE_RS232 || model.mInterface === ValveEnumDef.INTERFACE_RS232_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_RS485 ||  model.mInterface === ValveEnumDef.INTERFACE_RS485_WITH_ANALOGOUTPUT)
+            else if(model.mInterface === ValveEnumDef.INTERFACE_RS232 || model.mInterface === ValveEnumDef.INTERFACE_RS232_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_RS485 ||  model.mInterface === ValveEnumDef.INTERFACE_RS485_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_ETHERNET || model.mInterface === ValveEnumDef.INTERFACE_ETHERNET_WITH_ANALOGOUTPUT)
             {
                 popup = interfaceStatusRS232Dlg.createObject(window);
             }
@@ -195,6 +199,7 @@ Window {
         onClickToolFirmwareUpdateViaNet: { var popup = firmwareUpdateViaNetDlg.createObject(window)     ; popup.show(); }
         onClickAdvToolTest            : { var popup = advancedToolTestDlg.createObject(window)          ; popup.show(); }
         onClickAdvBackupNRestore      : { var popup = advancedToolBackupNRestoreDlg.createObject(window); popup.show(); }
+        onClickAdvDiskHoriCalibration : { var popup = advancedToolDiskHoriCalibDlg.createObject(window) ; popup.show(); }
         onClickHelpAbout              : { var popup = helpAboutDlg.createObject(window)                 ; popup.show(); }
     }
 
@@ -556,6 +561,15 @@ Window {
         }
     }
     Component{
+        id : interfaceSetupEtherNETDlg
+        InterfaceSetupEtherNETDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
+    }
+
+
+    Component{
         id : interfaceStatusLogicDlg
         InterfaceStatusLogicDlg{
             connectInfo: model.mConnectionInfo
@@ -579,8 +593,9 @@ Window {
     Component{
         id : interfaceStatusRS232Dlg
         InterfaceStatusRS232Dlg{
-            connectInfo: model.mConnectionInfo
-            valveID    : model.mValveID
+            connectInfo    : model.mConnectionInfo
+            valveID        : model.mValveID
+            userInterface  : model.mInterface
         }
     }
 
@@ -627,7 +642,12 @@ Window {
 
         }
     }
+    Component{
+        id : advancedToolDiskHoriCalibDlg
+        AdvancedToolDiskHoriCalibDlg{
 
+        }
+    }
     Component{
         id : controlZeroDlg
         ControlZeroDlg{

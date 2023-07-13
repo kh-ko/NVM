@@ -861,18 +861,20 @@ public slots:
 
         if(mIsWritten)
         {
-            if(mWriteS01FullScale.toDouble() == 0)
-            {
-                setErrS01FullScale(dto.mValue.toDouble() != mWriteS01FullScale.toDouble());
-            }
-            else
-            {
-                int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01FullScale.toDouble()));
-                double cmpDiff = qPow(10, (exp + 1) - 7);
+            setErrS01FullScale(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 4).toDouble(), mWriteS01FullScale.toDouble()));
 
-                cmpDiff = cmpDiff < 0.0001 ? 0.00011 : cmpDiff + 0.00001;
-                setErrS01FullScale(qAbs(dto.mValue.toDouble() - mWriteS01FullScale.toDouble()) > cmpDiff);
-            }
+            //if(mWriteS01FullScale.toDouble() == 0)
+            //{
+            //    setErrS01FullScale(dto.mValue.toDouble() != mWriteS01FullScale.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01FullScale.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.0001 ? 0.00011 : cmpDiff + 0.00001;
+            //    setErrS01FullScale(qAbs(dto.mValue.toDouble() - mWriteS01FullScale.toDouble()) > cmpDiff);
+            //}
         }
         else
         {
@@ -1061,19 +1063,20 @@ public slots:
 
         if(mIsWritten)
         {
-             if(mWriteS01Scale.toDouble() == 0)
-             {
-                 setErrS01Scale(dto.mValue.toDouble() != mWriteS01Scale.toDouble());
-             }
-             else
-             {
-                 int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01Scale.toDouble()));
-                 double cmpDiff = qPow(10, (exp + 1) - 7);
-
-                 cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
-
-                 setErrS01Scale(qAbs(dto.mValue.toDouble() - mWriteS01Scale.toDouble()) > cmpDiff);
-             }
+            setErrS01Scale(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 6).toDouble(), mWriteS01Scale.toDouble()));
+            //if(mWriteS01Scale.toDouble() == 0)
+            //{
+            //    setErrS01Scale(dto.mValue.toDouble() != mWriteS01Scale.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01Scale.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
+            //
+            //    setErrS01Scale(qAbs(dto.mValue.toDouble() - mWriteS01Scale.toDouble()) > cmpDiff);
+            //}
         }
         else
         {
@@ -1127,18 +1130,20 @@ public slots:
 
         if(mIsWritten)
         {
-            if(mWriteS01FilterSec.toDouble() == 0)
-            {
-                setErrS01FilterSec(dto.mValue.toDouble() != mWriteS01FilterSec.toDouble());
-            }
-            else
-            {
-                int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01FilterSec.toDouble()));
-                double cmpDiff = qPow(10, (exp + 1) - 7);
+            setErrS01FilterSec(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 2).toDouble(), mWriteS01FilterSec.toDouble()));
 
-                cmpDiff = cmpDiff < 0.01 ? 0.011 : cmpDiff + 0.001;
-                setErrS01FilterSec(qAbs(dto.mValue.toDouble() - mWriteS01FilterSec.toDouble()) > cmpDiff);
-            }
+            //if(mWriteS01FilterSec.toDouble() == 0)
+            //{
+            //    setErrS01FilterSec(dto.mValue.toDouble() != mWriteS01FilterSec.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01FilterSec.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.01 ? 0.011 : cmpDiff + 0.001;
+            //    setErrS01FilterSec(qAbs(dto.mValue.toDouble() - mWriteS01FilterSec.toDouble()) > cmpDiff);
+            //}
         }
         else
         {
@@ -1192,22 +1197,24 @@ public slots:
 
         if(mIsWritten)
         {
-            if(mWriteS01LogSensorVoltPerDecade.toDouble() == 0)
-            {
-                setErrS01LogSensorVoltPerDecade(dto.mValue.toDouble() != mWriteS01LogSensorVoltPerDecade.toDouble());
-            }
-            else
-            {
-                int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01LogSensorVoltPerDecade.toDouble()));
-                double cmpDiff = qPow(10, (exp + 1) - 7);
+            setErrS01LogSensorVoltPerDecade(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 3).toDouble(), mWriteS01LogSensorVoltPerDecade.toDouble()));
 
-                cmpDiff = cmpDiff < 0.01 ? 0.011 : cmpDiff + 0.001;
-                setErrS01LogSensorVoltPerDecade(qAbs(dto.mValue.toDouble() - mWriteS01LogSensorVoltPerDecade.toDouble()) > cmpDiff);
-            }
+            //if(mWriteS01LogSensorVoltPerDecade.toDouble() == 0)
+            //{
+            //    setErrS01LogSensorVoltPerDecade(dto.mValue.toDouble() != mWriteS01LogSensorVoltPerDecade.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01LogSensorVoltPerDecade.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.01 ? 0.011 : cmpDiff + 0.001;
+            //    setErrS01LogSensorVoltPerDecade(qAbs(dto.mValue.toDouble() - mWriteS01LogSensorVoltPerDecade.toDouble()) > cmpDiff);
+            //}
         }
         else
         {
-            setS01LogSensorVoltPerDecade(QString::number(dto.mValue.toDouble(), 'f', 2));
+            setS01LogSensorVoltPerDecade(QString::number(dto.mValue.toDouble(), 'f', 3));
         }
 
         setState((eState)(mState + 1));
@@ -1230,18 +1237,20 @@ public slots:
 
         if(mIsWritten)
         {
-            if(mWriteS01LogSensorVoltAtFullScale.toDouble() == 0)
-            {
-                setErrS01LogSensorVoltAtFullScale(dto.mValue.toDouble() != mWriteS01LogSensorVoltAtFullScale.toDouble());
-            }
-            else
-            {
-                int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01LogSensorVoltAtFullScale.toDouble()));
-                double cmpDiff = qPow(10, (exp + 1) - 7);
+            setErrS01LogSensorVoltAtFullScale(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 6).toDouble(), mWriteS01LogSensorVoltAtFullScale.toDouble()));
 
-                cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
-                setErrS01LogSensorVoltAtFullScale(qAbs(dto.mValue.toDouble() - mWriteS01LogSensorVoltAtFullScale.toDouble()) > cmpDiff);
-            }
+            //if(mWriteS01LogSensorVoltAtFullScale.toDouble() == 0)
+            //{
+            //    setErrS01LogSensorVoltAtFullScale(dto.mValue.toDouble() != mWriteS01LogSensorVoltAtFullScale.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS01LogSensorVoltAtFullScale.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
+            //    setErrS01LogSensorVoltAtFullScale(qAbs(dto.mValue.toDouble() - mWriteS01LogSensorVoltAtFullScale.toDouble()) > cmpDiff);
+            //}
         }
         else
         {
@@ -1349,18 +1358,20 @@ public slots:
 
         if(mIsWritten)
         {
-            if(mWriteS02FullScale.toDouble() == 0)
-            {
-                setErrS02FullScale(dto.mValue.toDouble() != mWriteS02FullScale.toDouble());
-            }
-            else
-            {
-                int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02FullScale.toDouble()));
-                double cmpDiff = qPow(10, (exp + 1) - 7);
+            setErrS02FullScale(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 4).toDouble(), mWriteS02FullScale.toDouble()));
 
-                cmpDiff = cmpDiff < 0.0001 ? 0.00011 : cmpDiff + 00001;
-                setErrS02FullScale(qAbs(dto.mValue.toDouble() - mWriteS02FullScale.toDouble()) > cmpDiff);
-            }
+            //if(mWriteS02FullScale.toDouble() == 0)
+            //{
+            //    setErrS02FullScale(dto.mValue.toDouble() != mWriteS02FullScale.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02FullScale.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.0001 ? 0.00011 : cmpDiff + 00001;
+            //    setErrS02FullScale(qAbs(dto.mValue.toDouble() - mWriteS02FullScale.toDouble()) > cmpDiff);
+            //}
         }
         else
         {
@@ -1549,18 +1560,19 @@ public slots:
 
         if(mIsWritten)
         {
-             if(mWriteS02Scale.toDouble() == 0)
-             {
-                 setErrS02Scale(dto.mValue.toDouble() != mWriteS02Scale.toDouble());
-             }
-             else
-             {
-                 int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02Scale.toDouble()));
-                 double cmpDiff = qPow(10, (exp + 1) - 7);
+            setErrS02Scale(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 6).toDouble(), mWriteS02Scale.toDouble()));
 
-                 cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
-                 setErrS02Scale(qAbs(dto.mValue.toDouble() - mWriteS02Scale.toDouble()) > cmpDiff);
-             }
+             //if(mWriteS02Scale.toDouble() == 0)
+             //{
+             //    setErrS02Scale(dto.mValue.toDouble() != mWriteS02Scale.toDouble());
+             //}
+             //else
+             //{
+             //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02Scale.toDouble()));
+             //    double cmpDiff = qPow(10, (exp + 1) - 7);
+             //    cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
+             //    setErrS02Scale(qAbs(dto.mValue.toDouble() - mWriteS02Scale.toDouble()) > cmpDiff);
+             //}
         }
         else
         {
@@ -1614,18 +1626,20 @@ public slots:
 
         if(mIsWritten)
         {
-            if(mWriteS02FilterSec.toDouble() == 0)
-            {
-                setErrS02FilterSec(dto.mValue.toDouble() != mWriteS02FilterSec.toDouble());
-            }
-            else
-            {
-                int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02FilterSec.toDouble()));
-                double cmpDiff = qPow(10, (exp + 1) - 7);
+            setErrS02FilterSec(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 2).toDouble(), mWriteS02FilterSec.toDouble()));
 
-                cmpDiff = cmpDiff < 0.01 ? 0.011 : cmpDiff + 0.001;
-                setErrS02FilterSec(qAbs(dto.mValue.toDouble() - mWriteS02FilterSec.toDouble()) > cmpDiff);
-            }
+            //if(mWriteS02FilterSec.toDouble() == 0)
+            //{
+            //    setErrS02FilterSec(dto.mValue.toDouble() != mWriteS02FilterSec.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02FilterSec.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.01 ? 0.011 : cmpDiff + 0.001;
+            //    setErrS02FilterSec(qAbs(dto.mValue.toDouble() - mWriteS02FilterSec.toDouble()) > cmpDiff);
+            //}
         }
         else
         {
@@ -1679,22 +1693,24 @@ public slots:
 
         if(mIsWritten)
         {
-            if(mWriteS02LogSensorVoltPerDecade.toDouble() == 0)
-            {
-                setErrS02LogSensorVoltPerDecade(dto.mValue.toDouble() != mWriteS02LogSensorVoltPerDecade.toDouble());
-            }
-            else
-            {
-                int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02LogSensorVoltPerDecade.toDouble()));
-                double cmpDiff = qPow(10, (exp + 1) - 7);
+            setErrS02LogSensorVoltPerDecade(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 3).toDouble(), mWriteS02LogSensorVoltPerDecade.toDouble()));
 
-                cmpDiff = cmpDiff < 0.01 ? 0.011 : cmpDiff + 0.001;
-                setErrS02LogSensorVoltPerDecade(qAbs(dto.mValue.toDouble() - mWriteS02LogSensorVoltPerDecade.toDouble()) > cmpDiff);
-            }
+            //if(mWriteS02LogSensorVoltPerDecade.toDouble() == 0)
+            //{
+            //    setErrS02LogSensorVoltPerDecade(dto.mValue.toDouble() != mWriteS02LogSensorVoltPerDecade.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02LogSensorVoltPerDecade.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.01 ? 0.011 : cmpDiff + 0.001;
+            //    setErrS02LogSensorVoltPerDecade(qAbs(dto.mValue.toDouble() - mWriteS02LogSensorVoltPerDecade.toDouble()) > cmpDiff);
+            //}
         }
         else
         {
-            setS02LogSensorVoltPerDecade(QString::number(dto.mValue.toDouble(), 'f', 2));
+            setS02LogSensorVoltPerDecade(QString::number(dto.mValue.toDouble(), 'f', 3));
         }
 
         setState((eState)(mState + 1));
@@ -1717,18 +1733,20 @@ public slots:
 
         if(mIsWritten)
         {
-            if(mWriteS02LogSensorVoltAtFullScale.toDouble() == 0)
-            {
-                setErrS02LogSensorVoltAtFullScale(dto.mValue.toDouble() != mWriteS02LogSensorVoltAtFullScale.toDouble());
-            }
-            else
-            {
-                int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02LogSensorVoltAtFullScale.toDouble()));
-                double cmpDiff = qPow(10, (exp + 1) - 7);
+            setErrS02LogSensorVoltAtFullScale(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 6).toDouble(), mWriteS02LogSensorVoltAtFullScale.toDouble()));
 
-                cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
-                setErrS02LogSensorVoltAtFullScale(qAbs(dto.mValue.toDouble() - mWriteS02LogSensorVoltAtFullScale.toDouble()) > cmpDiff);
-            }
+            //if(mWriteS02LogSensorVoltAtFullScale.toDouble() == 0)
+            //{
+            //    setErrS02LogSensorVoltAtFullScale(dto.mValue.toDouble() != mWriteS02LogSensorVoltAtFullScale.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteS02LogSensorVoltAtFullScale.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
+            //    setErrS02LogSensorVoltAtFullScale(qAbs(dto.mValue.toDouble() - mWriteS02LogSensorVoltAtFullScale.toDouble()) > cmpDiff);
+            //}
         }
         else
         {
@@ -1835,18 +1853,19 @@ public slots:
 
         if(mIsWritten)
         {
-            if(mWriteCrossoverDela.toDouble() == 0)
-            {
-                setErrCrossoverDela(dto.mValue.toDouble() != mWriteCrossoverDela.toDouble());
-            }
-            else
-            {
-                int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteCrossoverDela.toDouble()));
-                double cmpDiff = qPow(10, (exp + 1) - 7);
-
-                cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
-                setErrCrossoverDela(qAbs(dto.mValue.toDouble() - mWriteCrossoverDela.toDouble()) > cmpDiff);
-            }
+            setErrCrossoverDela(!qFuzzyCompare(QString::number(dto.mValue.toDouble(), 'f', 2).toDouble(), mWriteCrossoverDela.toDouble()));
+            //if(mWriteCrossoverDela.toDouble() == 0)
+            //{
+            //    setErrCrossoverDela(dto.mValue.toDouble() != mWriteCrossoverDela.toDouble());
+            //}
+            //else
+            //{
+            //    int exp = MATHUTIL_LOG10FLOOR(qAbs(mWriteCrossoverDela.toDouble()));
+            //    double cmpDiff = qPow(10, (exp + 1) - 7);
+            //
+            //    cmpDiff = cmpDiff < 0.000001 ? 0.0000011 : cmpDiff + 0.0000001;
+            //    setErrCrossoverDela(qAbs(dto.mValue.toDouble() - mWriteCrossoverDela.toDouble()) > cmpDiff);
+            //}
         }
         else
         {

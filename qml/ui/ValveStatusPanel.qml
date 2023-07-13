@@ -17,6 +17,8 @@ Rectangle {
     property var    isTestMode
     property var    isFieldBusError
     property var    isSaving
+    property var    isIDMissing
+    property var    isPFOMissing
     property var    isFirmwareError
     property var    unknowInterface
     property var    noSensorSignal
@@ -246,6 +248,24 @@ Rectangle {
                 keyText: qsTr("warning")
                 valueText: panel.loadProgress !== 100 ? "" :
                            panel.isPFONotReady ? qsTr("PFO not ready") : ""
+            }
+
+            NKeyValueListItem{
+                id : idMissingItem
+                anchors.top: pfoNotReadyItem.bottom; anchors.topMargin: height != 0 ? GUISetting.line_margin : 0
+                iconSource: panel.loadProgress === 100 && panel.isIDMissing ? "/image/icon-warning.png" : ""
+                keyText: qsTr("warning")
+                valueText: panel.loadProgress !== 100 ? "" :
+                           panel.isIDMissing ? qsTr("ID Missing") : ""
+            }
+
+            NKeyValueListItem{
+                id : pfoMissingItem
+                anchors.top: idMissingItem.bottom; anchors.topMargin: height != 0 ? GUISetting.line_margin : 0
+                iconSource: panel.loadProgress === 100 && panel.isPFOMissing ? "/image/icon-warning.png" : ""
+                keyText: qsTr("warning")
+                valueText: panel.loadProgress !== 100 ? "" :
+                           panel.isPFOMissing ? qsTr("PFO Missing") : ""
             }
         }
     }

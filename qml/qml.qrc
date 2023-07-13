@@ -134,5 +134,7 @@
         <file>ui/dialog/PressurePrecisionDlg.qml</file>
         <file>ui/dialog/AutoScaleMarginDlg.qml</file>
         <file>ui/dialog/FirmwareUpdateViaNetworkDlg.qml</file>
+        <file>ui/dialog/InterfaceSetupEtherNETDlg.qml</file>
+        <file>ui/dialog/AdvancedToolDiskHoriCalibDlg.qml</file>
     </qresource>
 </RCC>

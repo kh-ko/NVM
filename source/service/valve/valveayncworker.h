@@ -20,6 +20,8 @@
 
 #define FIELDBUS_ERR_ORIGINAL_MASK 0x01
 #define FIELDBUS_ERR_SAVING_MASK   0x02
+#define FIELDBUS_ERR_ID_MISS_MASK  0x04
+#define FIELDBUS_ERR_PFO_MISS_MASK 0x08
 
 #define WARNING2_FIRMWARE_MEMORY_MASK    0x01
 #define WARNING2_UNKNOW_INTERFACE_MASK   0x02
@@ -225,6 +227,16 @@
 #define REQ_READ_INTERFACE_CONFIG_RS232_DO_02           "i:2611"
 #define RES_INTERFACE_CONFIG_ETHCAT_DO_02_DATA_LEN      6
 
+/* ethernet interface setup (ip/subnet/gateway/dhcp/port1/port2)*/
+#define REQ_READ_INTERFACE_ETHERNET_IP                  "a:7302ATg04"
+#define REQ_READ_INTERFACE_ETHERNET_SUBNET              "a:7302ATg05"
+#define REQ_READ_INTERFACE_ETHERNET_GATEWAY             "a:7302ATg06"
+#define REQ_READ_INTERFACE_ETHERNET_DHCP                "a:7302ATg07"
+#define REQ_READ_INTERFACE_ETHERNET_PORT01              "a:7302ATg09"
+#define REQ_READ_INTERFACE_ETHERNET_PORT02              "a:7302ATg10"
+#define RES_READ_INTERFACE_ETHERNET_INFO                "a:7302"
+#define RES_INTERFACE_ETHERNET_INFO_DATA_LEN            0
+
 /*learn status*/
 #define REQ_READ_LEARN_STATUS                           "i:32"
 #define RES_LEARN_STATUS_DATA_LEN                       8
@@ -401,6 +413,14 @@
 #define REQ_WRITE_INTERFACE_CONFIG_RS232_IF          "s:20"
 #define REQ_WRITE_INTERFACE_CONFIG_RS485_IF          "s:22"
 #define REQ_WRITE_INTERFACE_CONFIG_RS232_COMM        "s:21"
+
+/* ethernet interface */
+#define REQ_WRITE_INTERFACE_EHTERNET_IP              "a:7302AT04"
+#define REQ_WRITE_INTERFACE_EHTERNET_SUBNET          "a:7302AT05"
+#define REQ_WRITE_INTERFACE_EHTERNET_GATEWAY         "a:7302AT06"
+#define REQ_WRITE_INTERFACE_EHTERNET_DHCP            "a:7302AT07"
+#define REQ_WRITE_INTERFACE_EHTERNET_PORT01          "a:7302AT09"
+#define REQ_WRITE_INTERFACE_EHTERNET_PORT02          "a:7302AT10"
 
 #define REQ_WRITE_SENSOR_SCALE                       "J:00"
 #define REQ_WRITE_SETPOINT_01                        "J:01"
@@ -911,8 +931,13 @@ public slots:
 
         emit signalEventResponseData(resDto);
 
-        if(netSucc || (netSucc == false && (resDto.mResDateTime.currentMSecsSinceEpoch() - mLastSuccMsec > 3000)) || (err == IValve::ResourceError))
+        if(netSucc || (netSucc == false && (resDto.mResDateTime.currentMSecsSinceEpoch() - mLastSuccMsec > 3000)) || (err == IValve::ResourceError || err == IValve::WriteError))
+        {
+            if(err == IValve::WriteError)
+                qDebug() << "Write error : disconnect," << netSucc;
+
             setIsConnecting(netSucc, retryConnect);
+        }
 
         if(netSucc)
             mLastSuccMsec = resDto.mResDateTime.currentMSecsSinceEpoch();
@@ -942,6 +967,7 @@ private:
         mIsConnecting = value;
         mRetryConnect = retryConnect;
 
+        qDebug() << "[" << Q_FUNC_INFO << "] conn = " << value << ", retry = " << retryConnect;
         emit signalEventChangedIsConnecting(value, retryConnect);
     }
 

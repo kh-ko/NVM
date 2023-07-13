@@ -36,6 +36,7 @@ public:
         if(mpCommunicationTraceDlgModel != nullptr)
             disconnect(this, SIGNAL(signalEventAddLog(QString, bool,QString, QString)), mpCommunicationTraceDlgModel, SLOT(onSignalEventAddLog(QString, bool,QString, QString)));
 
+        qDebug() << "[" << Q_FUNC_INFO << "]";
         disconnectValve();
     }
 
@@ -221,8 +222,14 @@ public:
 
     void disconnectValve()
     {
+        qDebug() << "[" << Q_FUNC_INFO << "]";
+
         if(mSerialPort.isOpen())
+        {
+            qDebug() << "[" << Q_FUNC_INFO << "]Is Open";
             mSerialPort.close();
+        }
+        qDebug() << "[" << Q_FUNC_INFO << "]END";
     }
 
     bool sendCmd(QString cmd, QString value, QString checkPreFix, int checkLength, QString & resValue, qint64 timeout, eValveError * pOErrs = nullptr) // khko add proc disconnect

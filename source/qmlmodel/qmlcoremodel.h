@@ -52,6 +52,8 @@ class QmlCoreModel : public QObject
     Q_PROPERTY(bool    mIsRS232Test           READ getIsRS232Test           NOTIFY signalEventChangedIsRS232Test           )
     Q_PROPERTY(bool    mFieldBusError         READ getFieldBusError         NOTIFY signalEventChangedFieldBusError         )
     Q_PROPERTY(bool    mIsSaving              READ getIsSaving              NOTIFY signalEventChangedIsSaving              )
+    Q_PROPERTY(bool    mIsIDMissing           READ getIsIDMissing           NOTIFY signalEventChangedIsIDMissing           )
+    Q_PROPERTY(bool    mIsPFOMissing          READ getIsPFOMissing          NOTIFY signalEventChangedIsPFOMissing          )
     Q_PROPERTY(bool    mFirmwareError         READ getFirmwareError         NOTIFY signalEventChangedFirmwareError         )
     Q_PROPERTY(bool    mUnknowInterface       READ getUnknowInterface       NOTIFY signalEventChangedUnknowInterface       )
     Q_PROPERTY(bool    mNoSensorSignal        READ getNoSensorSignal        NOTIFY signalEventChangedNoSensorSignal        )
@@ -143,6 +145,8 @@ public:
     bool     mIsRS232Test           = false                               ;
     bool     mFieldBusError         = false                               ;
     bool     mIsSaving              = false                               ;
+    bool     mIsIDMissing           = false                               ;
+    bool     mIsPFOMissing          = false                               ;
     bool     mFirmwareError         = false                               ;
     bool     mUnknowInterface       = false                               ;
     bool     mNoSensorSignal        = false                               ;
@@ -227,6 +231,8 @@ public:
     bool    getIsRS232Test          (){ return mIsRS232Test              ;}
     bool    getFieldBusError        (){ return mFieldBusError            ;}
     bool    getIsSaving             (){ return mIsSaving                 ;}
+    bool    getIsIDMissing          (){ return mIsIDMissing              ;}
+    bool    getIsPFOMissing         (){ return mIsPFOMissing             ;}
     bool    getFirmwareError        (){ return mFirmwareError            ;}
     bool    getUnknowInterface      (){ return mUnknowInterface          ;}
     bool    getNoSensorSignal       (){ return mNoSensorSignal           ;}
@@ -306,6 +312,8 @@ public:
     void setIsRS232Test          (bool              value){ if(mIsRS232Test           == value) return; mIsRS232Test           = value; emit signalEventChangedIsRS232Test          (value);}
     void setFieldBusError        (bool              value){ if(mFieldBusError         == value) return; mFieldBusError         = value; emit signalEventChangedFieldBusError        (value);}
     void setIsSaving             (bool              value){ if(mIsSaving              == value) return; mIsSaving              = value; emit signalEventChangedIsSaving             (value);}
+    void setIsIDMissing          (bool              value){ if(mIsIDMissing           == value) return; mIsIDMissing           = value; emit signalEventChangedIsIDMissing          (value);}
+    void setIsPFOMissing         (bool              value){ if(mIsPFOMissing          == value) return; mIsPFOMissing          = value; emit signalEventChangedIsPFOMissing         (value);}
     void setFirmwareError        (bool              value){ if(mFirmwareError         == value) return; mFirmwareError         = value; emit signalEventChangedFirmwareError        (value);}
     void setUnknowInterface      (bool              value){ if(mUnknowInterface       == value) return; mUnknowInterface       = value; emit signalEventChangedUnknowInterface      (value);}
     void setNoSensorSignal       (bool              value){ if(mNoSensorSignal        == value) return; mNoSensorSignal        = value; emit signalEventChangedNoSensorSignal       (value);}
@@ -391,6 +399,8 @@ signals:
     void signalEventChangedIsRS232Test          (bool    value);
     void signalEventChangedFieldBusError        (bool    value);
     void signalEventChangedIsSaving             (bool    value);
+    void signalEventChangedIsIDMissing          (bool    value);
+    void signalEventChangedIsPFOMissing         (bool    value);
     void signalEventChangedFirmwareError        (bool    value);
     void signalEventChangedUnknowInterface      (bool    value);
     void signalEventChangedNoSensorSignal       (bool    value);
@@ -565,6 +575,8 @@ public slots:
     void onValveChangedIsRS232Test            (             ){ setIsRS232Test(pValveSP->getIsRS232Test())                                              ;}
     void onValveChangedFieldBusError          (             ){ setFieldBusError(pValveSP->getFieldBusError())                                          ;}
     void onValveChangedIsSaving               (             ){ setIsSaving(pValveSP->getIsSaving())                                                    ;}
+    void onValveChangedIsIDMissing            (             ){ setIsSaving(pValveSP->getIsIDMissing())                                                 ;}
+    void onValveChangedIsPFOMissing           (             ){ setIsSaving(pValveSP->getIsPFOMissing())                                                ;}
     void onValveChangedFirmwareError          (             ){ setFirmwareError(pValveSP->getFirmwareError())                                          ;}
     void onValveChangedUnknowInterface        (             ){ setUnknowInterface(pValveSP->getUnknowInterface())                                      ;}
     void onValveChangedNoSensorSignal         (             ){ setNoSensorSignal (pValveSP->getNoSensorSignal ())                                      ;}

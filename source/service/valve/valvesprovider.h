@@ -49,6 +49,8 @@
 #define ENABLE_SLOT_VALVE_CHANGED_IS_TEST_MODE                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedIsTestMode                     (                                                )), this, SLOT(onValveChangedIsTestMode                   (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_FIELDBUS_ERR                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedFieldBusError                  (                                                )), this, SLOT(onValveChangedFieldBusError                (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_IS_SAVING                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedIsSaving                       (                                                )), this, SLOT(onValveChangedIsSaving                     (                                                  )))
+#define ENABLE_SLOT_VALVE_CHANGED_IS_ID_MISSING                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedIsIDMissing                    (                                                )), this, SLOT(onValveChangedIsIDMissing                  (                                                  )))
+#define ENABLE_SLOT_VALVE_CHANGED_IS_PFO_MISSING                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedIsPFOMissing                   (                                                )), this, SLOT(onValveChangedIsPFOMissing                 (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_FIRMWARE_ERR                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedFirmwareError                  (                                                )), this, SLOT(onValveChangedFirmwareError                (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_UNKNOW_INTERFACE                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedUnknowInterface                (                                                )), this, SLOT(onValveChangedUnknowInterface              (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_NO_SENSOR_SIG                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedNoSensorSignal                 (                                                )), this, SLOT(onValveChangedNoSensorSignal               (                                                  )))
@@ -184,6 +186,12 @@
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_RS232                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgRS232               (ValveResponseInterfaceConfigRS232Dto            )), this, SLOT(onValveReadedInterfaceCfgRS232             (ValveResponseInterfaceConfigRS232Dto              )))
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_RS485                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgRS485               (ValveResponseInterfaceConfigRS485Dto            )), this, SLOT(onValveReadedInterfaceCfgRS485             (ValveResponseInterfaceConfigRS485Dto              )))
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_RS232_RANGE                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgRS232Range          (ValveResponseInterfaceConfigRS232RangeDto       )), this, SLOT(onValveReadedInterfaceCfgRS232Range        (ValveResponseInterfaceConfigRS232RangeDto         )))
+#define ENABLE_SLOT_VALVE_READED_ETHERNET_IP                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceEthernetIP             (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceEthernetIP           (ValveResponseSimpleValueDto                       )))
+#define ENABLE_SLOT_VALVE_READED_ETHERNET_SUBNET                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceEthernetSubnet         (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceEthernetSubnet       (ValveResponseSimpleValueDto                       )))
+#define ENABLE_SLOT_VALVE_READED_ETHERNET_GATEWAY                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceEthernetGateway        (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceEthernetGateway      (ValveResponseSimpleValueDto                       )))
+#define ENABLE_SLOT_VALVE_READED_ETHERNET_DHCP                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceEthernetDHCP           (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceEthernetDHCP         (ValveResponseSimpleValueDto                       )))
+#define ENABLE_SLOT_VALVE_READED_ETHERNET_PORT01                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceEthernetPort01         (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceEthernetPort01       (ValveResponseSimpleValueDto                       )))
+#define ENABLE_SLOT_VALVE_READED_ETHERNET_PORT02                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceEthernetPort02         (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceEthernetPort02       (ValveResponseSimpleValueDto                       )))
 #define ENABLE_SLOT_VALVE_READED_IF_STATUS_LOGIC                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceStatusLogic            (ValveResponseInterfaceStatusLogicDto            )), this, SLOT(onValveReadedInterfaceStatusLogic          (ValveResponseInterfaceStatusLogicDto              )))
 #define ENABLE_SLOT_VALVE_READED_IF_STATUS_ETHERCAT                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceStatusEtherCAT         (ValveResponseInterfaceStatusEtherCATDto         )), this, SLOT(onValveReadedInterfaceStatusEtherCAT       (ValveResponseInterfaceStatusEtherCATDto           )))
 #define ENABLE_SLOT_VALVE_READED_IF_DNET_FIRMWARE_ID                    connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceDNetFirmwareID         (ValveResponseInterfaceDNetFirmwareIDDto         )), this, SLOT(onValveReadedInterfaceDNetFirmwareID       (ValveResponseInterfaceDNetFirmwareIDDto           )))
@@ -298,6 +306,12 @@
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_RS232                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgRS232              (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgRS232              (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_RS485                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgRS485              (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgRS485              (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_RS232_RANGE                    connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgRS232Range         (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgRS232Range         (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ETHERNET_IP                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceEthernetIP            (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceEthernetIP            (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ETHERNET_SUBNET                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceEthernetSubnet        (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceEthernetSubnet        (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ETHERNET_GATEWAY                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceEthernetGateway       (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceEthernetGateway       (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ETHERNET_DHCP                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceEthernetDHCP          (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceEthernetDHCP          (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ETHERNET_PORT01                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceEthernetPort01        (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceEthernetPort01        (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_ETHERNET_PORT02                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceEthernetPort02        (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceEthernetPort02        (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_CTRL_CYCLE_RESET                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenControlCyclesReset             (ValveResponseDto                                )), this, SLOT(onValveWrittenControlCyclesReset             (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_ISOL_CYCLE_RESET                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenIsolationCyclesReset           (ValveResponseDto                                )), this, SLOT(onValveWrittenIsolationCyclesReset           (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_ADC_GAINZERO                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenAdcGainZero                    (ValveResponseDto                                )), this, SLOT(onValveWrittenAdcGainZero                    (ValveResponseDto                                )))
@@ -410,6 +424,8 @@ private:
     bool        mIsTestMode         = false;
     bool        mFieldBusError      = false;
     bool        mIsSaving           = false;
+    bool        mIsIDMissing        = false;
+    bool        mIsPFOMissing       = false;
     bool        mFirmwareError      = false;
     bool        mUnknowInterface    = false;
     bool        mNoSensorSignal     = false;
@@ -507,6 +523,8 @@ public:
     bool        getIsTestMode                   (){ return mIsTestMode        ;}
     bool        getFieldBusError                (){ return mFieldBusError     ;}
     bool        getIsSaving                     (){ return mIsSaving          ;}
+    bool        getIsIDMissing                  (){ return mIsIDMissing       ;}
+    bool        getIsPFOMissing                 (){ return mIsPFOMissing      ;}
     bool        getFirmwareError                (){ return mFirmwareError     ;}
     bool        getUnknowInterface              (){ return mUnknowInterface   ;}
     bool        getNoSensorSignal               (){ return mNoSensorSignal    ;}
@@ -588,6 +606,8 @@ public:
         emit signalEventChangedIsTestMode        (     );
         emit signalEventChangedFieldBusError     (     );
         emit signalEventChangedIsSaving          (     );
+        emit signalEventChangedIsIDMissing       (     );
+        emit signalEventChangedIsPFOMissing      (     );
         emit signalEventChangedFirmwareError     (     );
         emit signalEventChangedUnknowInterface   (     );
         emit signalEventChangedNoSensorSignal    (     );
@@ -671,6 +691,8 @@ public:
     void        setIsTestMode                   (bool        value){if(mIsTestMode         == value) return; mIsTestMode         = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedIsTestMode        ();}
     void        setFieldBusError                (bool        value){if(mFieldBusError      == value) return; mFieldBusError      = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedFieldBusError     ();}
     void        setIsSaving                     (bool        value){if(mIsSaving           == value) return; mIsSaving           = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedIsSaving          ();}
+    void        setIsIDMissing                  (bool        value){if(mIsIDMissing        == value) return; mIsIDMissing        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedIsIDMissing       ();}
+    void        setIsPFOMissing                 (bool        value){if(mIsPFOMissing       == value) return; mIsPFOMissing       = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedIsPFOMissing      ();}
     void        setFirmwareError                (bool        value){if(mFirmwareError      == value) return; mFirmwareError      = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedFirmwareError     ();}
     void        setUnknowInterface              (bool        value){if(mUnknowInterface    == value) return; mUnknowInterface    = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedUnknowInterface   ();}
     void        setNoSensorSignal               (bool        value){if(mNoSensorSignal     == value) return; mNoSensorSignal     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedNoSensorSignal    ();}
@@ -751,6 +773,8 @@ signals:
     void signalEventChangedIsTestMode                   (             );
     void signalEventChangedFieldBusError                (             );
     void signalEventChangedIsSaving                     (             );
+    void signalEventChangedIsIDMissing                  (             );
+    void signalEventChangedIsPFOMissing                 (             );
     void signalEventChangedFirmwareError                (             );
     void signalEventChangedUnknowInterface              (             );
     void signalEventChangedNoSensorSignal               (             );
@@ -883,6 +907,12 @@ signals:
     void signalEventReadedInterfaceCfgRS232            (ValveResponseInterfaceConfigRS232Dto             dto);
     void signalEventReadedInterfaceCfgRS485            (ValveResponseInterfaceConfigRS485Dto             dto);
     void signalEventReadedInterfaceCfgRS232Range       (ValveResponseInterfaceConfigRS232RangeDto        dto);
+    void signalEventReadedInterfaceEthernetIP          (ValveResponseSimpleValueDto                      dto);
+    void signalEventReadedInterfaceEthernetSubnet      (ValveResponseSimpleValueDto                      dto);
+    void signalEventReadedInterfaceEthernetGateway     (ValveResponseSimpleValueDto                      dto);
+    void signalEventReadedInterfaceEthernetDHCP        (ValveResponseSimpleValueDto                      dto);
+    void signalEventReadedInterfaceEthernetPort01      (ValveResponseSimpleValueDto                      dto);
+    void signalEventReadedInterfaceEthernetPort02      (ValveResponseSimpleValueDto                      dto);
     void signalEventReadedLearnStatus                  (ValveResponseLearnStatusDto                      dto);
     void signalEventReadedLearnPressureLimit           (ValveResponseLearnPressureLimitDto               dto);
     void signalEventReadedFatalErrStatus               (ValveResponseFatalErrStatusDto                   dto);
@@ -1006,6 +1036,12 @@ signals:
     void signalEventWrittenInterfaceCfgRS232              (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceCfgRS485              (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceCfgRS232Range         (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceEthernetIP            (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceEthernetSubnet        (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceEthernetGateway       (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceEthernetDHCP          (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceEthernetPort01        (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceEthernetPort02        (ValveResponseDto                                 dto);
     void signalEventWrittenSensorScale                    (ValveResponseDto                                 dto);
     void signalEventWrittenSetPoint01                     (ValveResponseDto                                 dto);
     void signalEventWrittenSetPoint02                     (ValveResponseDto                                 dto);
@@ -1587,6 +1623,32 @@ public :
     {
         emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgRS232Range, nullptr, REQ_READ_INTERFACE_CONFIG_RS232_COMM, REQ_READ_INTERFACE_CONFIG_RS232_COMM, RES_INTERFACE_CONFIG_RS232_COMM_DATA_LEN, retryCnt, userData));
     }
+
+    void readInterfaceEthernetIP(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceEthernetIP, nullptr, REQ_READ_INTERFACE_ETHERNET_IP, RES_READ_INTERFACE_ETHERNET_INFO, RES_INTERFACE_ETHERNET_INFO_DATA_LEN, retryCnt, userData));
+    }
+    void readInterfaceEthernetSubnet(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceEthernetSubnet, nullptr, REQ_READ_INTERFACE_ETHERNET_SUBNET, RES_READ_INTERFACE_ETHERNET_INFO, RES_INTERFACE_ETHERNET_INFO_DATA_LEN, retryCnt, userData));
+    }
+    void readInterfaceEthernetGateway(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceEthernetGateway, nullptr, REQ_READ_INTERFACE_ETHERNET_GATEWAY, RES_READ_INTERFACE_ETHERNET_INFO, RES_INTERFACE_ETHERNET_INFO_DATA_LEN, retryCnt, userData));
+    }
+    void readInterfaceEthernetDHCP(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceEthernetDHCP, nullptr, REQ_READ_INTERFACE_ETHERNET_DHCP, RES_READ_INTERFACE_ETHERNET_INFO, RES_INTERFACE_ETHERNET_INFO_DATA_LEN, retryCnt, userData));
+    }
+    void readInterfaceEthernetPort01(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceEthernetPort01, nullptr, REQ_READ_INTERFACE_ETHERNET_PORT01, RES_READ_INTERFACE_ETHERNET_INFO, RES_INTERFACE_ETHERNET_INFO_DATA_LEN, retryCnt, userData));
+    }
+    void readInterfaceEthernetPort02(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceEthernetPort02, nullptr, REQ_READ_INTERFACE_ETHERNET_PORT02, RES_READ_INTERFACE_ETHERNET_INFO, RES_INTERFACE_ETHERNET_INFO_DATA_LEN, retryCnt, userData));
+    }
+
     void readLearnStatus(void * userData, int retryCnt = 0)
     {
         emit signalCommandRequest(ValveRequestDto(this, staticProcReadLearnStatus, nullptr, REQ_READ_LEARN_STATUS, REQ_READ_LEARN_STATUS, RES_LEARN_STATUS_DATA_LEN, retryCnt, userData));
@@ -2047,6 +2109,49 @@ public :
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceCfgRS232Range, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 
+    void setInterfaceEthernetIP(QString ip, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_EHTERNET_IP).arg(ip);
+
+        qDebug() << "[" << Q_FUNC_INFO << "]cmd = " << cmd;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceEthernetIP, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
+    }
+    void setInterfaceEthernetSubnet(QString subnet, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_EHTERNET_SUBNET).arg(subnet);
+
+        qDebug() << "[" << Q_FUNC_INFO << "]cmd = " << cmd;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceEthernetSubnet, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
+    }
+    void setInterfaceEthernetGateway(QString gateway, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_EHTERNET_GATEWAY).arg(gateway);
+
+        qDebug() << "[" << Q_FUNC_INFO << "]cmd = " << cmd;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceEthernetGateway, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
+    }
+    void setInterfaceEthernetDHCP(QString dhcp, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_EHTERNET_DHCP).arg(dhcp);
+
+        qDebug() << "[" << Q_FUNC_INFO << "]cmd = " << cmd;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceEthernetDHCP, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
+    }
+    void setInterfaceEthernetPort01(QString port01, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_EHTERNET_PORT01).arg(port01);
+
+        qDebug() << "[" << Q_FUNC_INFO << "]cmd = " << cmd;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceEthernetPort01, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
+    }
+    void setInterfaceEthernetPort02(QString port02, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_EHTERNET_PORT02).arg(port02);
+
+        qDebug() << "[" << Q_FUNC_INFO << "]cmd = " << cmd;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceEthernetPort02, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
+    }
+
     void setSensorScale(int sensor01Unit, int sensor01FullScale, int sensor01SignExp, int sensor01Exp, int sensor02Unit, int sensor02FullScale, int sensor02SignExp, int sensor02Exp, void * userData, int retryCnt = 0)
     {
         QString cmd = QString("%1%2%3%4%5%6%7%8%9%10").arg(REQ_WRITE_SENSOR_SCALE)
@@ -2166,6 +2271,8 @@ public :
     {
         QString cmd = QString("%1%2").arg(REQ_WRITE_LEARN)
                                      .arg(limitPressure, 8, 10, QChar('0'));
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << cmd;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenLearn, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 
@@ -4619,6 +4726,8 @@ public slots:
             flags = convertAbcNumberToInt(value.mid(startIdx,1)); startIdx += 1;
             signalDto.mFieldBusError   = (flags & FIELDBUS_ERR_ORIGINAL_MASK ) != 0;//value.mid(startIdx,1).toInt() == 1; startIdx += 1;
             signalDto.mIsSaving        = (flags & FIELDBUS_ERR_SAVING_MASK   ) != 0;//value.mid(startIdx,1).toInt() == 1; startIdx += 1;
+            signalDto.mIsIDMissing     = (flags & FIELDBUS_ERR_ID_MISS_MASK  ) != 0;
+            signalDto.mIsPFOMissing    = (flags & FIELDBUS_ERR_PFO_MISS_MASK ) != 0;
 
             // warring mask
             flags = convertAbcNumberToInt(value.mid(startIdx,1)); startIdx += 1;
@@ -4656,6 +4765,8 @@ public slots:
             setIsTestMode       (signalDto.mTestMode         );
             setFieldBusError    (signalDto.mFieldBusError    );
             setIsSaving         (signalDto.mIsSaving         );
+            setIsIDMissing      (signalDto.mIsIDMissing      );
+            setIsPFOMissing     (signalDto.mIsPFOMissing     );
             setFirmwareError    (signalDto.mFirmwareError    );
             setUnknowInterface  (signalDto.mUnknowInterface  );
             setNoSensorSignal   (signalDto.mNoSensorSignal   );
@@ -5718,6 +5829,134 @@ public slots:
         }
     }
 
+    static void staticProcReadInterfaceEthernetIP(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceEthernetIP(pResData);}
+    void procReadInterfaceEthernetIP(void * pResData){
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceEthernetIP(signalDto);
+        }
+    }
+
+    static void staticProcReadInterfaceEthernetSubnet(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceEthernetSubnet(pResData);}
+    void procReadInterfaceEthernetSubnet(void * pResData){
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceEthernetSubnet(signalDto);
+        }
+    }
+    static void staticProcReadInterfaceEthernetGateway(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceEthernetGateway(pResData);}
+    void procReadInterfaceEthernetGateway(void * pResData){
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceEthernetGateway(signalDto);
+        }
+    }
+    static void staticProcReadInterfaceEthernetDHCP(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceEthernetDHCP(pResData);}
+    void procReadInterfaceEthernetDHCP(void * pResData){
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceEthernetDHCP(signalDto);
+        }
+    }
+    static void staticProcReadInterfaceEthernetPort01(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceEthernetPort01(pResData);}
+    void procReadInterfaceEthernetPort01(void * pResData){
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceEthernetPort01(signalDto);
+        }
+    }
+    static void staticProcReadInterfaceEthernetPort02(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceEthernetPort02(pResData);}
+    void procReadInterfaceEthernetPort02(void * pResData){
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceEthernetPort02(signalDto);
+        }
+    }
+
     static void staticProcReadControlCycles(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadControlCycles(pResData);}
     void procReadControlCycles(void * pResData)
     {
@@ -6411,6 +6650,72 @@ public slots:
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventWrittenInterfaceCfgRS232Range(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceEthernetIP(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceEthernetIP(pResData);}
+    void procWrittenInterfaceEthernetIP(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceEthernetIP(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceEthernetSubnet(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceEthernetSubnet(pResData);}
+    void procWrittenInterfaceEthernetSubnet(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceEthernetSubnet(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceEthernetGateway(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceEthernetGateway(pResData);}
+    void procWrittenInterfaceEthernetGateway(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceEthernetGateway(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceEthernetDHCP(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceEthernetDHCP(pResData);}
+    void procWrittenInterfaceEthernetDHCP(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceEthernetDHCP(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceEthernetPort01(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceEthernetPort01(pResData);}
+    void procWrittenInterfaceEthernetPort01(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceEthernetPort01(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceEthernetPort02(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceEthernetPort02(pResData);}
+    void procWrittenInterfaceEthernetPort02(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceEthernetPort02(signalDto);
         }
     }
 

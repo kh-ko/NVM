@@ -41,6 +41,7 @@ HEADERS += \
     source/nchart/nchartview.h \
     source/qmlmodel/advancedtoolbackupnrestoredlgmodel.h \
     source/qmlmodel/advancedtooltestdlgmodel.h \
+    source/qmlmodel/advencedtooldiskhoricalibdlgmodel.h \
     source/qmlmodel/changeaccessdlgmodel.h \
     source/qmlmodel/control/nchartcanvasmodel.h \
     source/qmlmodel/controllearndlgmodel.h \
@@ -49,10 +50,12 @@ HEADERS += \
     source/qmlmodel/fatalerrordlgmodel.h \
     source/qmlmodel/firmwareupdatedlgmodel.h \
     source/qmlmodel/firmwareupdatevianetworkdlgmodel.h \
+    source/qmlmodel/function/fexportsetting.h \
     source/qmlmodel/graphanalyzedlgmodel.h \
     source/qmlmodel/interfacesetupdevnetassemblyitemmodel.h \
     source/qmlmodel/interfacesetupdevnetdlgmodel.h \
     source/qmlmodel/interfacesetupethercatdlgmodel.h \
+    source/qmlmodel/interfacesetupethernetdlgmodel.h \
     source/qmlmodel/interfacesetuplogicdlgmodel.h \
     source/qmlmodel/interfacesetuprs232dlgmodel.h \
     source/qmlmodel/interfacestatusdnetdlgmodel.h \

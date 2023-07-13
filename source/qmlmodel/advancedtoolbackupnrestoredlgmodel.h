@@ -311,7 +311,7 @@ public slots:
     {
         qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << dto.mReqDto.mReqCommand << "," << dto.mResData;
 
-        if(dto.mIsSucc == false)
+        if(dto.mIsSucc == false && dto.mIsNetworkErr)
         {
             setErrMsg("communication error");
             setState(eState::STATE_READY);
@@ -320,7 +320,14 @@ public slots:
 
         if(mState == eState::STATE_EXPORT_SETTING)
         {
-            mExportCmdList[mExportCmdIdx].mValue = dto.mResData.mid(mExportCmdList[mExportCmdIdx].mReadCommand.length());
+            if(dto.mIsSucc == true)
+            {
+                mExportCmdList[mExportCmdIdx].mValue = dto.mResData.mid(mExportCmdList[mExportCmdIdx].mReadCommand.length());
+            }
+            else
+            {
+                mExportCmdList[mExportCmdIdx].mValue = "skip";
+            }
             mExportCmdIdx++;
 
             if(mExportCmdIdx == mExportCmdList.size())
@@ -399,7 +406,8 @@ public slots:
 
         foreach(ValveCommandItem item, mExportCmdList)
         {
-            file.appendLine(QString("%1%2").arg(item.mWriteCommand).arg(item.mValue));
+            if(item.mValue != "skip")
+                file.appendLine(QString("%1%2").arg(item.mWriteCommand).arg(item.mValue));
         }
         file.close();
     }

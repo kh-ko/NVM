@@ -1841,6 +1841,8 @@ public:
     bool      mTestMode         ;
     bool      mFieldBusError    ;
     bool      mIsSaving         ;
+    bool      mIsIDMissing      ;
+    bool      mIsPFOMissing     ;
     bool      mFirmwareError    ;
     bool      mUnknowInterface  ;
     bool      mNoSensorSignal   ;
@@ -1876,6 +1878,8 @@ public:
         mTestMode       (copy.mTestMode         ),
         mFieldBusError  (copy.mFieldBusError    ),
         mIsSaving       (copy.mIsSaving         ),
+        mIsIDMissing    (copy.mIsIDMissing      ),
+        mIsPFOMissing   (copy.mIsPFOMissing     ),
         mFirmwareError  (copy.mFirmwareError    ),
         mUnknowInterface(copy.mUnknowInterface  ),
         mNoSensorSignal (copy.mNoSensorSignal   ),
@@ -1913,6 +1917,8 @@ public:
         mTestMode        = other.mTestMode         ;
         mFieldBusError   = other.mFieldBusError    ;
         mIsSaving        = other.mIsSaving         ;
+        mIsIDMissing     = other.mIsIDMissing      ;
+        mIsPFOMissing    = other.mIsPFOMissing     ;
         mFirmwareError   = other.mFirmwareError    ;
         mUnknowInterface = other.mUnknowInterface  ;
         mNoSensorSignal  = other.mNoSensorSignal   ;

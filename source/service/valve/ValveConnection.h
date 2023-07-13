@@ -134,10 +134,15 @@ public:
 
     void disconnectValve()
     {
+        qDebug() << "[" << Q_FUNC_INFO <<"]";
         if(mpValve != nullptr)
+        {
             delete mpValve;
+        }
 
         mpValve = nullptr;
+
+        qDebug() << "[" << Q_FUNC_INFO <<"] END";
     }
 
     bool sendCmd(QString cmd, QString value, QString checkPreFix, int checkLength, QString & resValue, qint64 timeout, IValve::eValveError * pOErr = nullptr)

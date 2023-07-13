@@ -36,6 +36,7 @@ Rectangle {
     signal clickNCPASettings()
     signal clickAdvToolTest()
     signal clickAdvBackupNRestore()
+    signal clickAdvDiskHoriCalibration()
     signal clickHelpManual()
     signal clickHelpAbout()
     signal clickHelpVisitNOVASEN()
@@ -308,11 +309,21 @@ Rectangle {
 
                 NExButtonItem{
                     id : menuBackupNRestore
-                    anchors.bottom: parent.bottom
+                    anchors.bottom: menuDiskHoriCalib.top
                     text.text: qsTr("Backup and resotore")
                     enabled: !GlobalUiValue.disableWinCreateBtn
 
                     onClicked: { panel.clickAdvBackupNRestore()}
+                }
+
+                NExButtonItem{
+                    id : menuDiskHoriCalib
+                    anchors.bottom: parent.bottom
+                    text.text: qsTr("Disk Horizontal calib")
+                    enabled: !GlobalUiValue.disableWinCreateBtn
+
+
+                    onClicked: { panel.clickAdvDiskHoriCalibration()}
                 }
             }
 

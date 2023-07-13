@@ -26,6 +26,7 @@
 #include "source/qmlmodel/interfacesetuplogicdlgmodel.h"
 #include "source/qmlmodel/interfacesetupethercatdlgmodel.h"
 #include "source/qmlmodel/interfacesetuprs232dlgmodel.h"
+#include "source/qmlmodel/interfacesetupethernetdlgmodel.h"
 #include "source/qmlmodel/interfacestatuslogicdlgmodel.h"
 #include "source/qmlmodel/interfacestatusethercatdlgmodel.h"
 #include "source/qmlmodel/interfacestatusdnetdlgmodel.h"
@@ -42,6 +43,7 @@
 #include "source/qmlmodel/valvepowerfailstatusdlgmodel.h"
 #include "source/qmlmodel/advancedtooltestdlgmodel.h"
 #include "source/qmlmodel/advancedtoolbackupnrestoredlgmodel.h"
+#include "source/qmlmodel/advencedtooldiskhoricalibdlgmodel.h"
 #include "source/qmlmodel/graphanalyzedlgmodel.h"
 #include "source/nchart/nchartview.h"
 //#include "source/nchart/nvoltchartview.h"
@@ -154,6 +156,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<InterfaceSetupEtherCATDlgModel>("InterfaceSetupEtherCATDlgModel", 1, 0, "InterfaceSetupEtherCATDlgModel");
     qmlRegisterType<InterfaceSetupEthCATItemModel>("InterfaceSetupEthCATItemModel", 1, 0, "InterfaceSetupEthCATItemModel");
     qmlRegisterType<InterfaceSetupRS232DlgModel>("InterfaceSetupRS232DlgModel", 1, 0, "InterfaceSetupRS232DlgModel");
+    qmlRegisterType<InterfaceSetupEtherNETDlgModel>("InterfaceSetupEtherNETDlgModel", 1, 0, "InterfaceSetupEtherNETDlgModel");
     qmlRegisterType<InterfaceStatusLogicDlgModel>("InterfaceStatusLogicDlgModel", 1, 0, "InterfaceStatusLogicDlgModel");
     qmlRegisterType<InterfaceStatusEtherCATDlgModel>("InterfaceStatusEtherCATDlgModel", 1, 0, "InterfaceStatusEtherCATDlgModel");
     qmlRegisterType<InterfaceStatusDNetDlgModel>("InterfaceStatusDNetDlgModel", 1, 0, "InterfaceStatusDNetDlgModel");
@@ -175,6 +178,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ValvePowerFailStatusDlgModel>("ValvePowerFailStatusDlgModel", 1, 0, "ValvePowerFailStatusDlgModel");
     qmlRegisterType<AdvancedToolTestDlgModel>("AdvancedToolTestDlgModel", 1, 0, "AdvancedToolTestDlgModel");
     qmlRegisterType<AdvancedToolBackupNRestoreDlgModel>("AdvancedToolBackupNRestoreDlgModel", 1, 0, "AdvancedToolBackupNRestoreDlgModel");
+    qmlRegisterType<AdvancedToolDiskHoriCalibDlgModel>("AdvancedToolDiskHoriCalibDlgModel", 1, 0, "AdvancedToolDiskHoriCalibDlgModel");
     qmlRegisterType<GraphAnalyzeDlgModel>("GraphAnalyzeDlgModel", 1, 0, "GraphAnalyzeDlgModel");
 
     //qmlRegisterType<LineChartData>("LineChartData", 1, 0, "LineChartData");
