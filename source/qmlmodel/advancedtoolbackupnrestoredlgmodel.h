@@ -82,6 +82,8 @@ signals:
     void signalEventCompletedLoad                 (             );
     void signalEventCompletedApply                (             );
     void signalEventCompletedExport               (             );
+    void signalEventWrittenSettingToFile          (             );
+    void signalEventWrittenSettingToValve         (             );
 
 private:
     QString exportFilePath;
@@ -410,6 +412,8 @@ public slots:
                 file.appendLine(QString("%1%2").arg(item.mWriteCommand).arg(item.mValue));
         }
         file.close();
+
+        emit signalEventWrittenSettingToFile();
     }
 
     Q_INVOKABLE void onCommandExportSetting()

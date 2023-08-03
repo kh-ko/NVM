@@ -136,5 +136,15 @@
         <file>ui/dialog/FirmwareUpdateViaNetworkDlg.qml</file>
         <file>ui/dialog/InterfaceSetupEtherNETDlg.qml</file>
         <file>ui/dialog/AdvancedToolDiskHoriCalibDlg.qml</file>
+        <file>ui/dialog/FirmwareUpdateExDlg.qml</file>
+        <file>image/fu_notice.png</file>
+        <file>ui/dialog/FUSelectMethodDlg.qml</file>
+        <file>control/NOKMessageBox.qml</file>
+        <file>ui/dialog/test.qml</file>
+        <file>control/NConfirmMsgBox.qml</file>
+        <file>image/fu_notice_ready01.png</file>
+        <file>image/fu_notice_ready02.png</file>
+        <file>image/fu_notice_ready03.png</file>
+        <file>image/fu_notice_reboot01.png</file>
     </qresource>
 </RCC>

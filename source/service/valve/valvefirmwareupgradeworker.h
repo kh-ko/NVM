@@ -508,6 +508,22 @@ private:
 
             if (blockSize == 0x0000) //end of file
             {
+                if(getStep() == (int)ValveFirmwareUpgradeDef::CPU1_DN_APP)
+                {
+                    setPercentCpu1App(100);
+                }
+                else if(getStep() == (int)ValveFirmwareUpgradeDef::CPU2_DN_APP)
+                {
+                    setPercentCpu2App(100);
+                }
+                else if(getStep() == (int)ValveFirmwareUpgradeDef::CPU1_VERIFY)
+                {
+                    setPercentCpu1Verify(100);
+                }
+                else if(getStep() == (int)ValveFirmwareUpgradeDef::CPU2_VERIFY)
+                {
+                    setPercentCpu2Verify(100);
+                }
                 break;
             }
 
@@ -614,6 +630,7 @@ private:
                 setPercentCpu2Verify((mReadedByteSize * 100) / mCpu2AppByteSize);
             }
         }
+
         return true;
     }
 
@@ -659,6 +676,15 @@ private:
                 qDebug() << "[" << Q_FUNC_INFO << "] readBuff[0] = " << readBuff[0] << ", writeBuff[0] = " << writeBuff[0];
                 return false;
             }
+        }
+
+        if(getStep() == (int)ValveFirmwareUpgradeDef::CPU1_DN_KERNEL)
+        {
+            setPercentCpu1Kernel((mReadedByteSize * 100) / mCpu1KernelByteSize);
+        }
+        else
+        {
+            setPercentCpu2Kernel((mReadedByteSize * 100) / mCpu2KernelByteSize);
         }
 
         return true;

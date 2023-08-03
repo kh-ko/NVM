@@ -39,6 +39,7 @@
 #include "source/qmlmodel/setpointpositiondlgmodel.h"
 #include "source/qmlmodel/sequencerdlgmodel.h"
 #include "source/qmlmodel/firmwareupdatedlgmodel.h"
+#include "source/qmlmodel/firmwareupdateexdlgmodel.h"
 #include "source/qmlmodel/firmwareupdatevianetworkdlgmodel.h"
 #include "source/qmlmodel/valvepowerfailstatusdlgmodel.h"
 #include "source/qmlmodel/advancedtooltestdlgmodel.h"
@@ -174,6 +175,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<SequencerDlgModel>("SequencerDlgModel", 1, 0, "SequencerDlgModel");
     qmlRegisterType<SeqTestItemModel>("SeqTestItemModel", 1, 0, "SeqTestItemModel");
     qmlRegisterType<FirmwareUpdateDlgModel>("FirmwareUpdateDlgModel", 1, 0, "FirmwareUpdateDlgModel");
+    qmlRegisterType<FirmwareUpdateExDlgModel>("FirmwareUpdateExDlgModel", 1, 0, "FirmwareUpdateExDlgModel");
     qmlRegisterType<FirmwareUpdateViaNetworkDlgModel>("FirmwareUpdateViaNetworkDlgModel", 1, 0, "FirmwareUpdateViaNetworkDlgModel");
     qmlRegisterType<ValvePowerFailStatusDlgModel>("ValvePowerFailStatusDlgModel", 1, 0, "ValvePowerFailStatusDlgModel");
     qmlRegisterType<AdvancedToolTestDlgModel>("AdvancedToolTestDlgModel", 1, 0, "AdvancedToolTestDlgModel");

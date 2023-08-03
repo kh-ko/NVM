@@ -49,8 +49,12 @@ HEADERS += \
     source/qmlmodel/def/qmlenumdef.h \
     source/qmlmodel/fatalerrordlgmodel.h \
     source/qmlmodel/firmwareupdatedlgmodel.h \
+    source/qmlmodel/firmwareupdateexdlgmodel.h \
     source/qmlmodel/firmwareupdatevianetworkdlgmodel.h \
+    source/qmlmodel/function/fdownloadfirmware.h \
     source/qmlmodel/function/fexportsetting.h \
+    source/qmlmodel/function/fimportsetting.h \
+    source/qmlmodel/function/fwritefirmware.h \
     source/qmlmodel/graphanalyzedlgmodel.h \
     source/qmlmodel/interfacesetupdevnetassemblyitemmodel.h \
     source/qmlmodel/interfacesetupdevnetdlgmodel.h \

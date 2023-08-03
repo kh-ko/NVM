@@ -104,7 +104,7 @@ public slots:
                 dstChart->setYAxis01Min(0);
                 dstChart->setYAxis01Max(posMax);
                 dstChart->setYAxis01Factor(1);
-                dstChart->setYAxis02Title(pressureTitle.arg(UNITUTIL_TO_STR(foundDpUnit)));
+                dstChart->setYAxis02Title(pressureTitle.arg(UNITUTIL_TO_STR(dpUnit)));
                 dstChart->setYAxis02Min(0);
                 dstChart->setYAxis02Max(pressureMax);
                 dstChart->setYAxis02Factor(1);

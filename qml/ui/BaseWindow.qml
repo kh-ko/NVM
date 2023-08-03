@@ -195,8 +195,9 @@ Window {
         }
         onClickToolChartAnalyzer      : { var popup = graphAnalyzeDlg.createObject(window)              ; popup.loadFromChart(chart.chartView); popup.show();}
         onClickToolSequencer          : {seqTestDlg.show(); }
-        onClickToolFirmwareUpdate     : { var popup = firmwareUpdateDlg.createObject(window)            ; popup.show(); }
-        onClickToolFirmwareUpdateViaNet: { var popup = firmwareUpdateViaNetDlg.createObject(window)     ; popup.show(); }
+        onClickToolFuSelectMethod     : { var popup = fuSelMethodDlg.createObject(window)               ; popup.show(); }
+        //onClickToolFirmwareUpdate      : { var popup = firmwareUpdateDlg.createObject(window)            ; popup.show(); }
+        //onClickToolFirmwareUpdateViaNet: { var popup = firmwareUpdateViaNetDlg.createObject(window)     ; popup.show(); }
         onClickAdvToolTest            : { var popup = advancedToolTestDlg.createObject(window)          ; popup.show(); }
         onClickAdvBackupNRestore      : { var popup = advancedToolBackupNRestoreDlg.createObject(window); popup.show(); }
         onClickAdvDiskHoriCalibration : { var popup = advancedToolDiskHoriCalibDlg.createObject(window) ; popup.show(); }
@@ -639,7 +640,22 @@ Window {
     Component{
         id : advancedToolBackupNRestoreDlg
         AdvancedToolBackupNRestoreDlg{
-
+            property string firmwareUpdateMethod : ""
+            onClosing: {
+                var popup
+                if(firmwareUpdateMethod == "network")
+                {
+                    popup = firmwareUpdateDlg.createObject(window);
+                    popup.method = firmwareUpdateMethod
+                    popup.show();
+                }
+                else if(firmwareUpdateMethod == "local")
+                {
+                    popup = firmwareUpdateDlg.createObject(window);
+                    popup.method = firmwareUpdateMethod
+                    popup.show();
+                }
+            }
         }
     }
     Component{
@@ -711,10 +727,69 @@ Window {
     }
 
     Component{
+        id : fuSelMethodDlg
+
+        FUSelectMethodDlg
+        {
+            onSelectedMethod: {
+                if(model.mIsValveConnect)
+                {
+                     var msgBox = questionExportSettingDMsgBox.createObject(window);
+                    msgBox.method = method
+                    msgBox.open()
+                    return
+                }
+                var popup = firmwareUpdateDlg.createObject(window)
+                popup.method = method
+                popup.show();
+            }
+        }
+    }
+
+    Component{
+        id : questionExportSettingDMsgBox
+
+        NOKMessageBox
+        {
+            property string method : ""
+
+            //function onReslut()
+            contentText : qsTr("When the firmware is updated, all settings are initialized.<br>Would you like to back up your settings before updating the firmware?")
+            okText : qsTr("Backup")
+            noText: qsTr("Skip")
+            contentHeight: 170 * GUISetting.scale; contentWidth: 400 * GUISetting.scale
+
+            onResult:
+            {
+                var popup
+
+                if(bOk)
+                {
+                    popup = advancedToolBackupNRestoreDlg.createObject(window);
+                    popup.show();
+                    popup.firmwareUpdateMethod = method
+                    popup.fnBackup();
+                }
+                else
+                {
+                    popup = firmwareUpdateDlg.createObject(window)
+                    popup.method = method
+                    popup.show();
+                }
+            }
+        }
+    }
+
+    Component{
         id : firmwareUpdateDlg
 
-        FirmwareUpdateDlg
+        FirmwareUpdateExDlg
         {
+            onClickRestoreSettings: {
+                var popup = advancedToolBackupNRestoreDlg.createObject(window);
+                popup.show();
+                popup.fnRestore();
+            }
         }
     }
 
@@ -757,34 +832,6 @@ Window {
             }
         }
     }
-    //
-    //Component{
-    //    id : pressurePrecisionDlg
-    //    PressurePrecisionDlg
-    //    {
-    //        minPressureFixedN: model.mMinPressureFixedN
-    //        userPressureFixedN: model.mUserPressureFixedN
-    //
-    //        onSignalChangedPrecision: {
-    //            model.onCommandSetUserPressureFixedN(precisionValue)
-    //        }
-    //    }
-    //}
-    //
-    //Component{
-    //    id : autoScaleMarginDlg
-    //
-    //    AutoScaleMarginDlg
-    //    {
-    //        autoScaleMargin: model.mAutoScaleMinMargin
-    //
-    //        onSignalChangedAutoScaleMargin:{
-    //            model.onCommandSetAutoScaleMinMargin(marginValue)
-    //        }
-    //    }
-    //}
-
-
 }
 
 
