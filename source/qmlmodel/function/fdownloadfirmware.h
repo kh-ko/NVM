@@ -160,8 +160,17 @@ public :
 
         verPath = ver.split("/");
         mDownFileList.clear();
-        mDownFileList.append(QString("VALVE_CPU1_%1_FLASH.txt").arg(verPath.at(verPath.size() - 1)));
-        mDownFileList.append(QString("VALVE_CPU2_%1_FLASH.txt").arg(verPath.at(verPath.size() - 1)));
+
+        if(verPath.at(verPath.size() - 1) == "LASTEST")
+        {
+            mDownFileList.append(QString("app_cpu01.txt").arg(verPath.at(verPath.size() - 1)));
+            mDownFileList.append(QString("app_cpu02.txt").arg(verPath.at(verPath.size() - 1)));
+        }
+        else
+        {
+            mDownFileList.append(QString("VALVE_CPU1_%1_FLASH.txt").arg(verPath.at(verPath.size() - 1)));
+            mDownFileList.append(QString("VALVE_CPU2_%1_FLASH.txt").arg(verPath.at(verPath.size() - 1)));
+        }
         mRemoteFilePath = QString("%1/%2").arg(mRemoteFileBasePath).arg(ver);
         setDownloadStep(0);
 
