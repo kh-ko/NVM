@@ -197,6 +197,8 @@ public slots:
     {
         int id = dto.mReqDto.mReqCommand.mid(QString(REQ_READ_LEARN_PARAM).length(), 3).toInt();
 
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << "," << dto.mResData;
+
         if(id != convertParamID(mState) || dto.mReqDto.mpRef != this)
             return;
 
@@ -229,6 +231,8 @@ public slots:
     void onValveWrittenLearnParam(ValveResponseDto dto)
     {
         int id = dto.mReqDto.mReqCommand.mid(QString(REQ_READ_LEARN_PARAM).length(), 3).toInt();
+
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << "," << dto.mResData;
 
         if(id != convertParamID(mState) || dto.mReqDto.mpRef != this)
             return;

@@ -66,6 +66,11 @@ BaseSetupWindow{
     {
         dialog.mode = "BackupOnly"
 
+        intFnBackup()
+    }
+
+    function intFnBackup()
+    {
         if(dlgModel.mAccessMode !== ValveEnumDef.ACCESS_LOCAL && !dlgModel.mIsRS232Test)
         {
             var popup = dialog.changeAccessDlg.createObject(dialog)
@@ -80,6 +85,11 @@ BaseSetupWindow{
     {
         dialog.mode = "RestoreOnly"
 
+        intFnRestore();
+    }
+
+    function intFnRestore()
+    {
         if(dlgModel.mAccessMode !== ValveEnumDef.ACCESS_LOCAL && !dlgModel.mIsRS232Test)
         {
             var popup = dialog.changeAccessDlg.createObject(dialog)
@@ -104,12 +114,12 @@ BaseSetupWindow{
         }
 
         onSignalEventWrittenSettingToFile: {
-            if(mode == "BackupOnly")
+            if(dialog.mode == "BackupOnly")
                 close()
         }
 
         onSignalEventWrittenSettingToValve:{
-            if(mode == "RestoreOnly")
+            if(dialog.mode == "RestoreOnly")
                 close()
         }
     }
@@ -152,7 +162,7 @@ BaseSetupWindow{
                     text.text: qsTr("Export valve settings")
                     enabled: dialog.progress === 100
                     onClick: {
-                        fnBackup()
+                        intFnBackup()
                     }
                 }
             }
@@ -180,7 +190,7 @@ BaseSetupWindow{
                     text.text: qsTr("Import valve settings")
 
                     onClick: {
-                        fnRestore()
+                        intFnRestore()
                     }
                 }
             }

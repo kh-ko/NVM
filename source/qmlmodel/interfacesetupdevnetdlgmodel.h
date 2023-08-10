@@ -1638,7 +1638,7 @@ private:
             else if(line.contains("ModDate"    )){line.append(QString(" %1;").arg(QDate::currentDate().toString(EDS_FILE_DATE_FMT)));}
             else if(line.contains("ModTime"    )){line.append(QString(" %1;").arg(QDateTime::currentDateTime().toString(TIME_FMT) ));}
             else if(line.contains("Revision"   )){line.append(QString(" %1;").arg("0.0"                                           ));}
-            else if(line.contains("VendCode"   )){line.append(QString(" %1;").arg("0"                                             ));}
+            else if(line.contains("VendCode"   )){line.append(QString(" %1;").arg("1762"                                          ));}
             else if(line.contains("VendName"   )){line.append(QString(" %1;").arg("\"NOVASEN\""                                   ));}
             else if(line.contains("ProdTypeStr")){line.append(QString(" %1;").arg("\"Generic\""                                   ));}
             else if(line.contains("ProdType"   )){line.append(QString(" %1;").arg("0"                                             ));}

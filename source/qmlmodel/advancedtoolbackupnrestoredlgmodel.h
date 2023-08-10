@@ -12,30 +12,34 @@ class ValveCommandItem
 {
 public:
     QString mReadCommand;
+    QString mReadResCommand = "";
     QString mWriteCommand;
     QString mValue;
 
     ValveCommandItem(){}
-    ValveCommandItem(const ValveCommandItem& copy):mReadCommand (copy.mReadCommand ),
-                                                   mWriteCommand(copy.mWriteCommand),
-                                                   mValue       (copy.mValue       ){}
+    ValveCommandItem(const ValveCommandItem& copy):mReadCommand   (copy.mReadCommand   ),
+                                                   mReadResCommand(copy.mReadResCommand),
+                                                   mWriteCommand  (copy.mWriteCommand  ),
+                                                   mValue         (copy.mValue         ){}
 
     ~ValveCommandItem(){}
 
     ValveCommandItem& operator=(const ValveCommandItem& other)
     {
 
-        mReadCommand  = other.mReadCommand ;
-        mWriteCommand = other.mWriteCommand;
-        mValue        = other.mValue       ;
+        mReadCommand    = other.mReadCommand   ;
+        mReadResCommand = other.mReadResCommand;
+        mWriteCommand   = other.mWriteCommand  ;
+        mValue          = other.mValue         ;
 
         return *this;
     }
 
-    void setCommand(QString readCmd, QString writeCmd)
+    void setCommand(QString readCmd, QString writeCmd, QString readResCmd = "")
     {
-        mReadCommand = readCmd;
-        mWriteCommand = writeCmd;
+        mReadCommand    = readCmd;
+        mReadResCommand = readResCmd;
+        mWriteCommand   = writeCmd;
     }
 };
 
@@ -324,7 +328,14 @@ public slots:
         {
             if(dto.mIsSucc == true)
             {
-                mExportCmdList[mExportCmdIdx].mValue = dto.mResData.mid(mExportCmdList[mExportCmdIdx].mReadCommand.length());
+                if(mExportCmdList[mExportCmdIdx].mReadResCommand.length() > 0)
+                {
+                    mExportCmdList[mExportCmdIdx].mValue = dto.mResData.mid(mExportCmdList[mExportCmdIdx].mReadResCommand.length());
+                }
+                else
+                {
+                    mExportCmdList[mExportCmdIdx].mValue = dto.mResData.mid(mExportCmdList[mExportCmdIdx].mReadCommand.length());
+                }
             }
             else
             {
@@ -345,6 +356,7 @@ public slots:
 
             if(mImportCmdIdx == mImportCmdList.size())
             {
+                emit signalEventWrittenSettingToValve();
                 setState(eState::STATE_READY);
                 return;
             }
@@ -449,7 +461,7 @@ public slots:
         tempItem.mValue = ""; mExportCmdList.append(tempItem);
 
         /* Pressure control learn param */
-        for(int i = 0; i < 103; i ++)
+        for(int i = 0; i < 104; i ++)
         {
             tempItem.setCommand(QString("%1%2").arg(REQ_READ_LEARN_PARAM).arg(i, 3, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_LEARN_PARAM).arg(i, 3, 10, QChar('0'))); mExportCmdList.append(tempItem);
         }
@@ -481,6 +493,15 @@ public slots:
 
         case ValveEnumDef::INTERFACE_ETHERNET:
         case ValveEnumDef::INTERFACE_ETHERNET_WITH_ANALOGOUTPUT:
+            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_ETHERNET_IP           ), QString("%1").arg(REQ_WRITE_INTERFACE_EHTERNET_IP              ), RES_READ_INTERFACE_ETHERNET_INFO); mExportCmdList.append(tempItem);
+            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_ETHERNET_SUBNET       ), QString("%1").arg(REQ_WRITE_INTERFACE_EHTERNET_SUBNET          ), RES_READ_INTERFACE_ETHERNET_INFO); mExportCmdList.append(tempItem);
+            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_ETHERNET_GATEWAY      ), QString("%1").arg(REQ_WRITE_INTERFACE_EHTERNET_GATEWAY         ), RES_READ_INTERFACE_ETHERNET_INFO); mExportCmdList.append(tempItem);
+            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_ETHERNET_DHCP         ), QString("%1").arg(REQ_WRITE_INTERFACE_EHTERNET_DHCP            ), RES_READ_INTERFACE_ETHERNET_INFO); mExportCmdList.append(tempItem);
+            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_ETHERNET_PORT01       ), QString("%1").arg(REQ_WRITE_INTERFACE_EHTERNET_PORT01          ), RES_READ_INTERFACE_ETHERNET_INFO); mExportCmdList.append(tempItem);
+            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_ETHERNET_PORT02       ), QString("%1").arg(REQ_WRITE_INTERFACE_EHTERNET_PORT02          ), RES_READ_INTERFACE_ETHERNET_INFO); mExportCmdList.append(tempItem);
+            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_CONFIG_RS232_IF       ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_RS232_IF          )); mExportCmdList.append(tempItem);
+            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_CONFIG_RS485_COMM     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_RS485_IF          )); mExportCmdList.append(tempItem);
+            tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_CONFIG_RS232_COMM     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_RS232_COMM        )); mExportCmdList.append(tempItem);
             break;
 
         case ValveEnumDef::INTERFACE_RS485:
