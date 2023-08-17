@@ -84,6 +84,8 @@
 #define ENABLE_SLOT_VALVE_CHANGED_SETPOINT_04_PRESSURE                  connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedSetPoint04Pressure             (                                                )), this, SLOT(onValveChangedSetPoint04Pressure           (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_SETPOINT_05_PRESSURE                  connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedSetPoint05Pressure             (                                                )), this, SLOT(onValveChangedSetPoint05Pressure           (                                                  )))
 #define ENABLE_SLOT_VALVE_CHANGED_SETPOINT_06_PRESSURE                  connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedSetPoint06Pressure             (                                                )), this, SLOT(onValveChangedSetPoint06Pressure           (                                                  )))
+#define ENABLE_SLOT_VALVE_CHANGED_VALVE_STATUS                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedValveStatus                    (QString                                         )), this, SLOT(onValveChangedValveStatus                  (QString                                           )))
+#define ENABLE_SLOT_VALVE_CHANGED_SENSOR_SETTING                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventChangedSensorSetting                  (QString                                         )), this, SLOT(onValveChangedSensorSetting                (QString                                           )))
 #define ENABLE_SLOT_VALVE_RESULT_CONNECT                                connect(ValveSProvider::getInstance(), SIGNAL(signalResultConnect                              (bool, QString                                   )), this, SLOT(onValveResultConnect                       (bool, QString                                     )))
 #define ENABLE_SLOT_VALVE_RESULT_DFU                                    connect(ValveSProvider::getInstance(), SIGNAL(signalResultDFU                                  (bool, QString                                   )), this, SLOT(onValveResultDFU                           (bool, QString                                     )))
 #define ENABLE_SLOT_VALVE_RESULT_READY_DFU                              connect(ValveSProvider::getInstance(), SIGNAL(signalResultReadyDFU                             (bool                                            )), this, SLOT(onValveResultReadyDFU                      (bool                                              )))
@@ -799,6 +801,8 @@ signals:
     void signalEventChangedSetPoint04Pressure           (             );
     void signalEventChangedSetPoint05Pressure           (             );
     void signalEventChangedSetPoint06Pressure           (             );
+    void signalEventChangedValveStatus                  (QString value);
+    void signalEventChangedSensorSetting                (QString value);
 
     void signalEventChangedValveID                      (             );
     void signalEventChangedFirmwareVersion              (             );
@@ -4811,6 +4815,7 @@ public slots:
 
         }while(false);
 
+        emit signalEventChangedValveStatus(signalDto.mResData);
         emit signalEventReadedValveStatus(signalDto);
     }
 

@@ -9,6 +9,7 @@
 #include "source/service/coreservice.h"
 #include "source/qmlmodel/control/nchartcanvasmodel.h"
 #include "source/qmlmodel/qmlcoremodel.h"
+#include "source/qmlmodel/debuggingmodel.h"
 #include "source/qmlmodel/searchdevicedlgmodel.h"
 #include "source/qmlmodel/valveidentificationexdlgmodel.h"
 #include "source/qmlmodel/valvesetupdlgmodel.h"
@@ -136,6 +137,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<NChartPointData>();
 
     qmlRegisterType<QmlCoreModel>("QmlCoreModel", 1, 0, "QmlCoreModel");
+    qmlRegisterType<DebuggingModel>("DebuggingModel", 1, 0, "DebuggingModel");
     qmlRegisterType<SearchDeviceDlgModel>("SearchDeviceDlgModel", 1, 0, "SearchDeviceDlgModel");
     qmlRegisterType<ValveIdentificationExDlgModel>("ValveIdentificationExDlgModel", 1, 0, "ValveIdentificationExDlgModel");
     qmlRegisterType<ValveSetupDlgModel>("ValveSetupDlgModel", 1, 0, "ValveSetupDlgModel");

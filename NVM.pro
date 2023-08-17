@@ -46,6 +46,7 @@ HEADERS += \
     source/qmlmodel/control/nchartcanvasmodel.h \
     source/qmlmodel/controllearndlgmodel.h \
     source/qmlmodel/controlzerodlgmodel.h \
+    source/qmlmodel/debuggingmodel.h \
     source/qmlmodel/def/qmlenumdef.h \
     source/qmlmodel/fatalerrordlgmodel.h \
     source/qmlmodel/firmwareupdatedlgmodel.h \
