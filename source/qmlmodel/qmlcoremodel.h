@@ -932,7 +932,6 @@ private:
 
         setConvertedFullScale(convertedFullScale);
 
-
         setPressureConvertFactor((double)getFullScale() / (double)getStdFullScale());
 
         convertCurrPressure();
@@ -943,6 +942,7 @@ private:
     {
         //if(getPressureDpUnit() == ValveEnumDef::PRESSURE_UNIT_PSF)
         //double convertedCurrPressure    = UNITUTIL_CONVERT(getFullScaleUnit(), getFullScale() * ((double)getCurrPressure() / (double)getStdFullScale()), getPressureDpUnit());
+
         double convertedCurrPressure    = UNITUTIL_CONVERT(getFullScaleUnit(), (double)getCurrPressure() * mPressureConvertFactor, getPressureDpUnit());
         setConvertedRTPressure(convertedCurrPressure);
     }

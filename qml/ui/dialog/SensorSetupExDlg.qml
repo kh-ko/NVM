@@ -349,14 +349,14 @@ BaseSetupWindow{
 
                 NInputNumber{
                     id : _s01FullScale
-                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    width: 150 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: s01SubTitleRange.bottom; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.5//GUISetting.margin
 
                     enabled: dialog.progress === 100
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS01FullScale ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 0; maxValue: 999999
+                    stepValue : 1; minValue: 0; maxValue: 99999999
                     fixedN : 4
 
                     visible: _s01Source.currentIndex != 0 && _s01Selection.currentIndex != 0
@@ -367,6 +367,7 @@ BaseSetupWindow{
                     }
 
                     onChangedValue: {
+                        textField.text = dlgModel.onCommandCheckScaleValue(textField.text)
                         _s01DigiValue.textField.text = dlgModel.onCommandCheckDigitalValue(textField.text, _s01DigiValue.textField.text)
                     }
                 }
@@ -876,14 +877,14 @@ BaseSetupWindow{
 
                 NInputNumber{
                     id : _s02FullScale
-                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    width: 150 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: s02SubTitleRange.bottom; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.5//GUISetting.margin
 
                     enabled: dialog.progress === 100
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS02FullScale ? "#FF0000" : "#000000"
-                    stepValue : 1; minValue: 0; maxValue: 999999
+                    stepValue : 1; minValue: 0; maxValue: 999999999
                     fixedN : 4
 
                     visible: _s02Source.currentIndex != 0 && _s02Selection.currentIndex != 0
@@ -894,6 +895,7 @@ BaseSetupWindow{
                     }
 
                     onChangedValue: {
+                        textField.text = dlgModel.onCommandCheckScaleValue(textField.text)
                         _s02DigiValue.textField.text = dlgModel.onCommandCheckDigitalValue(textField.text, _s02DigiValue.textField.text)
                     }
                 }

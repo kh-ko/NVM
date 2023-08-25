@@ -540,6 +540,34 @@ public:
 
 
 public slots:
+    Q_INVOKABLE QString onCommandCheckScaleValue(QString value)
+    {
+        QString retStr = "";
+        QChar dot = QChar('.');
+        QChar zero = QChar('0');
+
+        int validCnt = 0;
+        bool bStartCnt = false;
+
+        for(int i = 0; i < value.length(); i ++)
+        {
+            if(value[i] != dot && value[i] != zero)
+            {
+                bStartCnt = true;
+            }
+
+            if(bStartCnt)
+                validCnt++;
+
+            if(validCnt < 6 || value[i] == dot)
+                retStr.append(value[i]);
+            else
+                retStr.append(QChar('0'));
+
+        }
+
+        return retStr;
+    }
     Q_INVOKABLE QString onCommandCheckDigitalValue(QString fullScale, QString inputDigiStr)
     {
         QString protocolDigiValue = QString("%1").arg(qRound((inputDigiStr.toDouble() * 1000000.0)/ fullScale.toDouble()));
@@ -2652,6 +2680,71 @@ public slots:
     }
 
 private:
+    void splitSensorScale(QString scaleValue, QString &valuePart, QString &expPart)
+    {
+        QString intPart = "";
+        QString floatPart = "";
+        int dotIdx = scaleValue.indexOf(QChar('.'));
+        int nonZeroIdx;
+
+        QChar zero('0');
+
+        if(dotIdx < 0)
+        {
+            dotIdx = scaleValue.length();
+            scaleValue = scaleValue.append(".0");
+        }
+
+        intPart = scaleValue.split(".")[0];
+
+        if(intPart.toInt() == 0)
+            intPart = "";
+        else
+           intPart = QString::number(intPart.toInt());
+
+        floatPart = scaleValue.split(".")[1];
+
+        for(nonZeroIdx = floatPart.length() - 1; nonZeroIdx >= 0; nonZeroIdx --)
+        {
+            if(floatPart.at(nonZeroIdx) != zero)
+                break;
+        }
+
+        floatPart = floatPart.mid(0, nonZeroIdx + 1);
+
+        if(intPart.length() > 0)
+        {
+            expPart = QString::number(intPart.length()-1);
+        }
+        else if(floatPart.length() > 4)
+        {
+            int expValue = 0;
+
+            while (floatPart[0] == zero) {
+                floatPart.remove(0,1);
+
+                expValue--;
+
+                if(floatPart.length() < 5)
+                    break;
+            }
+
+            intPart = "0";
+            expPart = QString::number(expValue);
+        }
+        else
+        {
+            intPart = "0";
+            expPart = QString::number(0);
+        }
+
+        valuePart = valuePart.append(intPart);
+        valuePart = valuePart.append(floatPart);
+        valuePart = valuePart.append("000000");
+        valuePart = valuePart.insert(1, QChar('.'));
+        valuePart = valuePart.mid(0,6);
+    }
+
     int getExponent(QString strFullScale)
     {
         int exponent;
