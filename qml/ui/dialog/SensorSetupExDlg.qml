@@ -25,6 +25,12 @@ BaseSetupWindow{
 
     function commit()
     {
+        if(body.s01Source.currentIndex === 0)
+            body.s01Selection.currentIndex = 0;
+
+        if(body.s02Source.currentIndex === 0)
+            body.s02Selection.currentIndex = 0;
+
         var s01AnalActive               = body.s01AnalActive.isSelect ? 1 : 0
         var s01Selection                = body.s01Selection.currentIndex
         var s01Source                   = body.s01Source.currentIndex
