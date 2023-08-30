@@ -56,6 +56,11 @@ NWindow{
 
             count = dlgModel.onCommandGetVersionCount()
 
+            //if(count > 0)
+            //    versionCombo.displayText = dlgModel.onCommandGetVersionName(0)
+
+            versionModel.append({"modelData":"LASTEST"})
+
             for(var i = 0; i < count; i ++)
             {
                 var itemText = dlgModel.onCommandGetVersionName(i)

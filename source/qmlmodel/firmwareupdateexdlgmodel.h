@@ -234,10 +234,15 @@ public slots:
 
     Q_INVOKABLE void onCommandUpdateFromNetwork(QString comport, QString verName)
     {
-        qDebug() << "[" << Q_FUNC_INFO << "] comport = " << comport;
         setUpdateStep(0);
         setIsUpdating(true);
         mSelComPort = comport;
+
+        if(verName == "LASTEST" && mVersionList.size() > 0)
+            verName = mVersionList.at(0);
+
+        qDebug() << "[" << Q_FUNC_INFO << "] comport = " << comport << ", verName = " << verName;
+
         mfDownloadFirmware.run(verName);
     }
 
