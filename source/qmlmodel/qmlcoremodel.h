@@ -98,11 +98,13 @@ class QmlCoreModel : public QObject
     Q_PROPERTY(double  mSetPoint06Pressure    READ getSetPoint06Pressure    NOTIFY signalEventChangedSetPoint06Pressure    )
     Q_PROPERTY(int     mPressureFixedN        READ getPressureFixedN        NOTIFY signalEventChangedPressureFixedN        )
     Q_PROPERTY(bool    mIsRecord              READ getIsRecord              NOTIFY signalEventChangedIsRecord              )
+    Q_PROPERTY(bool    mIsAutoRecord          READ getIsAutoRecord          NOTIFY signalEventChangedIsAutoRecord          )
     Q_PROPERTY(qint64  mRecordTime            READ getRecordTime            NOTIFY signalEventChangedRecordTime            )
 
 
 private:
     qint64        mConMSec                  ;
+    qint64        mLastSaveTime             ;
     QList<qint64> mRecordTimestampList      ;
     QList<qint64> mRecordCurrentPosList     ;
     QList<qint64> mRecordTargetPosList      ;
@@ -191,6 +193,7 @@ public:
     double   mSetPoint06Pressure    = 0;
     //int      mPressureFixedN        = 0                                   ;
     bool     mIsRecord              = false                               ;
+    bool     mIsAutoRecord          = false                               ;
     qint64   mRecordStartTime       = 0                                   ;
     qint64   mRecordCurrTime        = 0                                   ;
 
@@ -277,6 +280,7 @@ public:
     double  getSetPoint06Pressure   (){ return mSetPoint06Pressure       ;}
     int     getPressureFixedN       (){ return mMinPressureFixedN > mUserPressureFixedN? mMinPressureFixedN : mUserPressureFixedN;}
     bool    getIsRecord             (){ return mIsRecord                 ;}
+    bool    getIsAutoRecord         (){ return mIsAutoRecord             ;}
     qint64  getRecordTime           (){ return (mRecordCurrTime - mRecordStartTime);}
 
     void setIsDevMode            (bool              value){ if(mIsDevMode             == value) return; mIsDevMode             = value; emit signalEventChangedIsDevMode            (value);}
@@ -359,6 +363,7 @@ public:
     //void setPressureFixedN       (int               value){ if(mPressureFixedN        == value) return; mPressureFixedN        = value; }
     void setSensorFullScale      (int unit, double  value){ if(mFullScaleUnit == unit && mFullScale == value) return; mFullScaleUnit = unit; mFullScale = value; emit signalEventChangedFullScaleUnit(unit); emit signalEventChangedFullScale(value);}
     void setIsRecord             (bool              value){ if(mIsRecord              == value) return; mIsRecord              = value; emit signalEventChangedIsRecord             (value);}
+    void setIsAutoRecord         (bool              value){ if(mIsAutoRecord          == value) return; mIsAutoRecord          = value; emit signalEventChangedIsAutoRecord         (value);}
     void setRecordTime           (qint64            value){                                             mRecordCurrTime        = value; emit signalEventChangedRecordTime           (getRecordTime());}
 
 signals:
@@ -445,6 +450,7 @@ signals:
     void signalEventChangedSetPoint06Pressure   (double  value);
     void signalEventChangedPressureFixedN       (int     value);
     void signalEventChangedIsRecord             (bool    value);
+    void signalEventChangedIsAutoRecord         (bool    value);
     void signalEventChangedRecordTime           (qint64  value);
     void signalEventAddGraphPoint               (qint64 msec, qint64 currPos, qint64 currPressure, qint64 targetPos, qint64 targetPressure);
     void signalEventOccurError                  (QString value);
@@ -725,7 +731,7 @@ public slots:
         if(!dto.mIsSucc)
             return;
 
-        msec         = dto.mResDateTime.time().msecsSinceStartOfDay();
+        msec         = dto.mResDateTime.toMSecsSinceEpoch();// .time().msecsSinceStartOfDay();
         currPos      = dto.mCurrPosition;
         currPressure = dto.mCurrPressure;
 
@@ -753,9 +759,9 @@ public slots:
         //    setIsClose(mMode == ValveEnumDef::MODE_CLOSED);
         //}
 
-        emit signalEventAddGraphPoint(msec, currPos, currPressure, targetPos, targetPressure);
+        emit signalEventAddGraphPoint(dto.mResDateTime.time().msecsSinceStartOfDay(), currPos, currPressure, targetPos, targetPressure);
 
-        if(getIsRecord())
+        if(getIsRecord() || getIsAutoRecord())
         {
             setRecordTime(QDateTime::currentMSecsSinceEpoch());
             recordPoint(msec, currPos, targetPos, currPressure, targetPressure);
@@ -813,6 +819,24 @@ public slots:
         {
             mRecordStartTime = 0;
             setRecordTime(0);
+        }
+    }
+
+    Q_INVOKABLE void onCommandClickAutoRecord()
+    {
+        setIsAutoRecord(!getIsAutoRecord());
+
+        if(getIsAutoRecord())
+        {
+            clearRecordData();
+            mLastSaveTime = mRecordStartTime = QDateTime::currentMSecsSinceEpoch();
+        }
+        else
+        {
+            mLastSaveTime = mRecordStartTime = 0;
+            setRecordTime(0);
+
+            autoSaveRecordData();
         }
     }
 
@@ -971,11 +995,33 @@ private:
 
     void recordPoint(qint64 msec, qint64 currPos, qint64 targetPos, qint64 currPressure, qint64 targetPressure)
     {
+        if(getIsAutoRecord())
+        {
+            autoSaveRecordData();
+        }
         mRecordTimestampList.append(msec);
         mRecordCurrentPosList.append(currPos);
         mRecordTargetPosList.append(targetPos);
         mRecordCurrentPressureList.append(currPressure);
         mRecordTargetPressureList.append(targetPressure);
+    }
+
+    void autoSaveRecordData()
+    {
+        qint64 curr = QDateTime::currentMSecsSinceEpoch();
+
+        if(mLastSaveTime > (curr - (1000 * 60 * 60)))
+            return;
+
+        if (QDir(QString("%1/autosave").arg(QApplication::applicationDirPath())).exists() == false)
+        {
+            QDir().mkdir(QString("%1/autosave").arg(QApplication::applicationDirPath()));
+        }
+
+        saveRecordData(QString("%1/%2/%3.txt").arg(QApplication::applicationDirPath()).arg("autosave").arg(QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss")));
+
+        mLastSaveTime = curr;
+        clearRecordData();
     }
 
     void saveRecordData(QString filePath)
@@ -1051,7 +1097,7 @@ private:
         file.appendLine(QString("timestamp(second)         actual_position    target_position    actual_pressure    target_pressure"));
 
         qint64 firstMsec;
-        double msec;
+        qint64 msec;
         double actualPos;
         double targetPos;
         double actualPressure;
@@ -1061,7 +1107,8 @@ private:
 
         for(int i = 0; i < mRecordTimestampList.size(); i ++)
         {
-            msec = (double)mRecordTimestampList[i] / (double)1000;
+            msec = mRecordTimestampList[i];
+
             if(i == 0)
             {
                 firstMsec = msec;
@@ -1072,8 +1119,9 @@ private:
             targetPos      = ((double)mRecordTargetPosList[i] ) * convertPosFactor;
             actualPressure = UNITUTIL_CONVERT(getFullScaleUnit(), ((double)mRecordCurrentPressureList[i]) * mPressureConvertFactor, getPressureDpUnit());
             targetPressure = UNITUTIL_CONVERT(getFullScaleUnit(), ((double)mRecordTargetPressureList[i] ) * mPressureConvertFactor, getPressureDpUnit());
-            file.appendLine(QString("%1    %2    %3    %4    %5")
-                                    .arg(msec          , 22, 'f', 3              , QChar('0'))
+            file.appendLine(QString("%1.%2    %3    %4    %5    %6")
+                                    .arg((msec/1000)   , 18, 10                  , QChar('0'))
+                                    .arg((msec%1000)   ,  3, 10                  , QChar('0'))
                                     .arg(actualPos     , 15, 'f', posFixedN      , QChar(' '))
                                     .arg(targetPos     , 15, 'f', posFixedN      , QChar(' '))
                                     .arg(actualPressure, 15, 'f', pressureFixedN , QChar(' '))

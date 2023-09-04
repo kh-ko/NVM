@@ -40,13 +40,15 @@ Rectangle {
     property var fixedN
     property var autoScaleMinMargin
     property var pressureDecades
-    property var isRecord
+    property bool isRecord     : false
+    property bool isAutoRecord : false
     property var recordTime
 
     property alias chartView : chart
 
     signal clickPause()
     signal clickRecord()
+    signal clickAutoRecord()
     signal clickAnalyze()
 
     color: "#FFFFFF"
@@ -127,46 +129,68 @@ Rectangle {
             }
         }
 
-        Item{
+        Row{
             id : controlBox
-            height: GUISetting.chart_ctrlbox_height; width: recordBtn.width + recordTime.width + recordTime.anchors.leftMargin + pauseBtn.width + pauseBtn.anchors.leftMargin + clearBtn.width + clearBtn.anchors.leftMargin /*+ analyzeBtn.width + analyzeBtn.anchors.leftMargin*/
+            height: GUISetting.chart_ctrlbox_height;
             anchors.horizontalCenter: parent.horizontalCenter; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin
+            spacing: GUISetting.margin * 2
 
-            NButton{
-                id : recordBtn
-                width: GUISetting.chart_ctrlbtn_width; height : parent.height;
-                anchors.left: parent.left; anchors.leftMargin: 0;
-                text.text : qsTr("Record")
-                onClick: {
-                    panel.clickRecord()
+            Item{
+                height : parent.height; width: recordBtn.width + GUISetting.line_margin + autoRecordBtn.width + GUISetting.line_margin + recordTime.width
+                NButton{
+                    id : recordBtn
+                    width: 100 * GUISetting.scale; height : parent.height;
+                    enabled: !panel.isAutoRecord
+                    text.text : qsTr("Record")
+                    onClick: {
+                        panel.clickRecord()
+                    }
+
+                    NCircleIndicator{
+                        width: GUISetting.on_indi_width; height: GUISetting.on_indi_height
+                        anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.verticalCenter: parent.verticalCenter
+
+                        color: "#FF0000"
+                        visible: panel.isRecord
+                    }
                 }
 
-                NCircleIndicator{
-                    width: GUISetting.on_indi_width; height: GUISetting.on_indi_height
-                    anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.verticalCenter: parent.verticalCenter
+                NButton{
+                    id : autoRecordBtn
+                    width: 100 * GUISetting.scale; height : parent.height;
+                    anchors.left: recordBtn.right; anchors.leftMargin: GUISetting.line_margin
+                    enabled: !panel.isRecord
+                    text.text : qsTr("Auto record")
+                    onClick: {
+                        panel.clickAutoRecord()
+                    }
 
-                    color: "#FF0000"
-                    visible: panel.isRecord
+                    NCircleIndicator{
+                        width: GUISetting.on_indi_width; height: GUISetting.on_indi_height
+                        anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.verticalCenter: parent.verticalCenter
+
+                        color: "#FF0000"
+                        visible: panel.isAutoRecord
+                    }
                 }
-            }
 
-            Rectangle{
-                id : recordTime
-                width: GUISetting.chart_ctrlbtn_width; height : parent.height;
-                anchors.left: recordBtn.right; anchors.leftMargin: GUISetting.line_margin;
-                color : "#E4E4E4"
+                Rectangle{
+                    id : recordTime
+                    width: 70 * GUISetting.scale; height : parent.height;
+                    anchors.right: parent.right;
+                    color : "#E4E4E4"
 
-                NText{
-                    anchors.fill: parent
-                    horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
-                    text : StrUtil.msecToString(panel.recordTime)
+                    NText{
+                        anchors.fill: parent
+                        horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
+                        text : StrUtil.msecToString(panel.recordTime)
+                    }
                 }
             }
 
             NButton{
                 id : pauseBtn
                 width: GUISetting.chart_ctrlbtn_width; height : parent.height;
-                anchors.left: recordTime.right; anchors.leftMargin: GUISetting.chart_ctrlbtn_margin;
                 text.text : qsTr("Pause")
                 onClick: {
                     panel.clickPause()
@@ -184,7 +208,6 @@ Rectangle {
             NButton{
                 id : clearBtn
                 width: GUISetting.chart_ctrlbtn_width; height : parent.height;
-                anchors.left: pauseBtn.right; anchors.leftMargin: GUISetting.chart_ctrlbtn_margin;
                 text.text : qsTr("Clear")
                 onClick: {
                     chart.onCommandClearGraph()
@@ -194,7 +217,6 @@ Rectangle {
             NButton{
                 id : analyzeBtn
                 width: GUISetting.chart_ctrlbtn_width; height : parent.height;
-                anchors.left: clearBtn.right; anchors.leftMargin: GUISetting.chart_ctrlbtn_margin;
                 text.text : qsTr("Analyze")
                 enabled: !GlobalUiValue.disableWinCreateBtn
                 onClick: {

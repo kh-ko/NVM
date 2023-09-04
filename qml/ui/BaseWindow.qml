@@ -239,11 +239,13 @@ Window {
         autoScaleMinMargin       : model.mAutoScaleMinMargin
         pressureDecades          : model.mPressureDecades
         isRecord                 : model.mIsRecord
+        isAutoRecord             : model.mIsAutoRecord
         recordTime               : model.mRecordTime
 
 
-        onClickPause  : {model.onCommandClickPause() }
-        onClickRecord : {model.onCommandClickRecord()}
+        onClickPause     : {model.onCommandClickPause()     }
+        onClickRecord    : {model.onCommandClickRecord()    }
+        onClickAutoRecord: {model.onCommandClickAutoRecord()}
         onClickAnalyze: {
             var popup = graphAnalyzeDlg.createObject(window);
 
