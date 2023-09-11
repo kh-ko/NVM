@@ -43,6 +43,7 @@ Rectangle {
     property bool isRecord     : false
     property bool isAutoRecord : false
     property var recordTime
+    property var autoRecordTime
 
     property alias chartView : chart
 
@@ -136,11 +137,10 @@ Rectangle {
             spacing: GUISetting.margin * 2
 
             Item{
-                height : parent.height; width: recordBtn.width + GUISetting.line_margin + autoRecordBtn.width + GUISetting.line_margin + recordTime.width
+                height : parent.height; width: recordBtn.width + GUISetting.line_margin + recordTime.width
                 NButton{
                     id : recordBtn
                     width: 100 * GUISetting.scale; height : parent.height;
-                    enabled: !panel.isAutoRecord
                     text.text : qsTr("Record")
                     onClick: {
                         panel.clickRecord()
@@ -155,12 +155,26 @@ Rectangle {
                     }
                 }
 
+                Rectangle{
+                    id : recordTime
+                    width: 70 * GUISetting.scale; height : parent.height;
+                    anchors.right: parent.right;
+                    color : "#E4E4E4"
+
+                    NText{
+                        anchors.fill: parent
+                        horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
+                        text : StrUtil.msecToString(panel.recordTime)
+                    }
+                }
+            }
+
+            Item{
+                height : parent.height; width: autoRecordBtn.width + GUISetting.line_margin + autoRecordTime.width
                 NButton{
                     id : autoRecordBtn
                     width: 100 * GUISetting.scale; height : parent.height;
-                    anchors.left: recordBtn.right; anchors.leftMargin: GUISetting.line_margin
-                    enabled: !panel.isRecord
-                    text.text : qsTr("Auto record")
+                    text.text : qsTr("Auto Record")
                     onClick: {
                         panel.clickAutoRecord()
                     }
@@ -175,7 +189,7 @@ Rectangle {
                 }
 
                 Rectangle{
-                    id : recordTime
+                    id : autoRecordTime
                     width: 70 * GUISetting.scale; height : parent.height;
                     anchors.right: parent.right;
                     color : "#E4E4E4"
@@ -183,7 +197,7 @@ Rectangle {
                     NText{
                         anchors.fill: parent
                         horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
-                        text : StrUtil.msecToString(panel.recordTime)
+                        text : StrUtil.msecToString(panel.autoRecordTime)
                     }
                 }
             }

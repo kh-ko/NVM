@@ -241,6 +241,7 @@ Window {
         isRecord                 : model.mIsRecord
         isAutoRecord             : model.mIsAutoRecord
         recordTime               : model.mRecordTime
+        autoRecordTime           : model.mAutoRecordTime
 
 
         onClickPause     : {model.onCommandClickPause()     }
