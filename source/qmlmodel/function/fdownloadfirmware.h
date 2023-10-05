@@ -161,7 +161,7 @@ public :
         verPath = ver.split("/");
         mDownFileList.clear();
 
-        if(verPath.at(verPath.size() - 1) == "LASTEST")
+        if(verPath.at(verPath.size() - 1) == "LATEST")
         {
             mDownFileList.append(QString("app_cpu01.txt").arg(verPath.at(verPath.size() - 1)));
             mDownFileList.append(QString("app_cpu02.txt").arg(verPath.at(verPath.size() - 1)));

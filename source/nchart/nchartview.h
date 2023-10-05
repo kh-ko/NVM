@@ -7,6 +7,11 @@
 #include "source/service/util/unitutil.h"
 #include "source/service/util/exceptionutil.h"
 
+#define PRESSURE_GRAPH      0
+#define PRESSURE_GRAPH_DASH 1
+#define POSITION_GRAPH      2
+#define POSITION_GRAPH_DASH 3
+
 class NChartControl;
 
 class NChartView : public QQuickPaintedItem
@@ -197,15 +202,25 @@ public slots:
 
         setXRange           (srcChart->getXRange           ());
 
-        setYAxis01AutoScale (true );
-        setYAxis01Log       (false);
-        setY01Draw          (true );
-        setY01DashDraw      (true );
+        //setYAxis01AutoScale (true );
+        //setYAxis01Log       (false);
+        //setY01Draw          (true );
+        //setY01DashDraw      (true );
 
-        setYAxis02AutoScale (true );
-        setYAxis02Log       (false);
-        setY02Draw          (true );
-        setY02DashDraw      (true );
+        //setYAxis02AutoScale (true );
+        //setYAxis02Log       (false);
+        //setY02Draw          (true );
+        //setY02DashDraw      (true );
+        setYAxis01AutoScale (srcChart->getYAxis01AutoScale() );
+        setYAxis01Log       (srcChart->getYAxis01Log      () );
+        setY01Draw          (srcChart->getY01Draw         () );
+        setY01DashDraw      (srcChart->getY01DashDraw     () );
+
+        setYAxis02AutoScale (srcChart->getYAxis02AutoScale());
+        setYAxis02Log       (srcChart->getYAxis02Log      ());
+        setY02Draw          (srcChart->getY02Draw         ());
+        setY02DashDraw      (srcChart->getY02DashDraw     ());
+
 
         NChartPointBuffer * pSrcPointBuff = srcChart->getPointBufferPtr();
 
@@ -243,10 +258,10 @@ public slots:
 
         CHECK_PTR_RETURN(m_CustomPlot);
 
-        m_CustomPlot->graph(0)->clearData();
-        m_CustomPlot->graph(1)->clearData();
-        m_CustomPlot->graph(2)->clearData();
-        m_CustomPlot->graph(3)->clearData();
+        m_CustomPlot->graph(PRESSURE_GRAPH     )->clearData();
+        m_CustomPlot->graph(PRESSURE_GRAPH_DASH)->clearData();
+        m_CustomPlot->graph(POSITION_GRAPH     )->clearData();
+        m_CustomPlot->graph(POSITION_GRAPH_DASH)->clearData();
     }
     Q_INVOKABLE void   onCommandAddPoint(double key, double y01, double y01Dash, double y02, double y02Dash)
     {
@@ -265,23 +280,23 @@ public slots:
 
         if(mY01Enable)
         {
-            m_CustomPlot->graph(0)->addData(key, y01);
-            m_CustomPlot->graph(0)->removeBeforeData(key - mXRange);
+            m_CustomPlot->graph(POSITION_GRAPH)->addData(key, y01);
+            m_CustomPlot->graph(POSITION_GRAPH)->removeBeforeData(key - mXRange);
         }
         if(mY01DashEnable)
         {
-            m_CustomPlot->graph(1)->addData(key, y01Dash);
-            m_CustomPlot->graph(1)->removeBeforeData(key - mXRange);
+            m_CustomPlot->graph(POSITION_GRAPH_DASH)->addData(key, y01Dash);
+            m_CustomPlot->graph(POSITION_GRAPH_DASH)->removeBeforeData(key - mXRange);
         }
         if(mY02Enable)
         {
-            m_CustomPlot->graph(2)->addData(key, y02);
-            m_CustomPlot->graph(2)->removeBeforeData(key - mXRange);
+            m_CustomPlot->graph(PRESSURE_GRAPH)->addData(key, y02);
+            m_CustomPlot->graph(PRESSURE_GRAPH)->removeBeforeData(key - mXRange);
         }
         if(mY02DashEnable)
         {
-            m_CustomPlot->graph(3)->addData(key, y02Dash);
-            m_CustomPlot->graph(3)->removeBeforeData(key - mXRange);
+            m_CustomPlot->graph(PRESSURE_GRAPH_DASH)->addData(key, y02Dash);
+            m_CustomPlot->graph(PRESSURE_GRAPH_DASH)->removeBeforeData(key - mXRange);
         }
     }
     Q_INVOKABLE void   onCommandInit(QString family, int fontSize, QString strYAxis01Color, QString strYAxis02Color, bool simpleXAxis, bool zoomEnable, bool fmtTime, bool rtUpdate, bool y01Enable, bool y01DashEnable, bool y02Enable, bool y02DashEnable)
@@ -321,7 +336,7 @@ public slots:
         yAxis02DashPen.setStyle(Qt::PenStyle::DotLine);
         yAxis02DashPen.setColor(yAxis02Color);
         yAxis02DashPen.setWidth(1); // 2
-        yAxis02TickPen.setColor(yAxis01Color);
+        yAxis02TickPen.setColor(yAxis02Color);
         yAxis02TickPen.setWidth(1);
 
         mY01Enable     = y01Enable    ;
@@ -393,22 +408,30 @@ public slots:
         m_CustomPlot->xAxis->grid()->setVisible(false);
         m_CustomPlot->xAxis->setTickLabelFont(tickFont);
 
-        m_CustomPlot->addGraph(m_CustomPlot->xAxis, m_CustomPlot->yAxis);
-        m_CustomPlot->graph(0)->setPen( yAxis01LinePen );
-        m_CustomPlot->addGraph(m_CustomPlot->xAxis, m_CustomPlot->yAxis);
-        m_CustomPlot->graph(1)->setPen( yAxis01DashPen );
         m_CustomPlot->addGraph(m_CustomPlot->xAxis, m_CustomPlot->yAxis2);
-        m_CustomPlot->graph(2)->setPen( yAxis02LinePen );
         m_CustomPlot->addGraph(m_CustomPlot->xAxis, m_CustomPlot->yAxis2);
-        m_CustomPlot->graph(3)->setPen( yAxis02DashPen );
+        m_CustomPlot->addGraph(m_CustomPlot->xAxis, m_CustomPlot->yAxis);
+        m_CustomPlot->addGraph(m_CustomPlot->xAxis, m_CustomPlot->yAxis);
+
+        yAxis01LinePen.setWidth(1);
+        m_CustomPlot->graph(POSITION_GRAPH)->setPen( yAxis01LinePen );
+
+        yAxis01DashPen.setWidth(1);
+        m_CustomPlot->graph(POSITION_GRAPH_DASH)->setPen( yAxis01DashPen );
+
+        yAxis02LinePen.setWidth(2);
+        m_CustomPlot->graph(PRESSURE_GRAPH)->setPen( yAxis02LinePen );
+
+        yAxis02DashPen.setWidth(2);
+        m_CustomPlot->graph(PRESSURE_GRAPH_DASH)->setPen( yAxis02DashPen );
 
         if(zoomEnable)
         {
             m_CustomPlot->setInteractions(NChart::iRangeDrag |NChart::iRangeZoom | NChart::iSelectPlottables);
 
             QList<NChartAxis*> axes;
-            axes.append(m_CustomPlot->yAxis);
             axes.append(m_CustomPlot->yAxis2);
+            axes.append(m_CustomPlot->yAxis);
             axes.append(m_CustomPlot->xAxis);
             m_CustomPlot->axisRect()->setRangeDragAxes(axes);
             m_CustomPlot->axisRect()->setRangeZoomAxes(axes);
@@ -500,10 +523,10 @@ private:
         if(getDebug())
             qDebug() << "[khko_debug]["<< Q_FUNC_INFO <<"] mYAxis01Factor = " << mYAxis01Factor << ", mYAxis02Factor = " << mYAxis02Factor;
 
-        m_CustomPlot->graph(0)->clearData();
-        m_CustomPlot->graph(1)->clearData();
-        m_CustomPlot->graph(2)->clearData();
-        m_CustomPlot->graph(3)->clearData();
+        m_CustomPlot->graph(POSITION_GRAPH     )->clearData();
+        m_CustomPlot->graph(POSITION_GRAPH_DASH)->clearData();
+        m_CustomPlot->graph(PRESSURE_GRAPH     )->clearData();
+        m_CustomPlot->graph(PRESSURE_GRAPH_DASH)->clearData();
 
         pointCnt = mPointBuffer.count();
 
@@ -512,13 +535,13 @@ private:
             NChartPointData data = mPointBuffer.at(i);
 
             if(mY01Enable)
-                m_CustomPlot->graph(0)->addData(data.mKey, data.mYAxis01Value        * mYAxis01Factor);
+                m_CustomPlot->graph(POSITION_GRAPH)->addData(data.mKey, data.mYAxis01Value        * mYAxis01Factor);
             if(mY01DashEnable)
-                m_CustomPlot->graph(1)->addData(data.mKey, data.mYAxis01DashValue    * mYAxis01Factor);
+                m_CustomPlot->graph(POSITION_GRAPH_DASH)->addData(data.mKey, data.mYAxis01DashValue    * mYAxis01Factor);
             if(mY02Enable)
-                m_CustomPlot->graph(2)->addData(data.mKey, data.mYAxis02Value        * mYAxis02Factor);
+                m_CustomPlot->graph(PRESSURE_GRAPH)->addData(data.mKey, data.mYAxis02Value        * mYAxis02Factor);
             if(mY02DashEnable)
-                m_CustomPlot->graph(3)->addData(data.mKey, data.mYAxis02DashValue    * mYAxis02Factor);
+                m_CustomPlot->graph(PRESSURE_GRAPH_DASH)->addData(data.mKey, data.mYAxis02DashValue    * mYAxis02Factor);
         }
     }
     bool searchMinMax(NChartGraph * graph, bool minMaxIsSet, double &min, double &max)
@@ -622,9 +645,9 @@ private:
             procLinerMinMax(autoScale && (drawLine || drawDash), min, max, foundMin, foundMax, procMin, procMax);
         }
 
-        if(axisIdx == 0 && (mY01Enable || mY01DashEnable))
+        if(axisIdx == 1 && (mY01Enable || mY01DashEnable))
             m_CustomPlot->yAxis->setRange(procMin, procMax);
-        if(axisIdx == 1 && (mY02Enable || mY02DashEnable))
+        if(axisIdx == 0 && (mY02Enable || mY02DashEnable))
             m_CustomPlot->yAxis2->setRange(procMin, procMax);
     }
 
@@ -650,10 +673,10 @@ private slots:
 
         mUpdateCnt++;
 
-        m_CustomPlot->graph(0)->setVisible(mY01Draw);
-        m_CustomPlot->graph(1)->setVisible(mY01DashDraw);
-        m_CustomPlot->graph(2)->setVisible(mY02Draw);
-        m_CustomPlot->graph(3)->setVisible(mY02DashDraw);
+        m_CustomPlot->graph(POSITION_GRAPH     )->setVisible(mY01Draw);
+        m_CustomPlot->graph(POSITION_GRAPH_DASH)->setVisible(mY01DashDraw);
+        m_CustomPlot->graph(PRESSURE_GRAPH     )->setVisible(mY02Draw);
+        m_CustomPlot->graph(PRESSURE_GRAPH_DASH)->setVisible(mY02DashDraw);
 
         // y range
         if((mUpdateCnt % 10 == 1) || mTimer.isActive() == false)
@@ -662,8 +685,8 @@ private slots:
                 qDebug() << "[khko_debug][onUpdateGraph] update YAxis, 01Max = " << mYAxis01Max << ", 02Max = " << mYAxis02Max;
 
             mUpdateCnt = 1;
-            setYAxisRange(0, mY01Draw, mY01DashDraw, mYAxis01AutoScale, mYAxis01Log, mYAxis01LogDecades, mYAxis01Min, mYAxis01Max);
-            setYAxisRange(1, mY02Draw, mY02DashDraw, mYAxis02AutoScale, mYAxis02Log, mYAxis02LogDecades, mYAxis02Min, mYAxis02Max);
+            setYAxisRange(1, mY01Draw, mY01DashDraw, mYAxis01AutoScale, mYAxis01Log, mYAxis01LogDecades, mYAxis01Min, mYAxis01Max);
+            setYAxisRange(0, mY02Draw, mY02DashDraw, mYAxis02AutoScale, mYAxis02Log, mYAxis02LogDecades, mYAxis02Min, mYAxis02Max);
 
             if(mTimer.isActive())
                 return;

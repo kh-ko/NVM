@@ -90,6 +90,10 @@ Rectangle {
                                       panel.pressureDpUnit === ValveEnumDef.PRESSURE_UNIT_PSI   ? "psi"  :
                                       panel.pressureDpUnit === ValveEnumDef.PRESSURE_UNIT_PSF   ? "psf"  : ""
 
+            //scale: GUISetting.scale
+            //height : 303 ; width : 830;
+            //
+            //anchors.horizontalCenter: parent.horizontalCenter; anchors.verticalCenter: parent.verticalCenter
             anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.bottom: controlBox.top; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
             mYAxis01Title      : qsTr("Position")
@@ -125,8 +129,7 @@ Rectangle {
             mDebug             : false
 
             Component.onCompleted: {
-
-                onCommandInit(FontManager.nanumGothicName, 8, "#24A7FF","#33CC33", true, false, true, true, true, true, true, true );
+                onCommandInit(FontManager.nanumGothicName, 8, "#0000FF", "#ED1C24", true, false, true, true, true, true, true, true );
             }
         }
 

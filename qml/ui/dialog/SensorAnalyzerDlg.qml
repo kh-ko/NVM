@@ -41,7 +41,7 @@ NWindow{ // khko_todo
                 unitCombo.currentIndex = dlgModel.mDpUnit
                 scaleCombo.currentIndex = dlgModel.mAutoScale ? 0 : 1
                 timeCombo.currentIndex = 0
-                chart.onCommandInit(FontManager.nanumGothicName, 8, "#24A7FF","#33CC33", true, false, true, true, dlgModel.mS01Selction, false, dlgModel.mS02Selction, false);
+                chart.onCommandInit(FontManager.nanumGothicName, 8, "#0000FF", "#ED1C24", true, false, true, true, dlgModel.mS01Selction, false, dlgModel.mS02Selction, false);
             }
         }
     }

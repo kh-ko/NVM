@@ -100,6 +100,20 @@ NWindow {
             dialog.close()
     }
 
+    onVisibilityChanged:     {
+        if(dialog.visibility === ApplicationWindow.Minimized )
+        {
+            dialog.title = titleText;
+            dialog.flags = Qt.Window | Qt.WindowTitleHint
+        }
+        else
+        {
+            dialog.flags = Qt.FramelessWindowHint | Qt.Window
+        }
+
+        console.debug(dialog.visibility)
+    }
+
     contentHeight: contentContainer.height; contentWidth: contentContainer.width
 
     Item {
@@ -125,6 +139,7 @@ NWindow {
             }
 
             onClickMinimized: {
+
                 dialog.showMinimized()
             }
         }

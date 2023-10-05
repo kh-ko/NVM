@@ -117,7 +117,16 @@ Window {
 
         onClickChangeAccessMode: {
             var newAccess = title.isLocal ? ValveEnumDef.ACCESS_REMOTE : ValveEnumDef.ACCESS_LOCAL
-            model.onCommandWriteAccess(newAccess);
+
+            if(title.isLocal)
+            {
+                model.onCommandWriteAccess(ValveEnumDef.ACCESS_REMOTE);
+            }
+            else
+            {
+                var popup = changeAccessDlg.createObject(window)
+                popup.open();
+            }
         }
     }
 
@@ -444,6 +453,12 @@ Window {
     Component{
         id : alertPopup
         NMessageBox{}
+    }
+
+    Component{
+        id : changeAccessDlg
+        ChangeAccessDlg{
+        }
     }
 
     Component{

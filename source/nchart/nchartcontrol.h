@@ -4661,6 +4661,7 @@ void NChartAbstractPlottable1D<DataType>::getDataSegments(QList<NChartDataRange>
   QPainter::drawPolyline if the configured \ref NChartControl::setPlottingHints() and \a painter
   style allows.
 */
+//khko_check
 template <class DataType>
 void NChartAbstractPlottable1D<DataType>::drawPolyline(NChartPainter *painter, const QVector<QPointF> &lineData) const
 {
@@ -4677,10 +4678,12 @@ void NChartAbstractPlottable1D<DataType>::drawPolyline(NChartPainter *painter, c
   }
 
   // if drawing solid line and not in PDF, use much faster line drawing instead of polyline:
-  if (mParentPlot->plottingHints().testFlag(NChart::phFastPolylines) &&
-      painter->pen().style() == Qt::SolidLine &&
-      !painter->modes().testFlag(NChartPainter::pmVectorized) &&
-      !painter->modes().testFlag(NChartPainter::pmNoCaching))
+  //khko_mod
+  if(painter->pen().style() == Qt::SolidLine)
+  //khko_del if (mParentPlot->plottingHints().testFlag(NChart::phFastPolylines) &&
+  //khko_del     painter->pen().style() == Qt::SolidLine &&
+  //khko_del     !painter->modes().testFlag(NChartPainter::pmVectorized) &&
+  //khko_del     !painter->modes().testFlag(NChartPainter::pmNoCaching))
   {
     int i = 0;
     bool lastIsNan = false;
@@ -4700,7 +4703,8 @@ void NChartAbstractPlottable1D<DataType>::drawPolyline(NChartPainter *painter, c
         lastIsNan = true;
       ++i;
     }
-  } else
+  }
+  else
   {
     int segmentStart = 0;
     int i = 0;

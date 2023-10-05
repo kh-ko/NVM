@@ -5,7 +5,7 @@ Item {
     property int refNonModalWindow : 0
     property int refModalWindow : 0
     property bool disableWinCreateBtn : refNonModalWindow > 0
-    property bool needDim : refModalWindow > 0
+    property bool needDim : false // refModalWindow > 0
 
     function addRefNonModalWindow()
     {

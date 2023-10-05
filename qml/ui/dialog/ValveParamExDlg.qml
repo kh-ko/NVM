@@ -17,7 +17,7 @@ NWindow{ // khko_todo
     property var strStatus   : dlgModel.mStrStatus
     property var errMsg      : dlgModel.mErrMsg
     property var errMsg2     : dlgModel.mErrMsg2
-    property var access      : dlgModel.mAccessMode
+    property var access      : ValveEnumDef.ACCESS_LOCAL //dlgModel.mAccessMode
     property var isRS232Test : dlgModel.mIsRS232Test
     property var isEdit      : dlgModel.mIsEdit
     property var connectInfo : ""

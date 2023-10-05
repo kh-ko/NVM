@@ -29,7 +29,7 @@ NWindow{
 
         if(nwindow.method == "network")
         {
-            versionCombo.displayText = "LASTEST"
+            versionCombo.displayText = "LATEST"
             dlgModel.onCommandSearchVersion();
         }
     }
@@ -59,7 +59,7 @@ NWindow{
             //if(count > 0)
             //    versionCombo.displayText = dlgModel.onCommandGetVersionName(0)
 
-            versionModel.append({"modelData":"LASTEST"})
+            versionModel.append({"modelData":"LATEST"})
 
             for(var i = 0; i < count; i ++)
             {
@@ -214,11 +214,16 @@ NWindow{
 
                         bgColor: "#24A7FF"
                         text.color: "#FFFFFF"
-                        text.text: qsTr("Next step")
+                        text.text: comportCombo.displayText != "" && nwindow.method == "local" ?qsTr("Update start") : qsTr("Next step")
 
                         onClick: {
                             if(comportCombo.displayText == "")
                                 step = step + 1
+                            else if(comportCombo.displayText != "" && nwindow.method == "local")
+                            {
+                                dlgModel.onCommandUpdateFromInternalFile(comportCombo.displayText)
+                                step = step + 3
+                            }
                             else
                                 step = step + 2
                         }
@@ -278,10 +283,17 @@ NWindow{
 
                         bgColor: "#24A7FF"
                         text.color: "#FFFFFF"
-                        text.text: qsTr("Next step")
+                        text.text: nwindow.method == "local" ? qsTr("Update start") : qsTr("Next step")
 
                         onClick: {
-                            step = step + 1
+                            if(nwindow.method == "local")
+                            {
+                                console.debug("local update")
+                                dlgModel.onCommandUpdateFromInternalFile(comportCombo.displayText)
+                                step = step + 2
+                            }
+                            else
+                                step = step + 1
                         }
                     }
                 }

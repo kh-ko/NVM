@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtMath>
+#include <QDir>
 #include "source/qmlmodel/def/qmlenumdef.h"
 #include "source/util/etcutil.h"
 #include "source/service/util/unitutil.h"
@@ -14,8 +15,25 @@
 class GraphAnalyzeDlgModel : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool mIsAutoLoad           READ getIsAutoLoad           NOTIFY signalEventChangedIsAutoLoad          )
+    Q_PROPERTY(int  mAutoRecordFileIdx    READ getAutoRecordFileIdx    NOTIFY signalEventChangedAutoRecordFileIdx   )
+    Q_PROPERTY(int  mSelAutoRecordFileIdx READ getSelAutoRecordFileIdx NOTIFY signalEventChangedSelAutoRecordFileIdx)
+
 
 public:
+    QStringList mAutoRecordFileList;
+    bool mIsAutoLoad = false;
+    int  mAutoRecordFileIdx = 0;
+    int  mSelAutoRecordFileIdx = -1;
+
+    bool getIsAutoLoad          (){return mIsAutoLoad          ;}
+    int  getAutoRecordFileIdx   (){return mAutoRecordFileIdx   ;}
+    int  getSelAutoRecordFileIdx(){return mSelAutoRecordFileIdx;}
+
+    void setIsAutoLoad          (bool value){if(mIsAutoLoad           == value)return; mIsAutoLoad           = value; emit signalEventChangedIsAutoLoad          (value); }
+    void setAutoRecordFileIdx   (int  value){if(mAutoRecordFileIdx    == value)return; mAutoRecordFileIdx    = value; emit signalEventChangedAutoRecordFileIdx   (value); }
+    void setSelAutoRecordFileIdx(int  value){if(mSelAutoRecordFileIdx == value)return; mSelAutoRecordFileIdx = value; emit signalEventChangedSelAutoRecordFileIdx(value); }
+
     explicit GraphAnalyzeDlgModel(QObject *parent = nullptr): QObject(parent)
     {
 
@@ -24,9 +42,103 @@ public:
     {
     }
 
-public slots:
+signals:
+    void signalEventChangedIsAutoLoad          (bool value);
+    void signalEventChangedAutoRecordFileIdx   (int  value);
+    void signalEventChangedSelAutoRecordFileIdx(int  value);
+
+public slots:    
+    Q_INVOKABLE QString onCommandGetAutoRecordFileName(int idx)
+    {
+        if((idx > (mAutoRecordFileList.count() - 1)) || idx < 0)
+            return "";
+
+        return mAutoRecordFileList.at(idx);
+    }
+
+    Q_INVOKABLE void onCommandPre()
+    {
+        if(mAutoRecordFileIdx < 1)
+            return;
+
+        setAutoRecordFileIdx(mAutoRecordFileIdx - 1);
+    }
+
+    Q_INVOKABLE void onCommandNext()
+    {
+        if((mAutoRecordFileIdx + 1) > (mAutoRecordFileList.count() - 1))
+            return;
+
+        setAutoRecordFileIdx(mAutoRecordFileIdx + 1);
+    }
+
+    Q_INVOKABLE void onCommandLoadAutoRecordFolder()
+    {
+        setAutoRecordFileIdx(-1);
+        setSelAutoRecordFileIdx(-1);
+        mAutoRecordFileList.clear();
+        setIsAutoLoad(true);
+
+        if (QDir(QString("%1/autosave").arg(QApplication::applicationDirPath())).exists() == false)
+        {
+            return;
+        }
+        else
+        {
+            QDir dir(QString("%1/autosave").arg(QApplication::applicationDirPath()));
+            QStringList fileList = dir.entryList(QStringList() << "*.txt",QDir::Files,QDir::SortFlag::Name);
+
+            for(int i = 0; i < fileList.size(); i++)
+            {
+                mAutoRecordFileList.append(fileList.at(i));
+            }
+        }
+
+        if(mAutoRecordFileList.count() > 0)
+            setAutoRecordFileIdx(0);
+    }
+
+    Q_INVOKABLE void onCommandLoadAutoRecord(int idx, NChartView * dstChart)
+    {
+        if((idx > (mAutoRecordFileList.count() - 1)) || idx < 0)
+            return;
+
+        setSelAutoRecordFileIdx(idx);
+
+        loadFromFile(QString("%1/autosave/%2").arg(QApplication::applicationDirPath()).arg(mAutoRecordFileList.at(idx)), dstChart);
+    }
+
     Q_INVOKABLE QString onCommandLoadFromFile(QString filePath, NChartView * dstChart)
     {
+        if(filePath.startsWith(QString("%1/autosave").arg(QApplication::applicationDirPath())))
+        {
+            onCommandLoadAutoRecordFolder();
+
+            for(int i = 0; i < mAutoRecordFileList.count(); i ++)
+            {
+                if(QString("%1/autosave/%2").arg(QApplication::applicationDirPath()).arg(mAutoRecordFileList.at(i)) == filePath)
+                {
+                    setAutoRecordFileIdx(i);
+                    onCommandLoadAutoRecord(i, dstChart);
+                    break;
+                }
+            }
+
+            return "";
+        }
+        else
+        {
+            setIsAutoLoad(false);
+            setSelAutoRecordFileIdx(-1);
+            return loadFromFile(filePath, dstChart);
+        }
+    }
+
+private:
+    QString loadFromFile(QString filePath, NChartView * dstChart)
+    {
+        qDebug() << "[" << Q_FUNC_INFO << "] file name = " << filePath;
+
         QString result = "";
         double  sensorFullScale;
         int     sensorUnit;
@@ -110,15 +222,15 @@ public slots:
                 dstChart->setYAxis02Factor(1);
                 dstChart->setPause(false);
 
-                dstChart->setYAxis01AutoScale (true );
-                dstChart->setYAxis01Log       (false);
-                dstChart->setY01Draw          (true );
-                dstChart->setY01DashDraw      (true );
-
-                dstChart->setYAxis02AutoScale (true );
-                dstChart->setYAxis02Log       (false);
-                dstChart->setY02Draw          (true );
-                dstChart->setY02DashDraw      (true );
+                //dstChart->setYAxis01AutoScale (true );
+                //dstChart->setYAxis01Log       (false);
+                //dstChart->setY01Draw          (true );
+                //dstChart->setY01DashDraw      (true );
+                //
+                //dstChart->setYAxis02AutoScale (true );
+                //dstChart->setYAxis02Log       (false);
+                //dstChart->setY02Draw          (true );
+                //dstChart->setY02DashDraw      (true );
             }
 
             if((lineIdx >= pointStartLine) && pointStartLine != -1)
@@ -153,7 +265,6 @@ public slots:
         return "";
     }
 
-private:
     bool getDoubleByLine(QString line, double &value)
     {
         QStringList col = line.split(":");

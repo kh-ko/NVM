@@ -15,7 +15,7 @@ BaseSetupWindow{
     progress    : dlgModel.mProgress
     strStatus   : dlgModel.mStrStatus
     errMsg      : dlgModel.mErrMsg
-    access      : dlgModel.mAccessMode
+    access      : ValveEnumDef.ACCESS_LOCAL //dlgModel.mAccessMode
     isRS232Test : dlgModel.mIsRS232Test
     isEdit      : dlgModel.mIsEdit
 

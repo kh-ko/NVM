@@ -54,7 +54,7 @@ NWindow{ // khko_todo
 
         Rectangle{
             id : body
-            height: (GUISetting.line_margin + graphSettingItem.height) + GUISetting.line_margin;
+            height: (GUISetting.line_margin + graphSettingItem.height) + (GUISetting.line_margin + autoFolderView.height) + GUISetting.line_margin;
             width: ( GUISetting.line_margin + graphSettingItem.width) + (GUISetting.line_margin + graphItem.width + GUISetting.line_margin)
             anchors.left: parent.left; anchors.top: titleBox.bottom
 
@@ -242,7 +242,7 @@ NWindow{ // khko_todo
 
                 Rectangle{
                     width: 150 * GUISetting.scale; height: (GUISetting.margin + saveBtn.height) + (GUISetting.margin + loadBtn.height) + GUISetting.margin;
-                    anchors.bottom: parent.bottom; anchors.bottomMargin: 2; anchors.left: parent.left;
+                    anchors.bottom: parent.bottom; anchors.left: parent.left;
 
                     color: "#FFFFFF"
 
@@ -267,6 +267,29 @@ NWindow{ // khko_todo
                             loadFileDialog.open()
                         }
                     }
+                }
+            }
+
+            Rectangle{
+                id : autoFolderView
+                height: dlgModel.mIsAutoLoad ? 24 * GUISetting.scale : 0;
+                anchors.top: graphSettingItem.bottom; anchors.topMargin: GUISetting.line_margin;
+                anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin;
+
+                visible: dlgModel.mIsAutoLoad
+
+                color: "#E4E4E4"
+
+                RowLayout{
+                    anchors.fill: parent
+                    spacing: GUISetting.line_margin
+
+                    NButton{ Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1; text.text: qsTr("Pre" ) ; onClick: {dlgModel.onCommandPre()}}
+                    NButton{ Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 4; text.color: dlgModel.mAutoRecordFileIdx     == dlgModel.mSelAutoRecordFileIdx ? "#24A7FF" : "#000000"; text.text: dlgModel.onCommandGetAutoRecordFileName(dlgModel.mAutoRecordFileIdx    ); onClick: {dlgModel.onCommandLoadAutoRecord(dlgModel.mAutoRecordFileIdx    , analyzeChart); analyzeChart.onCommandUpdate();}}
+                    NButton{ Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 4; text.color: dlgModel.mAutoRecordFileIdx + 1 == dlgModel.mSelAutoRecordFileIdx ? "#24A7FF" : "#000000"; text.text: dlgModel.onCommandGetAutoRecordFileName(dlgModel.mAutoRecordFileIdx + 1); onClick: {dlgModel.onCommandLoadAutoRecord(dlgModel.mAutoRecordFileIdx + 1, analyzeChart); analyzeChart.onCommandUpdate();}}
+                    NButton{ Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 4; text.color: dlgModel.mAutoRecordFileIdx + 2 == dlgModel.mSelAutoRecordFileIdx ? "#24A7FF" : "#000000"; text.text: dlgModel.onCommandGetAutoRecordFileName(dlgModel.mAutoRecordFileIdx + 2); onClick: {dlgModel.onCommandLoadAutoRecord(dlgModel.mAutoRecordFileIdx + 2, analyzeChart); analyzeChart.onCommandUpdate();}}
+                    NButton{ Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 4; text.color: dlgModel.mAutoRecordFileIdx + 3 == dlgModel.mSelAutoRecordFileIdx ? "#24A7FF" : "#000000"; text.text: dlgModel.onCommandGetAutoRecordFileName(dlgModel.mAutoRecordFileIdx + 3); onClick: {dlgModel.onCommandLoadAutoRecord(dlgModel.mAutoRecordFileIdx + 3, analyzeChart); analyzeChart.onCommandUpdate();}}
+                    NButton{ Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1;  text.text: qsTr("Next"); onClick: {dlgModel.onCommandNext()}}
                 }
             }
 
@@ -296,7 +319,7 @@ NWindow{ // khko_todo
                     mDebug : true
 
                     Component.onCompleted: {
-                        onCommandInit(FontManager.nanumGothicName, 8, "#24A7FF", "#33CC33", false, true, false, false, true, true, true, true)
+                        onCommandInit(FontManager.nanumGothicName, 8, "#0000FF", "#ED1C24", false, true, false, false, true, true, true, true)
                     }
                 }
             }
@@ -352,6 +375,7 @@ NWindow{ // khko_todo
         }
         visible : false
     }
+
 }
 
 /*

@@ -17,7 +17,6 @@ ApplicationWindow {
     color: "#00000000"
     flags: Qt.FramelessWindowHint | Qt.Window
 
-
     height: contentHeight + 4 ; width: contentWidth + 4
 
 //    Component.completed: {

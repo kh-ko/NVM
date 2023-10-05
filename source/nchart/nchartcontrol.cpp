@@ -679,7 +679,7 @@ NChartPainter *NChartPaintBufferPixmap::startPainting()
 {
   NChartPainter *result = new NChartPainter(&mBuffer);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  result->setRenderHint(QPainter::HighQualityAntialiasing);
+  result->setRenderHint(QPainter::HighQualityAntialiasing); //khko_del
 #endif
   return result;
 }
@@ -768,7 +768,7 @@ NChartPainter *NChartPaintBufferGlPbuffer::startPainting()
   }
   
   NChartPainter *result = new NChartPainter(mGlPBuffer);
-  result->setRenderHint(QPainter::HighQualityAntialiasing);
+  result->setRenderHint(QPainter::HighQualityAntialiasing); //khko_del
   return result;
 }
 
@@ -881,7 +881,7 @@ NChartPainter *NChartPaintBufferGlFbo::startPainting()
   mGlFrameBuffer->bind();
   NChartPainter *result = new NChartPainter(paintDevice.data());
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  result->setRenderHint(QPainter::HighQualityAntialiasing);
+  result->setRenderHint(QPainter::HighQualityAntialiasing); //khko_del
 #endif
   return result;
 }
@@ -1600,9 +1600,9 @@ void NChartLayerable::applyAntialiasingHint(NChartPainter *painter, bool localAn
   if (mParentPlot && mParentPlot->notAntialiasedElements().testFlag(overrideElement))
     painter->setAntialiasing(false);
   else if (mParentPlot && mParentPlot->antialiasedElements().testFlag(overrideElement))
-    painter->setAntialiasing(true);
+    painter->setAntialiasing(false); //khko_del painter->setAntialiasing(true);
   else
-    painter->setAntialiasing(localAntialiased);
+    painter->setAntialiasing(false); //khko_delpainter->setAntialiasing(localAntialiased);
 }
 
 /*! \internal
@@ -9989,6 +9989,8 @@ NChartAxisPainterPrivate::~NChartAxisPainterPrivate()
   The selection boxes (mAxisSelectionBox, mTickLabelsSelectionBox, mLabelSelectionBox) are set
   here, too.
 */
+
+//khko_check
 void NChartAxisPainterPrivate::draw(NChartPainter *painter)
 {
   QByteArray newHash = generateLabelParameterHash();
@@ -10062,7 +10064,7 @@ void NChartAxisPainterPrivate::draw(NChartPainter *painter)
   
   // draw axis base endings:
   bool antialiasingBackup = painter->antialiasing();
-  painter->setAntialiasing(true); // always want endings to be antialiased, even if base and ticks themselves aren't
+  painter->setAntialiasing(false); //khko_del painter->setAntialiasing(true); // always want endings to be antialiased, even if base and ticks themselves aren't
   painter->setBrush(QBrush(basePen.color()));
   NChartVector2D baseLineVector(baseLine.dx(), baseLine.dy());
   if (lowerEnding.style() != NChartLineEnding::esNone)
@@ -15658,7 +15660,7 @@ void NChartControl::paintEvent(QPaintEvent *event)
   if (painter.isActive())
   {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  painter.setRenderHint(QPainter::HighQualityAntialiasing); // to make Antialiasing look good if using the OpenGL graphicssystem
+    painter.setRenderHint(QPainter::HighQualityAntialiasing); //khko_del  // to make Antialiasing look good if using the OpenGL graphicssystem
 #endif
     if (mBackgroundBrush.style() != Qt::NoBrush)
       painter.fillRect(mViewport, mBackgroundBrush);
@@ -21331,6 +21333,7 @@ NChartRange NChartGraph::getValueRange(bool &foundRange, NChart::SignDomain inSi
   return mDataContainer->valueRange(foundRange, inSignDomain, inKeyRange);
 }
 
+//khko_check
 /* inherits documentation from base class */
 void NChartGraph::draw(NChartPainter *painter)
 {
@@ -21368,7 +21371,7 @@ void NChartGraph::draw(NChartPainter *painter)
       painter->setBrush(mBrush);
     painter->setPen(Qt::NoPen);
     drawFill(painter, &lines);
-    
+
     // draw line:
     if (mLineStyle != lsNone)
     {
@@ -21377,12 +21380,13 @@ void NChartGraph::draw(NChartPainter *painter)
       else
         painter->setPen(mPen);
       painter->setBrush(Qt::NoBrush);
+
       if (mLineStyle == lsImpulse)
         drawImpulsePlot(painter, lines);
       else
         drawLinePlot(painter, lines); // also step plots can be drawn as a line plot
     }
-    
+
     // draw scatters:
     NChartScatterStyle finalScatterStyle = mScatterStyle;
     if (isSelectedSegment && mSelectionDecorator)

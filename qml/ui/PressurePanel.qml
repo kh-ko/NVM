@@ -105,7 +105,7 @@ Rectangle {
             fontSize: 16 * GUISetting.scale
             horizontalAlignment: Text.AlignRight
             elide: Text.ElideRight
-            color: "#33CC33"
+            color: "#FF7F27"
             text : panel.convertedCurrPressure.toFixed(panel.fixedN)//.toLocaleString(FontManager.locale, 'f', panel.fixedN).replace(',', '')
         }
     }

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtMath>
+#include <QFile>
 #include "source/qmlmodel/def/qmlenumdef.h"
 #include "source/util/etcutil.h"
 #include "source/service/coreservice.h"
@@ -232,13 +233,66 @@ public slots:
         return "";
     }
 
+    Q_INVOKABLE void onCommandUpdateFromInternalFile(QString comport)
+    {
+        qDebug() << "[" << Q_FUNC_INFO << "] comport = " << comport;
+
+        QString appPath = QApplication::applicationDirPath();
+        QString fLicense = QString("%1/qdatetimelim.dll").arg(appPath);
+        QString fcpu01 = QString("%1/qfcpua.dll").arg(appPath);
+        QString fcpu02 = QString("%1/qfcpub.dll").arg(appPath);
+        int timeLimit;
+
+
+        if(QFile::exists(fLicense) == false)
+        {
+            qDebug() << "[" << Q_FUNC_INFO << "]invalid(1) file.";
+            emit signalEventResultUpdate(true, "invalid(1) file.");
+            return;
+        }
+
+        QFile file;
+        file.setFileName(fLicense);
+        file.open(QFile::ReadOnly);
+
+        if(file.isOpen() == false)
+        {
+            qDebug() << "[" << Q_FUNC_INFO << "]invalid(2) file.";
+            emit signalEventResultUpdate(true, "invalid(2) file.");
+            return;
+        }
+
+        QTextStream out(&file);
+        out.setCodec("utf-8");
+        timeLimit = out.readAll().replace(".","").toInt();
+        file.close();
+
+        QDateTime now = QDateTime::currentDateTime();
+
+        if(now.date().year() * 10000 + now.date().month() * 100 + now.date().day() > timeLimit)
+        {
+            qDebug() << "[" << Q_FUNC_INFO << "]invalid(3) file.";
+            emit signalEventResultUpdate(true, "invalid(3) file.");
+            return;
+        }
+
+        if(QFile::exists(fcpu01) == false || QFile::exists(fcpu02) == false)
+        {
+            qDebug() << "[" << Q_FUNC_INFO << "]invalid(4) file.";
+            emit signalEventResultUpdate(true, "invalid(4) file.");
+            return;
+        }
+
+        onCommandUpdateFromLocal(comport, fcpu01, fcpu02);
+    }
+
     Q_INVOKABLE void onCommandUpdateFromNetwork(QString comport, QString verName)
     {
         setUpdateStep(0);
         setIsUpdating(true);
         mSelComPort = comport;
 
-        if(verName == "LASTEST" && mVersionList.size() > 0)
+        if(verName == "LATEST" && mVersionList.size() > 0)
             verName = mVersionList.at(0);
 
         qDebug() << "[" << Q_FUNC_INFO << "] comport = " << comport << ", verName = " << verName;
