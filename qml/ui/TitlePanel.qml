@@ -11,7 +11,8 @@ Rectangle {
     property string version : "---"
     property bool connected : false
 
-    signal clickChangeAccessMode()
+    signal clickRemoteMode()
+    signal clickLocalMode()
     signal clickPortSelection()
 
     width: 1024; height: 36
@@ -19,18 +20,27 @@ Rectangle {
     //border.width: 1; border.color: "#000000"
 
     NTitleButton{
-        id : btnAccessMode
+        id : btnLocalMode
         width: GUISetting.title_btn_access_width; height: parent.height
-        iconSource: "/image/icon-key.png"
-        textSource: panel.isLocal && panel.isRS232Test == false? qsTr("Remote") :
-                    panel.isLocal && panel.isRS232Test == true ? qsTr("Remote(RS232 Test)") :
-                    panel.isLocal == false && panel.isRS232Test == false? qsTr("Local") :
-                    panel.isLocal == false && panel.isRS232Test == true ? qsTr("Local(RS232 Test)") : ""
+        //iconSource: "/image/icon-key.png"
+        textSource: qsTr("Local")//panel.isLocal && panel.isRS232Test == false? qsTr("Remote") :
+                    //panel.isLocal && panel.isRS232Test == true ? qsTr("Remote(RS232 Test)") :
+                    //panel.isLocal == false && panel.isRS232Test == false? qsTr("Local") :
+                    //panel.isLocal == false && panel.isRS232Test == true ? qsTr("Local(RS232 Test)") : ""
 
         enabled   : connected
 
         onClick: {
-            panel.clickChangeAccessMode()
+            panel.clickLocalMode()
+        }
+
+        Rectangle{
+            width: GUISetting.on_indi_width; height: GUISetting.on_indi_height
+            radius: width / 2
+            anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.verticalCenter: parent.verticalCenter
+
+            color: "#00DD00"
+            visible: panel.connected && panel.isLocal
         }
 
         Rectangle{
@@ -40,6 +50,38 @@ Rectangle {
             color: "#000000"
         }
     }
+
+    NTitleButton{
+        id : btnRemoteMode
+        width: GUISetting.title_btn_access_width; height: parent.height
+        anchors.left: btnLocalMode.right
+        //iconSource: "/image/icon-key.png"
+        textSource: qsTr("Remote")
+
+        enabled   : connected
+
+        onClick: {
+            panel.clickRemoteMode()
+        }
+
+        Rectangle{
+            width: GUISetting.on_indi_width; height: GUISetting.on_indi_height
+            radius: width / 2
+            anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.verticalCenter: parent.verticalCenter
+
+            color: "#00DD00"
+            visible: panel.connected && !panel.isLocal
+        }
+
+        Rectangle{
+            width: 1; height: parent.height
+            anchors.right: parent.right;
+
+            color: "#000000"
+        }
+    }
+
+
 
     NTitleButton{
         id : btnPortSelection

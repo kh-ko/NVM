@@ -14,6 +14,7 @@ class InterfaceStatusDNetDlgModel : public QObject
     Q_PROPERTY(int     mAccessMode               READ getAccessMode          NOTIFY signalEventChangedAccessMode         )
     Q_PROPERTY(bool    mIsRS232Test              READ getIsRS232Test         NOTIFY signalEventChangedIsRS232Test        )
     Q_PROPERTY(QString mMacValue                 READ getMacValue            NOTIFY signalEventChangedMacValue           )
+    Q_PROPERTY(QString mBaudrate                 READ getBaudrate            NOTIFY signalEventChangedBaudrate           )
     Q_PROPERTY(QString mFirmwareValue            READ getFirmwareValue       NOTIFY signalEventChangedFirmwareValue      )
     Q_PROPERTY(QString mSerialNumValue           READ getSerialNumValue      NOTIFY signalEventChangedSerialNumValue     )
     Q_PROPERTY(QString mInputAssemblyValue       READ getInputAssemblyValue  NOTIFY signalEventChangedInputAssemblyValue )
@@ -52,6 +53,7 @@ public:
     int     mAccessMode          = ValveEnumDef::ACCESS_LOCAL;
     bool    mIsRS232Test         = false;
     QString mMacValue            = "unknow";
+    QString mBaudrate            = "";
     QString mFirmwareValue       = "not supported";
     QString mSerialNumValue      = "not supported";
     QString mInputAssemblyValue  = "-";
@@ -89,6 +91,7 @@ public:
     int     getAccessMode         (){return mAccessMode         ;}
     bool    getIsRS232Test        (){return mIsRS232Test        ;}
     QString getMacValue           (){return mMacValue           ;}
+    QString getBaudrate           (){return mBaudrate           ;}
     QString getFirmwareValue      (){return mFirmwareValue      ;}
     QString getSerialNumValue     (){return mSerialNumValue     ;}
     QString getInputAssemblyValue (){return mInputAssemblyValue ;}
@@ -126,6 +129,7 @@ public:
     void setAccessMode         (int     value){if(mAccessMode          == value)return; mAccessMode          = value; emit signalEventChangedAccessMode         (value);}
     void setIsRS232Test        (bool    value){if(mIsRS232Test         == value)return; mIsRS232Test         = value; emit signalEventChangedIsRS232Test        (value);}
     void setMacValue           (QString value){if(mMacValue            == value)return; mMacValue            = value; emit signalEventChangedMacValue           (value);}
+    void setBaudrate           (QString value){                                         mBaudrate            = value; emit signalEventChangedBaudrate           (value);}
     void setFirmwareValue      (QString value){if(mFirmwareValue       == value)return; mFirmwareValue       = value; emit signalEventChangedFirmwareValue      (value);}
     void setSerialNumValue     (QString value){if(mSerialNumValue      == value)return; mSerialNumValue      = value; emit signalEventChangedSerialNumValue     (value);}
     void setInputAssemblyValue (QString value){if(mInputAssemblyValue  == value)return; mInputAssemblyValue  = value; emit signalEventChangedInputAssemblyValue (value);}
@@ -165,6 +169,7 @@ signals:
     void signalEventChangedAccessMode         (int     value);
     void signalEventChangedIsRS232Test        (bool    value);
     void signalEventChangedMacValue           (QString value);
+    void signalEventChangedBaudrate           (QString value);
     void signalEventChangedFirmwareValue      (QString value);
     void signalEventChangedSerialNumValue     (QString value);
     void signalEventChangedInputAssemblyValue (QString value);
@@ -206,6 +211,7 @@ public:
         ENABLE_SLOT_VALVE_CHANGED_IS_RS232_TEST               ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_MAC              ;
         ENABLE_SLOT_VALVE_READED_IF_DNET_FIRMWARE_ID          ;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_BAUDRATE         ;
         ENABLE_SLOT_VALVE_READED_IF_DNET_SERIAL_NUM           ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_POS_UNIT         ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_POS_GAIN         ;
@@ -263,6 +269,35 @@ public slots:
             setMacValue(QString("%1").arg(dto.mMacAddr,2,10,QChar('0')));
         else
             setMacValue("not supported");
+
+        setState((eState)(mState + 1));
+    }
+
+    void onValveReadedInterfaceCfgDNetBaudrate(ValveResponseInterfaceConfigDNetBaudrateDto dto)
+    {
+        if(mState != eState::STATE_READ_BAUDRATE || dto.mReqDto.mpRef != this)
+            return;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(dto.mIsSucc)
+        {
+            switch (dto.mBaudrate)
+            {
+            case 0: setBaudrate("125k"); break;
+            case 1: setBaudrate("250k"); break;
+            case 2: setBaudrate("500k"); break;
+            case 3: setBaudrate("auto"); break;
+            }
+        }
+        else
+            setBaudrate("auto");
 
         setState((eState)(mState + 1));
     }
@@ -702,7 +737,8 @@ private:
         STATE_READ_IO_STATUS      = STATE_READ_DO            + 1,
         STATE_READ_DSTATUS        = STATE_READ_IO_STATUS     + 1,
         STATE_READ_EX_STATUS      = STATE_READ_DSTATUS       + 1,
-        STATE_READ_MAC            = STATE_READ_EX_STATUS     + 1,
+        STATE_READ_BAUDRATE       = STATE_READ_EX_STATUS     + 1,
+        STATE_READ_MAC            = STATE_READ_BAUDRATE      + 1,
         STATE_OVER                = STATE_READ_MAC           + 1
     };
 
@@ -755,6 +791,7 @@ public slots:
         switch ((int)mState)
         {
         case (int)eState::STATE_READ_MAC          : pValveSP->readInterfaceConfigDNetMac         (this); break;
+        case (int)eState::STATE_READ_BAUDRATE     : pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
         case (int)eState::STATE_READ_FIRMWARE_ID  : pValveSP->readInterfaceDNetFirmwareID        (this); break;
         case (int)eState::STATE_READ_SERIALNUM    : pValveSP->readInterfaceDNetSerialNum         (this); break;
         case (int)eState::STATE_READ_POS_UNIT     : pValveSP->readInterfaceConfigDNetPosUnit     (this); break;

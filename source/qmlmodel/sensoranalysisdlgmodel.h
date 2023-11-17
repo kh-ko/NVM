@@ -54,7 +54,20 @@ class SensorAnalysisDlgModel : public QObject
     Q_PROPERTY(bool    mAutoScale             READ getAutoScale             NOTIFY signalEventChangedAutoScale            )
     Q_PROPERTY(int     mPrecN                 READ getPrecN                 NOTIFY signalEventChangedPrecN                )
     Q_PROPERTY(int     mXMsec                 READ getXMsec                 NOTIFY signalEventChangedXMsec                )
+    Q_PROPERTY(double  mSensor01Min           READ getSensor01Min           NOTIFY signalEventChangedSensor01Min          )
+    Q_PROPERTY(double  mSensor01Max           READ getSensor01Max           NOTIFY signalEventChangedSensor01Max          )
+    Q_PROPERTY(double  mSensor02Min           READ getSensor02Min           NOTIFY signalEventChangedSensor02Min          )
+    Q_PROPERTY(double  mSensor02Max           READ getSensor02Max           NOTIFY signalEventChangedSensor02Max          )
+    Q_PROPERTY(int     mIsEditDpUnit          READ getIsEditDpUnit          NOTIFY signalEventChangedIsEditDpUnit         )
+    Q_PROPERTY(bool    mIsEditAutoScale       READ getIsEditAutoScale       NOTIFY signalEventChangedIsEditAutoScale      )
+    Q_PROPERTY(int     mIsEditXMsec           READ getIsEditXMsec           NOTIFY signalEventChangedIsEditXMsec          )
+    Q_PROPERTY(bool    mIsEditSensor01Min     READ getIsEditSensor01Min     NOTIFY signalEventChangedIsEditSensor01Min    )
+    Q_PROPERTY(bool    mIsEditSensor01Max     READ getIsEditSensor01Max     NOTIFY signalEventChangedIsEditSensor01Max    )
+    Q_PROPERTY(bool    mIsEditSensor02Min     READ getIsEditSensor02Min     NOTIFY signalEventChangedIsEditSensor02Min    )
+    Q_PROPERTY(bool    mIsEditSensor02Max     READ getIsEditSensor02Max     NOTIFY signalEventChangedIsEditSensor02Max    )
     Q_PROPERTY(bool    mIsEdit                READ getIsEdit                NOTIFY signalEventChangedIsEdit               )
+    Q_PROPERTY(bool    mIsErrSensor01MinMax   READ getIsErrSensor01MinMax   NOTIFY signalEventChangedIsErrSensor01MinMax  )
+    Q_PROPERTY(bool    mIsErrSensor02MinMax   READ getIsErrSensor02MinMax   NOTIFY signalEventChangedIsErrSensor02MinMax  )
     Q_PROPERTY(QString mStrStatus             READ getStrStatus             NOTIFY signalEventChangedStrStatus            )
     Q_PROPERTY(QString mErrMsg                READ getErrMsg                NOTIFY signalEventChangedErrMsg               )
     Q_PROPERTY(QString mErrMsg2               READ getErrMsg2               NOTIFY signalEventChangedErrMsg2              )
@@ -103,7 +116,20 @@ public:
     bool    mAutoScale             = true;
     int     mPrecN                 = 6;
     int     mXMsec                 = 30000;
+    double  mSensor01Min           = 0;
+    double  mSensor01Max           = 0;
+    double  mSensor02Min           = 0;
+    double  mSensor02Max           = 0;
+    bool    mIsEditDpUnit          = false;
+    bool    mIsEditAutoScale       = false;
+    bool    mIsEditXMsec           = false;
+    bool    mIsEditSensor01Min     = false;
+    bool    mIsEditSensor01Max     = false;
+    bool    mIsEditSensor02Min     = false;
+    bool    mIsEditSensor02Max     = false;
     bool    mIsEdit                = false;
+    bool    mIsErrSensor01MinMax   = false;
+    bool    mIsErrSensor02MinMax   = false;
     QString mStrStatus             = "Loading";
     QString mErrMsg                = "";
     QString mErrMsg2               = "";
@@ -151,7 +177,20 @@ public:
     bool    getAutoScale            (){ return mAutoScale            ; }
     int     getPrecN                (){ return mPrecN                ; }
     int     getXMsec                (){ return mXMsec                ; }
+    double  getSensor01Min          (){ return mSensor01Min          ; }
+    double  getSensor01Max          (){ return mSensor01Max          ; }
+    double  getSensor02Min          (){ return mSensor02Min          ; }
+    double  getSensor02Max          (){ return mSensor02Max          ; }
+    bool    getIsEditDpUnit         (){ return mIsEditDpUnit         ; }
+    bool    getIsEditAutoScale      (){ return mIsEditAutoScale      ; }
+    bool    getIsEditXMsec          (){ return mIsEditXMsec          ; }
+    bool    getIsEditSensor01Min    (){ return mIsEditSensor01Min    ; }
+    bool    getIsEditSensor01Max    (){ return mIsEditSensor01Max    ; }
+    bool    getIsEditSensor02Min    (){ return mIsEditSensor02Min    ; }
+    bool    getIsEditSensor02Max    (){ return mIsEditSensor02Max    ; }
     bool    getIsEdit               (){ return mIsEdit               ; }
+    bool    getIsErrSensor01MinMax  (){ return mIsErrSensor01MinMax  ; }
+    bool    getIsErrSensor02MinMax  (){ return mIsErrSensor02MinMax  ; }
     QString getStrStatus            (){ return mStrStatus            ; }
     QString getErrMsg               (){ return mErrMsg               ; }
     QString getErrMsg2              (){ return mErrMsg2              ; }
@@ -199,7 +238,20 @@ public:
     void    setAutoScale            (bool    value){ if(mAutoScale             == value)return; mAutoScale             = value; emit signalEventChangedAutoScale            (value);}
     void    setPrecN                (int     value){ if(mPrecN                 == value)return; mPrecN                 = value; emit signalEventChangedPrecN                (value);}
     void    setXMsec                (int     value){ if(mXMsec                 == value)return; mXMsec                 = value; emit signalEventChangedXMsec                (value);}
+    void    setSensor01Min          (double  value){ if(mSensor01Min           == value)return; mSensor01Min           = value; emit signalEventChangedSensor01Min          (value);}
+    void    setSensor01Max          (double  value){ if(mSensor01Max           == value)return; mSensor01Max           = value; emit signalEventChangedSensor01Max          (value);}
+    void    setSensor02Min          (double  value){ if(mSensor02Min           == value)return; mSensor02Min           = value; emit signalEventChangedSensor02Min          (value);}
+    void    setSensor02Max          (double  value){ if(mSensor02Max           == value)return; mSensor02Max           = value; emit signalEventChangedSensor02Max          (value);}
+    void    setIsEditDpUnit         (bool    value){ if(mIsEditDpUnit          == value)return; mIsEditDpUnit          = value; emit signalEventChangedIsEditDpUnit         (value);}
+    void    setIsEditAutoScale      (bool    value){ if(mIsEditAutoScale       == value)return; mIsEditAutoScale       = value; emit signalEventChangedIsEditAutoScale      (value);}
+    void    setIsEditXMsec          (bool    value){ if(mIsEditXMsec           == value)return; mIsEditXMsec           = value; emit signalEventChangedIsEditXMsec          (value);}
+    void    setIsEditSensor01Min    (bool    value){ if(mIsEditSensor01Min     == value)return; mIsEditSensor01Min     = value; emit signalEventChangedIsEditSensor01Min    (value);}
+    void    setIsEditSensor01Max    (bool    value){ if(mIsEditSensor01Max     == value)return; mIsEditSensor01Max     = value; emit signalEventChangedIsEditSensor01Max    (value);}
+    void    setIsEditSensor02Min    (bool    value){ if(mIsEditSensor02Min     == value)return; mIsEditSensor02Min     = value; emit signalEventChangedIsEditSensor02Min    (value);}
+    void    setIsEditSensor02Max    (bool    value){ if(mIsEditSensor02Max     == value)return; mIsEditSensor02Max     = value; emit signalEventChangedIsEditSensor02Max    (value);}
     void    setIsEdit               (bool    value){ if(mIsEdit                == value)return; mIsEdit                = value; emit signalEventChangedIsEdit               (value);}
+    void    setIsErrSensor01MinMax  (bool    value){ if(mIsErrSensor01MinMax   == value)return; mIsErrSensor01MinMax   = value; emit signalEventChangedIsErrSensor01MinMax  (value);}
+    void    setIsErrSensor02MinMax  (bool    value){ if(mIsErrSensor02MinMax   == value)return; mIsErrSensor02MinMax   = value; emit signalEventChangedIsErrSensor02MinMax  (value);}
     void    setStrStatus            (QString value){ if(mStrStatus             == value)return; mStrStatus             = value; emit signalEventChangedStrStatus            (value);}
     void    setErrMsg               (QString value){ if(mErrMsg                == value)return; mErrMsg                = value; emit signalEventChangedErrMsg               (value);}
     void    setErrMsg2              (QString value){ if(mErrMsg2               == value)return; mErrMsg2               = value; emit signalEventChangedErrMsg2              (value);}
@@ -248,11 +300,25 @@ signals:
     void signalEventChangedAutoScale            (bool    value);
     void signalEventChangedPrecN                (int     value);
     void signalEventChangedXMsec                (int     value);
+    void signalEventChangedSensor01Min          (double  value);
+    void signalEventChangedSensor01Max          (double  value);
+    void signalEventChangedSensor02Min          (double  value);
+    void signalEventChangedSensor02Max          (double  value);
+    void signalEventChangedIsEditDpUnit         (bool    value);
+    void signalEventChangedIsEditAutoScale      (bool    value);
+    void signalEventChangedIsEditXMsec          (bool    value);
+    void signalEventChangedIsEditSensor01Min    (bool    value);
+    void signalEventChangedIsEditSensor01Max    (bool    value);
+    void signalEventChangedIsEditSensor02Min    (bool    value);
+    void signalEventChangedIsEditSensor02Max    (bool    value);
     void signalEventChangedIsEdit               (bool    value);
+    void signalEventChangedIsErrSensor01MinMax  (bool    value);
+    void signalEventChangedIsErrSensor02MinMax  (bool    value);
     void signalEventChangedStrStatus            (QString value);
     void signalEventChangedErrMsg               (QString value);
     void signalEventChangedErrMsg2              (QString value);
     void signalEventChangedProgress             (int     value);
+    void signalEventChangedGraphSetting         (             );
 
     void signalEventAddSensorValue(qint64 msec, double sensor01Value, double sensor02Value);
 
@@ -392,6 +458,9 @@ public slots:
 
     void onValveReadedSensorScale(ValveResponseSensorScaleDto dto)
     {
+        double s01FullScale;
+        double s02FullScale;
+
         if(mState != eState::STATE_READ_SCALE || dto.mReqDto.mpRef != this)
             return;
 
@@ -411,6 +480,14 @@ public slots:
         setS02FullScale((double)dto.mSensor02FullScale * qPow(10, dto.mSensor02Exp) * 0.0001);
         setS01Exponent(dto.mSensor01Exp);
         setS02Exponent(dto.mSensor02Exp);
+
+        s01FullScale = UNITUTIL_CONVERT(getS01Unit(), getS01FullScale(), getDpUnit());
+        s02FullScale = UNITUTIL_CONVERT(getS02Unit(), getS02FullScale(), getDpUnit());
+
+        setSensor01Min(0);
+        setSensor01Max(s01FullScale);
+        setSensor02Min(0);
+        setSensor02Max(s02FullScale);
 
         setState((eState)(mState + 1));
     }
@@ -519,6 +596,115 @@ public slots:
     Q_INVOKABLE void onCommandSetAutoScale(bool value)
     {
         setAutoScale(value);
+    }
+
+    Q_INVOKABLE void onCommandSetSensor01Min(double value)
+    {
+    }
+
+    Q_INVOKABLE void onCommandSetSensor01Max(double value)
+    {
+    }
+
+    Q_INVOKABLE void onCommandSetSensor02Min(double value)
+    {
+    }
+
+    Q_INVOKABLE void onCommandSetSensor02Max(double value)
+    {
+    }
+
+    Q_INVOKABLE void onCommandSetGraphSetting(int unitIdx, int intervalIdx, bool autoScale, double s01Min, double s01Max, double s02Min, double s02Max)
+    {
+        setIsErrSensor01MinMax(false);
+        setIsErrSensor02MinMax(false);
+
+        if(autoScale == false)
+        {
+            if(mS01Selction)
+            {
+                setIsErrSensor01MinMax(!(s01Min < s01Max));
+            }
+            if(mS02Selction)
+            {
+                setIsErrSensor02MinMax(!(s02Min < s02Max));
+            }
+
+            if(mIsErrSensor01MinMax || mIsErrSensor02MinMax)
+                return;
+        }
+
+        setIsEditSensor01Min  (false);
+        setIsEditSensor01Max  (false);
+        setIsEditSensor02Min  (false);
+        setIsEditSensor02Max  (false);
+        setIsEditDpUnit       (false);
+        setIsEditAutoScale    (false);
+        setIsEditXMsec        (false);
+        setIsEdit             (false);
+
+        setDpUnit(unitIdx);
+        setSensor01Min(s01Min);
+        setSensor01Max(s01Max);
+        setSensor02Min(s02Min);
+        setSensor02Max(s02Max);
+        setXMsec(mTimeIntervalList.at(intervalIdx));
+        setAutoScale(autoScale);
+        calValueByDpUnit();
+
+        emit signalEventChangedGraphSetting();
+    }
+
+    Q_INVOKABLE void onCommandSetIsEditDpUnit(bool value)
+    {
+        setIsEditDpUnit   (value);
+        setIsEdit         (value);
+    }
+    Q_INVOKABLE void onCommandSetIsEditAutoScale(bool value)
+    {
+        setIsEditAutoScale(value);
+        setIsEdit         (value);
+    }
+    Q_INVOKABLE void onCommandSetIsEditXMsec(bool value)
+    {
+        setIsEditXMsec    (value);
+        setIsEdit         (value);
+    }
+
+    Q_INVOKABLE void onCommandSetIsEditSensor01Min(bool value)
+    {
+        setIsEditSensor01Min(value);
+        setIsEdit           (value);
+    }
+
+    Q_INVOKABLE void onCommandSetIsEditSensor01Max(bool value)
+    {
+        setIsEditSensor01Max(value);
+        setIsEdit           (value);
+    }
+
+    Q_INVOKABLE void onCommandSetIsEditSensor02Min(bool value)
+    {
+        setIsEditSensor02Min(value);
+        setIsEdit           (value);
+    }
+
+    Q_INVOKABLE void onCommandSetIsEditSensor02Max(bool value)
+    {
+        setIsEditSensor02Max(value);
+        setIsEdit           (value);
+    }
+
+    Q_INVOKABLE void onCommandSetIsEdit(bool value)
+    {
+        setIsEditSensor01Min(value);
+        setIsEditSensor01Max(value);
+        setIsEditSensor02Min(value);
+        setIsEditSensor02Max(value);
+        setIsEditDpUnit     (value);
+        setIsEditAutoScale  (value);
+        setIsEditXMsec      (value);
+        setIsEdit           (value);
     }
 
 private:

@@ -41,7 +41,27 @@ NWindow{ // khko_todo
                 unitCombo.currentIndex = dlgModel.mDpUnit
                 scaleCombo.currentIndex = dlgModel.mAutoScale ? 0 : 1
                 timeCombo.currentIndex = 0
+
+                sensor01Min.setValue(dlgModel.mSensor01Min);
+                sensor01Max.setValue(dlgModel.mSensor01Max);
+                sensor02Min.setValue(dlgModel.mSensor02Min);
+                sensor02Max.setValue(dlgModel.mSensor02Max);
+
+                onCommandSetIsEdit(false);
                 chart.onCommandInit(FontManager.nanumGothicName, 8, "#0000FF", "#ED1C24", true, false, true, true, dlgModel.mS01Selction, false, dlgModel.mS02Selction, false);
+            }
+        }
+
+        onSignalEventChangedGraphSetting: {
+            if(dlgModel.mS01Selction)
+            {
+                chart.mYAxis01Min = dlgModel.mSensor01Min
+                chart.mYAxis01Max = dlgModel.mSensor01Max
+            }
+            if(dlgModel.mS02Selction)
+            {
+                chart.mYAxis02Min = dlgModel.mSensor02Min
+                chart.mYAxis02Max = dlgModel.mSensor02Max
             }
         }
     }
@@ -465,12 +485,12 @@ NWindow{ // khko_todo
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: graphSettingTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    textColor: "#000000"
+                    textColor: dlgModel.mIsEditDpUnit ? "#24A7FF" : "#000000"
 
                     model: ["pa","bar","mbar","ubar", "Torr", "mTorr", "atm", "psi", "psf","voltage", "mv"]
 
                     onCurrentIndexChanged: {
-                        dlgModel.onCommandSetDpUnit(currentIndex)
+                        dlgModel.onCommandSetIsEditDpUnit(true)
                     }
                 }
 
@@ -485,12 +505,12 @@ NWindow{ // khko_todo
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: unitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    textColor: "#000000"
+                    textColor: dlgModel.mIsEditXMsec ? "#24A7FF" : "#000000"
 
                     model: ["30 seconds","1 minute","2 minutes","5 minutes"]
 
                     onCurrentIndexChanged: {
-                        dlgModel.onCommandSetTimeInterval(currentIndex)
+                        dlgModel.onCommandSetIsEditXMsec(true)
                     }
 
                 }
@@ -506,18 +526,118 @@ NWindow{ // khko_todo
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: timeCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    textColor: "#000000"
+                    textColor: dlgModel.mIsEditAutoScale ? "#24A7FF" : "#000000"
 
                     model: ["auto","fixed"]
 
                     onCurrentIndexChanged: {
-                        dlgModel.onCommandSetAutoScale(currentIndex == 0 ? true : false)
+                        dlgModel.onCommandSetIsEditAutoScale(true)
                     }
                 }
 
                 NText{
                     anchors.verticalCenter: scaleCombo.verticalCenter; anchors.left: scaleCombo.right; anchors.leftMargin: GUISetting.margin
                     text : qsTr("scale")
+                }
+
+                NInputNumber{
+                    id : sensor01Min
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    anchors.top: scaleCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    enabled: scaleCombo.currentIndex == 1 && dlgModel.mS01Selction
+
+                    textField.validator: DoubleValidator{}
+                    textField.color:  dlgModel.mIsEditSensor01Min ? "#24A7FF" : dlgModel.mIsErrSensor01MinMax ? "#FF0000" : "#000000"
+                    stepValue : 0.0001; minValue: -100000000; maxValue: 100000000
+                    fixedN : dlgModel.mS01GraphPrecN
+
+                    onChangedText: {
+                        dlgModel.onCommandSetIsEditSensor01Min(true)
+                    }
+                }
+                NText{
+                    anchors.verticalCenter: sensor01Min.verticalCenter; anchors.left: sensor01Min.right; anchors.leftMargin: GUISetting.margin
+                    text : qsTr("sensor 01 min")
+                }
+
+                NInputNumber{
+                    id : sensor01Max
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    anchors.top: sensor01Min.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    enabled: scaleCombo.currentIndex == 1 && dlgModel.mS01Selction
+
+                    textField.validator: DoubleValidator{}
+                    textField.color:  dlgModel.mIsEditSensor01Max ? "#24A7FF" : dlgModel.mIsErrSensor01MinMax ? "#FF0000" : "#000000"
+                    stepValue : 0.0001; minValue: -100000000; maxValue: 100000000
+                    fixedN : dlgModel.mS01GraphPrecN
+
+                    onChangedText: {
+                        dlgModel.onCommandSetIsEditSensor01Max(true)
+                    }
+                }
+                NText{
+                    anchors.verticalCenter: sensor01Max.verticalCenter; anchors.left: sensor01Max.right; anchors.leftMargin: GUISetting.margin
+                    text : qsTr("sensor 01 max")
+                }
+
+                NInputNumber{
+                    id : sensor02Min
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    anchors.top: sensor01Max.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    enabled: scaleCombo.currentIndex == 1 && dlgModel.mS02Selction
+
+                    textField.validator: DoubleValidator{}
+                    textField.color:  dlgModel.mIsEditSensor02Min ? "#24A7FF" : dlgModel.mIsErrSensor02MinMax ? "#FF0000" : "#000000"
+                    stepValue : 0.0001; minValue: -100000000; maxValue: 100000000
+                    fixedN : dlgModel.mS02GraphPrecN
+
+                    onChangedText: {
+                        dlgModel.onCommandSetIsEditSensor02Min(true)
+                    }
+                }
+                NText{
+                    anchors.verticalCenter: sensor02Min.verticalCenter; anchors.left: sensor02Min.right; anchors.leftMargin: GUISetting.margin
+                    text : qsTr("sensor 02 min")
+                }
+
+                NInputNumber{
+                    id : sensor02Max
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    anchors.top: sensor02Min.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    enabled: scaleCombo.currentIndex == 1 && dlgModel.mS02Selction
+
+                    textField.validator: DoubleValidator{}
+                    textField.color:  dlgModel.mIsEditSensor02Max ? "#24A7FF" : dlgModel.mIsErrSensor02MinMax ? "#FF0000" : "#000000"
+                    stepValue : 0.0001; minValue: -100000000; maxValue: 100000000
+                    fixedN : dlgModel.mS02GraphPrecN
+
+                    onChangedText: {
+                        dlgModel.onCommandSetIsEditSensor02Max(true)
+                    }
+                }
+                NText{
+                    anchors.verticalCenter: sensor02Max.verticalCenter; anchors.left: sensor02Max.right; anchors.leftMargin: GUISetting.margin
+                    text : qsTr("sensor 02 max")
+                }
+
+                NButton{
+                    height: 24 * GUISetting.scale
+                    anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
+                    enabled: dlgModel.mIsEdit
+                    bgColor: "#24A7FF"
+                    text.color: "#FFFFFF"
+
+                    text.text: qsTr("Apply")
+
+                    onClick: {
+                        var isAutoScale = scaleCombo.currentIndex == 0 ? true : false
+                        dlgModel.onCommandSetGraphSetting(unitCombo.currentIndex, timeCombo.currentIndex, isAutoScale, parseFloat(sensor01Min.textField.text), parseFloat(sensor01Max.textField.text), parseFloat(sensor02Min.textField.text), parseFloat(sensor02Max.textField.text))
+                    }
                 }
             }
 

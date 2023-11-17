@@ -27,7 +27,7 @@ Item {
 
 
     property real title_panel_height              : 36  * scale
-    property real title_btn_access_width          : 190 * scale
+    property real title_btn_access_width          : 100 * scale
     property real title_btn_portselection_width   : 190 * scale
     property real title_ver_bottom_margin         : 4 * scale
 

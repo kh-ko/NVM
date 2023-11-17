@@ -447,7 +447,7 @@ NWindow{ // khko_todo
                             interfaceController.write()
                         }
                     }
-
+/*
                     NButton{
                         id : paramResetBtn
                         Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
@@ -460,6 +460,7 @@ NWindow{ // khko_todo
                             interfaceParamReset.paramReset()
                         }
                     }
+                    */
 
                     NButton{
                         id : factoryResetBtn
@@ -470,6 +471,12 @@ NWindow{ // khko_todo
                         text.text: qsTr("Factory<br>reset")
 
                         onClick: {
+                            var popup = passwordDlg.createObject(dialog); popup.caller = factoryResetBtn; popup.open();
+
+                        }
+
+                        function confirm()
+                        {
                             interfaceFactoryReset.factoryReset()
                         }
                     }
@@ -546,6 +553,14 @@ NWindow{ // khko_todo
         id : messageBox
         NMessageBox{
 
+        }
+    }
+
+    Component{
+        id : passwordDlg
+        PasswordDlg
+        {
+            onResult: { caller.confirm()}
         }
     }
 }

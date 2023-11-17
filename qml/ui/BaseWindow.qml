@@ -115,14 +115,14 @@ Window {
             window.showPortSelection();
         }
 
-        onClickChangeAccessMode: {
+        onClickRemoteMode: {
+            model.onCommandWriteAccess(ValveEnumDef.ACCESS_REMOTE);
+        }
+
+        onClickLocalMode: {
             var newAccess = title.isLocal ? ValveEnumDef.ACCESS_REMOTE : ValveEnumDef.ACCESS_LOCAL
 
-            if(title.isLocal)
-            {
-                model.onCommandWriteAccess(ValveEnumDef.ACCESS_REMOTE);
-            }
-            else
+            if(title.isLocal == false)
             {
                 var popup = changeAccessDlg.createObject(window)
                 popup.open();

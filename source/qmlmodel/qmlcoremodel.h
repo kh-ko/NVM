@@ -760,7 +760,7 @@ public slots:
         //}
 
         setIsOpen (currPos == 100000 && getMode() != ValveEnumDef::MODE_SAFETY);
-        setIsClose(currPos == 0      && getMode() != ValveEnumDef::MODE_SAFETY);
+        setIsClose(currPos == 0      && getMode() == ValveEnumDef::MODE_CLOSED);
 
         //if(!pValveSP->getIsSealingType())
         //{

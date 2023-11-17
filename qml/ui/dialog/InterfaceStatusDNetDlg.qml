@@ -414,7 +414,7 @@ BaseSetupWindow{
                         id : _baudrateValue
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
                         isBold: true
-                        text : qsTr("auto")
+                        text : dlgModel.mBaudrate
                     }
                 }
 
