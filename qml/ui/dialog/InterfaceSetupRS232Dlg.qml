@@ -263,15 +263,15 @@ BaseSetupWindow{
                         onCurrentIndexChanged: {
                             dlgModel.onCommandSetEdit(true)
 
-                            if(currentIndex == 0)
-                            {
-                                _duplexModeCombo.currentIndex = 0
-                                _deviceAddress.textField.text = "0"
-                            }
-                            else if(currentIndex == 2)
-                            {
-                                _deviceAddress.textField.text = "0"
-                            }
+                            //if(currentIndex == 0)
+                            //{
+                            //    _duplexModeCombo.currentIndex = 0
+                            //    _deviceAddress.textField.text = "0"
+                            //}
+                            //else if(currentIndex == 2)
+                            //{
+                            //    _deviceAddress.textField.text = "0"
+                            //}
                         }
                     }
 
