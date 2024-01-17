@@ -792,14 +792,14 @@ private:
         }
         else
         {
-            mPDOList[itemIdx]->setErrDataType(dataType != 0);
+            //mPDOList[itemIdx]->setErrDataType(dataType != 0);
 
-            if(dataType != 0)
-                mPDOList[itemIdx]->setIsEdit(true);
-            else
+            //if(dataType != 0)
+            //    mPDOList[itemIdx]->setIsEdit(true);
+            //else
                 mPDOList[itemIdx]->setIsEdit(false);
 
-            mPDOList[itemIdx]->setDataType(0); // only supported unsigned integer
+            mPDOList[itemIdx]->setDataType(dataType); // only supported unsigned integer
             mPDOList[itemIdx]->setIsEdit(false);
         }
 
