@@ -6,6 +6,8 @@
 #include "source/qmlmodel/def/qmlenumdef.h"
 #include "source/util/etcutil.h"
 #include "source/service/coreservice.h"
+#include "source/service/util/filewriterex.h"
+
 class InterfaceSetupEthCATItemModel : public QObject
 {
     Q_OBJECT
@@ -415,6 +417,31 @@ public slots:
         return mPDOList.count();
     }
 
+    Q_INVOKABLE void onCommandExportXML(QString filePath)
+    {
+        FileWriterEx file;
+        QStringList contents;
+        int splitIdx = filePath.lastIndexOf("/")+1;
+        QString dir = filePath.left(splitIdx);
+        QString fileName = filePath.mid(splitIdx);
+
+        if(file.open(dir, fileName, FileWriterEx::FILE_OPEN_NEWWRITE) == false)
+        {
+            setErrMsg2("export failed(1)");
+            return;
+        }
+
+        contents = createXMLContents();
+
+        foreach(QString line, contents)
+        {
+            file.appendLine(line);
+        }
+
+        file.close();
+        return;
+    }
+
     Q_INVOKABLE void onCommandApply(int diFunction, int diMode, int diInput, int doFunction, int doMode, int doOutput,int devID)
     {
         mIsWritten       = true      ;
@@ -795,6 +822,59 @@ private:
             mPDOList[itemIdx]->setRangeTo(to);
             mPDOList[itemIdx]->setIsEdit(false);
         }
+    }
+
+    QString getDataTypeString(int idx)
+    {
+        switch(mPDOList[idx]->getDataType())
+        {
+        case 0: return "DINT";
+        case 1: return "REAL";
+        }
+
+        return "DINT";
+    }
+
+    QStringList createXMLContents()
+    {
+        QStringList contents;
+        QFile file;
+
+        file.setFileName(QString("%1/ref_sample/ethercat_sample.XML").arg(QApplication::applicationDirPath()));
+        file.open(QFile::ReadOnly);
+
+        if(file.isOpen() == false)
+        {
+            setErrMsg2("export failed(2)");
+            return contents;
+        }
+
+        QTextStream out(&file);
+        out.setCodec("utf-8");
+
+        do{
+            QString line = out.readLine();
+
+            if     (line.contains("<Name>Pressure</Name>"                               )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 0))); }
+            else if(line.contains("<Name>Pressure sensor 1</Name>"                      )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 1))); }
+            else if(line.contains("<Name>Pressure sensor 2</Name>"                      )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 2))); }
+            else if(line.contains("<Name>Position</Name>"                               )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 3))); }
+            else if(line.contains("<Name>Target position</Name>"                        )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 4))); }
+            else if(line.contains("<Name>Cluster valve position</Name>"                 )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 5))); }
+            else if(line.contains("<Name>Pressure setpoint</Name>"                      )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 6))); }
+            else if(line.contains("<Name>Position setpoint</Name>"                      )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 7))); }
+            else if(line.contains("<Name>Pressure alignment setpoint</Name>"            )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 8))); }
+            else if(line.contains("<Name>External digital pressure sensor 1</Name>"     )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString( 9))); }
+            else if(line.contains("<Name>External digital pressure sensor 2</Name>"     )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString(10))); }
+            else if(line.contains("<Name>Cluster valve freeze position setpoint</Name>" )){contents.append(line); line = out.readLine(); contents.append(QString(line).arg(getDataTypeString(11))); }
+            else
+            {
+                contents.append(line);
+            }
+        }while(!out.atEnd());
+
+        file.close();
+        return contents;
     }
 
 };

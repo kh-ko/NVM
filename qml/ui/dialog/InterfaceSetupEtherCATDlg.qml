@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
+import Qt.labs.platform 1.1
 import "../../control/."
 import ValveEnumDef 1.0
 import InterfaceSetupEtherCATDlgModel 1.0
@@ -54,9 +55,9 @@ BaseSetupWindow{
             pdoListModel.append({"pdoDataName" : "cluster valve position"       , "itemIdx":5})
             pdoListModel.append({"pdoDataName" : "pressure setpoint"            , "itemIdx":6})
             pdoListModel.append({"pdoDataName" : "position setpoint"            , "itemIdx":7})
-            pdoListModel.append({"pdoDataName" : "position alignment setpoint"  , "itemIdx":8})
-            pdoListModel.append({"pdoDataName" : "external digital pressure"    , "itemIdx":9})
-            pdoListModel.append({"pdoDataName" : "external digital pressure"    , "itemIdx":10})
+            pdoListModel.append({"pdoDataName" : "pressure alignment setpoint"  , "itemIdx":8})
+            pdoListModel.append({"pdoDataName" : "external digital pressure 1"  , "itemIdx":9})
+            pdoListModel.append({"pdoDataName" : "external digital pressure 2"  , "itemIdx":10})
             pdoListModel.append({"pdoDataName" : "cluster valve freeze position", "itemIdx":11})
         }
 
@@ -322,27 +323,60 @@ BaseSetupWindow{
 
                 color: "#FFFFFF"
 
-                NButton{
-                    id : applyBtn
-                    height: GUISetting.popup_btnbox_btn_height; width: parent.width / 2
+                RowLayout{
+                    height: GUISetting.popup_btnbox_btn_height; width: parent.width * 0.7
                     anchors.verticalCenter: parent.verticalCenter; anchors.horizontalCenter: parent.horizontalCenter
-                    enabled: dialog.progress === 100
+                    spacing: GUISetting.margin
 
-                    bgColor: "#24A7FF"
-                    text.color: "#FFFFFF"
-                    text.text: qsTr("Apply")
+                    NButton{
+                        id : applyBtn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
 
-                    onClick: {
-                        if(dialog.access !== ValveEnumDef.ACCESS_LOCAL && dialog.isRS232Test == false)
-                        {
-                            dialog.openChangeAccessDlg()
-                            return;
+                        bgColor: "#24A7FF"
+                        text.color: "#FFFFFF"
+                        text.text: qsTr("Apply")
+
+                        onClick: {
+                            if(dialog.access !== ValveEnumDef.ACCESS_LOCAL && dialog.isRS232Test == false)
+                            {
+                                dialog.openChangeAccessDlg()
+                                return;
+                            }
+
+                            dialog.commit()
                         }
+                    }
 
-                        dialog.commit()
+                    NButton{
+                        id : exportToEDS
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100 && !dialog.isEdit
+
+                        bgColor: "#FFFFFF"
+                        text.text: qsTr("export configuration to XML file")
+
+                        onClick: {
+                            wFileDialog.open();
+                        }
                     }
                 }
             }
         }
+    }
+
+    FileDialog{
+        id: wFileDialog
+            title: qsTr("export configuration")
+            //folder: "./"
+            fileMode: FileDialog.SaveFile
+            nameFilters: ["XML files (*.xml)"]
+
+            onAccepted: {
+                dlgModel.onCommandExportXML(currentFile.toString().split("///")[1])
+            }
+            onRejected: {
+            }
+            visible : false
     }
 }

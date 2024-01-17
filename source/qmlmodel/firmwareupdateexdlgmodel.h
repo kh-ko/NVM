@@ -111,6 +111,7 @@ signals:
 
     void signalEventResultSearchVer();
     void signalEventResultUpdate(bool bErr, QString errMsg);
+    void signalEventCompletedFactoryReset();
 
 public:
     explicit FirmwareUpdateExDlgModel(QObject *parent = nullptr): QObject(parent)
@@ -385,6 +386,9 @@ public slots:
 
     void onValveChangedLoadProgress(int value)
     {
+        if(mStartFactorReset)
+            emit signalEventCompletedFactoryReset();
+
         if(value == ValveEnumDef::LOAD_COMPLETED)
             setIsReboot(true);
     }
@@ -394,9 +398,11 @@ public slots:
         qDebug() << "[" << Q_FUNC_INFO << "]";
         pValveSP->setAccess(ValveEnumDef::ACCESS_LOCAL, this);
         pValveSP->factoryReset(this);
+        mStartFactorReset = true;
     }
 
 private:
+    bool        mStartFactorReset = false;
     QTimer      mTimer;
     QString     mSelComPort    ="";
     QStringList mComPortList   ;

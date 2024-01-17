@@ -67,7 +67,7 @@ RowLayout {
 
             textColor: itemModel.mErrDataType ? "#FF0000" : "#000000"
             visible: !item.isHeader
-            enabled: false //item.enabled
+            enabled: item.enabled
             currentIndex: itemModel.mDataType
 
             model: ["signed integer","floating"]

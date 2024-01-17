@@ -14,6 +14,7 @@ NWindow{
     property var titleText : qsTr("Firmware update")
     property string method : ""
     property int step : 0
+    property var waitBox : null
 
     signal clickRestoreSettings()
 
@@ -36,6 +37,11 @@ NWindow{
 
     FirmwareUpdateExDlgModel{
         id : dlgModel
+
+        onSignalEventCompletedFactoryReset : {
+            if(waitBox != null)
+                waitBox.close();
+        }
 
         onSignalEventResultUpdate: {
             console.debug("bErr = " + bErr + ", errMsg = " + errMsg)
@@ -580,8 +586,10 @@ NWindow{
                             text.text: qsTr("Factory reset")
 
                             onClick: {
+                                var popup = factoryResetWaitBox.createObject(nwindow)
+                                popup.open();
+                                waitBox = popup;
                                 dlgModel.onCommandFactoryReset()
-                                close()
                             }
                         }
 
@@ -625,9 +633,30 @@ NWindow{
     }
 
     Component{
+        id : passwordDlg
+        PasswordDlg
+        {
+            onResult: { caller.confirm()}
+        }
+    }
+
+    Component{
         id : messageBox
         NConfirmMsgBox{
             contentWidth: 400 * GUISetting.scale
+        }
+    }
+
+    Component{
+        id : factoryResetWaitBox
+        NMessageBox{
+            titleText : qsTr("Factory reset")
+            contentText : qsTr("Please wait until the factory reset is complete.")
+            contentWidth: 400 * GUISetting.scale
+
+            onClosed: {
+                nwindow.close()
+            }
         }
     }
 }
