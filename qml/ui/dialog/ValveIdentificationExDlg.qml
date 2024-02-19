@@ -455,7 +455,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknow", "K : ISO-KF", "F : ISO", "C : CF-F"]
+                    model: ["Unknow", "K : ISO-KF", "F : ISO", "C : CF-F", "P : ISO-K"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
