@@ -51,6 +51,10 @@
 #define REQ_READ_VALVE_MAX_SPEED                        "i:69"
 #define RES_VALVE_MAX_SPEED_DATA_LEN                    6
 
+/*valve setup*/
+#define REQ_READ_VALVE_SETUP                            "i:04"
+#define RES_VALVE_SETUP_DATA_LEN                        8
+
 /* defalut sensor setup*/
 #define REQ_READ_SENSOR_CONFIG                          "i:01"
 #define RES_SENSOR_CONFIG_DATA_LEN                      8
@@ -130,6 +134,8 @@
 #define RES_SENSEX_CROSSOVER_HIGH_DATA_LEN              0
 #define REQ_READ_SENSEX_CROSSOVER_DELA                  "i:12002"
 #define RES_SENSEX_CROSSOVER_DELA_DATA_LEN              0
+
+// pressure control
 #define REQ_READ_PRESSURE_CTRL_CONFIG                   "i:02"
 #define RES_PRESSURE_CTRL_CONFIG_DATA_LEN               8
 #define REQ_READ_SELECT_CTRL_MODE                       "i:02Z00"
@@ -164,10 +170,11 @@
 #define RES_FIXED2_CTRL_RAMP_MODE_DATA_LEN              1
 #define REQ_READ_FIXED2_CTRL_DIR                        "i:02C03"
 #define RES_FIXED2_CTRL_DIR_DATA_LEN                    1
-#define REQ_READ_VALVE_SETUP                            "i:04"
-#define RES_VALVE_SETUP_DATA_LEN                        8
+
+/* login interface setup*/
 #define REQ_READ_INTERFACE_CONFIG_LOGIC                 "i:20"
 #define RES_INTERFACE_CONFIG_LOGIC_DATA_LEN             8
+
 
 /* ethercat interface setup*/
 #define REQ_READ_INTERFACE_CONFIG_ETHCAT_DI             "i:2601"
@@ -312,6 +319,7 @@
 #define RES_SENSOR_SELECTION_DATA_LEN                   8
 
 
+#define REQ_TRACE_MODE                                  "a:80"
 #define REQ_WRITE_ACCESS                                "c:01"
 #define REQ_WRITE_ENABLE_PFO                            "c:10"
 #define REQ_WRITE_CTRL_CYCLES_RESET                     "c:20"
@@ -734,6 +742,7 @@ private:
     /* properties */
     bool mIsConnecting = false;
     bool mRetryConnect = false;
+    bool mTraceMode    = false;
     qint64 mLastSuccMsec = 0;
     int  mFailCount = 0;
 
@@ -754,6 +763,7 @@ signals:
     void signalResultReadyFirmwareUpdate(bool isSucc                        );
     void signalEventSearchedDevice      (QStringList devList                );
     void signalEventResponseData        (ValveResponseDto dto               );
+    void signalEventTrace               (QString data                       );
 
 public slots:
     /* slots for internal signal */
@@ -772,7 +782,7 @@ public slots:
             emit signalEventSearchedDevice(devList);
         }
 
-        if(mMonitoringDto.mpValveSProvider != nullptr)
+        if(mMonitoringDto.mpValveSProvider != nullptr && mTraceMode == false)
             onCommandRequest(ValveRequestDto(mMonitoringDto));
 
         delay = mIsConnecting ? mMonitoringCycle : 1000; // khko add proc disconnect
@@ -843,6 +853,52 @@ public slots:
         }
     }
 
+    void onCommandSetTraceMode(bool value, ValveRequestDto  dto)
+    {
+        qDebug() << "[" << Q_FUNC_INFO << "]" << value;
+
+        SerialValve * pSValve = (SerialValve *)mConn.getConnectionPtr();
+        if(value == false && pSValve->getSerialPort() != nullptr)
+        {
+            disconnect(pSValve->getSerialPort(), SIGNAL(readyRead()), this, SLOT(onTrace()));
+        }
+
+        ValveResponseDto resDto = onCommandRequest(dto);
+
+        if(resDto.mIsSucc == false)
+            return;
+
+        mTraceMode = value;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]OK";
+
+        if(value == true)
+        {
+            connect(pSValve->getSerialPort(), SIGNAL(readyRead()), this, SLOT(onTrace()));
+        }
+    }
+
+    void onTrace()
+    {
+        SerialValve * pSValve = (SerialValve *)mConn.getConnectionPtr();
+
+        if(pSValve == nullptr)
+            return;
+
+        QString traceData = QString(pSValve->readTarce("\r\n", 100));
+        QStringList traceList = traceData.split("\r\n");
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << traceData;
+
+        foreach(QString data , traceList)
+        {
+            if(data.length() > 0)
+            {
+                emit signalEventTrace(data);
+            }
+        }
+    }
+
     void onCommandReadyFirmwareUpdate()
     {
 //        IValve::eValveError err = IValve::NoError;
@@ -883,7 +939,7 @@ public slots:
         setIsConnecting(false, false);
     }
 
-    void onCommandRequest(ValveRequestDto  dto)
+    ValveResponseDto onCommandRequest(ValveRequestDto  dto)
     {
         IValve::eValveError err = IValve::NoError;
         QString response;
@@ -941,6 +997,8 @@ public slots:
 
         if(netSucc)
             mLastSuccMsec = resDto.mResDateTime.currentMSecsSinceEpoch();
+
+        return resDto;
     }
 
 public:

@@ -29,6 +29,7 @@ Rectangle {
     signal clickPressureCtrlLearnParam()
     signal clickInterfaceSetup()
     signal clickInterfaceStatus()
+    signal clickInterfaceTrace()
     signal clickToolChartAnalyzer()
     signal clickToolSequencer()
     signal clickToolFuSelectMethod()
@@ -216,11 +217,20 @@ Rectangle {
                 }
                 NExButtonItem{
                     id : menuInterfaceStatus
-                    anchors.bottom: parent.bottom
+                    anchors.bottom: menuInterfaceTrace.top
                     enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
                     text.text: qsTr("Status")
 
                     onClicked:{ panel.clickInterfaceStatus() }
+                }
+
+                NExButtonItem{
+                    id : menuInterfaceTrace
+                    anchors.bottom: parent.bottom
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+                    text.text: qsTr("Trace")
+
+                    onClicked:{ panel.clickInterfaceTrace() }
                 }
             }
 

@@ -55,6 +55,11 @@ public:
             delete mpValve;
     }
 
+    QObject * getConnectionPtr()
+    {
+        return mpValve;
+    }
+
     QString getConnectionInfo()
     {
         if(mpValve != nullptr)

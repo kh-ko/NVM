@@ -419,6 +419,37 @@ public:
         return readBuf;
     }
 
+    QByteArray readTarce(const char * endChar, qint64 timeout) // khko add proc disconnect
+    {
+        QByteArray readBuf;
+        qint64 msec;
+
+        if(mSerialPort.isOpen() == false)
+        {
+            return readBuf;
+        }
+
+        mSerialPort.clearError();
+
+        msec = QDateTime::currentMSecsSinceEpoch();
+
+       do{
+            QByteArray tempBuf = mSerialPort.readAll();
+
+            if(tempBuf.length() < 1)
+                return readBuf;
+
+            readBuf.append(tempBuf);
+
+            if(readBuf.endsWith(endChar))
+            {
+                return readBuf;
+            }
+        } while (mSerialPort.waitForReadyRead(timeout));
+
+        return readBuf;
+    }
+
     QString getValue(QString checkPrefix, QString readData)
     {
         if(readData.startsWith("E:"))

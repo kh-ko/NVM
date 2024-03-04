@@ -216,6 +216,7 @@
 #define ENABLE_SLOT_VALVE_READED_SETPOINT_06                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedSetPoint06                      (ValveResponseSetPointDto                        )), this, SLOT(onValveReadedSetpoint06                    (ValveResponseSetPointDto                          )))
 #define ENABLE_SLOT_VALVE_READED_PFO_PERFORMED_CYCLES                   connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedPFOPerformedCycles              (ValveResponsePFOPerformedCyclesDto              )), this, SLOT(onValveReadedPFOPerformedCycles            (ValveResponsePFOPerformedCyclesDto                )))
 #define ENABLE_SLOT_VALVE_READED_PFO_CURRENT_VOLTAGE                    connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedPFOCurrentVoltage               (ValveResponsePFOCurrentVoltageDto               )), this, SLOT(onValveReadedPFOCurrentVoltage             (ValveResponsePFOCurrentVoltageDto                 )))
+#define ENABLE_SLOT_VALVE_WRITTEN_TRACE_MODE                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenTraceMode                      (ValveResponseDto                                )), this, SLOT(onValveWrittenTraceMode                    (ValveResponseDto                                  )))
 #define ENABLE_SLOT_VALVE_WRITTEN_ACCESS                                connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenAccess                         (ValveResponseDto                                )), this, SLOT(onValveWrittenAcces                        (ValveResponseDto                                  )))
 #define ENABLE_SLOT_VALVE_WRITTEN_TARGET_POSITION                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenTargetPosition                 (ValveResponseDto                                )), this, SLOT(onValveWrittenTargetPosition               (ValveResponseDto                                  )))
 #define ENABLE_SLOT_VALVE_WRITTEN_TARGET_PRESSURE                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenTargetPressure                 (ValveResponseDto                                )), this, SLOT(onValveWrittenTargetPressure               (ValveResponseDto                                  )))
@@ -335,6 +336,7 @@
 #define ENABLE_SLOT_VALVE_WRITTEN_TEST_MODE                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenTestMode                       (ValveResponseDto                                )), this, SLOT(onValveWrittenTestMode                       (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_ENCODER_ZERO                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenEncoderZero                    (ValveResponseDto                                )), this, SLOT(onValveWrittenEncoderZero                    (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_CUSTOM_REQUEST                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenCustomRequest                  (ValveResponseDto                                )), this, SLOT(onValveWrittenCustomRequest                  (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_TRACE                                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventReceivedTraceData                     (QString                                         )), this, SLOT(onValveRecevedTraceData                      (QString                                         )))
 
 class ReqCommandUserData : public QObject
 {
@@ -951,6 +953,7 @@ signals:
     void signalEventReadedInterfaceStatusDNet          (ValveResponseInterfaceStatusDNetDto              dto);
     void signalEventReadedInterfaceStatusRS232         (ValveResponseInterfaceStatusRS232Dto             dto);
 
+    void signalEventWrittenTraceMode                      (ValveResponseDto                                 dto);
     void signalEventWrittenAccess                         (ValveResponseDto                                 dto);
     void signalEventWrittenEnablePFO                      (ValveResponseDto                                 dto);
     void signalEventWrittenControlCyclesReset             (ValveResponseDto                                 dto);
@@ -1070,7 +1073,7 @@ signals:
     void signalEventWrittenEncoderZero                    (ValveResponseDto                                 dto);
     void signalEventWrittenCustomRequest                  (ValveResponseDto                                 dto);
 //    void signalEventWrittenFatalErrReset          (ValveResponseDto                              dto);
-
+    void signalEventReceivedTraceData                     (QString data);
     //****************************/
     /* command signals to worker */
     //****************************/
@@ -1082,6 +1085,7 @@ signals:
     void signalCommandConnect                     (int type, QString devAddr    );
     void signalCommandReConnect                   (                             );
     void signalCommandRequest                     (ValveRequestDto         value);
+    void signalCommandSetTraceMode                (bool value, ValveRequestDto dto);
 
 public :
     static ValveSProvider * getInstance()
@@ -1126,11 +1130,15 @@ public :
         connect(this         , SIGNAL(signalCommandReConnect          (                       )), mpASyncWorker, SLOT(onCommandReConnect          (                      )));
         connect(this         , SIGNAL(signalCommandReadyFirmwareUpdate(                       )), mpASyncWorker, SLOT(onCommandReadyFirmwareUpdate(                      )));
         connect(this         , SIGNAL(signalCommandRequest            (ValveRequestDto        )), mpASyncWorker, SLOT(onCommandRequest            (ValveRequestDto       )));
+        connect(this         , SIGNAL(signalCommandSetTraceMode       (bool, ValveRequestDto  )), mpASyncWorker, SLOT(onCommandSetTraceMode       (bool, ValveRequestDto )));
+
         connect(mpASyncWorker, SIGNAL(signalEventChangedIsConnecting  (bool, bool             )), this         , SLOT(onChangedIsConnecting       (bool, bool            )));
         connect(mpASyncWorker, SIGNAL(signalResultConnect             (bool, QString          )), this         , SLOT(onResultConnect             (bool, QString         )));
         connect(mpASyncWorker, SIGNAL(signalResultReadyFirmwareUpdate (bool                   )), this         , SLOT(onResultReadyFirmwareUpdate (bool                  )));
         connect(mpASyncWorker, SIGNAL(signalEventSearchedDevice       (QStringList            )), this         , SLOT(onSearchedDevice            (QStringList           )));
         connect(mpASyncWorker, SIGNAL(signalEventResponseData         (ValveResponseDto       )), this         , SLOT(onResponseData              (ValveResponseDto      )));
+        connect(mpASyncWorker, SIGNAL(signalEventTrace                (QString                )), this         , SLOT(onTraceData                 (QString               )));
+
 
         mpDFUWorkerThread = new QThread;
         mpDFUWorker       = new ValveFirmwareUpgradeWorker;
@@ -1166,11 +1174,13 @@ public :
             disconnect(this         , SIGNAL(signalCommandReConnect          (                       )), mpASyncWorker, SLOT(onCommandReConnect         (                       )));
             disconnect(this         , SIGNAL(signalCommandReadyFirmwareUpdate(                       )), mpASyncWorker, SLOT(onCommandReadyFirmwareUpdate(                      )));
             disconnect(this         , SIGNAL(signalCommandRequest            (ValveRequestDto        )), mpASyncWorker, SLOT(onCommandRequest           (ValveRequestDto        )));
+            disconnect(this         , SIGNAL(signalCommandSetTraceMode       (bool, ValveRequestDto  )), mpASyncWorker, SLOT(onCommandSetTraceMode       (bool, ValveRequestDto )));
             disconnect(mpASyncWorker, SIGNAL(signalEventChangedIsConnecting  (bool, bool             )), this         , SLOT(onChangedIsConnecting      (bool, bool             )));
             disconnect(mpASyncWorker, SIGNAL(signalResultConnect             (bool, QString          )), this         , SLOT(onResultConnect            (bool, QString          )));
             disconnect(mpASyncWorker, SIGNAL(signalResultReadyFirmwareUpdate (bool                   )), this         , SLOT(onResultReadyFirmwareUpdate (bool                  )));
             disconnect(mpASyncWorker, SIGNAL(signalEventSearchedDevice       (QStringList            )), this         , SLOT(onSearchedDevice           (QStringList            )));
             disconnect(mpASyncWorker, SIGNAL(signalEventResponseData         (ValveResponseDto       )), this         , SLOT(onResponseData             (ValveResponseDto       )));
+            disconnect(mpASyncWorker, SIGNAL(signalEventTrace                (QString                )), this         , SLOT(onTraceData                 (QString               )));
 
             mpASyncWorker= nullptr;
         }
@@ -1826,6 +1836,13 @@ public :
     ///
     ///
     /////////////////////////////////////////////
+    void setTraceMode(bool value, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2").arg(REQ_TRACE_MODE).arg(value ? "01" : "00");
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << cmd;
+        emit signalCommandSetTraceMode(value, ValveRequestDto(this, staticProcWriteTraceMode, nullptr, cmd, "", 0, retryCnt, userData));
+    }
     void setAccess(int access, void * userData, int retryCnt = 0)
     {
         QString cmd = QString("%1%2").arg(REQ_WRITE_ACCESS).arg(access == ValveEnumDef::ACCESS_LOCAL ? "00" : access == ValveEnumDef::ACCESS_REMOTE ? "01" : "02");
@@ -2379,6 +2396,11 @@ public slots:
 
         if(dto.mReqDto.mMainProcFunc != nullptr)
             dto.mReqDto.mMainProcFunc(&dto);
+    }
+
+    void onTraceData(QString data)
+    {
+        emit signalEventReceivedTraceData(data);
     }
 
     void onChangedDFUStep(int step)
@@ -6115,6 +6137,19 @@ public slots:
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventReadedLearnStatus(signalDto);
+        }
+    }
+
+    static void staticProcWriteTraceMode(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWriteTraceMode(pResData);}
+    void procWriteTraceMode(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        qDebug() << "[" << Q_FUNC_INFO << "]";
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenTraceMode(signalDto);
         }
     }
 

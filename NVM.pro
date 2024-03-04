@@ -68,6 +68,7 @@ HEADERS += \
     source/qmlmodel/interfacestatusethercatdlgmodel.h \
     source/qmlmodel/interfacestatuslogicdlgmodel.h \
     source/qmlmodel/interfacestatusrs232dlgmodel.h \
+    source/qmlmodel/interfacetracedlgmodel.h \
     source/qmlmodel/ncpasettingsdlgmodel.h \
     source/qmlmodel/panelbaratrongraph.h \
     source/qmlmodel/pressurectrlfloatsetupdlgmodel.h \

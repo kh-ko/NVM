@@ -32,6 +32,7 @@
 #include "source/qmlmodel/interfacestatusethercatdlgmodel.h"
 #include "source/qmlmodel/interfacestatusdnetdlgmodel.h"
 #include "source/qmlmodel/interfacestatusrs232dlgmodel.h"
+#include "source/qmlmodel/interfacetracedlgmodel.h"
 #include "source/qmlmodel/valvecyclecounterdlgmodel.h"
 #include "source/qmlmodel/valvecaribrationdlgmodel.h"
 #include "source/qmlmodel/controlzerodlgmodel.h"
@@ -164,6 +165,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<InterfaceStatusEtherCATDlgModel>("InterfaceStatusEtherCATDlgModel", 1, 0, "InterfaceStatusEtherCATDlgModel");
     qmlRegisterType<InterfaceStatusDNetDlgModel>("InterfaceStatusDNetDlgModel", 1, 0, "InterfaceStatusDNetDlgModel");
     qmlRegisterType<InterfaceStatusRS232DlgModel>("InterfaceStatusRS232DlgModel", 1, 0, "InterfaceStatusRS232DlgModel");
+    qmlRegisterType<InterfaceTraceDlgModel>("InterfaceTraceDlgModel", 1, 0, "InterfaceTraceDlgModel");
     qmlRegisterType<ValveCycleCounterDlgModel>("ValveCycleCounterDlgModel", 1, 0, "ValveCycleCounterDlgModel");
     qmlRegisterType<ValveCariblationDlgModel>("ValveCariblationDlgModel", 1, 0, "ValveCariblationDlgModel");
     qmlRegisterType<ControlZeroDlgModel>("ControlZeroDlgModel", 1, 0, "ControlZeroDlgModel");

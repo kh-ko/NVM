@@ -207,6 +207,8 @@ Window {
 
             popup.show();
         }
+
+        onClickInterfaceTrace         : { var popup = interfaceTraceDlg.createObject(window)            ; popup.show(); }
         onClickToolChartAnalyzer      : { var popup = graphAnalyzeDlg.createObject(window)              ; popup.loadFromChart(chart.chartView); popup.show();}
         onClickToolSequencer          : {seqTestDlg.show(); }
         onClickToolFuSelectMethod     : { var popup = fuSelMethodDlg.createObject(window)               ; popup.show(); }
@@ -620,6 +622,15 @@ Window {
             connectInfo    : model.mConnectionInfo
             valveID        : model.mValveID
             userInterface  : model.mInterface
+        }
+    }
+
+
+    Component{
+        id : interfaceTraceDlg
+        InterfaceTraceDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
         }
     }
 
