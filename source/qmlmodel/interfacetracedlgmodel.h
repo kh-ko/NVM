@@ -9,9 +9,11 @@
 #include "source/service/coreservice.h"
 #include "source/service/util/filewriterex.h"
 
+#define TRACE_UI_MAX_ROW_CNT 500
 class InterfaceTraceDlgModel : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int     mMaxRowCnt  READ getMaxRowCnt  NOTIFY signalEventChangedMaxRowCnt )
     Q_PROPERTY(bool    mIsRecord   READ getIsRecord   NOTIFY signalEventChangedIsRecord  )
     Q_PROPERTY(QString mRecordTime READ getRecordTime NOTIFY signalEventChangedRecordTime)
     Q_PROPERTY(bool    mIsHold     READ getIsHold     NOTIFY signalEventChangedIsHold    )
@@ -26,6 +28,7 @@ class InterfaceTraceDlgModel : public QObject
     Q_PROPERTY(int     mProgress   READ getProgress   NOTIFY signalEventChangedProgress  )
 
 public:
+    int     mMaxRowCnt   = 500;
     bool    mIsRecord    = false;
     QString mRecordTime  = "";
     bool    mIsHold      = false;
@@ -40,6 +43,7 @@ public:
     int     mProgress    = 0 ;
 
 
+    int     getMaxRowCnt (){ return mMaxRowCnt ;}
     bool    getIsRecord  (){ return mIsRecord  ;}
     QString getRecordTime(){ return mRecordTime;}
     bool    getIsHold    (){ return mIsHold    ;}
@@ -54,7 +58,7 @@ public:
     int     getProgress  (){ return mProgress  ;}
 
 
-
+    void    setMaxRowCnt (int     value){if(mMaxRowCnt  == value)return; mMaxRowCnt  = value; emit signalEventChangedMaxRowCnt (value);}
     void    setIsRecord  (bool    value){if(mIsRecord   == value)return; mIsRecord   = value; emit signalEventChangedIsRecord  (value);}
     void    setRecordTime(QString value){if(mRecordTime == value)return; mRecordTime = value; emit signalEventChangedRecordTime(value);}
     void    setIsHold    (bool    value){if(mIsHold     == value)return; mIsHold     = value; emit signalEventChangedIsHold    (value);}
@@ -69,6 +73,7 @@ public:
     void    setProgress  (int     value){if(mProgress   == value)return; mProgress   = value; emit signalEventChangedProgress  (value);}
 
 signals:
+    void signalEventChangedMaxRowCnt (int     value);
     void signalEventChangedIsRecord  (bool    value);
     void signalEventChangedRecordTime(QString value);
     void signalEventChangedIsHold    (bool    value);
@@ -82,7 +87,7 @@ signals:
     void signalEventChangedErrMsg    (QString value);
     void signalEventChangedProgress  (int     value);
 
-    void signalEventReceived(QString localTime, QString interval, QString receivedData, QString transmittedData);
+    void signalEventReceived(int insertRowIdx, QString localTime, QString interval, QString receivedData, QString transmittedData);
     void signalEventClear();
 
 public slots:
@@ -108,8 +113,8 @@ public slots:
         {
             foreach(QString data, traceHoldDataList)
             {
-                procTarceSignal(data);
                 traceDataList.append(data);
+                procTarceSignal(traceDataList.size() - 1, data);
             }
             traceHoldDataList.clear();
         }
@@ -129,12 +134,16 @@ public slots:
 
     Q_INVOKABLE void onCmdSetSortMode(int sortMode)
     {
+        int idx = 0;
+
         if(getSortMode() != sortMode)
         {
+            setFoundCount(0);
+            setFoundIdx(-1);
             emit signalEventClear();
             foreach(QString data, traceDataList)
             {
-                procTarceSignal(data);
+                procTarceSignal(idx++, data);
             }
         }
 
@@ -152,7 +161,12 @@ public slots:
 
             if(sortMode == 0)
             {
-                for(int i = traceDataList.size() - 1; i > -1; i--)
+                int endIdx = traceDataList.size() - mMaxRowCnt;
+
+                if(endIdx < 0)
+                    endIdx = 0;
+
+                for(int i = traceDataList.size() - 1; i > endIdx-1; i--)
                 {
                     QString temp = traceDataList[i];
 
@@ -160,13 +174,16 @@ public slots:
                     {
                         if(firstIdx == -1)
                             firstIdx = i;
+
                         foundCount ++;
                     }
                 }
             }
             else
             {
-                for(int i = 0; i < traceDataList.size(); i++)
+                int startIdx = 0 < traceDataList.size() - mMaxRowCnt ? traceDataList.size() - mMaxRowCnt : 0;
+
+                for(int i = startIdx; i < traceDataList.size(); i++)
                 {
                     QString temp = traceDataList[i];
 
@@ -174,11 +191,14 @@ public slots:
                     {
                         if(firstIdx == -1)
                             firstIdx = i;
+
                         foundCount ++;
                     }
                 }
             }
         }while (0);
+
+        qDebug() << "[" << Q_FUNC_INFO << "]firstIdx = " << firstIdx;
 
         setFoundIdx(firstIdx);
         setFoundCount(foundCount);
@@ -221,7 +241,7 @@ public slots:
         while(!in.atEnd()) {
             QString line = in.readLine();
             traceDataList.append(line);
-            procTarceSignal(line);
+            procTarceSignal(traceDataList.size() - 1, line);
         }
 
         file.close();
@@ -290,7 +310,7 @@ public slots:
 
         traceDataList.append(data);
 
-        procTarceSignal(data);
+        procTarceSignal(traceDataList.size() - 1, data);
     }
 
     void onTimeout()
@@ -304,7 +324,7 @@ public slots:
     }
 
 private:
-    void procTarceSignal(QString data)
+    void procTarceSignal(int rowIdx, QString data)
     {
         QString localTime = "";
         QString interval = "";
@@ -325,16 +345,21 @@ private:
         if(dataList.length() > 3)
             transmitted = dataList[3];
 
-        emit signalEventReceived(localTime, interval, received, transmitted);
+        emit signalEventReceived(rowIdx, localTime, interval, received, transmitted);
     }
 
     void searchFromEnd(QString value)
     {
+        int endIdx = traceDataList.size() - mMaxRowCnt;
+
+        if(endIdx < 0)
+            endIdx = 0;
+
         if(getFoundIdx() > (traceDataList.size() - 1)
            || getFoundIdx() < 0 )
             return;
 
-        for(int i = getFoundIdx() - 1; i > -1; i-- )
+        for(int i = getFoundIdx() - 1; i > endIdx - 1; i-- )
         {
             QString temp = traceDataList[i];
 
@@ -348,11 +373,13 @@ private:
 
     void searchFromStart(QString value)
     {
+        int startIdx = getFoundIdx() + 1 < traceDataList.size() - mMaxRowCnt ? traceDataList.size() - mMaxRowCnt : getFoundIdx() + 1;
+
         if(getFoundIdx() > (traceDataList.size() - 1)
            || getFoundIdx() < 0 )
             return;
 
-        for(int i = getFoundIdx() + 1; i < traceDataList.size(); i++)
+        for(int i = startIdx; i < traceDataList.size(); i++)
         {
             QString temp = traceDataList[i];
 

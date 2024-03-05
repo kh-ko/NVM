@@ -419,35 +419,30 @@ public:
         return readBuf;
     }
 
-    QByteArray readTarce(const char * endChar, qint64 timeout) // khko add proc disconnect
+    QString mTraceReadBuffer;
+    void startTrace()
     {
-        QByteArray readBuf;
-        qint64 msec;
+        mTraceReadBuffer = "";
+    }
+    QString readTarce(const char * endChar) // khko add proc disconnect
+    {
+        QString ret = "";
 
         if(mSerialPort.isOpen() == false)
         {
-            return readBuf;
+            return ret;
         }
 
         mSerialPort.clearError();
 
-        msec = QDateTime::currentMSecsSinceEpoch();
+        mTraceReadBuffer.append(mSerialPort.readAll());
 
-       do{
-            QByteArray tempBuf = mSerialPort.readAll();
-
-            if(tempBuf.length() < 1)
-                return readBuf;
-
-            readBuf.append(tempBuf);
-
-            if(readBuf.endsWith(endChar))
-            {
-                return readBuf;
-            }
-        } while (mSerialPort.waitForReadyRead(timeout));
-
-        return readBuf;
+        if(mTraceReadBuffer.endsWith(endChar))
+        {
+            ret = mTraceReadBuffer;
+            mTraceReadBuffer.clear();
+        }
+        return ret;
     }
 
     QString getValue(QString checkPrefix, QString readData)

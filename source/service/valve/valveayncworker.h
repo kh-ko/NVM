@@ -874,6 +874,7 @@ public slots:
 
         if(value == true)
         {
+            pSValve->startTrace();
             connect(pSValve->getSerialPort(), SIGNAL(readyRead()), this, SLOT(onTrace()));
         }
     }
@@ -885,10 +886,14 @@ public slots:
         if(pSValve == nullptr)
             return;
 
-        QString traceData = QString(pSValve->readTarce("\r\n", 100));
+        QString traceData = pSValve->readTarce("\r\n");
+
+        if(traceData == "")
+            return;
+
         QStringList traceList = traceData.split("\r\n");
 
-        qDebug() << "[" << Q_FUNC_INFO << "]" << traceData;
+        //qDebug() << "[" << Q_FUNC_INFO << "]" << traceData;
 
         foreach(QString data , traceList)
         {

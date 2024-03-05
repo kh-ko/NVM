@@ -32,27 +32,32 @@ BaseSetupWindow{
         id : dlgModel
 
         onSignalEventChangedFoundIdx: {
-            if(mFoundIdx > (body.traceListModel.count -1) || mFoundIdx < 0)
-                return;
-
-            if(body.sortMode == 0)
+            for(var idx = 0; idx < body.traceListModel.count; idx ++)
             {
-                body.dataListBody.positionViewAtIndex((body.traceListModel.count - 1) - mFoundIdx, ListView.Center)
-            }
-            else
-            {
-                body.dataListBody.positionViewAtIndex(0, ListView.Center)
+                if(body.traceListModel.get(idx).rowIdx == mFoundIdx)
+                {
+                    body.dataListBody.positionViewAtIndex(idx, ListView.Center)
+                    break;
+                }
             }
         }
 
         onSignalEventReceived: {
             if(body.sortMode == 0)
             {
-                body.traceListModel.insert(0, {"rowIdx" : body.traceListModel.count, "localTime" : localTime, "interval" : interval, "receviedData" : receivedData, "transmittedData": transmittedData})
+                if(mMaxRowCnt == body.traceListModel.count)
+                {
+                    body.traceListModel.remove(body.traceListModel.count - 1, 1)
+                }
+                body.traceListModel.insert(0, {"rowIdx" : insertRowIdx, "localTime" : localTime, "interval" : interval, "receviedData" : receivedData, "transmittedData": transmittedData})
             }
             else
             {
-                body.traceListModel.append({"rowIdx" : body.traceListModel.count, "localTime" : localTime, "interval" : interval, "receviedData" : receivedData, "transmittedData": transmittedData})
+                if(mMaxRowCnt == body.traceListModel.count)
+                {
+                    body.traceListModel.remove(0, 1)
+                }
+                body.traceListModel.append({"rowIdx" : insertRowIdx, "localTime" : localTime, "interval" : interval, "receviedData" : receivedData, "transmittedData": transmittedData})
             }
         }
 
