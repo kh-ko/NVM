@@ -10,6 +10,13 @@
 #include <QSerialPortInfo>
 
 #include "source/service/valve/device/ivalve.h"
+#include <QFile>
+#include <QApplication>
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
 
 class SerialValve : public QObject, public IValve
 {
@@ -21,6 +28,12 @@ signals:
 private:
     QSerialPort mSerialPort;
     QObject *mpCommunicationTraceDlgModel = nullptr;
+
+    qint32 mBaudRate = 0;
+    int    mDataBits = 0;
+    int    mStopBits = 0;
+    int    mParity   = 0;
+
 
 public:
     explicit SerialValve(QObject *parent = nullptr):QObject(parent)
@@ -183,11 +196,14 @@ public:
 
         disconnectValve();
 
+        if(mBaudRate == 0)
+            readConnectionOpt();
+
         mSerialPort.setPortName(portName);
-        mSerialPort.setBaudRate(QSerialPort::Baud38400);
-        mSerialPort.setDataBits(QSerialPort::Data7);
-        mSerialPort.setStopBits(QSerialPort::OneStop);
-        mSerialPort.setParity(QSerialPort::EvenParity);
+        mSerialPort.setBaudRate(mBaudRate/*QSerialPort::Baud38400*/);
+        mSerialPort.setDataBits((QSerialPort::DataBits)mDataBits /*QSerialPort::Data7*/);
+        mSerialPort.setStopBits((QSerialPort::StopBits)mStopBits /*QSerialPort::OneStop*/);
+        mSerialPort.setParity  ((QSerialPort::Parity)mParity     /*QSerialPort::EvenParity*/);
 
         if(mSerialPort.open(QIODevice::ReadWrite) == false)
         {
@@ -435,7 +451,11 @@ public:
 
         mSerialPort.clearError();
 
-        mTraceReadBuffer.append(mSerialPort.readAll());
+        QByteArray recv = mSerialPort.readAll();
+
+        qDebug() << "[" << Q_FUNC_INFO << "])recv = " << QString(recv);
+
+        mTraceReadBuffer.append(recv);
 
         if(mTraceReadBuffer.endsWith(endChar))
         {
@@ -485,6 +505,53 @@ public:
         case QSerialPort::NotOpenError             : return eValveError::NotOpenError             ;
         default                                    : return eValveError::UnknownError             ;
         }
+    }
+
+    void readConnectionOpt()
+    {
+        QFile file;
+        QJsonDocument doc;
+
+        file.setFileName(QString("%1/config/connection_option.json").arg(QApplication::applicationDirPath()));
+        file.open(QFile::ReadOnly);
+
+        if(file.isOpen() == false)
+        {
+            qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]fail";
+            mBaudRate = (qint32)QSerialPort::Baud38400;
+            mDataBits = (int)QSerialPort::Data7;
+            mStopBits = (int)QSerialPort::OneStop;
+            mParity   = (int)QSerialPort::EvenParity;
+            return ;
+        }
+
+        QByteArray loadData = file.readAll();
+
+        file.close();
+
+        try{
+            doc = QJsonDocument::fromJson(loadData);
+
+            QJsonObject obj = doc.object();
+
+            mBaudRate  = obj.value("baudrate").toInt();
+            mDataBits  = obj.value("dataBits").toInt();
+            mStopBits  = obj.value("stopBits").toInt();
+            mParity    = obj.value("parity").toInt();
+
+            qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]mBaudRate = " << mBaudRate << ", mDataBits = " << mDataBits << ", mStopBits = " << mStopBits << ", mParity = " << mParity;
+        }
+        catch (int ex)
+        {
+            qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]exception";
+            mBaudRate = (qint32)QSerialPort::Baud38400;
+            mDataBits = (int)QSerialPort::Data7;
+            mStopBits = (int)QSerialPort::OneStop;
+            mParity   = (int)QSerialPort::EvenParity;
+            return ;
+        }
+        return ;
+
     }
 };
 
