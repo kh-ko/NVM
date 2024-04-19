@@ -8,6 +8,7 @@
 #include <QDateTime>
 #include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QHash>
 
 #include "source/service/valve/device/ivalve.h"
 #include <QFile>
@@ -17,6 +18,46 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
+class SerialConnectionOpt{
+public:
+    QSerialPort::BaudRate mBaudRate = QSerialPort::Baud38400 ;
+    QSerialPort::DataBits mDataBits = QSerialPort::Data7     ;
+    QSerialPort::StopBits mStopBits = QSerialPort::OneStop   ;
+    QSerialPort::Parity   mParity   = QSerialPort::EvenParity;
+
+    SerialConnectionOpt(){}
+    SerialConnectionOpt(QSerialPort::BaudRate baudRate,
+                        QSerialPort::DataBits dataBits,
+                        QSerialPort::StopBits stopBits,
+                        QSerialPort::Parity   parity)
+    {
+        mBaudRate = baudRate;
+        mDataBits = dataBits;
+        mStopBits = stopBits;
+        mParity   = parity  ;
+    }
+    SerialConnectionOpt(const SerialConnectionOpt& copy) :
+        mBaudRate(copy.mBaudRate),
+        mDataBits(copy.mDataBits),
+        mStopBits(copy.mStopBits),
+        mParity  (copy.mParity  ){}
+
+    ~SerialConnectionOpt(){}
+
+    SerialConnectionOpt& operator=(const SerialConnectionOpt& other)
+    {
+        mBaudRate = other.mBaudRate;
+        mDataBits = other.mDataBits;
+        mStopBits = other.mStopBits;
+        mParity   = other.mParity  ;
+
+        return *this;
+    }
+};
+
+Q_DECLARE_METATYPE(SerialConnectionOpt);
+
+
 
 class SerialValve : public QObject, public IValve
 {
@@ -28,12 +69,14 @@ signals:
 private:
     QSerialPort mSerialPort;
     QObject *mpCommunicationTraceDlgModel = nullptr;
+    QList<SerialConnectionOpt>           mConnOpts;
 
-    qint32 mBaudRate = 0;
-    int    mDataBits = 0;
-    int    mStopBits = 0;
-    int    mParity   = 0;
+    static QHash<QString, SerialConnectionOpt> * getConnectionHash()
+    {
+        static QHash<QString, SerialConnectionOpt>  mConnections;
 
+        return &mConnections;
+    }
 
 public:
     explicit SerialValve(QObject *parent = nullptr):QObject(parent)
@@ -55,7 +98,13 @@ public:
 
     QString getConnectionInfo()
     {
-        return QString("%1-38400-7-1-E").arg(mSerialPort.portName());
+        QString parity = mSerialPort.parity() == QSerialPort::NoParity ? "N"
+                         : mSerialPort.parity() == QSerialPort::EvenParity ? "E"
+                         : mSerialPort.parity() == QSerialPort::OddParity ? "O"
+                         : mSerialPort.parity() == QSerialPort::SpaceParity ? "S"
+                         : mSerialPort.parity() == QSerialPort::SpaceParity ? "M" : "U";
+
+        return QString("%1-%2-%3-%4-%5").arg(mSerialPort.portName()).arg(mSerialPort.baudRate()).arg(mSerialPort.dataBits()).arg(mSerialPort.stopBits()).arg(parity);
     }
 
     QString getConnectTypeNmae()
@@ -133,6 +182,9 @@ public:
 //        }
 //        return portList;
 
+        getConnectionHash()->clear();
+        readConnectionOptions();
+
         QString dummy;
         QStringList portList;
         SerialValve * pSeacherValve = nullptr;
@@ -146,23 +198,47 @@ public:
 
             if(mSerialPort.portName() == info.portName())
             {
+                SerialConnectionOpt opt;
+
+                opt.mBaudRate = (QSerialPort::BaudRate)(mSerialPort.baudRate());
+                opt.mDataBits = mSerialPort.dataBits();
+                opt.mStopBits = mSerialPort.stopBits();
+                opt.mParity   = mSerialPort.parity()  ;
+
                 result = sendCmdInt(cmd, value, checkPreFix, checkLength, dummy, 300);
+
+                getConnectionHash()->insert(info.portName(), opt);
 
                 qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]connected port["<< info.portName() <<"] search : result = " << result;
             }
             else
             {
-                pSeacherValve = new SerialValve();
-
-                if(pSeacherValve->connectValve(info.portName()))
+                for(int connIdx = 0; connIdx< mConnOpts.count() && result == false; connIdx++)
                 {
-                    result = pSeacherValve->sendCmdInt(cmd, value, checkPreFix, checkLength, dummy, 300);
+                    pSeacherValve = new SerialValve();
 
-                    qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]port["<< info.portName() <<"] search : result = " << result;
-                }
-                else
-                {
-                    qDebug() << "[khko_debug][" << Q_FUNC_INFO << "] port[" << info.portName() <<"] is open fail";
+                    SerialConnectionOpt opt = mConnOpts[connIdx];
+
+                    if(pSeacherValve->connectValve(info.portName(), opt.mBaudRate, opt.mDataBits, opt.mStopBits, opt.mParity))
+                    {
+                        result = pSeacherValve->sendCmdInt(cmd, value, checkPreFix, checkLength, dummy, 300);
+
+                        if(result)
+                        {
+                            qDebug() << "[" << Q_FUNC_INFO << "]Inerted connection info : " << info.portName() << ", baudRate = " << opt.mBaudRate << ", dataBit = " << opt.mDataBits << ", stopBit = " << opt.mStopBits << ", parity = " << opt.mParity;
+                            getConnectionHash()->insert(info.portName(), opt);
+                        }
+
+                        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]port["<< info.portName() <<"] search : result = " << result;
+                    }
+                    else
+                    {
+                        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "] port[" << info.portName() <<"] is open fail";
+                    }
+
+                    pSeacherValve->disconnectValve();
+                    delete pSeacherValve;
+                    pSeacherValve = nullptr;
                 }
             }
 
@@ -176,13 +252,6 @@ public:
             {
                 portList.append(QString("D:%1:").arg(info.portName()));
             }
-
-            if(mSerialPort.portName() != info.portName())
-            {
-                pSeacherValve->disconnectValve();
-                delete pSeacherValve;
-                pSeacherValve = nullptr;
-            }
         }
         return portList;
     }
@@ -191,19 +260,25 @@ public:
     bool connectValve(QString portName)
     {
         QString readData;
+        SerialConnectionOpt opt;
 
-        qDebug() << "[SerialValve][connectValve]" << portName;
+        qDebug() << "[" << Q_FUNC_INFO << "]" << portName;
 
         disconnectValve();
 
-        if(mBaudRate == 0)
-            readConnectionOpt();
+        if(getConnectionHash()->contains(portName))
+        {
+            qDebug() << "[" << Q_FUNC_INFO << "] port found";
+            opt = getConnectionHash()->find(portName).value();
+        }
 
         mSerialPort.setPortName(portName);
-        mSerialPort.setBaudRate(mBaudRate/*QSerialPort::Baud38400*/);
-        mSerialPort.setDataBits((QSerialPort::DataBits)mDataBits /*QSerialPort::Data7*/);
-        mSerialPort.setStopBits((QSerialPort::StopBits)mStopBits /*QSerialPort::OneStop*/);
-        mSerialPort.setParity  ((QSerialPort::Parity)mParity     /*QSerialPort::EvenParity*/);
+        mSerialPort.setBaudRate(opt.mBaudRate /*QSerialPort::Baud38400*/ );
+        mSerialPort.setDataBits(opt.mDataBits /*QSerialPort::Data7*/     );
+        mSerialPort.setStopBits(opt.mStopBits /*QSerialPort::OneStop*/   );
+        mSerialPort.setParity  (opt.mParity   /*QSerialPort::EvenParity*/);
+
+        qDebug() << "[SerialValve][connectValve]" << portName << ", baudRate = " << opt.mBaudRate << ", dataBit = " << opt.mDataBits << ", stopBit = " << opt.mStopBits << ", parity = " << opt.mParity;
 
         if(mSerialPort.open(QIODevice::ReadWrite) == false)
         {
@@ -218,7 +293,7 @@ public:
     {
         QString readData;
 
-        qDebug() << "[SerialValve][connectValve]" << portName;
+        qDebug() << "[" << Q_FUNC_INFO << "]" << portName << ", baudRate = " << baudRate << ", dataBit = " << dataBit << ", stopBit = " << stopBit << ", parity = " << parity;
 
         disconnectValve();
 
@@ -230,7 +305,7 @@ public:
 
         if(mSerialPort.open(QIODevice::ReadWrite) == false)
         {
-            qDebug() << "[SerialValve][connectValve]failed";
+            qDebug() << "[" << Q_FUNC_INFO << "] failed";
              return false;
         }
         return true;
@@ -507,10 +582,13 @@ public:
         }
     }
 
-    void readConnectionOpt()
+    void readConnectionOptions()
     {
         QFile file;
         QJsonDocument doc;
+        SerialConnectionOpt opt;
+
+        mConnOpts.clear();
 
         file.setFileName(QString("%1/config/connection_option.json").arg(QApplication::applicationDirPath()));
         file.open(QFile::ReadOnly);
@@ -518,10 +596,8 @@ public:
         if(file.isOpen() == false)
         {
             qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]fail";
-            mBaudRate = (qint32)QSerialPort::Baud38400;
-            mDataBits = (int)QSerialPort::Data7;
-            mStopBits = (int)QSerialPort::OneStop;
-            mParity   = (int)QSerialPort::EvenParity;
+
+            mConnOpts.append(opt);
             return ;
         }
 
@@ -532,26 +608,35 @@ public:
         try{
             doc = QJsonDocument::fromJson(loadData);
 
-            QJsonObject obj = doc.object();
+            QJsonArray array = doc.array();
 
-            mBaudRate  = obj.value("baudrate").toInt();
-            mDataBits  = obj.value("dataBits").toInt();
-            mStopBits  = obj.value("stopBits").toInt();
-            mParity    = obj.value("parity").toInt();
+            for(int idx = 0; idx < array.count(); idx++)
+            {
+                QJsonObject obj = array.at(idx).toObject();
 
-            qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]mBaudRate = " << mBaudRate << ", mDataBits = " << mDataBits << ", mStopBits = " << mStopBits << ", mParity = " << mParity;
+                opt.mBaudRate = (QSerialPort::BaudRate)obj.value("baudrate").toInt();
+                opt.mDataBits = (QSerialPort::DataBits)obj.value("dataBits").toInt();
+                opt.mStopBits = (QSerialPort::StopBits)obj.value("stopBits").toInt();
+                opt.mParity   = (QSerialPort::Parity  )obj.value("parity").toInt()  ;
+
+                qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]mBaudRate = " << opt.mBaudRate << ", mDataBits = " << opt.mDataBits << ", mStopBits = " << opt.mStopBits << ", mParity = " << opt.mParity;
+
+                mConnOpts.append(opt);
+            }
         }
         catch (int ex)
         {
             qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]exception";
-            mBaudRate = (qint32)QSerialPort::Baud38400;
-            mDataBits = (int)QSerialPort::Data7;
-            mStopBits = (int)QSerialPort::OneStop;
-            mParity   = (int)QSerialPort::EvenParity;
+            opt.mBaudRate = QSerialPort::Baud38400 ;
+            opt.mDataBits = QSerialPort::Data7     ;
+            opt.mStopBits = QSerialPort::OneStop   ;
+            opt.mParity   = QSerialPort::EvenParity;
+
+            mConnOpts.clear();
+            mConnOpts.append(opt);
             return ;
         }
         return ;
-
     }
 };
 
