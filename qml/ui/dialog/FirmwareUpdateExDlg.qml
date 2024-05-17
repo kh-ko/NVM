@@ -523,7 +523,7 @@ NWindow{
 
                             Image{
                                 anchors.left: parent.left; anchors.right: parent.right;
-                                source: "/image/fu_notice_ready03.png"
+                                source: "/image/fu_notice_reboot02.png"
                                 fillMode: Image.PreserveAspectFit
                             }
 

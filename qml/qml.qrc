@@ -147,5 +147,6 @@
         <file>image/fu_notice_ready03.png</file>
         <file>image/fu_notice_reboot01.png</file>
         <file>ui/dialog/InterfaceTraceDlg.qml</file>
+        <file>image/fu_notice_reboot02.png</file>
     </qresource>
 </RCC>
