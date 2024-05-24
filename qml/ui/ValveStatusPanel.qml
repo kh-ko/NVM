@@ -157,7 +157,7 @@ Rectangle {
                 iconSource: panel.loadProgress === 100 && panel.unknowInterface ? "/image/icon-warning.png" : ""
                 keyText: qsTr("warning")
                 valueText: panel.loadProgress !== 100 ? "" :
-                           panel.unknowInterface ? qsTr("unknow interface") : ""
+                           panel.unknowInterface ? qsTr("Unknown interface") : ""
             }
 
             NKeyValueListItem{

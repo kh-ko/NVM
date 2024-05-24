@@ -113,7 +113,7 @@ BaseSetupWindow{
                                dlgModel.mFatalErrStatus == 25 ? qsTr("failure axis 1 and 2")   :
                                dlgModel.mFatalErrStatus == 26 ? qsTr("multiple axis misalignment")   :
                                dlgModel.mFatalErrStatus == 27 ? qsTr("commutation error")   :
-                               dlgModel.mFatalErrStatus == 40 ? qsTr("recovery error")   : qsTr("unknow")
+                               dlgModel.mFatalErrStatus == 40 ? qsTr("recovery error")   : qsTr("unknown")
                         visible: dialog.progress === 100
                     }
                 }
@@ -144,7 +144,7 @@ BaseSetupWindow{
                                dlgModel.mFatalErrStatus == 25 ? qsTr("normal operation")    :
                                dlgModel.mFatalErrStatus == 26 ? qsTr("normal operation")    :
                                dlgModel.mFatalErrStatus == 27 ? qsTr("synchronization")     :
-                               dlgModel.mFatalErrStatus == 40 ? qsTr("fatal error recovery"): qsTr("unknow")
+                               dlgModel.mFatalErrStatus == 40 ? qsTr("fatal error recovery"): qsTr("unknown")
                         visible: dialog.progress === 100
                     }
                 }
@@ -175,7 +175,7 @@ BaseSetupWindow{
                                dlgModel.mFatalErrStatus == 25 ? qsTr("valve mechanics, power loss")    :
                                dlgModel.mFatalErrStatus == 26 ? qsTr("valve mechanics, power loss")    :
                                dlgModel.mFatalErrStatus == 27 ? qsTr("defect encoder, valve mechanics blocked")     :
-                               dlgModel.mFatalErrStatus == 40 ? qsTr("unrecoverable failure condition"): qsTr("unknow")
+                               dlgModel.mFatalErrStatus == 40 ? qsTr("unrecoverable failure condition"): qsTr("unknown")
                         visible: dialog.progress === 100
                     }
                 }
