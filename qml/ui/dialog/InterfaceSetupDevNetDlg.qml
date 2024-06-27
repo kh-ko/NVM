@@ -364,7 +364,7 @@ BaseSetupWindow{
                     visible: _pressureUnitCombo.currentIndex == 0
                     textField.validator: DoubleValidator{}
                     stepValue : 1; minValue:0; maxValue: 999999999
-                    fixedN : 3
+                    fixedN : 4
 
                     enabled: dialog.progress === 100 && _pressureUnitCombo.currentIndex == 0
 
@@ -394,7 +394,7 @@ BaseSetupWindow{
                     anchors.verticalCenter: sensor02RangeFromLabel.verticalCenter; anchors.left: sensor02RangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _sensor01Range.right
 
                     stepValue : 1; minValue:0; maxValue: 999999999
-                    fixedN : 3
+                    fixedN : 4
 
                     visible: false//_pressureUnitCombo.currentIndex > 1
                     textField.validator: DoubleValidator{}
