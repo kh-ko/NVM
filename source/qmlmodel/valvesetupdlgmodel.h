@@ -255,7 +255,7 @@ public slots:
         mWriteSyncMode  = syncMode;
         mWriteStrokeLimit  = strokeLimit;
         mWriteTargetPosPowerFail = pValveSP->getIsSupportPFO() ? targetPosPowerFail : 0;
-        mWriteTargetPosNetworkFail = pValveSP->getInterface() == ValveEnumDef::INTERFACE_LOGIC ? 0 : targetPosNetworkFail;
+        mWriteTargetPosNetworkFail = /*pValveSP->getInterface() == ValveEnumDef::INTERFACE_LOGIC ? 0 :*/ targetPosNetworkFail;
 
         setErrMsg("");
 
