@@ -1335,7 +1335,7 @@ private:
 
         gain = *((float *)floatBuff.data());
 
-        return gain;
+        return gain * 10000;
     }
 
 //    double calRange(QString value)
@@ -1423,7 +1423,7 @@ private:
     }
     QString calGain(double range)
     {
-        float gain = range / 1;
+        float gain = range / 10000;
 
         //qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]gain = " << QString("%1").arg(gain,0,'f',10);
         QByteArray gainBuff;

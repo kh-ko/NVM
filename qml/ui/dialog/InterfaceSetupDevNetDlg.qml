@@ -293,7 +293,7 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _positionRange.verticalCenter; anchors.left: _positionRange.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrPositionRange ? "#FF0000" : "#000000"
-                    text : qsTr("gain")
+                    text : qsTr("Max")
                 }
 
                 NComboBox{

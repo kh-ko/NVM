@@ -327,7 +327,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknown", "A : APC", "M : Manual", "G : Gate", "U : UHV Gate"]
+                    model: ["Unknown", "A : APC", "M : Manual", "G : Gate", "U : UHV Gate", "L : Low cost APC"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
