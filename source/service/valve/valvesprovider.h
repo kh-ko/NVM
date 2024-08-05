@@ -2048,6 +2048,7 @@ public :
                                            .arg(idx, 2, 10, QChar('0'))
                                            .arg(dataType, 1, 10, QChar('0'))
                                            .arg("00000");
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "cmd = " <<cmd;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceCfgEthCATPDODataType, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 
@@ -2056,6 +2057,7 @@ public :
         QString cmd = QString("%1%2%3").arg(REQ_WRITE_INTERFACE_CFG_ETHCAT_PDO_RANGE)
                                            .arg(idx, 2, 10, QChar('0'))
                                            .arg(range);
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "cmd = " <<cmd;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceCfgEthCATPDORange, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 

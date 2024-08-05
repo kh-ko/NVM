@@ -450,7 +450,8 @@ public slots:
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_05), QString("%1").arg(REQ_WRITE_SETPOINT_05)); mExportCmdList.append(tempItem);
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_06), QString("%1").arg(REQ_WRITE_SETPOINT_06)); mExportCmdList.append(tempItem);
 
-        /* valve params*/
+
+        /* valve params
         tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_START));
         tempItem.mValue = ""; mExportCmdList.append(tempItem);
         for(int i = 18; i < 100; i ++)
@@ -459,6 +460,7 @@ public slots:
         }
         tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_END));
         tempItem.mValue = ""; mExportCmdList.append(tempItem);
+        */
 
         /* Pressure control learn param */
         for(int i = 0; i < 104; i ++)
