@@ -101,6 +101,8 @@ BaseSetupWindow{
             retSerialNumber = retSerialNumber + body.productNumberInput.textField.text
         }
 
+        console.debug("[buildSerialNumberByGUI]mIsSupportPdNumEx" + retSerialNumber)
+
         return retSerialNumber;
     }
 
@@ -200,7 +202,6 @@ BaseSetupWindow{
             if(body.productNumberExInput.textField.text  !== productNumberExValue)
                  dlgModel.onCommandSetEdit(true)
 
-            console.debug("[setValveIDBySerialNumber]mIsSupportPdNumEx" + dlgModel.mIsSupportPdNumEx)
             body.productNumberExInput.textField.text  = productNumberExValue
         }
 
@@ -217,6 +218,8 @@ BaseSetupWindow{
         id : dlgModel
 
         onSignalEventCompletedLoad: {
+            console.debug("[onSignalEventCompletedLoad]mSerialNumber = " + dlgModel.mSerialNumber)
+
             body.serialNumberInput.textField.text   = dlgModel.mSerialNumber
             body.valveModelCombo.currentIndex       = dlgModel.mValveModel
             body.valveTypeCombo.currentIndex        = dlgModel.mValveType
@@ -234,7 +237,6 @@ BaseSetupWindow{
 
             if(dlgModel.mIsSupportPdNumEx)
             {
-                console.debug("[onSignalEventCompletedLoad]mIsSupportPdNumEx" + dlgModel.mIsSupportPdNumEx)
                 body.productNumberExInput.setTextByValue(dlgModel.mProductNumberEx)
             }
             onCommandSetEdit(false);
@@ -742,7 +744,7 @@ BaseSetupWindow{
 
                     isHexMode: true
                     padN : 6
-                    textField.validator: RegExpValidator { regExp: /[0-9A-Fa-f]{0,4}/ }
+                    textField.validator: RegExpValidator { regExp: /[0-9A-Fa-f]{0,6}/ }
                     stepValue : 1; minValue: 0; maxValue: 16777215
                     fixedN : 0
 

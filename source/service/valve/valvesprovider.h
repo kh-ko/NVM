@@ -2468,6 +2468,9 @@ public slots:
             value.insert(20,QChar('-'));
             value.insert(25,QChar('-'));
 
+            if(value.length() > 30)
+                value.insert(30,QChar('-'));
+
             signalDto.mValveID = value;
 
             setValveID(signalDto.mValveID);
