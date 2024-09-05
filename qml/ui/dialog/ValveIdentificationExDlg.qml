@@ -44,11 +44,17 @@ BaseSetupWindow{
         var version03        = body.version03Combo.currentIndex
         var productNumber    = parseInt(body.productNumberInput.textField.text, 16)
 
+        var productNumberEx  = 0;
+        if(dlgModel.mIsSupportPdNumEx)
+        {
+            productNumberEx  = parseInt(body.productNumberExInput.textField.text, 16)
+        }
+
         body.serialNumberInput.textField.text = dialog.buildSerialNumberByGUI();
         body.serialNumberInput.isInvalidValue = false
 
 
-        dlgModel.onCommandApply(valveModel, valveType, sealingType, flangeSize, methodOfContract, bodyMaterial, commInterface, powerOption, quantifyOfSensor, version01, version02, version03, productNumber)
+        dlgModel.onCommandApply(valveModel, valveType, sealingType, flangeSize, methodOfContract, bodyMaterial, commInterface, powerOption, quantifyOfSensor, version01, version02, version03, productNumber, productNumberEx)
     }
 
     function containModelValue(value, model, startIdx, len)
@@ -85,14 +91,22 @@ BaseSetupWindow{
         retSerialNumber = retSerialNumber + getModelValue(body.version01Combo.currentIndex        , body.version01Combo.model       , 0, 1)
         retSerialNumber = retSerialNumber + getModelValue(body.version02Combo.currentIndex        , body.version02Combo.model       , 0, 1)
         retSerialNumber = retSerialNumber + getModelValue(body.version03Combo.currentIndex        , body.version03Combo.model       , 0, 1) + "-"
-        retSerialNumber = retSerialNumber + body.productNumberInput.textField.text
+        if(dlgModel.mIsSupportPdNumEx)
+        {
+            retSerialNumber = retSerialNumber + body.productNumberInput.textField.text + "-"
+            retSerialNumber = retSerialNumber + body.productNumberExInput.textField.text
+        }
+        else
+        {
+            retSerialNumber = retSerialNumber + body.productNumberInput.textField.text
+        }
 
         return retSerialNumber;
     }
 
     function setValveIDBySerialNumber(inputValue)
     {
-        if(inputValue.length !== 20)
+        if(inputValue.length < 20)
         {
             return false;
         }
@@ -118,6 +132,12 @@ BaseSetupWindow{
         var version02Value        = inputValue.substr(14, 1)
         var version03Value        = inputValue.substr(15, 1)
         var productNumberValue    = inputValue.substr(16, 4)
+        var productNumberExValue  = "0000";
+
+        if(inputValue.length > 23)
+        {
+            productNumberExValue    = inputValue.substr(20, 6)
+        }
 
         var valveModelIdx         = containModelValue(valveModelValue      , body.valveModelCombo.model      , 0, 1)
         var valveTypeIdx          = containModelValue(valveTypeValue       , body.valveTypeCombo.model       , 0, 1)
@@ -151,6 +171,12 @@ BaseSetupWindow{
          ||(!(productNumberValue.charAt(3) >= '0' && productNumberValue.charAt(3) <= '9') && !(productNumberValue.charAt(3) >= 'A' && productNumberValue.charAt(3) <= 'F')))
             return false;
 
+        if((!(productNumberExValue.charAt(0) >= '0' && productNumberExValue.charAt(0) <= '9') && !(productNumberExValue.charAt(0) >= 'A' && productNumberExValue.charAt(0) <= 'F'))
+         ||(!(productNumberExValue.charAt(1) >= '0' && productNumberExValue.charAt(1) <= '9') && !(productNumberExValue.charAt(1) >= 'A' && productNumberExValue.charAt(1) <= 'F'))
+         ||(!(productNumberExValue.charAt(2) >= '0' && productNumberExValue.charAt(2) <= '9') && !(productNumberExValue.charAt(2) >= 'A' && productNumberExValue.charAt(2) <= 'F'))
+         ||(!(productNumberExValue.charAt(3) >= '0' && productNumberExValue.charAt(3) <= '9') && !(productNumberExValue.charAt(3) >= 'A' && productNumberExValue.charAt(3) <= 'F')))
+            return false;
+
         body.valveModelCombo.currentIndex       = valveModelIdx
         body.valveTypeCombo.currentIndex        = valveTypeIdx
         body.sealingTypeCombo.currentIndex      = sealingTypeIdx
@@ -168,6 +194,15 @@ BaseSetupWindow{
              dlgModel.onCommandSetEdit(true)
 
         body.productNumberInput.textField.text  = productNumberValue
+
+        if(dlgModel.mIsSupportPdNumEx)
+        {
+            if(body.productNumberExInput.textField.text  !== productNumberExValue)
+                 dlgModel.onCommandSetEdit(true)
+
+            console.debug("[setValveIDBySerialNumber]mIsSupportPdNumEx" + dlgModel.mIsSupportPdNumEx)
+            body.productNumberExInput.textField.text  = productNumberExValue
+        }
 
         return true;
     }
@@ -197,6 +232,11 @@ BaseSetupWindow{
             body.version03Combo.currentIndex        = dlgModel.mVersion03
             body.productNumberInput.setTextByValue(dlgModel.mProductNumber)
 
+            if(dlgModel.mIsSupportPdNumEx)
+            {
+                console.debug("[onSignalEventCompletedLoad]mIsSupportPdNumEx" + dlgModel.mIsSupportPdNumEx)
+                body.productNumberExInput.setTextByValue(dlgModel.mProductNumberEx)
+            }
             onCommandSetEdit(false);
         }
     }
@@ -219,6 +259,7 @@ BaseSetupWindow{
             property alias version02Combo        : _version02Combo
             property alias version03Combo        : _version03Combo
             property alias productNumberInput    : _productNumberInput
+            property alias productNumberExInput  : _productNumberExInput
             property real  guiScale              : GUISetting.scale
 
             height: (GUISetting.line_margin + generalItem.height) + (GUISetting.line_margin + firmwareItem.height) + (GUISetting.line_margin + btnBox.height + GUISetting.line_margin);
@@ -667,13 +708,13 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + productNumberLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
-                    text : _productNumberInput.textField.text
+                    text : dlgModel.mIsSupportPdNumEx ? _productNumberInput.textField.text + "-" + _productNumberExInput.textField.text : _productNumberInput.textField.text
                 }
 
                 NInputNumber{
                     id : _productNumberInput
                     anchors.verticalCenter: productNumber.verticalCenter; anchors.left: productNumber.left;
-                    height: 24 * GUISetting.scale; width : productNumber.width
+                    height: 24 * GUISetting.scale; width : (productNumber.width / 2) - (GUISetting.margin / 2)
 
                     textField.color: dlgModel.mErrProductNumber ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100
@@ -683,6 +724,26 @@ BaseSetupWindow{
                     padN : 4
                     textField.validator: RegExpValidator { regExp: /[0-9A-Fa-f]{0,4}/ }
                     stepValue : 1; minValue: 0; maxValue: 65535
+                    fixedN : 0
+
+                    onChangedValue: {
+                        dlgModel.onCommandSetEdit(true)
+                    }
+                }
+
+                NInputNumber{
+                    id : _productNumberExInput
+                    anchors.verticalCenter: productNumber.verticalCenter; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    height: 24 * GUISetting.scale; width : (productNumber.width / 2) - (GUISetting.margin / 2)
+
+                    textField.color: dlgModel.mErrProductNumberEx ? "#FF0000" : "#000000"
+                    enabled: dialog.progress === 100 && dlgModel.mIsSupportPdNumEx
+                    visible: dialog.unlock
+
+                    isHexMode: true
+                    padN : 6
+                    textField.validator: RegExpValidator { regExp: /[0-9A-Fa-f]{0,4}/ }
+                    stepValue : 1; minValue: 0; maxValue: 16777215
                     fixedN : 0
 
                     onChangedValue: {
@@ -719,7 +780,7 @@ BaseSetupWindow{
                     anchors.top: firmwareTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: firmwareVersionLabel.right; anchors.leftMargin: GUISetting.margin * 2
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + firmwareVersionLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
-                    text : dlgModel.mFirmwareVersion
+                    text : dlgModel.mFirmwareVersion.slice(0, 6) + "-" + dlgModel.mFirmwareVersion.slice(6);
                 }
             }
 

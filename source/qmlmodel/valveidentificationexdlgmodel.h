@@ -27,6 +27,8 @@ class ValveIdentificationExDlgModel : public QObject
     Q_PROPERTY(int      mVersion02            READ getVersion02            NOTIFY signalEventChangedVersion02           )
     Q_PROPERTY(int      mVersion03            READ getVersion03            NOTIFY signalEventChangedVersion03           )
     Q_PROPERTY(int      mProductNumber        READ getProductNumber        NOTIFY signalEventChangedProductNumber       )
+    Q_PROPERTY(int      mProductNumberEx      READ getProductNumberEx      NOTIFY signalEventChangedProductNumberEx     )
+    Q_PROPERTY(bool     mIsSupportPdNumEx     READ getIsSupportPdNumEx     NOTIFY signalEventChangedIsSupportPdNumEx    )
     Q_PROPERTY(QString  mFirmwareVersion      READ getFirmwareVersion      NOTIFY signalEventChangedFirmwareVersion     )
     Q_PROPERTY(bool     mErrSerialNumber      READ getErrSerialNumber      NOTIFY signalEventChangedErrSerialNumber     )
     Q_PROPERTY(bool     mErrValveModel        READ getErrValveModel        NOTIFY signalEventChangedErrValveModel       )
@@ -42,6 +44,7 @@ class ValveIdentificationExDlgModel : public QObject
     Q_PROPERTY(bool     mErrVersion02         READ getErrVersion02         NOTIFY signalEventChangedErrVersion02        )
     Q_PROPERTY(bool     mErrVersion03         READ getErrVersion03         NOTIFY signalEventChangedErrVersion03        )
     Q_PROPERTY(bool     mErrProductNumber     READ getErrProductNumber     NOTIFY signalEventChangedErrProductNumber    )
+    Q_PROPERTY(bool     mErrProductNumberEx   READ getErrProductNumberEx   NOTIFY signalEventChangedErrProductNumberEx  )
     Q_PROPERTY(bool     mErrFirmwareVersion   READ getErrFirmwareVersion   NOTIFY signalEventChangedErrFirmwareVersion  )
 
     Q_PROPERTY(bool     mIsEdit               READ getIsEdit               NOTIFY signalEventChangedIsEdit              )
@@ -67,6 +70,8 @@ public:
     int     mVersion02            = 0;
     int     mVersion03            = 0;
     int     mProductNumber        = 0;
+    int     mProductNumberEx      = 0;
+    bool    mIsSupportPdNumEx     = true;
     QString mFirmwareVersion      = 0;
     bool    mErrSerialNumber      = false;
     bool    mErrValveModel        = false;
@@ -82,6 +87,7 @@ public:
     bool    mErrVersion02         = false;
     bool    mErrVersion03         = false;
     bool    mErrProductNumber     = false;
+    bool    mErrProductNumberEx   = false;
     bool    mErrFirmwareVersion   = false;
     bool    mIsEdit               = false;
     QString mStrStatus            = "Loading";
@@ -105,6 +111,8 @@ public:
     int     getVersion02           (){ return mVersion02           ;}
     int     getVersion03           (){ return mVersion03           ;}
     int     getProductNumber       (){ return mProductNumber       ;}
+    int     getProductNumberEx     (){ return mProductNumberEx     ;}
+    bool    getIsSupportPdNumEx    (){ return mIsSupportPdNumEx    ;}
     QString getFirmwareVersion     (){ return mFirmwareVersion     ;}
     bool    getErrSerialNumber     (){ return mErrSerialNumber     ;}
     bool    getErrValveModel       (){ return mErrValveModel       ;}
@@ -120,6 +128,7 @@ public:
     bool    getErrVersion02        (){ return mErrVersion02        ;}
     bool    getErrVersion03        (){ return mErrVersion03        ;}
     bool    getErrProductNumber    (){ return mErrProductNumber    ;}
+    bool    getErrProductNumberEx  (){ return mErrProductNumberEx  ;}
     bool    getErrFirmwareVersion  (){ return mErrFirmwareVersion  ;}
     bool    getIsEdit              (){ return mIsEdit              ;}
     QString getStrStatus           (){ return mStrStatus           ;}
@@ -143,6 +152,8 @@ public:
     void    setVersion02           (int     value){ if(mVersion02            == value)return; mVersion02            = value; emit signalEventChangedVersion02           (value);}
     void    setVersion03           (int     value){ if(mVersion03            == value)return; mVersion03            = value; emit signalEventChangedVersion03           (value);}
     void    setProductNumber       (int     value){ if(mProductNumber        == value)return; mProductNumber        = value; emit signalEventChangedProductNumber       (value);}
+    void    setProductNumberEx     (int     value){ if(mProductNumberEx      == value)return; mProductNumberEx      = value; emit signalEventChangedProductNumberEx     (value);}
+    void    setIsSupportPdNumEx    (bool    value){ if(mIsSupportPdNumEx     == value)return; mIsSupportPdNumEx     = value; emit signalEventChangedIsSupportPdNumEx    (value);}
     void    setFirmwareVersion     (QString value){ if(mFirmwareVersion      == value)return; mFirmwareVersion      = value; emit signalEventChangedFirmwareVersion     (value);}
     void    setErrSerialNumber     (bool    value){ if(mErrSerialNumber      == value)return; mErrSerialNumber      = value; emit signalEventChangedErrSerialNumber     (value);}
     void    setErrValveModel       (bool    value){ if(mErrValveModel        == value)return; mErrValveModel        = value; emit signalEventChangedErrValveModel       (value);}
@@ -158,6 +169,7 @@ public:
     void    setErrVersion02        (bool    value){ if(mErrVersion02         == value)return; mErrVersion02         = value; emit signalEventChangedErrVersion02        (value);}
     void    setErrVersion03        (bool    value){ if(mErrVersion03         == value)return; mErrVersion03         = value; emit signalEventChangedErrVersion03        (value);}
     void    setErrProductNumber    (bool    value){ if(mErrProductNumber     == value)return; mErrProductNumber     = value; emit signalEventChangedErrProductNumber    (value);}
+    void    setErrProductNumberEx  (bool    value){ if(mErrProductNumberEx   == value)return; mErrProductNumberEx   = value; emit signalEventChangedErrProductNumberEx  (value);}
     void    setErrFirmwareVersion  (bool    value){ if(mErrFirmwareVersion   == value)return; mErrFirmwareVersion   = value; emit signalEventChangedErrFirmwareVersion  (value);}
     void    setIsEdit              (bool    value){ if(mIsEdit               == value)return; mIsEdit               = value; emit signalEventChangedIsEdit              (value);}
     void    setStrStatus           (QString value){ if(mStrStatus            == value)return; mStrStatus            = value; emit signalEventChangedStrStatus           (value);}
@@ -182,6 +194,8 @@ signals:
     void signalEventChangedVersion02           (int     value);
     void signalEventChangedVersion03           (int     value);
     void signalEventChangedProductNumber       (int     value);
+    void signalEventChangedProductNumberEx     (int     value);
+    void signalEventChangedIsSupportPdNumEx    (bool    value);
     void signalEventChangedFirmwareVersion     (QString value);
     void signalEventChangedErrSerialNumber     (bool    value);
     void signalEventChangedErrValveModel       (bool    value);
@@ -197,6 +211,7 @@ signals:
     void signalEventChangedErrVersion02        (bool    value);
     void signalEventChangedErrVersion03        (bool    value);
     void signalEventChangedErrProductNumber    (bool    value);
+    void signalEventChangedErrProductNumberEx  (bool    value);
     void signalEventChangedErrFirmwareVersion  (bool    value);
     void signalEventChangedIsEdit              (bool    value);
     void signalEventChangedStrStatus           (QString value);
@@ -276,8 +291,18 @@ public slots:
 
         if(!dto.mIsSucc)
         {
+            if(mState == STATE_READ_PRODUCTNUM_EX && dto.mIsNetworkErr == false)
+            {
+                setIsSupportPdNumEx(false);
+            }
+
             setState(mState);
             return;
+        }
+
+        if(mState == STATE_READ_PRODUCTNUM_EX)
+        {
+            setIsSupportPdNumEx(true);
         }
 
         setParam(dto.mID, dto.mValue);
@@ -314,6 +339,7 @@ public slots:
                         getErrVersion02        () ||
                         getErrVersion03        () ||
                         getErrProductNumber    () ||
+                        getErrProductNumberEx  () ||
                         getErrFirmwareVersion  ()   );
         }
         setFirmwareVersion(dto.mFirmwareVersion);
@@ -328,7 +354,7 @@ public slots:
         setIsEdit(value);
     }
 
-    Q_INVOKABLE void onCommandApply(int valveModelIdx, int valveTypeIdx, int sealingTypeIdx, int flangeSizeIdx, int methodOfContractIdx, int bodyMaterialIdx, int commInterfaceIdx, int powerOptionIdx, int quantityOfSensorsIdx, int version01Idx, int version02Idx, int version03Idx, int productNumberIdx)
+    Q_INVOKABLE void onCommandApply(int valveModelIdx, int valveTypeIdx, int sealingTypeIdx, int flangeSizeIdx, int methodOfContractIdx, int bodyMaterialIdx, int commInterfaceIdx, int powerOptionIdx, int quantityOfSensorsIdx, int version01Idx, int version02Idx, int version03Idx, int productNumberIdx, int productNumberExIdx)
     {
         mIsWritten = true;
         mWriteValveModelIdx        = valveModelIdx       ;
@@ -344,6 +370,7 @@ public slots:
         mWriteVersion02Idx         = version02Idx        ;
         mWriteVersion03Idx         = version03Idx        ;
         mWriteProductNumberIdx     = productNumberIdx    ;
+        mWriteProductNumberExIdx   = productNumberExIdx  ;
 
         setErrMsg2("");
         setState(eState::STATE_WRITE_START);
@@ -424,7 +451,8 @@ private:
         STATE_WRITE_VERSION_02        = STATE_WRITE_VERSION_01        + 1,
         STATE_WRITE_VERSION_03        = STATE_WRITE_VERSION_02        + 1,
         STATE_WRITE_PRODUCTNUM        = STATE_WRITE_VERSION_03        + 1,
-        STATE_WRITE_END               = STATE_WRITE_PRODUCTNUM        + 1,
+        STATE_WRITE_PRODUCTNUM_EX     = STATE_WRITE_PRODUCTNUM        + 1,
+        STATE_WRITE_END               = STATE_WRITE_PRODUCTNUM_EX     + 1,
         STATE_READ_SERIALNUM          = STATE_WRITE_END               + 1,
         STATE_READ_VALVEMODEL         = STATE_READ_SERIALNUM          + 1,
         STATE_READ_VALVETYPE          = STATE_READ_VALVEMODEL         + 1,
@@ -439,7 +467,8 @@ private:
         STATE_READ_VERSION_02         = STATE_READ_VERSION_01         + 1,
         STATE_READ_VERSION_03         = STATE_READ_VERSION_02         + 1,
         STATE_READ_PRODUCTNUM         = STATE_READ_VERSION_03         + 1,
-        STATE_READ_FIRMWAREVERSION    = STATE_READ_PRODUCTNUM         + 1,
+        STATE_READ_PRODUCTNUM_EX      = STATE_READ_PRODUCTNUM         + 1,
+        STATE_READ_FIRMWAREVERSION    = STATE_READ_PRODUCTNUM_EX      + 1,
         STATE_READY                   = STATE_READ_FIRMWAREVERSION    + 1
     };
 
@@ -460,6 +489,7 @@ private:
     int  mWriteVersion02Idx         = 0;
     int  mWriteVersion03Idx         = 0;
     int  mWriteProductNumberIdx     = 0;
+    int  mWriteProductNumberExIdx   = 0;
 
     int convertParamID(eState state)
     {
@@ -498,6 +528,8 @@ private:
             return mWriteVersion03Idx                  ;
         case (int)eState::STATE_WRITE_PRODUCTNUM       :
             return mWriteProductNumberIdx              ;
+        case (int)eState::STATE_WRITE_PRODUCTNUM_EX    :
+            return mWriteProductNumberExIdx            ;
         }
 
         return 0;
@@ -654,6 +686,18 @@ private:
                 setProductNumber(mWriteProductNumberIdx);
             }
             break;
+
+        case (int)QmlEnumDef::VALVEPARAM_PRODUCTNUM_EX:
+            if(mIsWritten == false)
+            {
+                setProductNumberEx(idxValue);
+            }
+            else
+            {
+                setErrProductNumberEx(mWriteProductNumberExIdx!= idxValue);
+                setProductNumberEx(mWriteProductNumberExIdx);
+            }
+            break;
         }
     }
 
@@ -676,6 +720,10 @@ private:
 
         if(mState < (int)eState::STATE_READY && mState >= STATE_READ_SERIALNUM)
         {
+            if(mState == STATE_READ_PRODUCTNUM_EX && getIsSupportPdNumEx() == false)
+            {
+                mState = (eState)(mState + 1);
+            }
             progress = (mState * 100) / eState::STATE_READY;
             strStatus = "Loading";
         }
@@ -686,6 +734,11 @@ private:
         }
         else
         {
+            if(mState == STATE_WRITE_PRODUCTNUM_EX && getIsSupportPdNumEx() == false)
+            {
+                mState = (eState)(mState + 1);
+            }
+
             progress = ((mState - eState::STATE_WRITE_VALVEMODEL) * 100) / (eState::STATE_WRITE_END + 1);
             strStatus = "Writting";
         }
@@ -716,6 +769,7 @@ public slots:
         case (int)eState::STATE_READ_VERSION_02:
         case (int)eState::STATE_READ_VERSION_03:
         case (int)eState::STATE_READ_PRODUCTNUM:
+        case (int)eState::STATE_READ_PRODUCTNUM_EX:
             pValveSP->readValveParam(convertParamID(mState), this);
             break;
         case (int)eState::STATE_READ_FIRMWAREVERSION:
@@ -738,6 +792,7 @@ public slots:
         case (int)eState::STATE_WRITE_VERSION_02:
         case (int)eState::STATE_WRITE_VERSION_03:
         case (int)eState::STATE_WRITE_PRODUCTNUM:
+        case (int)eState::STATE_WRITE_PRODUCTNUM_EX:
             pValveSP->setValveParam(convertParamID(mState), QString("%1").arg(getWriteValueByState(mState),6,16,QChar('0')), this); // khko : edit int to qstring
             break;
 

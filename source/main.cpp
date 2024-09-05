@@ -28,10 +28,12 @@
 #include "source/qmlmodel/interfacesetupethercatdlgmodel.h"
 #include "source/qmlmodel/interfacesetuprs232dlgmodel.h"
 #include "source/qmlmodel/interfacesetupethernetdlgmodel.h"
+#include "source/qmlmodel/interfacesetupprofibusdlgmodel.h"
 #include "source/qmlmodel/interfacestatuslogicdlgmodel.h"
 #include "source/qmlmodel/interfacestatusethercatdlgmodel.h"
 #include "source/qmlmodel/interfacestatusdnetdlgmodel.h"
 #include "source/qmlmodel/interfacestatusrs232dlgmodel.h"
+#include "source/qmlmodel/interfacestatusprofibusdlgmodel.h"
 #include "source/qmlmodel/interfacetracedlgmodel.h"
 #include "source/qmlmodel/valvecyclecounterdlgmodel.h"
 #include "source/qmlmodel/valvecaribrationdlgmodel.h"
@@ -114,6 +116,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<ValveResponseInterfaceConfigDNetDoDto>();
     qRegisterMetaType<ValveResponseInterfaceConfigRS232Dto>();
     qRegisterMetaType<ValveResponseInterfaceConfigRS232RangeDto>();
+    qRegisterMetaType<ValveResponseInterfaceConfigFieldbusNodeAddrDto>();
     qRegisterMetaType<ValveResponseInterfaceStatusRS232Dto>();
     qRegisterMetaType<ValveResponseLearnStatusDto>();
     qRegisterMetaType<ValveResponseLearnPressureLimitDto>();
@@ -161,10 +164,12 @@ int main(int argc, char *argv[])
     qmlRegisterType<InterfaceSetupEthCATItemModel>("InterfaceSetupEthCATItemModel", 1, 0, "InterfaceSetupEthCATItemModel");
     qmlRegisterType<InterfaceSetupRS232DlgModel>("InterfaceSetupRS232DlgModel", 1, 0, "InterfaceSetupRS232DlgModel");
     qmlRegisterType<InterfaceSetupEtherNETDlgModel>("InterfaceSetupEtherNETDlgModel", 1, 0, "InterfaceSetupEtherNETDlgModel");
+    qmlRegisterType<InterfaceSetupProfibusDlgModel>("InterfaceSetupProfibusDlgModel", 1, 0, "InterfaceSetupProfibusDlgModel");
     qmlRegisterType<InterfaceStatusLogicDlgModel>("InterfaceStatusLogicDlgModel", 1, 0, "InterfaceStatusLogicDlgModel");
     qmlRegisterType<InterfaceStatusEtherCATDlgModel>("InterfaceStatusEtherCATDlgModel", 1, 0, "InterfaceStatusEtherCATDlgModel");
     qmlRegisterType<InterfaceStatusDNetDlgModel>("InterfaceStatusDNetDlgModel", 1, 0, "InterfaceStatusDNetDlgModel");
     qmlRegisterType<InterfaceStatusRS232DlgModel>("InterfaceStatusRS232DlgModel", 1, 0, "InterfaceStatusRS232DlgModel");
+    qmlRegisterType<InterfaceStatusProfibusDlgModel>("InterfaceStatusProfibusDlgModel", 1, 0, "InterfaceStatusProfibusDlgModel");
     qmlRegisterType<InterfaceTraceDlgModel>("InterfaceTraceDlgModel", 1, 0, "InterfaceTraceDlgModel");
     qmlRegisterType<ValveCycleCounterDlgModel>("ValveCycleCounterDlgModel", 1, 0, "ValveCycleCounterDlgModel");
     qmlRegisterType<ValveCariblationDlgModel>("ValveCariblationDlgModel", 1, 0, "ValveCariblationDlgModel");

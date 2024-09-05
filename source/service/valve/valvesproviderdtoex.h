@@ -830,6 +830,41 @@ public:
 
 Q_DECLARE_METATYPE(ValveResponseInterfaceConfigEthCATDoDto);
 
+class ValveResponseInterfaceConfigFieldbusNodeAddrDto : public ValveResponseDto
+{
+public:
+    int mNodeAddr  = 0;
+    QString mDummy = "";
+
+    ValveResponseInterfaceConfigFieldbusNodeAddrDto(){}
+    ValveResponseInterfaceConfigFieldbusNodeAddrDto(ValveRequestDto reqDto, QDateTime resDateTime, QString resData, bool isParsed, bool isSucc, bool isNetworkErr, QString errMsg =""):ValveResponseDto(reqDto, resDateTime, resData, isParsed, isSucc, isNetworkErr, errMsg){}
+    ValveResponseInterfaceConfigFieldbusNodeAddrDto(ValveResponseDto baseDto) : ValveResponseDto(baseDto){}
+    ValveResponseInterfaceConfigFieldbusNodeAddrDto(const ValveResponseInterfaceConfigFieldbusNodeAddrDto& copy) : ValveResponseDto(copy),
+        mNodeAddr(copy.mNodeAddr),
+        mDummy   (copy.mDummy   ){}
+
+    ~ValveResponseInterfaceConfigFieldbusNodeAddrDto(){}
+
+    ValveResponseInterfaceConfigFieldbusNodeAddrDto& operator=(const ValveResponseInterfaceConfigFieldbusNodeAddrDto& other)
+    {
+        ValveResponseDto::operator=(other);
+
+        mNodeAddr = other.mNodeAddr;
+        mDummy    = other.mDummy   ;
+
+        return *this;
+    }
+
+    QString toString()
+    {
+        return QString("%1, mNodeAddr = %2, mDummy = %3")
+                               .arg(ValveResponseDto::toString()).arg(mNodeAddr).arg(mDummy);
+    }
+};
+//ValveResponseInterfaceConfigFieldbusNodeAddrDto
+Q_DECLARE_METATYPE(ValveResponseInterfaceConfigFieldbusNodeAddrDto);
+
+
 class ValveResponseInterfaceConfigEthCATDevIDDto : public ValveResponseDto
 {
 public:

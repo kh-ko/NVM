@@ -177,6 +177,10 @@ Window {
             {
                 popup = interfaceSetupEtherNETDlg.createObject(window);
             }
+            else if(model.mInterface == ValveEnumDef.INTERFACE_PROFIBUS)
+            {
+                popup = interfaceSetupProfibusDlg.createObject(window);
+            }
             else
             {
                 popup = interfaceSetupLogicDlg.createObject(window);
@@ -198,7 +202,10 @@ Window {
             {
                 popup = interfaceStatusRS232Dlg.createObject(window);
             }
-
+            else if(model.mInterface == ValveEnumDef.INTERFACE_PROFIBUS)
+            {
+                popup = interfaceStatusProfibusDlg.createObject(window);
+            }
             else
             {
                 popup = interfaceStatusLogicDlg.createObject(window);
@@ -593,6 +600,14 @@ Window {
         }
     }
 
+    Component{
+        id : interfaceSetupProfibusDlg
+        InterfaceSetupProfibusDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
+    }
+
 
     Component{
         id : interfaceStatusLogicDlg
@@ -623,8 +638,13 @@ Window {
             userInterface  : model.mInterface
         }
     }
-
-
+    Component{
+        id : interfaceStatusProfibusDlg
+        InterfaceStatusProfibusDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
+    }
     Component{
         id : interfaceTraceDlg
         InterfaceTraceDlg{

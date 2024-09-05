@@ -244,6 +244,10 @@
 #define RES_READ_INTERFACE_ETHERNET_INFO                "a:7302"
 #define RES_INTERFACE_ETHERNET_INFO_DATA_LEN            0
 
+/* fieldbus interface setup ()*/
+#define REQ_READ_INTERFACE_FIELDBUS_NODE_ADDR           "i:20"
+#define RES_INTERFACE_CFG_FIELDBUS_NODE_ADDR_DATA_LEN   8
+
 /*learn status*/
 #define REQ_READ_LEARN_STATUS                           "i:32"
 #define RES_LEARN_STATUS_DATA_LEN                       8
@@ -429,6 +433,9 @@
 #define REQ_WRITE_INTERFACE_EHTERNET_DHCP            "a:7302AT07"
 #define REQ_WRITE_INTERFACE_EHTERNET_PORT01          "a:7302AT09"
 #define REQ_WRITE_INTERFACE_EHTERNET_PORT02          "a:7302AT10"
+
+/* fieldbus interface */
+#define REQ_WRITE_INTERFACE_CFG_FIELDBUS_NODE_ADDR   "s:20"
 
 #define REQ_WRITE_SENSOR_SCALE                       "J:00"
 #define REQ_WRITE_SETPOINT_01                        "J:01"

@@ -63,10 +63,12 @@ HEADERS += \
     source/qmlmodel/interfacesetupethercatdlgmodel.h \
     source/qmlmodel/interfacesetupethernetdlgmodel.h \
     source/qmlmodel/interfacesetuplogicdlgmodel.h \
+    source/qmlmodel/interfacesetupprofibusdlgmodel.h \
     source/qmlmodel/interfacesetuprs232dlgmodel.h \
     source/qmlmodel/interfacestatusdnetdlgmodel.h \
     source/qmlmodel/interfacestatusethercatdlgmodel.h \
     source/qmlmodel/interfacestatuslogicdlgmodel.h \
+    source/qmlmodel/interfacestatusprofibusdlgmodel.h \
     source/qmlmodel/interfacestatusrs232dlgmodel.h \
     source/qmlmodel/interfacetracedlgmodel.h \
     source/qmlmodel/ncpasettingsdlgmodel.h \

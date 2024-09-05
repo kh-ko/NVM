@@ -377,7 +377,7 @@ BaseSetupWindow{
                     anchors.verticalCenter: _sensor01Range.verticalCenter; anchors.left: _sensor01Range.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrSensor01Range ? "#FF0000" : "#000000"
                     visible: _pressureUnitCombo.currentIndex == 0
-                    text : qsTr("gain") //_pressureUnitCombo.currentIndex > 1 ? qsTr("sensor 1 range") : qsTr("sensor range")
+                    text : qsTr("MAX") //_pressureUnitCombo.currentIndex > 1 ? qsTr("sensor 1 range") : qsTr("sensor range")
                  }
 
                 NText{

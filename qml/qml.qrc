@@ -148,5 +148,7 @@
         <file>image/fu_notice_reboot01.png</file>
         <file>ui/dialog/InterfaceTraceDlg.qml</file>
         <file>image/fu_notice_reboot02.png</file>
+        <file>ui/dialog/InterfaceSetupProfibusDlg.qml</file>
+        <file>ui/dialog/InterfaceStatusProfibusDlg.qml</file>
     </qresource>
 </RCC>

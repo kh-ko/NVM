@@ -194,6 +194,7 @@
 #define ENABLE_SLOT_VALVE_READED_ETHERNET_DHCP                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceEthernetDHCP           (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceEthernetDHCP         (ValveResponseSimpleValueDto                       )))
 #define ENABLE_SLOT_VALVE_READED_ETHERNET_PORT01                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceEthernetPort01         (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceEthernetPort01       (ValveResponseSimpleValueDto                       )))
 #define ENABLE_SLOT_VALVE_READED_ETHERNET_PORT02                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceEthernetPort02         (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceEthernetPort02       (ValveResponseSimpleValueDto                       )))
+#define ENABLE_SLOT_VALVE_READED_IF_CFG_FIELDBUS_NODE_ADDR              connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgFieldbusNodeAddr    (ValveResponseInterfaceConfigFieldbusNodeAddrDto )), this, SLOT(onValveReadedInterfaceCfgFieldbusNodeAddr  (ValveResponseInterfaceConfigFieldbusNodeAddrDto   )))
 #define ENABLE_SLOT_VALVE_READED_IF_STATUS_LOGIC                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceStatusLogic            (ValveResponseInterfaceStatusLogicDto            )), this, SLOT(onValveReadedInterfaceStatusLogic          (ValveResponseInterfaceStatusLogicDto              )))
 #define ENABLE_SLOT_VALVE_READED_IF_STATUS_ETHERCAT                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceStatusEtherCAT         (ValveResponseInterfaceStatusEtherCATDto         )), this, SLOT(onValveReadedInterfaceStatusEtherCAT       (ValveResponseInterfaceStatusEtherCATDto           )))
 #define ENABLE_SLOT_VALVE_READED_IF_DNET_FIRMWARE_ID                    connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceDNetFirmwareID         (ValveResponseInterfaceDNetFirmwareIDDto         )), this, SLOT(onValveReadedInterfaceDNetFirmwareID       (ValveResponseInterfaceDNetFirmwareIDDto           )))
@@ -315,6 +316,7 @@
 #define ENABLE_SLOT_VALVE_WRITTEN_ETHERNET_DHCP                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceEthernetDHCP          (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceEthernetDHCP          (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_ETHERNET_PORT01                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceEthernetPort01        (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceEthernetPort01        (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_ETHERNET_PORT02                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceEthernetPort02        (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceEthernetPort02        (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CFG_FIELDBUS_NODE_ADDR             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceCfgFieldbusNodeAddr   (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceCfgFieldbusNodeAddr   (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_CTRL_CYCLE_RESET                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenControlCyclesReset             (ValveResponseDto                                )), this, SLOT(onValveWrittenControlCyclesReset             (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_ISOL_CYCLE_RESET                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenIsolationCyclesReset           (ValveResponseDto                                )), this, SLOT(onValveWrittenIsolationCyclesReset           (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_ADC_GAINZERO                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenAdcGainZero                    (ValveResponseDto                                )), this, SLOT(onValveWrittenAdcGainZero                    (ValveResponseDto                                )))
@@ -919,6 +921,7 @@ signals:
     void signalEventReadedInterfaceEthernetDHCP        (ValveResponseSimpleValueDto                      dto);
     void signalEventReadedInterfaceEthernetPort01      (ValveResponseSimpleValueDto                      dto);
     void signalEventReadedInterfaceEthernetPort02      (ValveResponseSimpleValueDto                      dto);
+    void signalEventReadedInterfaceCfgFieldbusNodeAddr (ValveResponseInterfaceConfigFieldbusNodeAddrDto  dto);
     void signalEventReadedLearnStatus                  (ValveResponseLearnStatusDto                      dto);
     void signalEventReadedLearnPressureLimit           (ValveResponseLearnPressureLimitDto               dto);
     void signalEventReadedFatalErrStatus               (ValveResponseFatalErrStatusDto                   dto);
@@ -1049,6 +1052,7 @@ signals:
     void signalEventWrittenInterfaceEthernetDHCP          (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceEthernetPort01        (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceEthernetPort02        (ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceCfgFieldbusNodeAddr   (ValveResponseDto                                 dto);
     void signalEventWrittenSensorScale                    (ValveResponseDto                                 dto);
     void signalEventWrittenSetPoint01                     (ValveResponseDto                                 dto);
     void signalEventWrittenSetPoint02                     (ValveResponseDto                                 dto);
@@ -1662,7 +1666,10 @@ public :
     {
         emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceEthernetPort02, nullptr, REQ_READ_INTERFACE_ETHERNET_PORT02, RES_READ_INTERFACE_ETHERNET_INFO, RES_INTERFACE_ETHERNET_INFO_DATA_LEN, retryCnt, userData));
     }
-
+    void readInterfaceConfigFieldbusNodeAddr(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgFieldbusNodeAddr, nullptr, REQ_READ_INTERFACE_FIELDBUS_NODE_ADDR, REQ_READ_INTERFACE_FIELDBUS_NODE_ADDR, RES_INTERFACE_CFG_FIELDBUS_NODE_ADDR_DATA_LEN, retryCnt, userData));
+    }
     void readLearnStatus(void * userData, int retryCnt = 0)
     {
         emit signalCommandRequest(ValveRequestDto(this, staticProcReadLearnStatus, nullptr, REQ_READ_LEARN_STATUS, REQ_READ_LEARN_STATUS, RES_LEARN_STATUS_DATA_LEN, retryCnt, userData));
@@ -2174,7 +2181,13 @@ public :
         qDebug() << "[" << Q_FUNC_INFO << "]cmd = " << cmd;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceEthernetPort02, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
-
+    void setInterfaceConfigFieldbusNodeAddr(int nodeAddr, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2%3").arg(REQ_WRITE_INTERFACE_CFG_FIELDBUS_NODE_ADDR)
+                                           .arg(nodeAddr, 3,10, QChar('0'))
+                                           .arg("00000");
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceCfgFieldbusNodeAddr, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
+    }
     void setSensorScale(int sensor01Unit, int sensor01FullScale, int sensor01SignExp, int sensor01Exp, int sensor02Unit, int sensor02FullScale, int sensor02SignExp, int sensor02Exp, void * userData, int retryCnt = 0)
     {
         QString cmd = QString("%1%2%3%4%5%6%7%8%9%10").arg(REQ_WRITE_SENSOR_SCALE)
@@ -2578,7 +2591,7 @@ public slots:
     {
         ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
         ValveResponseSensorScaleDto signalDto(*pResDto);
-        \
+
         do{
             if(!signalDto.mIsSucc)
             {
@@ -5986,6 +5999,32 @@ public slots:
         }
     }
 
+    static void staticProcReadInterfaceCfgFieldbusNodeAddr(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceCfgFieldbusNodeAddr(pResData);}
+    void procReadInterfaceCfgFieldbusNodeAddr(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseInterfaceConfigFieldbusNodeAddrDto signalDto(*pResDto);
+
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            int startIdx = 0;
+            signalDto.mNodeAddr = value.mid(startIdx,3).toInt(); startIdx += 5;
+            startIdx += 1;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceCfgFieldbusNodeAddr(signalDto);
+        }
+    }
+
     static void staticProcReadControlCycles(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadControlCycles(pResData);}
     void procReadControlCycles(void * pResData)
     {
@@ -6758,6 +6797,17 @@ public slots:
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventWrittenInterfaceEthernetPort02(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceCfgFieldbusNodeAddr(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceCfgFieldbusNodeAddr(pResData);}
+    void procWrittenInterfaceCfgFieldbusNodeAddr(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceCfgFieldbusNodeAddr(signalDto);
         }
     }
 

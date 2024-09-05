@@ -22,6 +22,7 @@ public:
         VALVEPARAM_VERSION_02       = VALVEPARAM_VERSION_01       + 1,
         VALVEPARAM_VERSION_03       = VALVEPARAM_VERSION_02       + 1,
         VALVEPARAM_PRODUCTNUM       = VALVEPARAM_VERSION_03       + 1,
+        VALVEPARAM_PRODUCTNUM_EX    = VALVEPARAM_PRODUCTNUM       + 1,
     };
 
     enum eSeqItemType{

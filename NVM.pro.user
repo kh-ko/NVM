@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.15.0, 2024-08-05T14:36:00. -->
+<!-- Written by QtCreator 4.15.0, 2024-09-05T11:19:27. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -140,8 +140,8 @@
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">2</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:\myfolder\Work\06.NCPA\03.Source\x.output</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">D:/myfolder/Work/06.NCPA/03.Source/x.output</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:\myfolder\Work\06.NCPA\03.NVM\03.Source\x.output</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">D:/myfolder/Work/06.NCPA/03.NVM/03.Source/x.output</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -297,9 +297,8 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">NVM2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/myfolder/Work/06.NCPA/03.Source/work/NVM/NVM.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/myfolder/Work/06.NCPA/03.Source/work/NVM/NVM.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/myfolder/Work/06.NCPA/03.NVM/03.Source/work/NVM/NVM.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/myfolder/Work/06.NCPA/03.NVM/03.Source/work/NVM/NVM.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
