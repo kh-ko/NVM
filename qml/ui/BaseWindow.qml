@@ -22,7 +22,7 @@ Window {
     property FatalErrorDlg fatalErrorDlgObj: null
 
     visible: true
-    title: model.mIsWithoutLogo ? qsTr("New Valve Manager") : qsTr("NVM - NOVASEN Valve Manager")
+    title: model.mCompany !== ValveEnumDef.COMPANY_NOVA ? qsTr("New Valve Manager") : qsTr("NVM - NOVASEN Valve Manager")
 
     width: 1024; height: 705
     minimumHeight: 705; minimumWidth: 1024
@@ -139,6 +139,7 @@ Window {
         isZeroEnable   : model.mZeroEnable
         isConnected    : model.mIsValveConnect
         isSupportPFO   : model.mIsSupportPFO
+        company        : model.mCompany
 
         onClickValveIdentification    : { var popup = valveIdentificationExDlg.createObject(window) ; popup.show(); }
         onClickValveSetup             : { var popup = valveSetupDlg.createObject(window)            ; popup.show(); }
@@ -681,6 +682,7 @@ Window {
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
             versionValue: model.mNCPAVersion
+            company     : model.mCompany
         }
     }
     Component{

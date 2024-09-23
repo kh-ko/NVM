@@ -150,5 +150,6 @@
         <file>image/fu_notice_reboot02.png</file>
         <file>ui/dialog/InterfaceSetupProfibusDlg.qml</file>
         <file>ui/dialog/InterfaceStatusProfibusDlg.qml</file>
+        <file>image/img_soao.png</file>
     </qresource>
 </RCC>

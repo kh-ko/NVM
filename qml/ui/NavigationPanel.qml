@@ -4,6 +4,7 @@ import "../control/."
 import "./dialog/."
 import GlobalUiValue 1.0
 import GUISetting 1.0
+import ValveEnumDef 1.0
 
 Rectangle {
     id : panel
@@ -13,6 +14,7 @@ Rectangle {
     property bool isConnected   : false
     property bool isSupportPFO  : false
     property bool isLogoVisible : false
+    property int  company       : 0
 
     color : "#FFFFFF"
 
@@ -354,7 +356,7 @@ Rectangle {
                     id : menuHelpAbout
                     anchors.bottom: parent.bottom
                     text.text: qsTr("About")
-                    enabled: panel.isLogoVisible && !GlobalUiValue.disableWinCreateBtn
+                    enabled: panel.company !== ValveEnumDef.COMPANY_NONE && !GlobalUiValue.disableWinCreateBtn
 
                     onClicked: { panel.clickHelpAbout() }
                 }
@@ -369,10 +371,10 @@ Rectangle {
 
     Image{
         id : logoImg
-        anchors.left: navigatelist.left; anchors.leftMargin: 20; anchors.right: navigatelist.right; anchors.rightMargin: 20; anchors.bottom: parent.bottom; anchors.bottomMargin: panel.isLogoVisible ? 20 : 0
-        source: "/image/img_novasen_ex.png"
+        anchors.left: navigatelist.left; anchors.leftMargin: 20; anchors.right: navigatelist.right; anchors.rightMargin: 20; anchors.bottom: parent.bottom; anchors.bottomMargin: panel.company !== ValveEnumDef.COMPANY_NONE ? 20 : 0
+        source: panel.company == ValveEnumDef.COMPANY_NOVA ? "/image/img_novasen_ex.png" : "/image/img_soao.png"
         fillMode: Image.PreserveAspectFit
-        height: panel.isLogoVisible ? undefined : 0
+        height: panel.company == ValveEnumDef.COMPANY_NONE ? 0 : undefined //panel.isLogoVisible ? undefined : 0
     }
 
     Component{

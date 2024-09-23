@@ -484,6 +484,7 @@ class ValveEnumDef: public QObject{
     Q_ENUMS(eLearnPressureRaising)
     Q_ENUMS(eLearnPressureStable)
     Q_ENUMS(eInterface)
+    Q_ENUMS(eCompany)
 
 public:
     enum eSensorOp{
@@ -739,6 +740,12 @@ public:
         INTERFACE_LOGIC_4_20mA_SPECIAL       = 17, // H
         INTERFACE_CCLINK                     = 18, // I
         INTERFACE_ETHERCAT                   = 19, // J
+    };
+
+    enum eCompany{
+        COMPANY_NONE = 0,
+        COMPANY_NOVA = 1,
+        COMPANY_SOAO = 2
     };
 };
 

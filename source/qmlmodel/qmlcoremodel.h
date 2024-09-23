@@ -20,6 +20,7 @@ class QmlCoreModel : public QObject
     Q_PROPERTY(double  mPressureConvertFactor READ getPressureConvertFactor NOTIFY signalEventChangedPressureConvertFactor )
     Q_PROPERTY(QString mNCPAVersion           READ getNCPAVersion           NOTIFY signalEventChangedNCPAVersion           )
     Q_PROPERTY(bool    mIsWithoutLogo         READ getIsWithoutLogo         NOTIFY signalEventChangedIsWithoutLogo         )
+    Q_PROPERTY(int     mCompany               READ getCompany               NOTIFY signalEventChangedCompany               )
     Q_PROPERTY(bool    mIsValveConnect        READ getIsValeConnect         NOTIFY signalEventChangedIsValveConnect        )
     Q_PROPERTY(QString mErrMsg                READ getErrMsg                NOTIFY signalEventChangedErrMsg                )
     Q_PROPERTY(int     mLoadProgress          READ getLoadProgress          NOTIFY signalEventChangedLoadProgress          )
@@ -211,6 +212,7 @@ public:
     double  getPressureConvertFactor(){ return mPressureConvertFactor    ;}
     QString getNCPAVersion          (){ return pLSettingSP->mBuildVersion;}
     bool    getIsWithoutLogo        (){ return pLSettingSP->mIsWithoutLogo;}
+    int     getCompany              (){ return pLSettingSP->mCompany     ;}
     bool    getIsValeConnect        (){ return mIsValveConnect           ;}
     QString getErrMsg               (){ return mErrMsg                   ;}
     int     getLoadProgress         (){ return mLoadProgress             ;}
@@ -383,6 +385,7 @@ signals:
     void signalEventChangedPressureConvertFactor(double  value);
     void signalEventChangedNCPAVersion          (QString value);
     void signalEventChangedIsWithoutLogo        (bool    value);
+    void signalEventChangedCompany              (int     value);
     void signalEventChangedIsValveConnect       (bool    value);
     void signalEventChangedErrMsg               (QString value);
     void signalEventChangedLoadProgress         (int     value);

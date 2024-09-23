@@ -7,6 +7,7 @@
 #include <QSettings>
 #include <QTimer>
 
+#include "source/service/valve/valveayncworker.h"
 #include "source/service/util/exceptionutil.h"
 #include "source/service/util/unitutil.h"
 
@@ -67,8 +68,9 @@ public:
     QList<int> mChartMSecOption = {30000, 60000, 120000, 300000};
 
     qint64  mMonitoringCycle       = 10;
-    QString mBuildVersion          = "1.9.57";
-    bool    mIsWithoutLogo         = false;
+    QString mBuildVersion          = "1.9.59";
+    bool    mIsWithoutLogo         = false; // not used
+    int     mCompany               = (int)ValveEnumDef::COMPANY_NONE;
 
     bool    mIsDrawCurrPos         = true ;
     bool    mIsDrawTargetPos       = true ;
