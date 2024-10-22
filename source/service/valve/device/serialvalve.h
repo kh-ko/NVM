@@ -18,46 +18,6 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
-class SerialConnectionOpt{
-public:
-    QSerialPort::BaudRate mBaudRate = QSerialPort::Baud38400 ;
-    QSerialPort::DataBits mDataBits = QSerialPort::Data7     ;
-    QSerialPort::StopBits mStopBits = QSerialPort::OneStop   ;
-    QSerialPort::Parity   mParity   = QSerialPort::EvenParity;
-
-    SerialConnectionOpt(){}
-    SerialConnectionOpt(QSerialPort::BaudRate baudRate,
-                        QSerialPort::DataBits dataBits,
-                        QSerialPort::StopBits stopBits,
-                        QSerialPort::Parity   parity)
-    {
-        mBaudRate = baudRate;
-        mDataBits = dataBits;
-        mStopBits = stopBits;
-        mParity   = parity  ;
-    }
-    SerialConnectionOpt(const SerialConnectionOpt& copy) :
-        mBaudRate(copy.mBaudRate),
-        mDataBits(copy.mDataBits),
-        mStopBits(copy.mStopBits),
-        mParity  (copy.mParity  ){}
-
-    ~SerialConnectionOpt(){}
-
-    SerialConnectionOpt& operator=(const SerialConnectionOpt& other)
-    {
-        mBaudRate = other.mBaudRate;
-        mDataBits = other.mDataBits;
-        mStopBits = other.mStopBits;
-        mParity   = other.mParity  ;
-
-        return *this;
-    }
-};
-
-Q_DECLARE_METATYPE(SerialConnectionOpt);
-
-
 
 class SerialValve : public QObject, public IValve
 {
@@ -69,7 +29,6 @@ signals:
 private:
     QSerialPort mSerialPort;
     QObject *mpCommunicationTraceDlgModel = nullptr;
-    QList<SerialConnectionOpt>           mConnOpts;
 
     static QHash<QString, SerialConnectionOpt> * getConnectionHash()
     {
@@ -127,7 +86,7 @@ public:
         if(mSerialPort.isOpen())
             mSerialPort.readAll();
     }
-    QStringList searchDevice(QString cmd, QString value, QString checkPreFix, int checkLength, QString additionalInfo = "")
+    QStringList searchDevice(QList<SerialConnectionOpt>connList, QString cmd, QString value, QString checkPreFix, int checkLength, QString additionalInfo = "")
     {
         Q_UNUSED(additionalInfo);
 
@@ -183,7 +142,8 @@ public:
 //        return portList;
 
         getConnectionHash()->clear();
-        readConnectionOptions();
+        //readConnectionOptions();
+
 
         QString dummy;
         QStringList portList;
@@ -213,11 +173,13 @@ public:
             }
             else
             {
-                for(int connIdx = 0; connIdx< mConnOpts.count() && result == false; connIdx++)
+                for(int connIdx = 0; connIdx< connList.count() && result == false; connIdx++)
                 {
+                    qDebug() << "[khko_debug][" << Q_FUNC_INFO << "] port[" << info.portName() <<"] TRY";
+
                     pSeacherValve = new SerialValve();
 
-                    SerialConnectionOpt opt = mConnOpts[connIdx];
+                    SerialConnectionOpt opt = connList[connIdx];
 
                     if(pSeacherValve->connectValve(info.portName(), opt.mBaudRate, opt.mDataBits, opt.mStopBits, opt.mParity))
                     {
@@ -305,7 +267,7 @@ public:
 
         if(mSerialPort.open(QIODevice::ReadWrite) == false)
         {
-            qDebug() << "[" << Q_FUNC_INFO << "] failed";
+            qDebug() << "[" << Q_FUNC_INFO << "] failed : " << mSerialPort.error();
              return false;
         }
         return true;
@@ -580,63 +542,6 @@ public:
         case QSerialPort::NotOpenError             : return eValveError::NotOpenError             ;
         default                                    : return eValveError::UnknownError             ;
         }
-    }
-
-    void readConnectionOptions()
-    {
-        QFile file;
-        QJsonDocument doc;
-        SerialConnectionOpt opt;
-
-        mConnOpts.clear();
-
-        file.setFileName(QString("%1/config/connection_option.json").arg(QApplication::applicationDirPath()));
-        file.open(QFile::ReadOnly);
-
-        if(file.isOpen() == false)
-        {
-            qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]fail";
-
-            mConnOpts.append(opt);
-            return ;
-        }
-
-        QByteArray loadData = file.readAll();
-
-        file.close();
-
-        try{
-            doc = QJsonDocument::fromJson(loadData);
-
-            QJsonArray array = doc.array();
-
-            for(int idx = 0; idx < array.count(); idx++)
-            {
-                QJsonObject obj = array.at(idx).toObject();
-
-                opt.mBaudRate = (QSerialPort::BaudRate)obj.value("baudrate").toInt();
-                opt.mDataBits = (QSerialPort::DataBits)obj.value("dataBits").toInt();
-                opt.mStopBits = (QSerialPort::StopBits)obj.value("stopBits").toInt();
-                opt.mParity   = (QSerialPort::Parity  )obj.value("parity").toInt()  ;
-
-                qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]mBaudRate = " << opt.mBaudRate << ", mDataBits = " << opt.mDataBits << ", mStopBits = " << opt.mStopBits << ", mParity = " << opt.mParity;
-
-                mConnOpts.append(opt);
-            }
-        }
-        catch (int ex)
-        {
-            qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]exception";
-            opt.mBaudRate = QSerialPort::Baud38400 ;
-            opt.mDataBits = QSerialPort::Data7     ;
-            opt.mStopBits = QSerialPort::OneStop   ;
-            opt.mParity   = QSerialPort::EvenParity;
-
-            mConnOpts.clear();
-            mConnOpts.append(opt);
-            return ;
-        }
-        return ;
     }
 };
 

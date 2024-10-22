@@ -105,6 +105,7 @@ HEADERS += \
     source/service/valve/device/serialvalve.h \
     source/service/valve/valveayncworker.h \
     source/service/valve/valveconnection.h \
+    source/service/valve/valveconnectoption.h \
     source/service/valve/valvefirmwareupgradeworker.h \
     source/service/valve/valvesprovider.h \
     source/service/valve/valvesproviderdto.h \

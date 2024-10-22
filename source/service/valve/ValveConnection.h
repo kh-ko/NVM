@@ -9,6 +9,7 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include "source/service/valve/device/serialvalve.h"
+#include "source/service/valve/valveconnectoption.h"
 
 class ValveConnEnumDef: public QObject{
     Q_OBJECT
@@ -174,7 +175,7 @@ private:
 
         qDebug() << "[" << Q_FUNC_INFO << "]";
 
-        QStringList portList = pSerialValve->searchDevice("i:83","","i:83", 0, additionalInfo);
+        QStringList portList = pSerialValve->searchDevice(ValveConnectOption::getInstance()->getConnectionList(), "i:83","","i:83", 0, additionalInfo);
 
         if(pSerialValve != mpValve)
             delete  pSerialValve;

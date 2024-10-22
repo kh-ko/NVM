@@ -191,52 +191,52 @@ public slots:
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
         case (int)ValveFirmwareUpgradeDef::CPU1_DN_KERNEL:
-            if(downloadKernel(mpValve, mCpu1KernelFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU1_ERASE); startTimer(2006);}
+            if(downloadKernel(mpValve, mCpu1KernelFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU1_ERASE); startTimer(3006);}
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU1_ERASE    :
-            if(eraseCPU(mpValve, ERASE_CPU1, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU1_DN_APP); startTimer(1000); }
+            if(eraseCPU(mpValve, ERASE_CPU1, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU1_DN_APP); startTimer(2000); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU1_DN_APP   :
-            if(downloadApp(mpValve, DFU_CPU1, mCpu1AppFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU1_VERIFY); startTimer(1000); }
+            if(downloadApp(mpValve, DFU_CPU1, mCpu1AppFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU1_VERIFY); startTimer(2000); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU1_VERIFY   :
-            if(downloadApp(mpValve, VERIFY_CPU1, mCpu1AppFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU1_RESET); startTimer(1000); }
+            if(downloadApp(mpValve, VERIFY_CPU1, mCpu1AppFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU1_RESET); startTimer(2000); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU1_RESET    :
-            if(resetCPU(mpValve, RESET_CPU1_BOOT_CPU2, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_DN_KERNEL); startTimer(1000); }
+            if(resetCPU(mpValve, RESET_CPU1_BOOT_CPU2, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_DN_KERNEL); startTimer(2000); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU2_DN_KERNEL:
-            if(downloadKernel(mpValve, mCpu2KernelFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_ERASE); startTimer(2006); }
+            if(downloadKernel(mpValve, mCpu2KernelFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_ERASE); startTimer(3006); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU2_ERASE    :
-            if(eraseCPU(mpValve, ERASE_CPU2, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_DN_APP); startTimer(1000); }
+            if(eraseCPU(mpValve, ERASE_CPU2, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_DN_APP); startTimer(2000); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU2_DN_APP   :
-            if(downloadApp(mpValve, DFU_CPU2, mCpu2AppFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_VERIFY); startTimer(1000); }
+            if(downloadApp(mpValve, DFU_CPU2, mCpu2AppFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_VERIFY); startTimer(2000); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU2_VERIFY   :
-            if(downloadApp(mpValve, VERIFY_CPU2, mCpu2AppFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_RESET); startTimer(1000); }
+            if(downloadApp(mpValve, VERIFY_CPU2, mCpu2AppFile, errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU2_RESET); startTimer(2000); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU2_RESET    :
-            if(resetCPU(mpValve, RESET_CPU2, errMsg)){ setStep(ValveFirmwareUpgradeDef::COMPLETE); startTimer(1000); }
+            if(resetCPU(mpValve, RESET_CPU2, errMsg)){ setStep(ValveFirmwareUpgradeDef::COMPLETE); startTimer(2000); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
@@ -310,7 +310,7 @@ private:
 
         mpValve = new SerialValve();
 
-        if(mpValve->connectValve(mComPort, (QSerialPort::BaudRate)mBaudRate, (QSerialPort::DataBits)mDataBit, (QSerialPort::StopBits)mStopBit, (QSerialPort::Parity)mParity) == false)
+        if(mpValve->connectValve(mComPort, QSerialPort::BaudRate::Baud19200 /*(QSerialPort::BaudRate)mBaudRate*/, (QSerialPort::DataBits)mDataBit, (QSerialPort::StopBits)mStopBit, (QSerialPort::Parity)mParity) == false)
         {
             qDebug() << "[" << Q_FUNC_INFO << "] can not connect valve";
 
@@ -321,9 +321,9 @@ private:
             return false;
         }
 
-        setStep(ValveFirmwareUpgradeDef::CPU1_DN_KERNEL);
+        //setStep(ValveFirmwareUpgradeDef::CPU1_DN_KERNEL);
 
-        startTimer(1000);
+        //startTimer(1000);
 
         return true;
     }

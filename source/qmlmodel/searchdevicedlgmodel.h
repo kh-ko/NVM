@@ -98,10 +98,35 @@ public slots:
         return mPortList[idx].mIsReady;
     }
 
+    Q_INVOKABLE int onCommandGetOptionCount()
+    {
+        return optionList.count();
+    }
+
+    Q_INVOKABLE QString onCommandGetOptionName(int idx)
+    {
+        return optionList[idx].mName;
+    }
+
+    Q_INVOKABLE bool onCommandGetOptionIsSelect(int idx)
+    {
+        return optionList[idx].mIsSelect;
+    }
+
+    Q_INVOKABLE void onCommandSelOption(int idx)
+    {
+        optionList[idx].mIsSelect = !optionList[idx].mIsSelect;
+
+        ValveConnectOption::getInstance()->setConnectionList(optionList);
+        return ;
+    }
+
 public:
     explicit SearchDeviceDlgModel(QObject *parent = nullptr): QObject(parent)
     {
         ENABLE_SLOT_VALVE_SEARCHED_DEVICE;
+
+        optionList = ValveConnectOption::getInstance()->getAllConnectionList();
 
         pValveSP->search();
     }
@@ -111,6 +136,8 @@ public:
     }
 
 private:
+    QList<SerialConnectionOpt> optionList;
+
     bool compareAndCopy(QStringList portList)
     {
         QList<PortInfo> newPortList;

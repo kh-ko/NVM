@@ -10,10 +10,24 @@ NWindow {
 
     signal selectPort(string connType, string portName)
 
+    function selectPotion(optIdx)
+    {
+        model.onCommandSelOption(optIdx)
+    }
+
     contentHeight: contentContainer.height; contentWidth: contentContainer.width
 
     SearchDeviceDlgModel{
         id : model
+
+        Component.onCompleted: {
+            for(var i = 0; i < model.onCommandGetOptionCount(); i ++)
+            {
+                var name = model.onCommandGetOptionName(i);
+                var isSelect = model.onCommandGetOptionIsSelect(i);
+                listOptModel.append({"optIdx" : i, "optName" : name, "optIsSelect" : isSelect})
+            }
+        }
 
         onSignalEventChangedPortList:
         {
@@ -51,9 +65,45 @@ NWindow {
 
         }
 
+        Rectangle{
+            id : optSelectBox
+            color : "#FFFFFF"
+            height: 50 * GUISetting.scale
+            anchors.top: titleBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin
+
+            ListView {
+                id: optList
+                anchors.fill: parent; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin; orientation: Qt.Horizontal  // 가로 방향 설정
+                spacing: GUISetting.margin;
+                clip : true
+
+                model : ListModel{
+                    id : listOptModel
+                }
+
+                delegate: NButton{
+                    height: GUISetting.btn_nor_height; width: 150 * GUISetting.scale
+                    anchors.verticalCenter: parent.verticalCenter
+                    text.text: optName
+
+                    onClick: {
+                        optIsSelect = !optIsSelect
+                        dialog.selectPotion(optIdx)
+                    }
+
+                    Rectangle{
+                        width: GUISetting.on_indi_width; height: GUISetting.on_indi_height
+                        anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.verticalCenter: parent.verticalCenter
+                        radius: (width / 2) + 1
+                        color: optIsSelect ? "#24A7FF" : "#E4E4E4"
+                    }
+                }
+            }
+        }
+
         ListView{
             id : portList
-            anchors.top: titleBox.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+            anchors.top: optSelectBox.bottom; anchors.topMargin: GUISetting.margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
             spacing: GUISetting.margin;
             clip : true
