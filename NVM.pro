@@ -83,6 +83,7 @@ HEADERS += \
     source/qmlmodel/sensorsetupexdlgmodel.h \
     source/qmlmodel/sequencerdlgmodel.h \
     source/qmlmodel/setpointpositiondlgmodel.h \
+    source/qmlmodel/valvecalibrationexdlgmodel.h \
     source/qmlmodel/valvecaribrationdlgmodel.h \
     source/qmlmodel/valvecyclecounterdlgmodel.h \
     source/qmlmodel/valveidentificationexdlgmodel.h \

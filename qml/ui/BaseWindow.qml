@@ -154,7 +154,16 @@ Window {
             window.valveRecoveryDlgObj = valveRecoveryDlg.createObject(window);
             window.valveRecoveryDlgObj.show();
         }
-        onClickValveCailbration       : { var popup = valveCalibrationDlg.createObject(window)      ; popup.show(); }
+        onClickValveCailbration       :
+        {
+            var popup;
+            var lastValue = parseInt(model.mFirmwareVersion.slice(-4));
+            if (lastValue > 479) {
+                popup = valveCalibrationExDlg.createObject(window)    ; popup.show();
+            } else {
+                popup = valveCalibrationDlg.createObject(window)      ; popup.show();
+            }
+        }
         onClickSensorSetup            : { var popup = sensorSetupExDlg.createObject(window)         ; popup.show(); }
         onClickSensorAnalysis         : { var popup = sensorAnalysisDlg.createObject(window)        ; popup.show(); }
         onClickPressureCtrlSetup      : { var popup = pressureCtrlFloatSetupDlg.createObject(window); popup.show(); }
@@ -676,6 +685,15 @@ Window {
             valveID    : model.mValveID
         }
     }
+
+    Component{
+        id : valveCalibrationExDlg
+        ValveCalibrationExDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
+    }
+
     Component{
         id :helpAboutDlg
         HelpAboutDlg{

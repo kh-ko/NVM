@@ -160,6 +160,8 @@ public slots:
         if(mState != eState::STATE_READ_CONFIG || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mResData;
+
         setErrMsg(dto.mErrMsg);
 
         if(dto.mIsSucc)

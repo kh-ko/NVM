@@ -26,6 +26,7 @@ class QmlCoreModel : public QObject
     Q_PROPERTY(int     mLoadProgress          READ getLoadProgress          NOTIFY signalEventChangedLoadProgress          )
     Q_PROPERTY(QString mConnectionInfo        READ getConnectionInfo        NOTIFY signalEventChangedConnectionInfo        )
     Q_PROPERTY(QString mValveID               READ getValveID               NOTIFY signalEventChangedValveID               )
+    Q_PROPERTY(QString mFirmwareVersion       READ getFirmwareVersion       NOTIFY signalEventChangedFirmwareVersion       )
     Q_PROPERTY(int     mInterface             READ getInterface             NOTIFY signalEventChangedInterface             )
     Q_PROPERTY(bool    mIsSupportPFO          READ getIsSupportPFO          NOTIFY signalEventChangedIsSupportPFO          )
     Q_PROPERTY(int     mSensorVersion         READ getSensorVersion         NOTIFY signalEventChangedSensorVersion         )
@@ -127,6 +128,7 @@ public:
     int      mLoadProgress          = 0                                   ;
     QString  mConnectionInfo        = ""                                  ;
     QString  mValveID               = ""                                  ;
+    QString  mFirmwareVersion       = ""                                  ;
     int      mInterface             = ValveEnumDef::INTERFACE_LOGIC       ;
     bool     mIsSupportPFO          = false                               ;
     int      mSensorVersion         = 1                                   ;
@@ -218,6 +220,7 @@ public:
     int     getLoadProgress         (){ return mLoadProgress             ;}
     QString getConnectionInfo       (){ return mConnectionInfo           ;}
     QString getValveID              (){ return mValveID                  ;}
+    QString getFirmwareVersion      (){ return mFirmwareVersion          ;}
     int     getInterface            (){ return mInterface                ;}
     int     getIsSupportPFO         (){ return mIsSupportPFO             ;}
     int     getSensorVersion        (){ return mSensorVersion            ;}
@@ -303,6 +306,7 @@ public:
     void setLoadProgress         (int               value){ if(mLoadProgress          == value) return; mLoadProgress          = value; emit signalEventChangedLoadProgress         (value);}
     void setConnectionInfo       (QString           value){ if(mConnectionInfo        == value) return; mConnectionInfo        = value; emit signalEventChangedConnectionInfo       (value);}
     void setValveID              (QString           value){ if(mValveID               == value) return; mValveID               = value; emit signalEventChangedValveID              (value);}
+    void setFirmwareVersion      (QString           value){ if(mFirmwareVersion       == value) return; mFirmwareVersion       = value; emit signalEventChangedFirmwareVersion      (value);}
     void setInterface            (int               value){ if(mInterface             == value) return; mInterface             = value; emit signalEventChangedInterface            (value);}
     void setIsSupportPFO         (bool              value){ if(mIsSupportPFO          == value) return; mIsSupportPFO          = value; emit signalEventChangedIsSupportPFO         (value);}
     void setSensorVersion        (int               value){ if(mSensorVersion         == value) return; mSensorVersion         = value; emit signalEventChangedSensorVersion        (value);}
@@ -391,6 +395,7 @@ signals:
     void signalEventChangedLoadProgress         (int     value);
     void signalEventChangedConnectionInfo       (QString value);
     void signalEventChangedValveID              (QString value);
+    void signalEventChangedFirmwareVersion      (QString value);
     void signalEventChangedInterface            (int     value);
     void signalEventChangedIsSupportPFO         (bool    value);
     void signalEventChangedSensorVersion        (int     value);
@@ -478,6 +483,7 @@ public slots:
         ENABLE_SLOT_VALVE_CHANGED_CONNECTIONINFO;
 
         ENABLE_SLOT_VALVE_CHANGED_VALVE_ID;
+        ENABLE_SLOT_VALVE_CHANGED_FIRMWARE_VER;
         ENABLE_SLOT_VALVE_CHANGED_VALVE_INTERFACE;
         ENABLE_SLOT_VALVE_CHANGED_VALVE_IS_SUPPORT_PFO;
         ENABLE_SLOT_VALVE_CHANGED_ENABLE_PFO;
@@ -574,6 +580,7 @@ public slots:
     void onValveChangedIsConnected            (bool    value){ setIsValeConnect(value);if(value)mConMSec = QDateTime::currentDateTime().toMSecsSinceEpoch();}
     void onValveChangedConnectionInfo         (QString value){ setConnectionInfo(value)                                                                ;}
     void onValveChangedValveID                (             ){ setValveID(pValveSP->getValveID())                                                      ;}
+    void onValveChangedFirmwareVersion        (             ){ setFirmwareVersion(pValveSP->getFirmwareVersion())                                      ;}
     void onValveChangedInterface              (             ){ setInterface(pValveSP->getInterface())                                                  ;}
     void onValveChangedIsSupportPFO           (             ){ setIsSupportPFO(pValveSP->getIsSupportPFO())                                            ;}
     void onValveChangedSensorVersion          (             ){ setSensorVersion(pValveSP->getSensorVersion())                                          ;}

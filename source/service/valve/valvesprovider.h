@@ -1923,6 +1923,8 @@ public :
     void setSensorConfig(int sensorOp, bool zeroEnable, int highLowRatio, void * userData, int retryCnt = 0)
     {
         QString cmd = QString("%1%2%3%4").arg(REQ_WRITE_SENSOR_CONFIG).arg(sensorOp).arg(zeroEnable ? 1 : 0).arg(highLowRatio, 6, 10, QChar('0'));
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << cmd;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenSensorConfig, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 
@@ -2293,9 +2295,13 @@ public :
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenValveSpeed, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 
-    void setAdcGainZero(void * userData, int retryCnt = 0)
+    void setAdcGainZero(QString value, void * userData, int retryCnt = 0)
     {
-        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenAdcGainZero, staticProcReadValveStatus, REQ_WRITE_ADC_GAIN_ZERO, "", 0, retryCnt, userData));
+        QString cmd = QString("%1%2").arg(REQ_WRITE_ADC_GAIN_ZERO).arg(value);
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << cmd;
+
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenAdcGainZero, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 
     void setSensorZero(void * userData, int retryCnt = 0)
@@ -2679,7 +2685,7 @@ public slots:
             int startIdx = 0;
             signalDto.mSensorOperation = value.mid(startIdx,1).toInt()                    ; startIdx += 1;
             signalDto.mZeroEnable      = value.mid(startIdx,1).toInt() == 0 ? false : true; startIdx += 1;
-            signalDto.mFullScaleRatio  = value.mid(startIdx,5).toLongLong()               ; startIdx += 5;
+            signalDto.mFullScaleRatio  = value.mid(startIdx,6).toLongLong()               ; startIdx += 5;
 
             if(signalDto.mReqDto.mpRef == this)
             {

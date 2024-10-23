@@ -1,5 +1,5 @@
-#ifndef VALVECARIBRATIONDLGMODEL_H
-#define VALVECARIBRATIONDLGMODEL_H
+#ifndef VALVECALIBRATIONEXDLGMODEL_H
+#define VALVECALIBRATIONEXDLGMODEL_H
 
 #include <QObject>
 #include <QtMath>
@@ -8,11 +8,10 @@
 #include "source/service/coreservice.h"
 
 
-class ValveCariblationDlgModel : public QObject
+class ValveCalibrationExDlgModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int      mAccessMode              READ getAccessMode               NOTIFY signalEventChangedAccessMode              )
-    Q_PROPERTY(bool     mIsZeroEnable            READ getIsZeroEnable             NOTIFY signalEventChangedIsZeroEnable            )
     Q_PROPERTY(bool     mIsRS232Test             READ getIsRS232Test              NOTIFY signalEventChangedIsRS232Test             )
     Q_PROPERTY(bool     mIsEdit                  READ getIsEdit                   NOTIFY signalEventChangedIsEdit                  )
     Q_PROPERTY(QString  mStrStatus               READ getStrStatus                NOTIFY signalEventChangedStrStatus               )
@@ -21,7 +20,6 @@ class ValveCariblationDlgModel : public QObject
 
 public:
     int     mAccessMode              = ValveEnumDef::ACCESS_LOCAL;
-    bool    mIsZeroEnable            = false;
     bool    mIsRS232Test             = false;
     bool    mIsEdit                  = false;
     QString mStrStatus               = "ready";
@@ -29,7 +27,6 @@ public:
     int     mProgress                = 100 ;
 
     int     getAccessMode             (){ return mAccessMode             ;}
-    bool    getIsZeroEnable           (){ return mIsZeroEnable           ;}
     bool    getIsRS232Test            (){ return mIsRS232Test            ;}
     int     getIsEdit                 (){ return mIsEdit                 ;}
     QString getStrStatus              (){ return mStrStatus              ;}
@@ -37,7 +34,6 @@ public:
     int     getProgress               (){ return mProgress               ;}
 
     void    setAccessMode             (int     value){ if(mAccessMode              == value)return; mAccessMode              = value; emit signalEventChangedAccessMode             (value);}
-    void    setIsZeroEnable           (bool    value){ if(mIsZeroEnable            == value)return; mIsZeroEnable            = value; emit signalEventChangedIsZeroEnable           (value);}
     void    setIsRS232Test            (bool    value){ if(mIsRS232Test             == value)return; mIsRS232Test             = value; emit signalEventChangedIsRS232Test            (value);}
     void    setIsEdit                 (bool    value){ if(mIsEdit                  == value)return; mIsEdit                  = value; emit signalEventChangedIsEdit                 (value);}
     void    setStrStatus              (QString value){ if(mStrStatus               == value)return; mStrStatus               = value; emit signalEventChangedStrStatus              (value);}
@@ -46,7 +42,6 @@ public:
 
 signals:
     void signalEventChangedAccessMode             (int     value);
-    void signalEventChangedIsZeroEnable           (bool    value);
     void signalEventChangedIsRS232Test            (bool    value);
     void signalEventChangedIsEdit                 (int     value);
     void signalEventChangedStrStatus              (QString value);
@@ -55,14 +50,11 @@ signals:
     void signalEventResult                        (bool isSucc, QString errMsg);
 
 public:
-    explicit ValveCariblationDlgModel(QObject *parent = nullptr): QObject(parent)
+    explicit ValveCalibrationExDlgModel(QObject *parent = nullptr): QObject(parent)
     {
         ENABLE_SLOT_VALVE_CHANGED_ACCESS;
         ENABLE_SLOT_VALVE_CHANGED_IS_RS232_TEST;
-        ENABLE_SLOT_VALVE_READED_SENSOR_CONFIG;
-        ENABLE_SLOT_VALVE_WRITTEN_SENSOR_CONFIG;
         ENABLE_SLOT_VALVE_WRITTEN_ADC_GAINZERO;
-        ENABLE_SLOT_VALVE_WRITTEN_SENSOR_ZERO;
 
         onValveChangedAccess();
         onValveChangedIsRS232Test();
@@ -70,9 +62,9 @@ public:
         mTimer.setSingleShot(true);
         connect(&mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
-        setState(eState::STATE_READ_CONFIG);
+        setState(eState::STATE_READY);
     }
-    ~ValveCariblationDlgModel()
+    ~ValveCalibrationExDlgModel()
     {
     }
 
@@ -87,51 +79,37 @@ public slots:
         setIsRS232Test(pValveSP->getIsRS232Test());
     }
 
-    Q_INVOKABLE void onCommandZeroEnable(bool value)
+    Q_INVOKABLE void onCommandGainCalibration(QString btnName)
     {
-        mWriteZeroEnable = value;
-        setState(eState::STATE_WRITE_CONFIG);
+        if(btnName == "Sensor 01")
+        {
+            mWriteValue = "01";
+        }
+        else if(btnName == "Sensor 02")
+        {
+            mWriteValue = "02";
+        }
+        else if(btnName == "Analog input")
+        {
+            mWriteValue = "03";
+        }
+        setState(eState::STATE_WRITE_GAIN);
     }
 
-    void onValveReadedSensorConfig(ValveResponseSensorConfigDto dto)
+    Q_INVOKABLE void onCommandZeroCalibration(QString btnName)
     {
-        if(mState != eState::STATE_READ_CONFIG || dto.mReqDto.mpRef != this)
-            return;
-
-        setErrMsg(dto.mErrMsg);
-
-        if(dto.mIsSucc)
+        if(btnName == "Sensor 01")
         {
-            mSensorOp    = pValveSP->getSensorOperation();
-            mSensorRatio = dto.mFullScaleRatio;
-            setIsZeroEnable(dto.mZeroEnable);
-            setState((eState)(mState + 1));
+            mWriteValue = "11";
         }
-        else
+        else if(btnName == "Sensor 02")
         {
-            setState(mState);
-            return;
+            mWriteValue = "12";
         }
-    }
-
-    void onValveWrittenSensorConfig(ValveResponseDto  dto)
-    {
-        if(mState != eState::STATE_WRITE_CONFIG || dto.mReqDto.mpRef != this)
-            return;
-
-        if(dto.mIsNetworkErr)
+        else if(btnName == "Analog input")
         {
-            setState(mState);
-            return;
+            mWriteValue = "13";
         }
-
-        setErrMsg(dto.mErrMsg);
-
-        setState((eState)(mState + 1));
-    }
-
-    Q_INVOKABLE void onCommandGainCalibration()
-    {
         setState(eState::STATE_WRITE_GAIN);
     }
 
@@ -153,43 +131,16 @@ public slots:
         setState(STATE_READY);
     }
 
-    Q_INVOKABLE void onCommandZeroCalibration()
-    {
-        setState(eState::STATE_WRITE_ZERO);
-    }
-
-    void onValveWrittenSensorZero(ValveResponseDto dto)
-    {
-        if(mState != STATE_WRITE_ZERO || dto.mReqDto.mpRef != this)
-            return;
-
-        if(dto.mIsNetworkErr)
-        {
-            setState(mState);
-            return;
-        }
-
-        setErrMsg(dto.mErrMsg);
-
-        emit signalEventResult(dto.mIsSucc, dto.mErrMsg);
-
-        setState(STATE_READY);
-    }
-
 private:
     enum eState{
         STATE_WRITE_ZERO            =  0,
-        STATE_WRITE_GAIN            =  STATE_WRITE_ZERO   + 1,
-        STATE_WRITE_CONFIG          =  STATE_WRITE_GAIN   + 1,
-        STATE_READ_CONFIG           =  STATE_WRITE_CONFIG + 1,
-        STATE_READY                 =  STATE_READ_CONFIG  + 1,
+        STATE_WRITE_GAIN            =  STATE_WRITE_ZERO  + 1,
+        STATE_READY                 =  STATE_WRITE_GAIN  + 1,
     };
 
     QTimer mTimer;
-    eState mState           = eState::STATE_READY;
-    bool   mWriteZeroEnable = false;
-    int    mSensorOp        = 0;
-    qint64 mSensorRatio     = 0;
+    eState mState       = eState::STATE_READY;
+    QString mWriteValue = "";
 
     void startTimer()
     {
@@ -220,21 +171,13 @@ public slots:
         switch ((int)mState)
         {
         case (int)eState::STATE_WRITE_GAIN:
-            pValveSP->setAdcGainZero("",this);
+            pValveSP->setAdcGainZero(mWriteValue, this);
             break;
 
         case (int)eState::STATE_WRITE_ZERO:
-            pValveSP->setSensorZero(this);
-            break;
-
-        case (int)eState::STATE_WRITE_CONFIG:
-            pValveSP->setSensorConfig(mSensorOp, mWriteZeroEnable, mSensorRatio, this);
-            break;
-
-        case (int)eState::STATE_READ_CONFIG:
-            pValveSP->readSensorConfig(this);
+            pValveSP->setAdcGainZero(mWriteValue, this);
             break;
         }
     }
 };
-#endif // VALVECARIBRATIONDLGMODEL_H
+#endif // VALVECALIBRATIONEXDLGMODEL_H

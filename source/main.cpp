@@ -37,6 +37,7 @@
 #include "source/qmlmodel/interfacetracedlgmodel.h"
 #include "source/qmlmodel/valvecyclecounterdlgmodel.h"
 #include "source/qmlmodel/valvecaribrationdlgmodel.h"
+#include "source/qmlmodel/valvecalibrationexdlgmodel.h"
 #include "source/qmlmodel/controlzerodlgmodel.h"
 #include "source/qmlmodel/controllearndlgmodel.h"
 #include "source/qmlmodel/fatalerrordlgmodel.h"
@@ -173,6 +174,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<InterfaceTraceDlgModel>("InterfaceTraceDlgModel", 1, 0, "InterfaceTraceDlgModel");
     qmlRegisterType<ValveCycleCounterDlgModel>("ValveCycleCounterDlgModel", 1, 0, "ValveCycleCounterDlgModel");
     qmlRegisterType<ValveCariblationDlgModel>("ValveCariblationDlgModel", 1, 0, "ValveCariblationDlgModel");
+    qmlRegisterType<ValveCalibrationExDlgModel>("ValveCalibrationExDlgModel", 1, 0, "ValveCalibrationExDlgModel");
     qmlRegisterType<ControlZeroDlgModel>("ControlZeroDlgModel", 1, 0, "ControlZeroDlgModel");
     qmlRegisterType<ControlLearnDlgModel>("ControlLearnDlgModel", 1, 0, "ControlLearnDlgModel");
     qmlRegisterType<FatalErrorDlgModel>("FatalErrorDlgModel", 1, 0, "FatalErrorDlgModel");
