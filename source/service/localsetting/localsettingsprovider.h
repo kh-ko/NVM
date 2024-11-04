@@ -70,7 +70,7 @@ public:
     qint64  mMonitoringCycle       = 10;
     QString mBuildVersion          = "1.9.62";
     bool    mIsWithoutLogo         = false; // not used
-    int     mCompany               = (int)ValveEnumDef::COMPANY_SOAO;
+    int     mCompany               = (int)ValveEnumDef::COMPANY_NONE;
 
     bool    mIsDrawCurrPos         = true ;
     bool    mIsDrawTargetPos       = true ;

@@ -435,14 +435,14 @@ public:
             {
                 readBuf.append(tempData);
 
-                if(readBuf.endsWith(endChar) || readBuf.size() >= maxLen)
+                if(readBuf.endsWith(endChar) || (readBuf.size() >= maxLen && maxLen > 0))
                 {
                     if(pOErrs != nullptr)
                         * pOErrs = NoError;
                     readBuf.replace(endChar, "");
 
-                    if(readBuf.size() != maxLen)
-                        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]size = "<< readBuf.size()  <<", read data = " << QString(readBuf);
+                    if(readBuf.size() != maxLen && maxLen > 0)
+                        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]maxLen = " << maxLen << ", size = "<< readBuf.size()  <<", read data = " << QString(readBuf);
 
                     return readBuf;
                 }
