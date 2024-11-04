@@ -424,7 +424,8 @@ public:
 
         msec = QDateTime::currentMSecsSinceEpoch();
 
-        while (mSerialPort.waitForReadyRead(timeout)) {
+        while (true) {
+            mSerialPort.waitForReadyRead(10);
 
             QByteArray tempBuf = mSerialPort.readAll();
 
@@ -434,13 +435,14 @@ public:
             {
                 readBuf.append(tempData);
 
-                if(readBuf.endsWith(endChar) || readBuf.size() == maxLen)
+                if(readBuf.endsWith(endChar) || readBuf.size() >= maxLen)
                 {
                     if(pOErrs != nullptr)
                         * pOErrs = NoError;
                     readBuf.replace(endChar, "");
 
-                    //qDebug() << "[khko_debug][" << Q_FUNC_INFO << "] read data = " << QString(readBuf);
+                    if(readBuf.size() != maxLen)
+                        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]size = "<< readBuf.size()  <<", read data = " << QString(readBuf);
 
                     return readBuf;
                 }

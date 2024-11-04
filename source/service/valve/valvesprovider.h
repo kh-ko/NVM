@@ -2746,6 +2746,7 @@ public slots:
         ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
         ValveResponseSensorValueDto signalDto(*pResDto);
 
+
         do{
             if(!signalDto.mIsSucc)
             {
