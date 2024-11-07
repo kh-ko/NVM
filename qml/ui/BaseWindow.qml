@@ -157,7 +157,7 @@ Window {
         onClickValveCailbration       :
         {
             var popup;
-            var lastValue = parseInt(model.mFirmwareVersion.slice(-4));
+            var lastValue = parseInt(model.mFirmwareVersion.slice(-4), 16);
             if (lastValue > 479) {
                 popup = valveCalibrationExDlg.createObject(window)    ; popup.show();
             } else {
