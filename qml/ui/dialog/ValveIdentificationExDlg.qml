@@ -530,7 +530,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
-                    model: ["Unknown", "A : Aluminum", "S : SUS304", "L : SUS316L", "X : Multi-position"]
+                    model: ["Unknown", "A : Aluminum", "S : SUS304", "L : SUS316L", "X : Multi-position", "H : Aluminum-Hard"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
