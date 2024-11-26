@@ -138,7 +138,7 @@ RowLayout {
 
             textField.validator: item.itemModel.mDataType == 0 ?  intValidator : doubleValidator
             textField.color: itemModel.mErrRangeTo ? "#FF0000" : "#000000"
-            stepValue : 1; minValue:-1000000; maxValue: 1000000
+            stepValue : 1; minValue:-1000000; maxValue: 1000000000
             fixedN : item.itemModel.mDataType == 0 ? 0 : 5
 
             onFixedNChanged: {

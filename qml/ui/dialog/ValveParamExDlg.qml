@@ -12,6 +12,7 @@ import GUISetting 1.0
 NWindow{ // khko_todo
     id : dialog
 
+    property var currPageNum : 0
     property var titleText   : qsTr("Valve parameters")
     property var progress    : dlgModel.mProgress
     property var strStatus   : dlgModel.mStrStatus
@@ -212,6 +213,19 @@ NWindow{ // khko_todo
         }
     }
 
+    function movePage(pageNum)
+    {
+        dialog.currPageNum = pageNum;
+        var startIdx = pageNum * 10;
+
+        itemModel.clear();
+
+        for(var idx = startIdx; idx < startIdx + 10; idx ++)
+        {
+            itemModel.append({"idxValue":idx})
+        }
+    }
+
     onProgressChanged: {
         if(dialog.progress === 100 && dialog.isCloseAtComplete)
             dialog.close()
@@ -225,10 +239,11 @@ NWindow{ // khko_todo
         }
 
         Component.onCompleted : {
-            for(var idx = 0; idx < 100; idx ++)
-            {
-                itemModel.append({"idxValue":idx})
-            }
+            dialog.movePage(0);
+            //for(var idx = 0; idx < 100; idx ++)
+            //{
+            //    itemModel.append({"idxValue":idx})
+            //}
         }
     }
 
@@ -265,15 +280,178 @@ NWindow{ // khko_todo
 
         Rectangle{
             id : body
-            height: (GUISetting.line_margin + paramListView.height) + (GUISetting.line_margin + btnBox.height + GUISetting.line_margin)
+            height: (GUISetting.line_margin + naviBox.height) + (GUISetting.line_margin + paramListView.height) + (GUISetting.line_margin + btnBox.height + GUISetting.line_margin)
             anchors.left: parent.left; anchors.right: parent.right; anchors.top: titleBox.bottom
 
             color : "#E4E4E4"
 
+            Rectangle{
+                id : naviBox
+                height : 46 * GUISetting.scale
+                anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin
+                color: "#FFFFFF"
+
+                RowLayout{
+                    height: parent.height - (GUISetting.margin * 2); width: parent.width - (GUISetting.margin * 2)
+                    anchors.verticalCenter: parent.verticalCenter; anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: GUISetting.margin
+
+                    NButton{
+                        id : page01Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 0 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 0 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("1")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 0)
+                                dialog.movePage(0)
+                        }
+                    }
+
+                    NButton{
+                        id : page02Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 1 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 1 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("2")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 1)
+                                dialog.movePage(1)
+                        }
+                    }
+
+                    NButton{
+                        id : page03Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 2 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 2 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("3")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 2)
+                                dialog.movePage(2)
+                        }
+                    }
+
+                    NButton{
+                        id : page04Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 3 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 3 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("4")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 3)
+                                dialog.movePage(3)
+                        }
+                    }
+
+                    NButton{
+                        id : page05Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 4 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 4 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("5")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 4)
+                                dialog.movePage(4)
+                        }
+                    }
+
+                    NButton{
+                        id : page06Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 5 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 5 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("6")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 5)
+                                dialog.movePage(5)
+                        }
+                    }
+
+                    NButton{
+                        id : page07Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 6 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 6 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("7")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 6)
+                                dialog.movePage(6)
+                        }
+                    }
+
+                    NButton{
+                        id : page08Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 7 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 7 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("8")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 7)
+                                dialog.movePage(7)
+                        }
+                    }
+
+                    NButton{
+                        id : page09Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 8 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 8 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("9")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 8)
+                                dialog.movePage(8)
+                        }
+                    }
+
+                    NButton{
+                        id : page10Btn
+                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+                        enabled: dialog.progress === 100
+
+                        bgColor: dialog.currPageNum === 9 ? "#24A7FF" : "#FFFFFF"
+                        text.color: dialog.currPageNum === 9 ? "#FFFFFF" : "#000000"
+                        text.text: qsTr("10")
+
+                        onClick: {
+                            if(dialog.currPageNum !== 9)
+                                dialog.movePage(9)
+                        }
+                    }
+                }
+            }
+
             NScrollView{
                 id : paramListView
-                height: 500 * GUISetting.scale
-                anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin
+                height: 458 * GUISetting.scale
+                anchors.top: naviBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin
                 spacing : 0
 
                 model: itemModel
@@ -319,9 +497,8 @@ NWindow{ // khko_todo
 //                                                idxValue === 38 ? qsTr("(S-DN200 max speed)") :
 //                                                idxValue === 39 ? qsTr("(S-DN250 max speed)") : ""
 
-                    height: paramItemModel.mIsPresent ? (46 * GUISetting.scale) : 0; width: parent.width
-                    visible: paramItemModel.mIsPresent
-
+                    height:(46 * GUISetting.scale); width: parent.width
+                    opacity: paramItemModel.mIsPresent ? 1 : 0.3
 
                     onParamTextValueChanged:
                     {
@@ -343,7 +520,7 @@ NWindow{ // khko_todo
 
                         NText{
                             id : keyDesc
-                            width : 150
+                            width : 300 * GUISetting.scale
                             anchors.verticalCenter: parent.verticalCenter; anchors.left: keyLabel.right; anchors.leftMargin: GUISetting.margin; //anchors.right: valveInput.left; anchors.rightMargin: 10
                             text : parent.parent.paramDesc
                             color : "#24292E"
@@ -356,7 +533,7 @@ NWindow{ // khko_todo
                             height: 24 * GUISetting.scale//width: (parent.width - 40) / 2;
                             anchors.verticalCenter: parent.verticalCenter; anchors.left: keyDesc.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                            enabled: dialog.progress === 100
+                            enabled: dialog.progress === 100 && paramItemModel.mIsPresent
 
                             textField.validator: IntValidator{} // RegExpValidator { regExp: /[0-9A-Fa-f]{0,8}/ } //IntValidator{}
                             textField.color: parent.parent.paramItemModel.mIsErr ? "#FF0000" : parent.parent.paramItemModel.mIsEdit ? "#24A7FF" : "#000000"

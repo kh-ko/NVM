@@ -17,6 +17,8 @@ class InterfaceSetupDevNetDlgModel : public QObject
     Q_OBJECT
     Q_PROPERTY(int      mAccessMode             READ getAccessMode             NOTIFY signalEventChangedAccessMode           )
     Q_PROPERTY(bool     mIsRS232Test            READ getIsRS232Test            NOTIFY signalEventChangedIsRS232Test          )
+    Q_PROPERTY(int      mNewDevNetValveRev      READ getNewDevNetValveRev      NOTIFY signalEventChangedNewDevNetValveRev    )
+    Q_PROPERTY(int      mValveID                READ getValveID                NOTIFY signalEventChangedValveID              )
 
     Q_PROPERTY(QString  mMacAddr                READ getMacAddr                NOTIFY signalEventChangedMacAddr              )
     Q_PROPERTY(int      mBaudrateIdx            READ getBaudrateIdx            NOTIFY signalEventChangedBaudrateIdx          )
@@ -78,6 +80,8 @@ class InterfaceSetupDevNetDlgModel : public QObject
 public:
     int     mAccessMode    = ValveEnumDef::ACCESS_LOCAL;
     bool    mIsRS232Test   = false;
+    int     mNewDevNetValveRev    = 0; // khko "00G"
+    int     mValveID              = 0; // khko
 
     QString  mMacAddr             = "00(unknow)";
     int      mBaudrateIdx         = 0;
@@ -138,6 +142,8 @@ public:
 
     int     getAccessMode             (){return mAccessMode           ;}
     bool    getIsRS232Test            (){return mIsRS232Test          ;}
+    int     getNewDevNetValveRev      (){return mNewDevNetValveRev    ;}
+    int     getValveID                (){return mValveID              ;}
     QString getMacAddr                (){return mMacAddr              ;}
     int     getBaudrateIdx            (){return mBaudrateIdx          ;}
     int     getDataTypeIdx            (){return mDataTypeIdx          ;}
@@ -194,6 +200,8 @@ public:
 
     void setAccessMode           (int     value){if(mAccessMode            == value)return; mAccessMode            = value; emit signalEventChangedAccessMode           (value);}
     void setIsRS232Test          (bool    value){if(mIsRS232Test           == value)return; mIsRS232Test           = value; emit signalEventChangedIsRS232Test          (value);}
+    void setNewDevNetValveRev    (int     value){if(mNewDevNetValveRev     == value)return; mNewDevNetValveRev     = value; emit signalEventChangedNewDevNetValveRev    (value);}
+    void setValveID              (int     value){if(mValveID               == value)return; mValveID               = value; emit signalEventChangedValveID              (value);}
     void setMacAddr              (QString value){if(mMacAddr               == value)return; mMacAddr               = value; emit signalEventChangedMacAddr              (value);}
     void setBaudrateIdx          (int     value){if(mBaudrateIdx           == value)return; mBaudrateIdx           = value; emit signalEventChangedBaudrateIdx          (value);}
     void setDataTypeIdx          (int     value){if(mDataTypeIdx           == value)return; mDataTypeIdx           = value; emit signalEventChangedDataTypeIdx          (value);}
@@ -251,6 +259,8 @@ public:
 signals:
     void signalEventChangedAccessMode           (int     value);
     void signalEventChangedIsRS232Test          (bool    value);
+    void signalEventChangedNewDevNetValveRev    (int     value);
+    void signalEventChangedValveID              (int     value);
     void signalEventChangedMacAddr              (QString value);
     void signalEventChangedBaudrateIdx          (int     value);
     void signalEventChangedDataTypeIdx          (int     value);
@@ -362,9 +372,12 @@ public slots:
         setIsRS232Test(pValveSP->getIsRS232Test());
     }
 
+    //khko
     void onValveReadedValveParam(ValveResponseValveParamDto dto)
     {
-        if(mState != eState::STATE_READ_VALVE_TYPE || dto.mReqDto.mpRef != this)
+        QString temp;
+
+        if((mState != eState::STATE_READ_VALVE_TYPE && mState != eState::STATE_READ_VALVE_ID_1 && mState != eState::STATE_READ_VALVE_ID_2 && mState != eState::STATE_READ_VALVE_ID_3) || dto.mReqDto.mpRef != this)
             return;
 
         setErrMsg(dto.mErrMsg);
@@ -375,8 +388,40 @@ public slots:
             return;
         }
 
-        qDebug() << "[" << Q_FUNC_INFO << "] readed param = " << dto.mValue;
-        mReadedValveType = dto.mValue.toInt();
+        qDebug() << "[" << Q_FUNC_INFO << "] readed param = " << dto.mValue << ", step = " << mState;
+
+        switch ((int)mState) {
+        case (int)eState::STATE_READ_VALVE_TYPE:
+            mReadedValveType = dto.mValue.toInt(nullptr, 16);
+            break;
+
+        case (int)eState::STATE_READ_VALVE_ID_1:
+            mValveID01 = dto.mValue.toInt(nullptr, 16);
+            break;
+
+        case (int)eState::STATE_READ_VALVE_ID_2:
+            mValveID02 = dto.mValue.toInt(nullptr, 16);
+            break;
+
+        case (int)eState::STATE_READ_VALVE_ID_3:
+            temp = "00G";
+            mValveID03 = dto.mValue.toInt(nullptr, 16);
+            setNewDevNetValveRev(temp.toInt(nullptr, 36));
+            setValveID((mValveID01 * 36 * 36) + (mValveID02 * 36) + mValveID03);
+
+            if(mNewDevNetValveRev > mValveID)
+            {
+                mInputTable.at(mInputTable.size() - 1)->setEnable(false);
+                mOutputTable.at(mOutputTable.size() - 1)->setEnable(false);
+            }
+            else
+            {
+                mInputTable.at(mInputTable.size() - 1)->setEnable(true);
+                mOutputTable.at(mOutputTable.size() - 1)->setEnable(true);
+            }
+            break;
+        }
+
 
         setState((eState)(mState + 1));
     }
@@ -709,6 +754,11 @@ public slots:
         setState((eState)(mState + 1));
     }
 
+    Q_INVOKABLE bool onCommandIsSelEvenBytes()
+    {
+        return isInputEvenBytes();
+    }
+
     Q_INVOKABLE bool onCommandGetIsSelDummy()
     {
         return (mInputTable.at(mInputTable.size()-1)->getIsSelected() || mOutputTable.at(mOutputTable.size()-1)->getIsSelected());
@@ -727,7 +777,7 @@ public slots:
         return mInputTable.at(seq - 1);
     }
 
-    Q_INVOKABLE void onCommandSelectInputAssemblyItem(int seq, bool isSelect)
+    Q_INVOKABLE void onCommandSelectInputAssemblyItem(int seq, bool isSelect, bool isInternal = false)
     {
         InterfaceSetupDevNetAssemblyItemModel * pSelectedItem = onCommandGetInputAssemblyItem(seq);
         InterfaceSetupDevNetAssemblyItemModel * pDependentItem = onCommandGetInputAssemblyItem(pSelectedItem->getDepSeq());
@@ -739,7 +789,11 @@ public slots:
             pDependentItem->setIsSelected(!isSelect);
         }
 
-        mpQmlInDummyItem->setIsSelected(!isInputEvenBytes());
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
+        // khko : 00G 버젼 이후로 even 바이트를 만드는 것은 수동으로 설정할 수 있도록 한다.
+        if((mNewDevNetValveRev > mValveID) && isInternal == false )
+            mpQmlInDummyItem->setIsSelected(!isInputEvenBytes());
 
         int nextIdx = 0;
 
@@ -766,19 +820,23 @@ public slots:
         return mOutputTable.at(seq - 1);
     }
 
-    Q_INVOKABLE void onCommandSelectOutputAssemblyItem(int seq, bool isSelect)
+    Q_INVOKABLE void onCommandSelectOutputAssemblyItem(int seq, bool isSelect, bool isInternal = false)
     {
         InterfaceSetupDevNetAssemblyItemModel * pSelectedItem = onCommandGetOutputAssemblyItem(seq);
         InterfaceSetupDevNetAssemblyItemModel * pDependentItem = onCommandGetOutputAssemblyItem(pSelectedItem->getDepSeq());
 
         pSelectedItem->setIsSelected(isSelect);
 
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
+
         if(pDependentItem != nullptr && isSelect)
         {
             pDependentItem->setIsSelected(!isSelect);
         }
 
-        mpQmlOutDummyItem->setIsSelected(!isOutputEvenBytes());
+        // khko : 00G 버젼 이후로 even 바이트를 만드는 것은 수동으로 설정할 수 있도록 한다.
+        if((mNewDevNetValveRev > mValveID) && isInternal == false )
+            mpQmlOutDummyItem->setIsSelected(!isOutputEvenBytes());
 
         int nextIdx = 0;
 
@@ -1094,7 +1152,10 @@ private:
         STATE_WRITE_DI            = STATE_WRITE_OUT_ASS       + 1,
         STATE_WRITE_DO            = STATE_WRITE_DI            + 1,
         STATE_READ_VALVE_TYPE     = STATE_WRITE_DO            + 1,
-        STATE_READ_MAC            = STATE_READ_VALVE_TYPE     + 1,
+        STATE_READ_VALVE_ID_1     = STATE_READ_VALVE_TYPE     + 1,
+        STATE_READ_VALVE_ID_2     = STATE_READ_VALVE_ID_1     + 1,
+        STATE_READ_VALVE_ID_3     = STATE_READ_VALVE_ID_2     + 1,
+        STATE_READ_MAC            = STATE_READ_VALVE_ID_3     + 1,
         STATE_READ_BAUDRATE       = STATE_READ_MAC            + 1,
         STATE_READ_POS_UNIT       = STATE_READ_BAUDRATE       + 1,
         STATE_READ_POS_GAIN       = STATE_READ_POS_UNIT       + 1,
@@ -1134,6 +1195,9 @@ private:
     int     mWriteDOPolarity      = 0;
 
     int     mReadedValveType       = 0; // 0 = unknow, 1 = Butterfly, 2 = Pendulum
+    int     mValveID01             = 0;
+    int     mValveID02             = 0;
+    int     mValveID03             = 0;
     int     mReadedMAC             = 0;
     int     mReadedBaudrateIdx     = 0;
     QString mReadedPosUnit         = "1001";
@@ -1230,6 +1294,9 @@ public slots:
             pValveSP->setInterfaceConfigDNetDo(mWriteDOActivation, mWriteDOFunction, mWriteDOPolarity , this);
             break;
         case (int)STATE_READ_VALVE_TYPE    : if(mReadedValveType    != 0                                                               ){setState((eState)(mState + 1), true); return;} pValveSP->readValveParam                  (1, this); break;
+        case (int)STATE_READ_VALVE_ID_1    : pValveSP->readValveParam( 9, this); break;
+        case (int)STATE_READ_VALVE_ID_2    : pValveSP->readValveParam(10, this); break;
+        case (int)STATE_READ_VALVE_ID_3    : pValveSP->readValveParam(11, this); break;
         case (int)STATE_READ_MAC           : if(mReadedMAC          == mWriteMAC          && mErrMacAddr         == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetMac         (this); break;
         case (int)STATE_READ_BAUDRATE      : if(mReadedBaudrateIdx  == mWriteBaudrateIdx  && mErrBaudrateIdx     == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
         case (int)STATE_READ_POS_UNIT      : if(mReadedPosUnit      == mWritePosUnit      && mErrPositionUnitIdx == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetPosUnit     (this); break;
@@ -1364,10 +1431,10 @@ private:
     {
         quint32 maskedValue = value.toUInt(nullptr, 16);
 
-        for(quint32 shift = 0; shift < 32 && shift < (quint32)mInputTable.size()-1; shift++)
+        for(quint32 shift = 0; shift < 32 && shift < (quint32)mInputTable.size(); shift++)
         {
             quint32 mask = (0x00000001 << shift) & 0xFFFFFFFF;
-            onCommandSelectInputAssemblyItem(shift + 1, (maskedValue & mask) != 0);
+            onCommandSelectInputAssemblyItem(shift + 1, (maskedValue & mask) != 0, true);
         }
     }
 
@@ -1375,10 +1442,10 @@ private:
     {
         quint32 maskedValue = value.toUInt(nullptr, 16);
 
-        for(quint32 shift = 0; shift < 32 && shift < (quint32)mOutputTable.size()-1; shift++)
+        for(quint32 shift = 0; shift < 32 && shift < (quint32)mOutputTable.size(); shift++)
         {
             quint32 mask = (0x00000001 << shift) & 0xFFFFFFFF;
-            onCommandSelectOutputAssemblyItem(shift + 1, (maskedValue & mask) != 0);
+            onCommandSelectOutputAssemblyItem(shift + 1, (maskedValue & mask) != 0, true);
         }
     }
 
@@ -1467,7 +1534,7 @@ private:
         quint32 value = 0;
         quint32 mask = 0x00000001;
 
-        for(int idx = 0; idx < mInputTable.size()-1; idx++)
+        for(int idx = 0; idx < mInputTable.size(); idx++)
         {
             if(mInputTable.at(idx)->getIsSelected())
                 value = value | ((mask << idx) & 0xFFFFFFFF);
@@ -1479,7 +1546,7 @@ private:
         quint32 value = 0;
         quint32 mask = 0x00000001;
 
-        for(int idx = 0; idx < mOutputTable.size()-1; idx++)
+        for(int idx = 0; idx < mOutputTable.size(); idx++)
         {
             if(mOutputTable.at(idx)->getIsSelected())
                 value = value | ((mask << idx) & 0xFFFFFFFF);
@@ -1513,8 +1580,18 @@ private:
     bool isInputEvenBytes()
     {
         int len = 0;
+        int loopLimit;
 
-        for(int i = 0; i < mInputTable.size() - 1; i ++ )
+        if(mNewDevNetValveRev > mValveID)
+        {
+            loopLimit = mInputTable.size() - 1;
+        }
+        else
+        {
+            loopLimit = mInputTable.size();
+        }
+
+        for(int i = 0; i < loopLimit; i ++ ) // khko
         {
             InterfaceSetupDevNetAssemblyItemModel * pItem = mInputTable.at(i);
            if(pItem->getIsSelected()){ len = len + pItem->getLength(); }
@@ -1525,8 +1602,18 @@ private:
     bool isOutputEvenBytes()
     {
         int len = 0;
+        int loopLimit;
 
-        for(int i = 0; i < mOutputTable.size() - 1; i ++ )
+        if(mNewDevNetValveRev > mValveID)
+        {
+            loopLimit = mOutputTable.size() - 1;
+        }
+        else
+        {
+            loopLimit = mOutputTable.size();
+        }
+
+        for(int i = 0; i < loopLimit; i ++ )
         {
             InterfaceSetupDevNetAssemblyItemModel * pItem = mOutputTable.at(i);
            if(pItem->getIsSelected()){ len = len + pItem->getLength(); }
@@ -1546,7 +1633,6 @@ private:
             mInputTable.append(pQmlItem);
         }
         mpQmlInDummyItem = new InterfaceSetupDevNetAssemblyItemModel(this);
-        mpQmlInDummyItem->setEnable(false);
         mpQmlInDummyItem->setSeq    (mInputTable.at(mInputTable.size()-1)->getSeq() + 1);
         mpQmlInDummyItem->setIndex  (-1);
         mpQmlInDummyItem->setName   ("dummy");
@@ -1564,7 +1650,6 @@ private:
             mOutputTable.append(pQmlItem);
         }
         mpQmlOutDummyItem = new InterfaceSetupDevNetAssemblyItemModel(this);
-        mpQmlOutDummyItem->setEnable(false);
         mpQmlOutDummyItem->setSeq    (mOutputTable.at(mOutputTable.size()-1)->getSeq() + 1);
         mpQmlOutDummyItem->setIndex  (-1);
         mpQmlOutDummyItem->setName   ("dummy");

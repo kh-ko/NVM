@@ -749,7 +749,8 @@ BaseSetupWindow{
 
                         onClick: {
 
-                            if(dlgModel.onCommandGetIsSelDummy())
+                            if(((dlgModel.mValveID < dlgModel.mNewDevNetValveRev) && !dlgModel.onCommandIsSelEvenBytes())
+                               ||(!(dlgModel.mValveID < dlgModel.mNewDevNetValveRev) && dlgModel.onCommandGetIsSelDummy()))
                             {
                                 dialog.openNoticeDlg();
                             }
@@ -785,7 +786,7 @@ BaseSetupWindow{
     Component{
         id : noticeDlg
         NoticeDlg{
-            msg : qsTr("Added a dummy parameter to match even bytes.")
+            msg : (dlgModel.mValveID < dlgModel.mNewDevNetValveRev) ? qsTr("Added a dummy parameter to match even bytes.") : qsTr("The total byte count has been set to an odd number of bytes.<br><br>If an even number of bytes is required,<br>please check the dummy parameter and reapply.")
 
             onSignalConfirm: {
                 if(dialog.access !== ValveEnumDef.ACCESS_LOCAL && dialog.isRS232Test == false)
