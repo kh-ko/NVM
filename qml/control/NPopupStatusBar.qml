@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import GUISetting 1.0
+import FontManager 1.0
 
 Rectangle {
     id : control
@@ -24,6 +25,7 @@ Rectangle {
         NText{
             anchors.fill: parent; anchors.leftMargin: GUISetting.margin;
             verticalAlignment: Text.AlignVCenter
+            font.family: FontManager.codingName
             text : connectInfo + "      " + valveID
         }
     }

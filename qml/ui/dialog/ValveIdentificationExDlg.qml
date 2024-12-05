@@ -5,6 +5,7 @@ import "../../control/."
 import ValveEnumDef 1.0
 import ValveIdentificationExDlgModel 1.0
 import GUISetting 1.0
+import FontManager 1.0
 
 BaseSetupWindow{
     id : dialog
@@ -314,6 +315,8 @@ BaseSetupWindow{
                     height: 24  * GUISetting.scale; width : parent.width - (GUISetting.margin + serialNumberLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+
+                    font.family: FontManager.codingName
                     text : dlgModel.mSerialNumber
                 }
 
@@ -324,6 +327,7 @@ BaseSetupWindow{
                     anchors.verticalCenter: serialNumber.verticalCenter; anchors.horizontalCenter: serialNumber.horizontalCenter
                     height: 24  * GUISetting.scale; width : serialNumber.width
 
+                    textField.font.family: FontManager.codingName
                     textField.color: isInvalidValue ? "#FF0000" : "#000000" //textColor
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
@@ -358,6 +362,7 @@ BaseSetupWindow{
                     height: 24  * GUISetting.scale; width : parent.width - (GUISetting.margin + valveModelLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : valveModelCombo.currentText
                 }
 
@@ -370,6 +375,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["Unknown", "A : APC", "M : Manual", "G : Gate", "U : UHV Gate", "L : Low cost APC"]
 
                     onCurrentIndexChanged: {
@@ -390,6 +396,7 @@ BaseSetupWindow{
                     height: 24  * GUISetting.scale; width : parent.width - (GUISetting.margin + valveTypeLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : _valveTypeCombo.currentText
                 }
 
@@ -402,6 +409,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["Unknown", "B : Butterfly", "P : Pendulum", "C : Circular"]
 
                     onCurrentIndexChanged: {
@@ -422,6 +430,7 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + sealingTypeLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : sealingTypeCombo.currentText
                 }
 
@@ -434,6 +443,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["Unknown", "N : Non-Sealing", "S : Sealing", "F : FCup-Sealing", "X : Multi-position"]
 
                     onCurrentIndexChanged: {
@@ -454,6 +464,7 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + flangeSizeLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : flangeSizeCombo.currentText
                 }
 
@@ -466,6 +477,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["Unknown", "040 : DN40", "050 : DN50", "063 : DN63" , "080 : DN80" , "100 : DN100" , "160 : DN160" , "200 : DN200" , "250 : DN250", "025 : DN25", "320 : DN320"]
 
                     onCurrentIndexChanged: {
@@ -486,6 +498,7 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + methodOfContractLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : methodOfContractCombo.currentText
                 }
 
@@ -498,6 +511,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["Unknown", "K : ISO-KF", "F : ISO", "C : CF-F", "P : ISO-K", "X : Multi-position"]
 
                     onCurrentIndexChanged: {
@@ -518,6 +532,7 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + bodyMaterialLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : bodyMaterialCombo.currentText
                 }
 
@@ -530,6 +545,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["Unknown", "A : Aluminum", "S : SUS304", "L : SUS316L", "X : Multi-position", "H : Aluminum-Hard"]
 
                     onCurrentIndexChanged: {
@@ -550,6 +566,7 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + commInterfaceLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : commInterfaceCombo.currentText
                 }
 
@@ -562,6 +579,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["Unknown", "R2 : RS-232", "R3 : RS-232 with analog outputs", "R4 : RS-485", "LO : Logic", "DN : DeviceNet", "PB : Profibus", "EN : Ethernet", "CC : CC-Link", "EC : EtherCAT", "LL : Legacy Logic", "LD : Legacy DeviceNet", "AD : AP DeviceNet", "RL : Retrofit Logic"]
 
                     onCurrentIndexChanged: {
@@ -582,6 +600,7 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + powerOptionLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: ! dialog.unlock
+                    font.family: FontManager.codingName
                     text : powerOptionCombo.currentText
                 }
 
@@ -594,6 +613,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["Unknown", "B : Basic", "S : SPS", "P : with PFO", "D : with SPS and PFO", "U : with UPS", "A : with SPS & UPS"]
 
                     onCurrentIndexChanged: {
@@ -614,6 +634,7 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + quantifyOfSensorLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : quantifyOfSensorCombo.currentText
                 }
 
@@ -626,6 +647,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["0 : 0 Sensor", "1 : 1 Sensor", "2 : 2 Sensor"]
 
                     onCurrentIndexChanged: {
@@ -646,6 +668,7 @@ BaseSetupWindow{
                     height: 24  * GUISetting.scale; width : parent.width - (GUISetting.margin + versionLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : "R" + version01Combo.currentText + version02Combo.currentText + version03Combo.currentText
                 }
 
@@ -658,6 +681,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
                     onCurrentIndexChanged: {
@@ -674,6 +698,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
                     onCurrentIndexChanged: {
@@ -690,6 +715,7 @@ BaseSetupWindow{
                     enabled: dialog.progress === 100
                     visible: dialog.unlock
 
+                    fontFamily: FontManager.codingName
                     model: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
                     onCurrentIndexChanged: {
@@ -710,6 +736,7 @@ BaseSetupWindow{
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + productNumberLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
                     visible: !dialog.unlock
+                    font.family: FontManager.codingName
                     text : dlgModel.mIsSupportPdNumEx ? _productNumberInput.textField.text + "-" + _productNumberExInput.textField.text : _productNumberInput.textField.text
                 }
 
@@ -725,6 +752,7 @@ BaseSetupWindow{
                     isHexMode: true
                     padN : 4
                     textField.validator: RegExpValidator { regExp: /[0-9A-Fa-f]{0,4}/ }
+                    textField.font.family: FontManager.codingName
                     stepValue : 1; minValue: 0; maxValue: 65535
                     fixedN : 0
 
@@ -745,6 +773,7 @@ BaseSetupWindow{
                     isHexMode: true
                     padN : 6
                     textField.validator: RegExpValidator { regExp: /[0-9A-Fa-f]{0,6}/ }
+                    textField.font.family: FontManager.codingName
                     stepValue : 1; minValue: 0; maxValue: 16777215
                     fixedN : 0
 
@@ -782,6 +811,7 @@ BaseSetupWindow{
                     anchors.top: firmwareTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: firmwareVersionLabel.right; anchors.leftMargin: GUISetting.margin * 2
                     height: 24 * GUISetting.scale; width : parent.width - (GUISetting.margin + firmwareVersionLabel.width + (GUISetting.margin * 2) + GUISetting.margin)
                     verticalAlignment: Text.AlignVCenter
+                    font.family: FontManager.codingName
                     text : dlgModel.mFirmwareVersion.slice(0, 6) + "-" + dlgModel.mFirmwareVersion.slice(6);
                 }
             }

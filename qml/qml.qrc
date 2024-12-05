@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>ui/BaseWindow.qml</file>
         <file>uiengine/FontManager.qml</file>
-        <file>uiengine/font/GodoB.ttf</file>
+        <file>uiengine/font/SourceCodePro-Regular.ttf</file>
         <file>uiengine/font/NanumBarunGothic.ttf</file>
         <file>uiengine/font/NanumBarunGothicBold.ttf</file>
         <file>qtquickcontrols2.conf</file>

@@ -1,11 +1,13 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import "./."
+import FontManager 1.0
 
 ComboBox {
     id: control
 
     property var textColor : "#000000"
+    property var fontFamily : FontManager.nanumGothicName
 
     opacity: enabled ? 1 : 0.3
 
@@ -20,6 +22,7 @@ ComboBox {
             NText {
                 width: parent.width - 20; height: parent.height
                 anchors.horizontalCenter: parent.horizontalCenter
+                font.family: control.fontFamily
                 text: modelData
                 verticalAlignment: Text.AlignVCenter
             }
@@ -59,6 +62,7 @@ ComboBox {
             width: control.width - indicator.width - 20
             anchors.left: parent.left; anchors.leftMargin: 10; anchors.verticalCenter: parent.verticalCenter
 
+            font.family: control.fontFamily
             text: control.displayText
             color : control.textColor
             verticalAlignment: Text.AlignVCenter

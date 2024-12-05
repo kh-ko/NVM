@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import "../control/."
 import GlobalUiValue 1.0
 import GUISetting 1.0
+import FontManager 1.0
 
 Rectangle {
     id : panel
@@ -30,6 +31,7 @@ Rectangle {
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
             Layout.preferredWidth: 3
+            font.family: FontManager.codingName
             text : panel.isConnected ? qsTr("connected valve : ") + panel.serialNumber : ""
         }
         NText{
