@@ -417,6 +417,10 @@ public slots:
 
         for(int i = 0; i < mpParamList.count(); i ++)
         {
+            // id 부분은 백업에서 제외 + pos offset도 제외 : 20241210 - 김부장님 요청사항
+            if(i < 17 || i == 51)
+                continue;
+
             if(mpParamList[i]->getIsPresent() && mpParamList[i]->getTextValue().length() > 0)
             {
                 if(mpParamList[i]->mIntValue < 0)
