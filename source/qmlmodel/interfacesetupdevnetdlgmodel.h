@@ -1722,7 +1722,7 @@ private:
             else if(line.contains("CreateTime" )){line.append(QString(" %1;").arg(QDateTime::currentDateTime().toString(TIME_FMT) ));}
             else if(line.contains("ModDate"    )){line.append(QString(" %1;").arg(QDate::currentDate().toString(EDS_FILE_DATE_FMT)));}
             else if(line.contains("ModTime"    )){line.append(QString(" %1;").arg(QDateTime::currentDateTime().toString(TIME_FMT) ));}
-            else if(line.contains("Revision"   )){line.append(QString(" %1;").arg("0.0"                                           ));}
+            else if(line.contains("Revision"   )){line.append(QString(" %1;").arg("1.0"                                           ));}
             else if(line.contains("VendCode"   )){line.append(QString(" %1;").arg("1762"                                          ));}
             else if(line.contains("VendName"   )){line.append(QString(" %1;").arg("\"NOVASEN\""                                   ));}
             else if(line.contains("ProdTypeStr")){line.append(QString(" %1;").arg("\"Generic\""                                   ));}
@@ -1737,7 +1737,7 @@ private:
                 default:line.append(QString(" %1;").arg("0")); break;
                 }
             }
-            else if(line.contains("MajRev"     )){line.append(QString(" %1;").arg("0"                                             ));}
+            else if(line.contains("MajRev"     )){line.append(QString(" %1;").arg("1"                                             ));}
             else if(line.contains("MinRev"     )){line.append(QString(" %1;").arg("0"                                             ));}
             // 버터 플라이 / 팬들럼
             else if(line.contains("ProdName"   ))
