@@ -377,12 +377,17 @@ public slots:
     {
         QString temp;
 
-        if((mState != eState::STATE_READ_VALVE_TYPE && mState != eState::STATE_READ_VALVE_ID_1 && mState != eState::STATE_READ_VALVE_ID_2 && mState != eState::STATE_READ_VALVE_ID_3) || dto.mReqDto.mpRef != this)
+        if((mState != eState::STATE_READ_VALVE_TYPE
+            && mState != eState::STATE_READ_VALVE_ID_1
+            && mState != eState::STATE_READ_VALVE_ID_2
+            && mState != eState::STATE_READ_VALVE_ID_3
+            && mState != eState::STATE_READ_PROD_CODE
+            && mState != eState::STATE_READ_PROD_TYPE) || dto.mReqDto.mpRef != this)
             return;
 
         setErrMsg(dto.mErrMsg);
 
-        if(!dto.mIsSucc/* || dto.mMacAddr > 100*/)
+        if(!dto.mIsSucc && dto.mIsNetworkErr/* || dto.mMacAddr > 100*/)
         {
             setState(mState);
             return;
@@ -392,20 +397,48 @@ public slots:
 
         switch ((int)mState) {
         case (int)eState::STATE_READ_VALVE_TYPE:
-            mReadedValveType = dto.mValue.toInt(nullptr, 16);
+             if(!dto.mIsSucc)
+             {
+                 setState(mState);
+                 return;
+             }
+
+             mReadedValveType = dto.mValue.toInt(nullptr, 16);
             break;
 
         case (int)eState::STATE_READ_VALVE_ID_1:
-            mValveID01 = dto.mValue.toInt(nullptr, 16);
+            if(!dto.mIsSucc)
+            {
+                mValveID01 = 0;
+            }
+            else
+            {
+                mValveID01 = dto.mValue.toInt(nullptr, 16);
+            }
             break;
 
         case (int)eState::STATE_READ_VALVE_ID_2:
-            mValveID02 = dto.mValue.toInt(nullptr, 16);
+            if(!dto.mIsSucc)
+            {
+                mValveID02 = 0;
+            }
+            else
+            {
+                mValveID02 = dto.mValue.toInt(nullptr, 16);
+            }
             break;
 
         case (int)eState::STATE_READ_VALVE_ID_3:
+            if(!dto.mIsSucc)
+            {
+                mValveID03 = 0;
+            }
+            else
+            {
+                mValveID03 = dto.mValue.toInt(nullptr, 16);
+            }
+
             temp = "00G";
-            mValveID03 = dto.mValue.toInt(nullptr, 16);
             setNewDevNetValveRev(temp.toInt(nullptr, 36));
             setValveID((mValveID01 * 36 * 36) + (mValveID02 * 36) + mValveID03);
 
@@ -413,12 +446,51 @@ public slots:
             {
                 mInputTable.at(mInputTable.size() - 1)->setEnable(false);
                 mOutputTable.at(mOutputTable.size() - 1)->setEnable(false);
+
+                mProdType = 0;
+                mProdTypeStr = "\"Generic\"";
+                switch(mReadedValveType)
+                {
+                    case 1:mProdCode  = 100; break;
+                    case 2:mProdCode  = 200; break;
+                    default:mProdCode =   0; break;
+                }
+                mState = STATE_READ_PROD_CODE;
             }
             else
             {
                 mInputTable.at(mInputTable.size() - 1)->setEnable(true);
                 mOutputTable.at(mOutputTable.size() - 1)->setEnable(true);
             }
+
+            break;
+        case (int)eState::STATE_READ_PROD_TYPE:
+            if(!dto.mIsSucc)
+            {
+                setState(mState);
+                return;
+            }
+
+            mProdType = dto.mValue.toInt(nullptr, 16);
+            switch(mProdType)
+            {
+                case 0x00:mProdTypeStr  = "\"Generic Device\""; break;
+                case 0x0C:mProdTypeStr  = "\"Communications Adapter\""; break;
+                case 0x1D:mProdTypeStr  = "\"Process Control Valve\""; break;
+                default:mProdTypeStr    = "\"Unknow\""; break;
+            }
+
+            break;
+
+        case (int)eState::STATE_READ_PROD_CODE:
+            if(!dto.mIsSucc)
+            {
+                setState(mState);
+                return;
+            }
+
+            mProdCode = dto.mValue.toInt(nullptr, 16);
+
             break;
         }
 
@@ -1155,7 +1227,9 @@ private:
         STATE_READ_VALVE_ID_1     = STATE_READ_VALVE_TYPE     + 1,
         STATE_READ_VALVE_ID_2     = STATE_READ_VALVE_ID_1     + 1,
         STATE_READ_VALVE_ID_3     = STATE_READ_VALVE_ID_2     + 1,
-        STATE_READ_MAC            = STATE_READ_VALVE_ID_3     + 1,
+        STATE_READ_PROD_TYPE      = STATE_READ_VALVE_ID_3     + 1,
+        STATE_READ_PROD_CODE      = STATE_READ_PROD_TYPE      + 1,
+        STATE_READ_MAC            = STATE_READ_PROD_CODE      + 1,
         STATE_READ_BAUDRATE       = STATE_READ_MAC            + 1,
         STATE_READ_POS_UNIT       = STATE_READ_BAUDRATE       + 1,
         STATE_READ_POS_GAIN       = STATE_READ_POS_UNIT       + 1,
@@ -1198,6 +1272,9 @@ private:
     int     mValveID01             = 0;
     int     mValveID02             = 0;
     int     mValveID03             = 0;
+    int     mProdType              = 0;
+    QString mProdTypeStr           = "";
+    int     mProdCode              = 0;
     int     mReadedMAC             = 0;
     int     mReadedBaudrateIdx     = 0;
     QString mReadedPosUnit         = "1001";
@@ -1297,6 +1374,8 @@ public slots:
         case (int)STATE_READ_VALVE_ID_1    : pValveSP->readValveParam( 9, this); break;
         case (int)STATE_READ_VALVE_ID_2    : pValveSP->readValveParam(10, this); break;
         case (int)STATE_READ_VALVE_ID_3    : pValveSP->readValveParam(11, this); break;
+        case (int)STATE_READ_PROD_TYPE     : pValveSP->readValveParam(34, this); break;
+        case (int)STATE_READ_PROD_CODE     : pValveSP->readValveParam(33, this); break;
         case (int)STATE_READ_MAC           : if(mReadedMAC          == mWriteMAC          && mErrMacAddr         == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetMac         (this); break;
         case (int)STATE_READ_BAUDRATE      : if(mReadedBaudrateIdx  == mWriteBaudrateIdx  && mErrBaudrateIdx     == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
         case (int)STATE_READ_POS_UNIT      : if(mReadedPosUnit      == mWritePosUnit      && mErrPositionUnitIdx == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetPosUnit     (this); break;
@@ -1725,20 +1804,12 @@ private:
             else if(line.contains("Revision"   )){line.append(QString(" %1;").arg("1.0"                                           ));}
             else if(line.contains("VendCode"   )){line.append(QString(" %1;").arg("1762"                                          ));}
             else if(line.contains("VendName"   )){line.append(QString(" %1;").arg("\"NOVASEN\""                                   ));}
-            else if(line.contains("ProdTypeStr")){line.append(QString(" %1;").arg("\"Generic\""                                   ));}
-            else if(line.contains("ProdType"   )){line.append(QString(" %1;").arg("0"                                             ));}
+            else if(line.contains("ProdTypeStr")){line.append(QString(" %1;").arg(mProdTypeStr                                    ));}
+            else if(line.contains("ProdType"   )){line.append(QString(" %1;").arg(mProdType                                       ));}
             // 버터 플라이는 100, 팬들럼 200
-            else if(line.contains("ProdCode"   ))
-            {
-                switch(mReadedValveType)
-                {
-                case 1:line.append(QString(" %1;").arg("100")); break;
-                case 2:line.append(QString(" %1;").arg("200")); break;
-                default:line.append(QString(" %1;").arg("0")); break;
-                }
-            }
+            else if(line.contains("ProdCode"   )){line.append(QString(" %1;").arg(mProdCode                                       ));}
             else if(line.contains("MajRev"     )){line.append(QString(" %1;").arg("1"                                             ));}
-            else if(line.contains("MinRev"     )){line.append(QString(" %1;").arg("0"                                             ));}
+            else if(line.contains("MinRev"     )){line.append(QString(" %1;").arg("1"                                             ));}
             // 버터 플라이 / 팬들럼
             else if(line.contains("ProdName"   ))
             {
