@@ -152,5 +152,6 @@
         <file>ui/dialog/InterfaceStatusProfibusDlg.qml</file>
         <file>image/img_soao.png</file>
         <file>ui/dialog/ValveCalibrationExDlg.qml</file>
+        <file>ui/dialog/PressureLearnList.qml</file>
     </qresource>
 </RCC>

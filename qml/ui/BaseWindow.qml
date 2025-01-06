@@ -168,6 +168,7 @@ Window {
         onClickSensorAnalysis         : { var popup = sensorAnalysisDlg.createObject(window)        ; popup.show(); }
         onClickPressureCtrlSetup      : { var popup = pressureCtrlFloatSetupDlg.createObject(window); popup.show(); }
         onClickPressureCtrlLearnParam : { var popup = pressureCtrlLearnParamDlg.createObject(window); popup.show(); }//popup.open(); }
+        onClickPressureCtrlLearnList  : { var popup = pressureCtrlLearnListDlg.createObject(window) ; popup.show(); }//popup.open(); }
         onClickNCPASettings           : { var popup = ncpaSettingsDlg.createObject(window)          ; popup.show(); }
         onClickInterfaceSetup         : {
             var popup
@@ -567,6 +568,14 @@ Window {
             valveID    : model.mValveID
         }
     }
+    Component{
+        id : pressureCtrlLearnListDlg
+        PressureLearnList{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
+    }
+
     Component{
         id : ncpaSettingsDlg
         NCPASettingsDlg{

@@ -14,6 +14,7 @@ Item {
     property var   fixedN   : 0
     property var   padN     : 0
     property bool  isHexMode : false
+    property bool  isSpecialFloatNode : false
     property alias textField : _textField
     property string test
 
@@ -23,11 +24,21 @@ Item {
     signal changedValue(var value)
     signal changedText()
 
+    function setFloatValue(value)
+    {
+        control.textField.text = value.toPrecision(6);
+        control.procFloatString();
+    }
+
     function setTextByValue(value)
     {
         if(isHexMode)
         {
             _textField.text = value.toString(16).toUpperCase().padStart(control.padN,'0')
+        }
+        else if(control.isSpecialFloatNode)
+        {
+            control.procFloatString();
         }
         else
         {
@@ -60,6 +71,28 @@ Item {
         _textField.focus = false;
     }
 
+    function procFloatString() {
+        var strFloat = control.textField.text;
+        var retString;
+
+        // 1) 문자열 -> 숫자로 변환
+        var floatVal = parseFloat(strFloat);
+
+        // 2) 변환된 숫자가 유효한지 체크
+        if (!isNaN(floatVal)) {
+            // 3) toPrecision(prec) 메서드를 이용해 유효 자릿수를 prec로 설정
+            retString = floatVal.toPrecision(6);
+        } else {
+            // 숫자로 변환할 수 없는 경우 "nan"으로 처리
+            control.textField.text = "nan";
+            return;
+        }
+
+        floatVal = parseFloat(retString);
+
+        // 4) 결과 문자열 반환
+        control.textField.text = floatVal.toString();;
+    }
     BorderImage {
         anchors.fill: parent
         source: "/image/hall-2.png"

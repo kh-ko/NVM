@@ -29,6 +29,7 @@ Rectangle {
     signal clickSensorAnalysis()
     signal clickPressureCtrlSetup()
     signal clickPressureCtrlLearnParam()
+    signal clickPressureCtrlLearnList()
     signal clickInterfaceSetup()
     signal clickInterfaceStatus()
     signal clickInterfaceTrace()
@@ -194,10 +195,17 @@ Rectangle {
                 }
                 NExButtonItem{
                     id : menuPressControlLearnParam
-                    anchors.bottom: parent.bottom
+                    anchors.bottom: menuPressControlLearnList.top
                     text.text: qsTr("Learn parameter")
                     enabled : !GlobalUiValue.disableWinCreateBtn
                     onClicked: { panel.clickPressureCtrlLearnParam() }
+                }
+                NExButtonItem{
+                    id : menuPressControlLearnList
+                    anchors.bottom: parent.bottom
+                    text.text: qsTr("Learn list")
+                    enabled : panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+                    onClicked: { panel.clickPressureCtrlLearnList() }
                 }
             }
 

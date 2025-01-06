@@ -283,6 +283,8 @@
 #define RES_DP_CONFIG_DATA_LEN                          24
 #define REQ_READ_VALVE_PARAM                            "b:10"
 #define RES_VALVE_PARAM_DATA_LEN                        6
+#define REQ_READ_LEARN_LIST                             "b:20"
+#define RES_LEARN_LIST_DATA_LEN                         8
 #define REQ_READ_TOTAL_CTRL_CYCLES                      "b:3070"
 #define RES_TOTAL_CTRL_CYCLES_DATA_LEN                  10
 #define REQ_READ_TOTAL_ISOL_CYCLES                      "b:3071"
@@ -333,9 +335,13 @@
 #define REQ_WRITE_VALVE_PARAM_START                     "a:9901"
 #define REQ_WRITE_VALVE_PARAM                           "a:10"
 #define REQ_WRITE_VALVE_PARAM_END                       "a:9900"
+#define REQ_WRITE_LEARN_LIST_START                      "a:9903"
+#define REQ_WRITE_LEARN_LIST                            "a:20"
+#define REQ_WRITE_LEARN_LIST_END                        "a:9902"
 #define REQ_WRITE_FACTORY_RESET                         "f:01"
 #define REQ_WRITE_LEARN_RESET                           "f:02"
 #define REQ_WRITE_VALVE_PARAM_RESET                     "f:03"
+#define REQ_WRITE_LEARN_LIST_RESET                      "f:04"
 
 /* default sensor setup*/
 #define REQ_WRITE_SENSOR_CONFIG                      "s:01"
@@ -683,7 +689,35 @@ public:
         LOAD_PRESSURE_SET_POINT_05 = LOAD_PRESSURE_SET_POINT_04 + 1,
         LOAD_PRESSURE_SET_POINT_06 = LOAD_PRESSURE_SET_POINT_05 + 1,
         LOAD_VALVE_MAX_SPEED       = LOAD_PRESSURE_SET_POINT_06 + 1,
-        LOAD_COMPLETED             = LOAD_VALVE_MAX_SPEED
+        LOAD_SENSOR_01_TIME_FILTER = LOAD_VALVE_MAX_SPEED       + 1,
+        LOAD_SENSOR_02_TIME_FILTER = LOAD_SENSOR_01_TIME_FILTER + 1,
+        LOAD_PARAM_32              = LOAD_SENSOR_02_TIME_FILTER + 1,
+        LOAD_PARAM_35              = LOAD_PARAM_32              + 1,
+        LOAD_PARAM_36              = LOAD_PARAM_35              + 1,
+        LOAD_PARAM_37              = LOAD_PARAM_36              + 1,
+        LOAD_PARAM_38              = LOAD_PARAM_37              + 1,
+        LOAD_PARAM_56              = LOAD_PARAM_38              + 1,
+        LOAD_PARAM_57              = LOAD_PARAM_56              + 1,
+        LOAD_PARAM_58              = LOAD_PARAM_57              + 1,
+        LOAD_PARAM_59              = LOAD_PARAM_58              + 1,
+        LOAD_PARAM_60              = LOAD_PARAM_59              + 1,
+        LOAD_PARAM_66              = LOAD_PARAM_60              + 1,
+        LOAD_PARAM_73              = LOAD_PARAM_66              + 1,
+        LOAD_PARAM_74              = LOAD_PARAM_73              + 1,
+        LOAD_PARAM_75              = LOAD_PARAM_74              + 1,
+        LOAD_PARAM_82              = LOAD_PARAM_75              + 1,
+        LOAD_PARAM_88              = LOAD_PARAM_82              + 1,
+        LOAD_PARAM_89              = LOAD_PARAM_88              + 1,
+        LOAD_PARAM_90              = LOAD_PARAM_89              + 1,
+        LOAD_PARAM_91              = LOAD_PARAM_90              + 1,
+        LOAD_PARAM_92              = LOAD_PARAM_91              + 1,
+        LOAD_PARAM_93              = LOAD_PARAM_92              + 1,
+        LOAD_PARAM_95              = LOAD_PARAM_93              + 1,
+        LOAD_PARAM_96              = LOAD_PARAM_95              + 1,
+        LOAD_PARAM_97              = LOAD_PARAM_96              + 1,
+        LOAD_PARAM_98              = LOAD_PARAM_97              + 1,
+        LOAD_PARAM_99              = LOAD_PARAM_98              + 1,
+        LOAD_COMPLETED             = LOAD_PARAM_99
     };
     enum eLearnRunState{
         LEARN_RUN_STATE_NOT_RUNNING = 0,

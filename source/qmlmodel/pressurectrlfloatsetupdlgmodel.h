@@ -1269,6 +1269,8 @@ private:
 
         if(state == eState::STATE_READY)
         {
+            pValveSP->printSettingsAboutPressureCtrl();
+
             setProgress(100);
             mEditSelControl      = false;
             mEditAdapGainFactor  = false;

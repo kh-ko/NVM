@@ -74,6 +74,7 @@ HEADERS += \
     source/qmlmodel/ncpasettingsdlgmodel.h \
     source/qmlmodel/panelbaratrongraph.h \
     source/qmlmodel/pressurectrlfloatsetupdlgmodel.h \
+    source/qmlmodel/pressurectrllearnlistdlgmodel.h \
     source/qmlmodel/pressurectrllearnparamdlgmodel.h \
     source/qmlmodel/pressurectrlsetupdlgmodel.h \
     source/qmlmodel/qmlcoremodel.h \

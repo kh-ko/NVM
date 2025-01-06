@@ -2952,6 +2952,8 @@ private:
 
         if(state == eState::STATE_READY)
         {
+            pValveSP->printSettingsAboutPressureCtrl();
+
             mEditSelection                   = false;
             mEditS01AnalActive               = false;
             mEditS01SourceIdx                = false;

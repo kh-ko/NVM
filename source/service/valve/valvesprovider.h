@@ -4,10 +4,12 @@
 #include <QDateTime>
 #include <QTimer>
 #include <QMap>
+#include "source/service/config/configsprovider.h"
 #include "source/service/def/filedef.h"
 #include "source/service/util/exceptionutil.h"
 #include "source/service/valve/valveayncworker.h"
 #include "source/service/valve/valvefirmwareupgradeworker.h"
+#include "source/service/util/filewriterex.h"
 
 #define pValveSP ValveSProvider::getInstance()
 
@@ -165,6 +167,7 @@
 #define ENABLE_SLOT_VALVE_READED_FATAL_ERR_03_POS                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedFatalErr03Pos                   (ValveResponseFatalErrPosDto                     )), this, SLOT(onValveReadedFatalErr03Pos                 (ValveResponseFatalErrPosDto                       )))
 #define ENABLE_SLOT_VALVE_READED_WARNINGS                               connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedWarnings                        (ValveResponseWarningsDto                        )), this, SLOT(onValveReadedWarnings                      (ValveResponseWarningsDto                          )))
 #define ENABLE_SLOT_VALVE_READED_LEARN_PARAM                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedLearnParam                      (ValveResponseLearnParamDto                      )), this, SLOT(onValveReadedLearnParam                    (ValveResponseLearnParamDto                        )))
+#define ENABLE_SLOT_VALVE_READED_LEARN_LIST                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedLearnList                       (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedLearnList                     (ValveResponseSimpleValueDto                       )))
 #define ENABLE_SLOT_VALVE_READED_IF_CONFIG_LOGIC                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceConfigLogic            (ValveResponseInterfaceConfigLogicDto            )), this, SLOT(onValveReadedInterfaceConfigLogic          (ValveResponseInterfaceConfigLogicDto              )))
 #define ENABLE_SLOT_VALVE_READED_IF_CONFIG_ETHCAT_DI                    connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceConfigEthCATDi         (ValveResponseInterfaceConfigEthCATDiDto         )), this, SLOT(onValveReadedInterfaceConfigEthCATDi       (ValveResponseInterfaceConfigEthCATDiDto           )))
 #define ENABLE_SLOT_VALVE_READED_IF_CONFIG_ETHCAT_DO                    connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceConfigEthCATDo         (ValveResponseInterfaceConfigEthCATDoDto         )), this, SLOT(onValveReadedInterfaceConfigEthCATDo       (ValveResponseInterfaceConfigEthCATDoDto           )))
@@ -226,9 +229,13 @@
 #define ENABLE_SLOT_VALVE_WRITTEN_VALVE_PARAM                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenValveParam                     (ValveResponseDto                                )), this, SLOT(onValveWrittenValveParam                   (ValveResponseDto                                  )))
 #define ENABLE_SLOT_VALVE_WRITTEN_VALVE_PARAM_START                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenValveParamStart                (ValveResponseDto                                )), this, SLOT(onValveWrittenValveParamStart              (ValveResponseDto                                  )))
 #define ENABLE_SLOT_VALVE_WRITTEN_VALVE_PARAM_END                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenValveParamEnd                  (ValveResponseDto                                )), this, SLOT(onValveWrittenValveParamEnd                (ValveResponseDto                                  )))
+#define ENABLE_SLOT_VALVE_WRITTEN_LEARN_LIST                            connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenLearnList                      (ValveResponseDto                                )), this, SLOT(onValveWrittenLearnList                    (ValveResponseDto                                  )))
+#define ENABLE_SLOT_VALVE_WRITTEN_LEARN_LIST_START                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenLearnListStart                 (ValveResponseDto                                )), this, SLOT(onValveWrittenLearnListStart               (ValveResponseDto                                  )))
+#define ENABLE_SLOT_VALVE_WRITTEN_LEARN_LIST_END                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenLearnListEnd                   (ValveResponseDto                                )), this, SLOT(onValveWrittenLearnListEnd                 (ValveResponseDto                                  )))
 #define ENABLE_SLOT_VALVE_WRITTEN_FACTORY_RESET                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenFactoryReset                   (ValveResponseDto                                )), this, SLOT(onValveWrittenFactoryReset                 (ValveResponseDto                                  )))
 #define ENABLE_SLOT_VALVE_WRITTEN_LEARN_RESET                           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenLearnReset                     (ValveResponseDto                                )), this, SLOT(onValveWrittenLearnReset                   (ValveResponseDto                                  )))
 #define ENABLE_SLOT_VALVE_WRITTEN_VALVE_PARAM_RESET                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenValveParamReset                (ValveResponseDto                                )), this, SLOT(onValveWrittenValveParamReset              (ValveResponseDto                                  )))
+#define ENABLE_SLOT_VALVE_WRITTEN_LEARN_LIST_RESET                      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenLearnListReset                 (ValveResponseDto                                )), this, SLOT(onValveWrittenLearnListReset               (ValveResponseDto                                  )))
 //#define ENABLE_SLOT_VALVE_WRITTEN_FATAL_ERR_RESET                       connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenFatalErrReset                  (ValveSProviderDto                               )), this, SLOT(onValveWrittenFatalErrReset                (ValveSProviderDto                                 )))
 #define ENABLE_SLOT_VALVE_WRITTEN_REBOOT                                connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenReboot                         (ValveResponseDto                                )), this, SLOT(onValveWrittenReboot                       (ValveResponseDto                                  )))
 #define ENABLE_SLOT_VALVE_WRITTEN_SENSOR_CONFIG                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenSensorConfig                   (ValveResponseDto                                )), this, SLOT(onValveWrittenSensorConfig                 (ValveResponseDto                                  )))
@@ -358,6 +365,23 @@ public:
     }
 };
 
+class ParamItem : public QObject
+{
+public:
+    int mId    = -1;
+    int mValue = 0;
+    QString mLabel = "";
+
+    ParamItem()
+    {
+
+    }
+    ~ParamItem()
+    {
+
+    }
+};
+
 class ValveSProvider : public QObject
 {
     Q_OBJECT
@@ -373,10 +397,13 @@ private:
     int                 mLogSkipCount       = 100;
 
     /* properties */
+    bool        mIsInitSettingAboutPrsCtrl = false;
+    bool        mIsEditSettingAboutPrsCtrl = false;
     bool        mIsRunning          = false;
     bool        mIsConnected        = false;
     bool        mRetryConnect       = false;
     int         mLoadProgress       = ValveEnumDef::LOAD_NONE;
+    QList<int>  mLoadParamList      ;
     int         mDFUStep            = ValveFirmwareUpgradeDef::eStep::READY;
     int         mDFUPctCpu1Kernel  = 0;
     int         mDFUPctCpu2Kernel  = 0;
@@ -414,9 +441,11 @@ private:
     int         mS01SullScaleUnit   = ValveEnumDef::PRESSURE_UNIT_MTORR;
     double      mS01FullScale       = 1000000;
     int         mS01FullScalePrec   = 0;
+    QString     mS01FilterSec       = "";
     int         mS02SullScaleUnit   = ValveEnumDef::PRESSURE_UNIT_MTORR;
     double      mS02FullScale       = 1000000;
     int         mS02FullScalePrec   = 0;
+    QString     mS02FilterSec       = "";
     int         mSensorOperation    = ValveEnumDef::SENSOROP_NO_SENSOR;
     int         mSensor01Offset     = 0;
     int         mSensor02Offset     = 0;
@@ -456,6 +485,7 @@ private:
     int         mSetPoint04Pressure = 0;
     int         mSetPoint05Pressure = 0;
     int         mSetPoint06Pressure = 0;
+    QList<ParamItem *> mParamList;
 
     QString     mValveID            = "";
     QString     mFirmwareVersion    = "0";
@@ -573,8 +603,6 @@ public:
     void        setConnectionInfo               (QString     value){ if(mConnectionInfo     == value) return; mConnectionInfo     = value; emit signalEventChangedConnectionInfo    (value); }
     void        setLoadProgress                 (int         value)
     {
-        qDebug() << "[ValveSProvider][setLoadProgress]" << value;
-
         if(mLoadProgress == value)
             return;
 
@@ -582,6 +610,8 @@ public:
 
         if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED)
             return;
+        else
+            mIsInitSettingAboutPrsCtrl = true;
 
         emit signalEventChangedLoadProgress      (value);
 
@@ -661,22 +691,22 @@ public:
     void        setTargetPressure               (qint64      value){if(mTargetPressure     == value) return; mTargetPressure     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedTargetPressure    ();}
     void        setValveSpeed                   (qint64      value){if(mValveSpeed         == value) return; mValveSpeed         = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedValveSpeed        ();}
     void        setValveMaxSpeed                (int         value){if(mValveMaxSpeed      == value) return; mValveMaxSpeed      = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedValveMaxSpeed     ();}
-    void        setPressureCtrlMode             (int         value){if(mPressureCtrlMode   == value) return; mPressureCtrlMode   = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedPressureCtrlMode  ();}
-    void        setAdaptiveGainFactor           (QString     value){if(mAdaptiveGainFactor == value) return; mAdaptiveGainFactor = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setAdaptiveDeltaFactor          (QString     value){if(mAdaptiveDeltaFactor== value) return; mAdaptiveDeltaFactor= value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setAdaptiveSensorDelay          (QString     value){if(mAdaptiveSensorDelay== value) return; mAdaptiveSensorDelay= value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setAdaptiveRampTime             (QString     value){if(mAdaptiveRampTime   == value) return; mAdaptiveRampTime   = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setAdaptiveRampMode             (int         value){if(mAdaptiveRampMode   == value) return; mAdaptiveRampMode   = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed1PGain                  (QString     value){if(mFixed1PGain        == value) return; mFixed1PGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed1IGain                  (QString     value){if(mFixed1IGain        == value) return; mFixed1IGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed1RampTime               (QString     value){if(mFixed1RampTime     == value) return; mFixed1RampTime     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed1RampMode               (int         value){if(mFixed1RampMode     == value) return; mFixed1RampMode     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed1Dir                    (int         value){if(mFixed1Dir          == value) return; mFixed1Dir          = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed2PGain                  (QString     value){if(mFixed2PGain        == value) return; mFixed2PGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed2IGain                  (QString     value){if(mFixed2IGain        == value) return; mFixed2IGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed2RampTime               (QString     value){if(mFixed2RampTime     == value) return; mFixed2RampTime     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed2RampMode               (int         value){if(mFixed2RampMode     == value) return; mFixed2RampMode     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
-    void        setFixed2Dir                    (int         value){if(mFixed2Dir          == value) return; mFixed2Dir          = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setPressureCtrlMode             (int         value){if(mPressureCtrlMode   == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mPressureCtrlMode   = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedPressureCtrlMode  ();}
+    void        setAdaptiveGainFactor           (QString     value){if(mAdaptiveGainFactor == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mAdaptiveGainFactor = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setAdaptiveDeltaFactor          (QString     value){if(mAdaptiveDeltaFactor== value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mAdaptiveDeltaFactor= value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setAdaptiveSensorDelay          (QString     value){if(mAdaptiveSensorDelay== value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mAdaptiveSensorDelay= value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setAdaptiveRampTime             (QString     value){if(mAdaptiveRampTime   == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mAdaptiveRampTime   = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setAdaptiveRampMode             (int         value){if(mAdaptiveRampMode   == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mAdaptiveRampMode   = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1PGain                  (QString     value){if(mFixed1PGain        == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed1PGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1IGain                  (QString     value){if(mFixed1IGain        == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed1IGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1RampTime               (QString     value){if(mFixed1RampTime     == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed1RampTime     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1RampMode               (int         value){if(mFixed1RampMode     == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed1RampMode     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed1Dir                    (int         value){if(mFixed1Dir          == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed1Dir          = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2PGain                  (QString     value){if(mFixed2PGain        == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed2PGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2IGain                  (QString     value){if(mFixed2IGain        == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed2IGain        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2RampTime               (QString     value){if(mFixed2RampTime     == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed2RampTime     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2RampMode               (int         value){if(mFixed2RampMode     == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed2RampMode     = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
+    void        setFixed2Dir                    (int         value){if(mFixed2Dir          == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mFixed2Dir          = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return;                                             }
     void        setAccess                       (int         value){if(mAccess             == value) return; mAccess             = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedAccess            ();}
     void        setMode                         (int         value){if(mMode               == value) return; mMode               = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedMode              ();}
     void        setControlMode                  (int         value){if(mControlMode        == value) return; mControlMode        = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedControlMode       ();}
@@ -723,7 +753,29 @@ public:
     void        setSetPoint04Pressure           (int         value){if(mSetPoint04Pressure == value) return; mSetPoint04Pressure = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedSetPoint04Pressure();}
     void        setSetPoint05Pressure           (int         value){if(mSetPoint05Pressure == value) return; mSetPoint05Pressure = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedSetPoint05Pressure();}
     void        setSetPoint06Pressure           (int         value){if(mSetPoint06Pressure == value) return; mSetPoint06Pressure = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedSetPoint06Pressure();}
+    void        setS01FilterSec                 (QString     value){if(mS01FilterSec       == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mS01FilterSec = value; }
+    void        setS02FilterSec                 (QString     value){if(mS02FilterSec       == value) return; if(mIsInitSettingAboutPrsCtrl) mIsEditSettingAboutPrsCtrl = true; mS02FilterSec = value; }
+    void        setParam                        (QString     value)
+    {
+        int seq = value.mid(0,2).toUInt();
+        int param = value.mid(2,6).toUInt(nullptr, 16);
 
+        for(int i = 0; i < mParamList.count(); i ++)
+        {
+            if(mParamList[i]->mId == seq)
+            {
+                if(mParamList[i]->mValue != param)
+                {
+                    if(mIsInitSettingAboutPrsCtrl)
+                    {
+                        mIsEditSettingAboutPrsCtrl = true;
+                    }
+                    mParamList[i]->mValue = param;
+                }
+                return;
+            }
+        }
+    }
     void        setValveID                      (QString     value){if(mValveID            == value) return; mValveID            = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedValveID           ();}
     void        setFirmwareVersion              (QString     value){if(mFirmwareVersion    == value) return; mFirmwareVersion    = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedFirmwareVersion   ();}
     void        setIsSealingType                (bool        value){if(mIsSealingType      == value) return; mIsSealingType      = value; if(mLoadProgress != ValveEnumDef::LOAD_COMPLETED) return; emit signalEventChangedIsSealingType     ();}
@@ -940,6 +992,7 @@ signals:
     void signalEventReadedValveMaxSpeed                (ValveResponseSimpleValueDto                      dto);
     void signalEventReadedDisplayConfig                (ValveResponseDisplayConfigDto                    dto);
     void signalEventReadedValveParam                   (ValveResponseValveParamDto                       dto);
+    void signalEventReadedLearnList                    (ValveResponseSimpleValueDto                      dto);
     void signalEventReadedTotalControlCycles           (ValveResponseTotalControlCyclesDto               dto);
     void signalEventReadedTotalIsolationCycles         (ValveResponseTotalIsolationCyclesDto             dto);
     void signalEventReadedPFOPerformedCycles           (ValveResponsePFOPerformedCyclesDto               dto);
@@ -966,9 +1019,13 @@ signals:
     void signalEventWrittenValveParamStart                (ValveResponseDto                                 dto);
     void signalEventWrittenValveParam                     (ValveResponseDto                                 dto);
     void signalEventWrittenValveParamEnd                  (ValveResponseDto                                 dto);
+    void signalEventWrittenLearnListStart                 (ValveResponseDto                                 dto);
+    void signalEventWrittenLearnList                      (ValveResponseDto                                 dto);
+    void signalEventWrittenLearnListEnd                   (ValveResponseDto                                 dto);
     void signalEventWrittenFactoryReset                   (ValveResponseDto                                 dto);
     void signalEventWrittenValveParamReset                (ValveResponseDto                                 dto);
     void signalEventWrittenLearnReset                     (ValveResponseDto                                 dto);
+    void signalEventWrittenLearnListReset                 (ValveResponseDto                                 dto);
     void signalEventWrittenSensorConfig                   (ValveResponseDto                                 dto);
     void signalEventWrittenSensorExSelection              (ValveResponseDto                                 dto);
     void signalEventWrittenS01ExAnalActive                (ValveResponseDto                                 dto);
@@ -1107,6 +1164,52 @@ public :
     explicit ValveSProvider(QObject *parent = nullptr):QObject(parent)
     {
         qDebug() << "[ValveSProvider]Create";
+        pConfigSP->loadValveParams();
+
+        mLoadParamList.append(32);
+        mLoadParamList.append(35);
+        mLoadParamList.append(36);
+        mLoadParamList.append(37);
+        mLoadParamList.append(38);
+        mLoadParamList.append(56);
+        mLoadParamList.append(57);
+        mLoadParamList.append(58);
+        mLoadParamList.append(59);
+        mLoadParamList.append(60);
+        mLoadParamList.append(66);
+        mLoadParamList.append(73);
+        mLoadParamList.append(74);
+        mLoadParamList.append(75);
+        mLoadParamList.append(82);
+        mLoadParamList.append(88);
+        mLoadParamList.append(89);
+        mLoadParamList.append(90);
+        mLoadParamList.append(91);
+        mLoadParamList.append(92);
+        mLoadParamList.append(93);
+        mLoadParamList.append(95);
+        mLoadParamList.append(96);
+        mLoadParamList.append(97);
+        mLoadParamList.append(98);
+        mLoadParamList.append(99);
+
+        for(int paramListIdx = 0; paramListIdx < mLoadParamList.count(); paramListIdx ++)
+        {
+            ParamItem * pItem = new ParamItem();
+            pItem->mId        = mLoadParamList[paramListIdx];
+            pItem->mValue     = 0;
+
+            for(int descIdx = 0; descIdx < pConfigSP->mValveParamDescTable.count(); descIdx ++)
+            {
+                if(pConfigSP->mValveParamDescTable[descIdx].mSeq == mLoadParamList[paramListIdx])
+                {
+                    pItem->mLabel = pConfigSP->mValveParamDescTable[descIdx].mDesc;
+                    break;
+                }
+            }
+
+            mParamList.append(pItem);
+        }
     }
     ~ValveSProvider()
     {
@@ -1761,6 +1864,14 @@ public :
         emit signalCommandRequest(ValveRequestDto(this, staticProcReadValveParam, nullptr, cmd, cmd, RES_VALVE_PARAM_DATA_LEN, retryCnt, userData));
     }
 
+    void readLearnList(int id, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2").arg(REQ_READ_LEARN_LIST).arg(id,4,10,QChar('0'));
+
+        qDebug() << "[readLearnList]" << cmd;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcReadLearnList, nullptr, cmd, cmd, RES_LEARN_LIST_DATA_LEN, retryCnt, userData));
+    }
+
     void readTotalControlCycles(void * userData, int retryCnt = 0)
     {
         emit signalCommandRequest(ValveRequestDto(this, staticProcReadTotalControlCycles, nullptr, REQ_READ_TOTAL_CTRL_CYCLES, REQ_READ_TOTAL_CTRL_CYCLES, RES_TOTAL_CTRL_CYCLES_DATA_LEN, retryCnt, userData));
@@ -1905,6 +2016,24 @@ public :
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenValveParamEnd, nullptr, REQ_WRITE_VALVE_PARAM_END, "", 0, retryCnt, userData));
     }
 
+    void setLearnListStart(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenLearnListStart, nullptr, REQ_WRITE_LEARN_LIST_START, "", 0, retryCnt, userData));
+    }
+    void setLearnList(int id, QString value16, void * userData, int retryCnt = 0)
+    {
+        QString cmd = QString("%1%2%3").arg(REQ_WRITE_LEARN_LIST).arg(id, 4, 10, QChar('0')).arg(value16);
+        QString checkString = QString("%1%2").arg(REQ_WRITE_LEARN_LIST).arg(id, 4, 10, QChar('0'));
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << cmd;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenLearnList, nullptr, cmd, "", 0, retryCnt, userData));
+    }
+
+    void setLearnListEnd(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenLearnListEnd, nullptr, REQ_WRITE_LEARN_LIST_END, "", 0, retryCnt, userData));
+    }
+
     void factoryReset(void * userData, int retryCnt = 0)
     {
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenFactoryReset, staticProcReadValveStatus, REQ_WRITE_FACTORY_RESET, "", 0, retryCnt, userData));
@@ -1918,6 +2047,11 @@ public :
     void learnReset(void * userData, int retryCnt = 0)
     {
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenLearnReset, staticProcReadValveStatus, REQ_WRITE_LEARN_RESET, "", 0, retryCnt, userData));
+    }
+
+    void learnListReset(void * userData, int retryCnt = 0)
+    {
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenLearnListReset, staticProcReadValveStatus, REQ_WRITE_LEARN_LIST_RESET, "", 0, retryCnt, userData));
     }
 
     void setSensorConfig(int sensorOp, bool zeroEnable, int highLowRatio, void * userData, int retryCnt = 0)
@@ -2480,6 +2614,7 @@ public slots:
             signalDto.mValveID = value;
 
             setValveID(signalDto.mValveID);
+            setIsSealingType(signalDto.mValveID.at(12) == QChar('S'));
         }while(false);
 
 
@@ -2492,7 +2627,7 @@ public slots:
             else
             {
                 setLoadProgress(ValveEnumDef::LOAD_VALVE_ID);
-                setIsSealingType(signalDto.mValveID.at(12) == QChar('S'));
+                //setIsSealingType(signalDto.mValveID.at(12) == QChar('S'));
 
                 readFirmwareVersion(this);
             }
@@ -2517,6 +2652,7 @@ public slots:
             QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
 
             signalDto.mFirmwareVersion = value;
+            setFirmwareVersion(signalDto.mFirmwareVersion);
 
         }while(false);
 
@@ -2529,7 +2665,6 @@ public slots:
             else
             {
                 setLoadProgress(ValveEnumDef::LOAD_FIRMWARE_VER);
-                setFirmwareVersion(signalDto.mFirmwareVersion);
 
                 readHWConfig(this);
             }
@@ -3103,14 +3238,27 @@ public slots:
         ValveResponseSimpleValueDto signalDto(*pResDto);
 
         do{
-            if(!signalDto.mIsSucc)
+            if(signalDto.mIsNetworkErr)
             {
-                break;
+                readS01ExFilterSec(this);
+                return;
             }
 
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+            if(signalDto.mIsSucc)
+            {
+                QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
 
-            signalDto.mValue = value;
+                signalDto.mValue = value;
+
+                setS01FilterSec(value);
+            }
+
+
+            if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_VALVE_MAX_SPEED)
+            {
+                setLoadProgress(ValveEnumDef::LOAD_SENSOR_01_TIME_FILTER);
+                readS02ExFilterSec(this);
+            }
         }while(false);
 
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
@@ -3471,14 +3619,27 @@ public slots:
         ValveResponseSimpleValueDto signalDto(*pResDto);
 
         do{
-            if(!signalDto.mIsSucc)
+            if(signalDto.mIsNetworkErr)
             {
-                break;
+                readS02ExFilterSec(this);
+                return;
             }
 
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+            if(signalDto.mIsSucc)
+            {
+                QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
 
-            signalDto.mValue = value;
+                signalDto.mValue = value;
+
+                setS02FilterSec(value);
+            }
+
+            if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_SENSOR_01_TIME_FILTER)
+            {
+                setLoadProgress(ValveEnumDef::LOAD_SENSOR_02_TIME_FILTER);
+
+                readValveParam(mLoadParamList[mLoadProgress - ValveEnumDef::LOAD_SENSOR_02_TIME_FILTER], this);
+            }
         }while(false);
 
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
@@ -4728,7 +4889,11 @@ public slots:
 
         setValveMaxSpeed(speed);
 
-        setLoadProgress(ValveEnumDef::LOAD_VALVE_MAX_SPEED);
+        if(signalDto.mReqDto.mpRef == this && mLoadProgress == ValveEnumDef::LOAD_PRESSURE_SET_POINT_06)
+        {
+            setLoadProgress(ValveEnumDef::LOAD_VALVE_MAX_SPEED);
+            readS01ExFilterSec(this);
+        }
 
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
@@ -4958,23 +5123,61 @@ public slots:
         ValveResponseValveParamDto signalDto(*pResDto);
 
         do{
-            if(!signalDto.mIsSucc)
+            if(signalDto.mIsSucc)
             {
-                break;
+                QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length() - 2).trimmed();
+
+                int startIdx = 0;
+                signalDto.mID = value.mid(startIdx,2).toInt()   ; startIdx += 2;
+                signalDto.mValue = value.mid(startIdx,value.length() - 2); startIdx += value.length() - 2;
+
+                setParam(value);
             }
 
-            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length() - 2).trimmed();
+            if(signalDto.mReqDto.mpRef == this && mLoadProgress >= ValveEnumDef::LOAD_SENSOR_02_TIME_FILTER && mLoadProgress <= ValveEnumDef::LOAD_PARAM_98)
+            {
+                if(signalDto.mIsNetworkErr)
+                {
+                    readValveParam(mLoadParamList[mLoadProgress - (int)ValveEnumDef::LOAD_SENSOR_02_TIME_FILTER], this);
+                    return;
+                }
 
-            int startIdx = 0;
-            signalDto.mID = value.mid(startIdx,2).toInt()   ; startIdx += 2;
-            //signalDto.mValue = value.mid(startIdx,6).toInt(); startIdx += 6;
-            signalDto.mValue = value.mid(startIdx,value.length() - 2); startIdx += value.length() - 2;
+                setLoadProgress(mLoadProgress + 1);
+
+                if(mLoadProgress < (int)ValveEnumDef::LOAD_PARAM_99)
+                {
+                    readValveParam(mLoadParamList[mLoadProgress - (int)ValveEnumDef::LOAD_SENSOR_02_TIME_FILTER], this);
+                }
+            }
 
         }while(false);
 
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventReadedValveParam(signalDto);
+        }
+    }
+
+    static void staticProcReadLearnList(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadLearnList(pResData);}
+    void procReadLearnList(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            qDebug() << "[procReadLearnList]" << pResDto->mResData;
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            signalDto.mValue = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length() - 4).trimmed();
+
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedLearnList(signalDto);
         }
     }
 
@@ -6293,6 +6496,40 @@ public slots:
         }
     }
 
+    static void staticProcWrittenLearnListStart(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenLearnListStart(pResData);}
+    void procWrittenLearnListStart(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenLearnListStart(signalDto);
+        }
+    }
+
+    // khko_todo
+    static void staticProcWrittenLearnList(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenLearnList(pResData);}
+    void procWrittenLearnList(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenLearnList(signalDto);
+        }
+    }
+
+    static void staticProcWrittenLearnListEnd(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenLearnListEnd(pResData);}
+    void procWrittenLearnListEnd(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenLearnListEnd(signalDto);
+        }
+    }
+
     static void staticProcWrittenFactoryReset(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenFactoryReset(pResData);}
     void procWrittenFactoryReset(void * pResData)
     {
@@ -6324,6 +6561,17 @@ public slots:
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventWrittenLearnReset(signalDto);
+        }
+    }
+
+    static void staticProcWrittenLearnListReset(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenLearnListReset(pResData);}
+    void procWrittenLearnListReset(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenLearnListReset(signalDto);
         }
     }
 
@@ -7123,6 +7371,114 @@ public:
         }
 
         return QString("%1").arg(value);
+    }
+
+    void printSettingsAboutPressureCtrl()
+    {
+        if(mIsEditSettingAboutPrsCtrl == false)
+            return;
+
+
+        QString applicationPath = QApplication::applicationDirPath();
+
+        if (QDir(QString("%1/settings_history").arg(applicationPath)).exists() == false)
+        {
+            QDir().mkdir(QString("%1/settings_history").arg(applicationPath));
+        }
+
+        QString currTime = QDateTime::currentDateTime().toString("MM-dd-hh-mm-ss");
+        QString filePath = QString("%1/settings_history/pressure_control_setting_%2.txt").arg(applicationPath).arg(currTime);
+
+        FileWriterEx file;
+        int splitIdx = filePath.lastIndexOf("/")+1;
+        QString dir = filePath.left(splitIdx);
+        QString fileName = filePath.mid(splitIdx);
+
+        if(file.open(dir, fileName, FileWriterEx::FILE_OPEN_NEWWRITE) == false)
+        {
+            qDebug() << "[printSettingsAboutPressureCtrl]File open failed!";
+            return;
+        }
+
+        file.appendLine(QString("[Sensor setting]"));
+        file.appendLine(QString("Sensor 01 filter sec : %1").arg(mS01FilterSec));
+        file.appendLine(QString("Sensor 02 filter sec : %1").arg(mS02FilterSec));
+
+        file.appendLine(QString("[Pressure control setup]"));
+        switch (mPressureCtrlMode) {
+        case (int)ValveEnumDef::PRESSURE_CTRL_ADAPTIVE  :
+            file.appendLine(QString("Adaptive Gain Factor  : %1").arg(mAdaptiveGainFactor                                        ));
+            file.appendLine(QString("Adaptive Delta Factor : %1").arg(mAdaptiveDeltaFactor                                       ));
+            file.appendLine(QString("Adaptive Sensor Delay : %1").arg(mAdaptiveSensorDelay                                       ));
+            file.appendLine(QString("Adaptive Ramp Time    : %1").arg(mAdaptiveRampTime                                          ));
+            file.appendLine(QString("Adaptive Ramp Mode    : %1").arg(mAdaptiveRampMode == 0 ? "constant time" : "constant slope"));
+            break;
+        case (int)ValveEnumDef::PRESSURE_CTRL_FIXED_DOWN:
+            file.appendLine(QString("Fixed 1 P Gain          : %1").arg(mFixed1PGain                                             ));
+            file.appendLine(QString("Fixed 1 I Gain          : %1").arg(mFixed1IGain                                             ));
+            file.appendLine(QString("Fixed 1 Ramp Time       : %1").arg(mFixed1RampTime                                          ));
+            file.appendLine(QString("Fixed 1 Ramp Mode       : %1").arg(mFixed1RampMode == 0 ? "constant time" : "constant slope"));
+            file.appendLine(QString("Fixed 1 Direction       : %1").arg(mFixed1Dir == 0 ? "downstream": "upstream"               ));
+            break;
+        case (int)ValveEnumDef::PRESSURE_CTRL_FIXED_UP  :
+            file.appendLine(QString("Fixed 2 P Gain          : %1").arg(mFixed2PGain                                             ));
+            file.appendLine(QString("Fixed 2 I Gain          : %1").arg(mFixed2IGain                                             ));
+            file.appendLine(QString("Fixed 2 Ramp Time       : %1").arg(mFixed2RampTime                                          ));
+            file.appendLine(QString("Fixed 2 Ramp Mode       : %1").arg(mFixed2RampMode == 0 ? "constant time" : "constant slope"));
+            file.appendLine(QString("Fixed 2 Direction       : %1").arg(mFixed2Dir == 0 ? "downstream": "upstream"               ));
+            break;
+        case (int)ValveEnumDef::PRESSURE_CTRL_SOFT_DUMP :
+            file.appendLine(QString("Pressure control algorithm : Softdump"));
+            break;
+        }
+
+        file.appendLine(QString("[Valve Parameters]"));
+        for(int i = 0; i < mParamList.count(); i ++)
+        {
+            file.appendLine(QString("[%1]%2 : %3").arg(mParamList[i]->mId, 2, 10).arg(mParamList[i]->mLabel).arg(mParamList[i]->mValue));
+        }
+
+        //qDebug() << "================ Settings about pressure control =================";
+        //qDebug() << "[Sensor setting]";
+        //qDebug() << "Sensor 01 filter sec : " << QString("%1").arg(mS01FilterSec);
+        //qDebug() << "Sensor 02 filter sec : " << QString("%1").arg(mS02FilterSec);
+
+        //qDebug() << "[Pressure control setup]";
+        //switch (mPressureCtrlMode) {
+        //case (int)ValveEnumDef::PRESSURE_CTRL_ADAPTIVE  :
+        //    qDebug() << QString("Adaptive Gain Factor  : %1").arg(mAdaptiveGainFactor                                        );
+        //    qDebug() << QString("Adaptive Delta Factor : %1").arg(mAdaptiveDeltaFactor                                       );
+        //    qDebug() << QString("Adaptive Sensor Delay : %1").arg(mAdaptiveSensorDelay                                       );
+        //    qDebug() << QString("Adaptive Ramp Time    : %1").arg(mAdaptiveRampTime                                          );
+        //    qDebug() << QString("Adaptive Ramp Mode    : %1").arg(mAdaptiveRampMode == 0 ? "constant time" : "constant slope");
+        //    break;
+        //case (int)ValveEnumDef::PRESSURE_CTRL_FIXED_DOWN:
+        //    qDebug() << QString("Fixed 1 P Gain          : %1").arg(mFixed1PGain);
+        //    qDebug() << QString("Fixed 1 I Gain          : %1").arg(mFixed1IGain);
+        //    qDebug() << QString("Fixed 1 Ramp Time       : %1").arg(mFixed1RampTime);
+        //    qDebug() << QString("Fixed 1 Ramp Mode       : %1").arg(mFixed1RampMode == 0 ? "constant time" : "constant slope");
+        //    qDebug() << QString("Fixed 1 Direction       : %1").arg(mFixed1Dir == 0 ? "downstream": "upstream");
+        //    break;
+        //case (int)ValveEnumDef::PRESSURE_CTRL_FIXED_UP  :
+        //    qDebug() << QString("Fixed 2 P Gain          : %1").arg(mFixed2PGain);
+        //    qDebug() << QString("Fixed 2 I Gain          : %1").arg(mFixed2IGain);
+        //    qDebug() << QString("Fixed 2 Ramp Time       : %1").arg(mFixed2RampTime);
+        //    qDebug() << QString("Fixed 2 Ramp Mode       : %1").arg(mFixed2RampMode == 0 ? "constant time" : "constant slope");
+        //    qDebug() << QString("Fixed 2 Direction       : %1").arg(mFixed2Dir == 0 ? "downstream": "upstream");
+        //    break;
+        //case (int)ValveEnumDef::PRESSURE_CTRL_SOFT_DUMP :
+        //    qDebug() << "Pressure control algorithm : Softdump" ;
+        //    break;
+        //}
+
+        //qDebug() << "Valve Parameters";
+        //for(int i = 0; i < mParamList.count(); i ++)
+        //{
+        //    qDebug() << QString("[%1]%2 : %3").arg(mParamList[i]->mId, 2, 10).arg(mParamList[i]->mLabel).arg(mParamList[i]->mValue);
+        //}
+
+        file.close();
+        mIsEditSettingAboutPrsCtrl = false;
     }
 };
 #endif // SERIALSPROVIDER_H
