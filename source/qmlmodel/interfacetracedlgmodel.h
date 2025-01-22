@@ -98,7 +98,7 @@ public slots:
         if(value)
         {
             mRecordStartSec = QDateTime::currentSecsSinceEpoch();
-            onCmdClear();
+            //onCmdClear();
         }
         else if(getIsHold())
         {

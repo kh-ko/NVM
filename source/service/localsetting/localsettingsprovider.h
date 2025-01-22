@@ -68,7 +68,7 @@ public:
     QList<int> mChartMSecOption = {30000, 60000, 120000, 300000};
 
     qint64  mMonitoringCycle       = 10;
-    QString mBuildVersion          = "1.9.73";
+    QString mBuildVersion          = "1.9.75";
     bool    mIsWithoutLogo         = false; // not used
     int     mCompany               = (int)ValveEnumDef::COMPANY_NONE;
 

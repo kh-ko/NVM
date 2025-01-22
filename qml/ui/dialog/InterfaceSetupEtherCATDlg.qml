@@ -158,6 +158,11 @@ BaseSetupWindow{
                         height: 34 * GUISetting.scale; width: pdoListView.width
                         isHeader  : false; item01Name: pdoDataName; itemModel: dlgModel.onCommandGetPDOItem(itemIdx)
                         enabled: dlgModel.mProgress == 100 ? true : false
+
+                        onSelDataTypeChanged:
+                        {
+                            dlgModel.onCommandChangeDataType(selDataType);
+                        }
                     }
                 }
             }

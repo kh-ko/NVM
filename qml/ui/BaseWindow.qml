@@ -669,6 +669,7 @@ Window {
         InterfaceTraceDlg{
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
+            userInterface  : model.mInterface
         }
     }
 

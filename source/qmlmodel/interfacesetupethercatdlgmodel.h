@@ -351,7 +351,7 @@ public slots:
     {
         int idx = dto.mReqDto.mReqCommand.mid(QString(REQ_READ_INTERFACE_CFG_ETHCAT_PDO_DATA_TYPE).length(), 2).toInt();
 
-        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << convertPDOIdx(mState);
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << dto.mResData;
 
         if(idx != convertPDOIdx(mState) || dto.mReqDto.mpRef != this)
             return;
@@ -374,7 +374,7 @@ public slots:
     {
         int idx = dto.mReqDto.mReqCommand.mid(QString(REQ_READ_INTERFACE_CFG_ETHCAT_PDO_RANGE).length(), 2).toInt();
 
-        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << convertPDOIdx(mState);
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << dto.mResData;
 
         if(idx != convertPDOIdx(mState) || dto.mReqDto.mpRef != this)
             return;
@@ -397,6 +397,14 @@ public slots:
     {
         if(isEdit)
             setIsEdit(isEdit);
+    }
+
+    Q_INVOKABLE void onCommandChangeDataType(int selDatType)
+    {
+        //for(int i = 0; i < mPDOList.count(); i ++)
+        //{
+        //    mPDOList[i]->setDataType(selDatType);
+        //}
     }
 
     Q_INVOKABLE void onCommandSetEdit(bool value)

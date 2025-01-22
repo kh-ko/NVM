@@ -13,8 +13,9 @@ BaseSetupWindow{
 
     property int  foundCount : 0
     property var  body : null
+    property var  userInterface : 0
 
-    titleText     : qsTr("Sequence Test")
+    titleText     : qsTr("Trace")
     progress      : 100
     strStatus     : dlgModel.mStrStatus
     errMsg        : dlgModel.mErrMsg
@@ -25,7 +26,7 @@ BaseSetupWindow{
     Component.onCompleted: {
         body = bodyImpl.createObject(contentBody)
         bodyHeight = body.height
-        bodyWidth = 700 * GUISetting.scale
+        bodyWidth = 900 * GUISetting.scale
     }
 
     InterfaceTraceDlgModel{
@@ -86,7 +87,7 @@ BaseSetupWindow{
 
             onGuiScaleChanged: {
                 bodyHeight = height
-                bodyWidth  = 700 * GUISetting.scale
+                bodyWidth  = 900 * GUISetting.scale
             }
 
             Rectangle{
@@ -315,7 +316,7 @@ BaseSetupWindow{
                         }
 
                         Rectangle{
-                            Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 3
+                            Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: dialog.userInterface === ValveEnumDef.INTERFACE_ETHERCAT ? 6 : 3
                             color : "#24A7FF"
                             NText{
                                 anchors.fill: parent
@@ -327,6 +328,7 @@ BaseSetupWindow{
                         Rectangle{
                             Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 3
                             color : "#24A7FF"
+                            visible: dialog.userInterface !== ValveEnumDef.INTERFACE_ETHERCAT
                             NText{
                                 anchors.fill: parent
                                 color: "#FFFFFF"; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
@@ -379,7 +381,7 @@ BaseSetupWindow{
                             }
 
                             Rectangle{
-                                Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 3
+                                Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: dialog.userInterface === ValveEnumDef.INTERFACE_ETHERCAT ? 6 : 3
                                 color : _rowIdx == dlgModel.mFoundIdx ? "#24A7FF" : "#FFFFFF"
                                 NText{
                                     height: parent.height; width: parent.width - (GUISetting.margin) * 2
@@ -391,6 +393,7 @@ BaseSetupWindow{
 
                             Rectangle{
                                 Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 3
+                                visible: dialog.userInterface !== ValveEnumDef.INTERFACE_ETHERCAT
                                 color : _rowIdx == dlgModel.mFoundIdx ? "#24A7FF" : "#FFFFFF"
                                 NText{
                                     height: parent.height; width: parent.width - (GUISetting.margin) * 2
