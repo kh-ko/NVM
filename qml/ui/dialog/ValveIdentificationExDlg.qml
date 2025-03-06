@@ -512,7 +512,7 @@ BaseSetupWindow{
                     visible: dialog.unlock
 
                     fontFamily: FontManager.codingName
-                    model: ["Unknown", "K : ISO-KF", "F : ISO", "C : CF-F", "P : ISO-K", "X : Multi-position"]
+                    model: ["Unknown", "K : ISO-KF", "F : ISO-F", "C : CF", "P : ISO-K", "X : Controller only", "V : VF"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -580,7 +580,7 @@ BaseSetupWindow{
                     visible: dialog.unlock
 
                     fontFamily: FontManager.codingName
-                    model: ["Unknown", "R2 : RS-232", "R3 : RS-232 with analog outputs", "R4 : RS-485", "LO : Logic", "DN : DeviceNet", "PB : Profibus", "EN : Ethernet", "CC : CC-Link", "EC : EtherCAT", "LL : Legacy Logic", "LD : Legacy DeviceNet", "AD : AP DeviceNet", "RL : Retrofit Logic", "ND : Norcal Devicenet"]
+                    model: ["UK : Unknown", "R2 : RS-232", "R3 : RS-232 with analog outputs", "R4 : RS-485", "LO : Logic", "DN : DeviceNet", "PB : Profibus", "EN : Ethernet", "CC : CC-Link", "EC : EtherCAT", "LL : Legacy Logic", "LD : Legacy DeviceNet", "AD : AP DeviceNet", "RL : Retrofit Logic", "ND : Norcal Devicenet"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
