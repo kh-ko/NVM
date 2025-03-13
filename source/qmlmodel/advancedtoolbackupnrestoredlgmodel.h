@@ -92,6 +92,7 @@ signals:
 private:
     QString exportFilePath;
     int                     mExportCmdIdx = 0;
+    int                     mExportLearnListIdx = 0;
     QList<ValveCommandItem> mExportCmdList;
     int                     mImportCmdIdx = 0;
     QList<QString>          mImportCmdList;
@@ -146,7 +147,8 @@ private:
         STATE_EXPORT_SENSOR_CHECK        = 0,
         STATE_EXPORT_PRESSURE_CTRL_CHECK = STATE_EXPORT_SENSOR_CHECK        + 1,
         STATE_EXPORT_SETTING             = STATE_EXPORT_PRESSURE_CTRL_CHECK + 1,
-        STATE_IMPORT_SETTING             = STATE_EXPORT_SETTING             + 1,
+        STATE_EXPORT_LEARNLIST           = STATE_EXPORT_SETTING             + 1,
+        STATE_IMPORT_SETTING             = STATE_EXPORT_LEARNLIST           + 1,
         STATE_READY                      = STATE_IMPORT_SETTING             + 1
     };
 
@@ -182,8 +184,8 @@ private:
         }
         else
         {
-            if(state <= (int) eState::STATE_EXPORT_SETTING && state >= (int) eState::STATE_EXPORT_SENSOR_CHECK)
-                setProgress(qFloor((mExportCmdIdx * 100) / mExportCmdList.size()));
+            if(state <= (int) eState::STATE_EXPORT_LEARNLIST && state >= (int) eState::STATE_EXPORT_SENSOR_CHECK)
+                setProgress(qFloor((mExportCmdIdx * 80 ) / mExportCmdList.size()));
             else
                 setProgress(qFloor((mImportCmdIdx * 100) / mImportCmdList.size()));
 
@@ -345,10 +347,40 @@ public slots:
 
             if(mExportCmdIdx == mExportCmdList.size())
             {
+                //emit signalEventCompletedExport();
+                setState(eState::STATE_EXPORT_LEARNLIST);
+                return;
+            }
+        }
+        else if(mState == eState::STATE_EXPORT_LEARNLIST)
+        {
+            ValveCommandItem tempItem;
+            int lastIdx;
+            if(dto.mIsSucc == true && mExportLearnListIdx == 0)
+            {
+                tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_LEARN_LIST_START)); mExportCmdList.append(tempItem);
+            }
+            else if(dto.mIsSucc == false)
+            {
+                tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_LEARN_LIST_END)); mExportCmdList.append(tempItem);
                 emit signalEventCompletedExport();
                 setState(eState::STATE_READY);
                 return;
             }
+
+            tempItem.setCommand(QString("%1%2").arg(REQ_READ_LEARN_LIST).arg(mExportLearnListIdx, 4,10,QChar('0')), QString("%1%2").arg(REQ_WRITE_LEARN_LIST).arg(mExportLearnListIdx, 4,10,QChar('0'))); mExportCmdList.append(tempItem);
+            lastIdx = mExportCmdList.size() - 1;
+
+            if(mExportCmdList[lastIdx].mReadResCommand.length() > 0)
+            {
+                mExportCmdList[lastIdx].mValue = dto.mResData.mid(mExportCmdList[lastIdx].mReadResCommand.length());
+            }
+            else
+            {
+                mExportCmdList[lastIdx].mValue = dto.mResData.mid(mExportCmdList[lastIdx].mReadCommand.length());
+            }
+
+            mExportLearnListIdx++;
         }
         else if(mState == eState::STATE_IMPORT_SETTING)
         {
@@ -435,6 +467,7 @@ public slots:
         ValveCommandItem tempItem;
 
         mExportCmdIdx = 0;
+        mExportLearnListIdx = 0;
         mExportCmdList.clear();
         setErrMsg("");
 
@@ -451,16 +484,16 @@ public slots:
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_06), QString("%1").arg(REQ_WRITE_SETPOINT_06)); mExportCmdList.append(tempItem);
 
 
-        /* valve params
+        /* valve params */
         tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_START));
         tempItem.mValue = ""; mExportCmdList.append(tempItem);
-        for(int i = 18; i < 100; i ++)
+        for(int i = 51; i < 52; i ++)
         {
             tempItem.setCommand(QString("%1%2").arg(REQ_READ_VALVE_PARAM).arg(i, 2, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(i, 2, 10, QChar('0'))); mExportCmdList.append(tempItem);
         }
         tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_END));
         tempItem.mValue = ""; mExportCmdList.append(tempItem);
-        */
+
 
         /* Pressure control learn param */
         for(int i = 0; i < 104; i ++)
@@ -538,8 +571,14 @@ public slots:
     {
         switch ((int)mState)
         {
-        case STATE_EXPORT_SENSOR_CHECK        : pValveSP->readSensorExSelection(this);                                       break;
-        case STATE_EXPORT_PRESSURE_CTRL_CHECK : pValveSP->readSelectControlMode(this);                                       break;
+        case STATE_EXPORT_SENSOR_CHECK:
+            pValveSP->readSensorExSelection(this);
+            break;
+
+        case STATE_EXPORT_PRESSURE_CTRL_CHECK :
+            pValveSP->readSelectControlMode(this);
+            break;
+
         case STATE_EXPORT_SETTING:
             if(mExportCmdList.at(mExportCmdIdx).mReadCommand == "-")
             {
@@ -551,7 +590,17 @@ public slots:
                 pValveSP->customRequest(mExportCmdList.at(mExportCmdIdx).mReadCommand, this);
             }
             break;
-        case STATE_IMPORT_SETTING             : pValveSP->customRequest(mImportCmdList.at(mImportCmdIdx), this);             break;
+
+        case STATE_EXPORT_LEARNLIST:
+            {
+                QString cmd = QString("%1%2").arg(REQ_READ_LEARN_LIST).arg(mExportLearnListIdx,4,10,QChar('0'));
+                pValveSP->customRequest(cmd, this);
+            }
+            break;
+
+        case STATE_IMPORT_SETTING:
+            pValveSP->customRequest(mImportCmdList.at(mImportCmdIdx), this);
+            break;
         }
     }
 };
