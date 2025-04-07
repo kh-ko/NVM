@@ -696,7 +696,7 @@ NWindow{ // khko_todo
 
                         mPause             : false//panel.isPause
 
-                        mDebug             : true
+                        mDebug             : false
 
                         Component.onCompleted: {
 

@@ -505,8 +505,10 @@ public slots:
             return;
         }
 
-        setS01OffsetOriValue(dto.mS01Offset);
-        setS02OffsetOriValue(dto.mS02Offset);
+        qDebug() << "[khko_debug][onValveReadedSensorOffset]" << dto.mS01Offset << "," << dto.mS02Offset;
+
+        setS01OffsetOriValue(dto.mS01Offset * 100);
+        setS02OffsetOriValue(dto.mS02Offset * 100);
 
         calValueByDpUnit();
 

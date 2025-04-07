@@ -487,8 +487,11 @@ public slots:
         /* valve params */
         tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_START));
         tempItem.mValue = ""; mExportCmdList.append(tempItem);
-        for(int i = 51; i < 52; i ++)
+        for(int i = 0; i < 100; i ++)
         {
+            if(i < 17 || i == 51)
+                continue;
+
             tempItem.setCommand(QString("%1%2").arg(REQ_READ_VALVE_PARAM).arg(i, 2, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(i, 2, 10, QChar('0'))); mExportCmdList.append(tempItem);
         }
         tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_END));

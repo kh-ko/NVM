@@ -258,7 +258,7 @@ BaseSetupWindow{
                         textColor: dlgModel.mErrOperationModeIdx ? "#FF0000" : "#000000"
                         enabled: dlgModel.mProgress == 100
 
-                        model: ["RS232","RS485","RS485(P2P)"]
+                        model: ["Unknow","RS485","RS485(P2P)"]
 
                         onCurrentIndexChanged: {
                             dlgModel.onCommandSetEdit(true)
