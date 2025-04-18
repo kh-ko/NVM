@@ -6385,6 +6385,9 @@ public slots:
             signalDto.mIsOKClosePressure = value.mid(startIdx,1).toInt(); startIdx += 1;
             signalDto.mPressureRaising   = value.mid(startIdx,1).toInt(); startIdx += 1;
             signalDto.mPressureStability = value.mid(startIdx,1).toInt(); startIdx += 1;
+            int bitMask                  = value.mid(startIdx,1).toInt(); startIdx += 1;
+            signalDto.mNegativeOpenPressure = (bitMask & 0x01) == 0x01 ? 1 : 0;
+            signalDto.mIsNotOpened          = (bitMask & 0x02) == 0x02 ? 1 : 0;
 
         }while(false);
 

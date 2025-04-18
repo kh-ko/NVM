@@ -485,10 +485,7 @@ class ValveEnumDef: public QObject{
     Q_ENUMS(eLearnRunState)
     Q_ENUMS(eLearnDataSet)
     Q_ENUMS(eLearnAbort)
-    Q_ENUMS(eLearnOpenPressure)
-    Q_ENUMS(eLearnClosePressure)
-    Q_ENUMS(eLearnPressureRaising)
-    Q_ENUMS(eLearnPressureStable)
+    Q_ENUMS(eLearnAbortCause)
     Q_ENUMS(eInterface)
     Q_ENUMS(eCompany)
 
@@ -735,25 +732,14 @@ public:
         LEARN_ABORT_CTRL_UNIT = 2,
     };
 
-    enum eLearnOpenPressure{
-        LEARN_OPEN_PRESSURE_OK       = 0,
-        LEARN_OPEN_PRESSURE_GAS_HIGH = 1,
-        LEARN_OPEN_PRESSURE_NO_GAS   = 2,
-    };
-
-    enum eLearnClosePressure{
-        LEARN_CLOSE_PRESSURE_OK      = 0,
-        LEARN_CLOSE_PRESSURE_GAS_LOW = 1,
-    };
-
-    enum eLearnPressureRaising{
-        LEARN_PRESSURE_RAISING_OK       = 0,
-        LEARN_PRESSURE_RAISING_MISSING  = 1,
-    };
-
-    enum eLearnPressureStable{
-        LEARN_PRESSURE_STABLE_OK       = 0,
-        LEARN_PRESSURE_STABLE_UNSTABLE = 1,
+    enum eLearnAbortCause{
+        LEARN_ABORT_NOT_FAIL                 = 0,
+        LEARN_ABORT_OPEN_PRESSURE_TOO_HEIGHT = 1,
+        LEARN_ABORT_CLOSE_PRESSURE_TOO_LOW   = 2,
+        LEARN_ABORT_PRESSURE_RAISING         = 3,
+        LEARN_ABORT_PRESSURE_UNSTABLE        = 4,
+        LEARN_ABORT_NEGATIVE_OPEN_PRESSURE   = 5,
+        LEARN_ABORT_IS_NOT_OPEN_PRESSURE     = 6
     };
 
     enum eInterface{

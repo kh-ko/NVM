@@ -19,10 +19,7 @@ class ControlLearnDlgModel : public QObject
     Q_PROPERTY(int      mRunning                 READ getRunning                  NOTIFY signalEventChangedRunning                )
     Q_PROPERTY(int      mDataSetPresent          READ getDataSetPresent           NOTIFY signalEventChangedDataSetPresent         )
     Q_PROPERTY(int      mAbort                   READ getAbort                    NOTIFY signalEventChangedAbort                  )
-    Q_PROPERTY(int      mIsOKOpenPressure        READ getIsOKOpenPressure         NOTIFY signalEventChangedIsOKOpenPressure       )
-    Q_PROPERTY(int      mIsOKClosePressure       READ getIsOKClosePressure        NOTIFY signalEventChangedIsOKClosePressure      )
-    Q_PROPERTY(int      mPressureRaising         READ getPressureRaising          NOTIFY signalEventChangedPressureRaising        )
-    Q_PROPERTY(int      mPressureStability       READ getPressureStability        NOTIFY signalEventChangedPressureStability      )
+    Q_PROPERTY(int      mAbortCause              READ getAbortCause               NOTIFY signalEventChangedAbortCause             )
     Q_PROPERTY(bool     mIsShowState             READ getIsShowState              NOTIFY signalEventChangedIsShowState            )
     Q_PROPERTY(bool     mIsEdit                  READ getIsEdit                   NOTIFY signalEventChangedIsEdit                 )
     Q_PROPERTY(QString  mStrStatus               READ getStrStatus                NOTIFY signalEventChangedStrStatus              )
@@ -39,10 +36,7 @@ public:
     int     mRunning             = ValveEnumDef::LEARN_RUN_STATE_NOT_RUNNING;
     int     mDataSetPresent      = ValveEnumDef::LEARN_DATASET_NOT_PRESENT;
     int     mAbort               = ValveEnumDef::LEARN_ABORT_OK;
-    int     mIsOKOpenPressure    = ValveEnumDef::LEARN_OPEN_PRESSURE_OK;
-    int     mIsOKClosePressure   = ValveEnumDef::LEARN_CLOSE_PRESSURE_OK;
-    int     mPressureRaising     = ValveEnumDef::LEARN_PRESSURE_RAISING_OK;
-    int     mPressureStability   = ValveEnumDef::LEARN_PRESSURE_STABLE_OK;
+    int     mAbortCause          = ValveEnumDef::LEARN_ABORT_NOT_FAIL;
     bool    mIsShowState         = false;
     bool    mIsEdit              = false;
     QString mStrStatus           = "";
@@ -58,10 +52,7 @@ public:
     int     getRunning            (){return mRunning            ;}
     int     getDataSetPresent     (){return mDataSetPresent     ;}
     int     getAbort              (){return mAbort              ;}
-    int     getIsOKOpenPressure   (){return mIsOKOpenPressure   ;}
-    int     getIsOKClosePressure  (){return mIsOKClosePressure  ;}
-    int     getPressureRaising    (){return mPressureRaising    ;}
-    int     getPressureStability  (){return mPressureStability  ;}
+    int     getAbortCause         (){return mAbortCause         ;}
     bool    getIsShowState        (){return mIsShowState        ;}
     bool    getIsEdit             (){return mIsEdit             ;}
     QString getStrStatus          (){return mStrStatus          ;}
@@ -70,17 +61,14 @@ public:
     int     getProgress           (){return mProgress           ;}
 
     void    setAccessMode         (int     value){ if(mAccessMode              == value)return; mAccessMode          = value; emit signalEventChangedAccessMode               (value);}
-    void    setIsRS232Test        (bool    value){ if(mIsRS232Test             == value)return; mIsRS232Test          = value; emit signalEventChangedIsRS232Test             (value);}
+    void    setIsRS232Test        (bool    value){ if(mIsRS232Test             == value)return; mIsRS232Test         = value; emit signalEventChangedIsRS232Test              (value);}
     void    setSensorFullScaleUnit(int     value){ if(mSensorFullScaleUnit     == value)return; mSensorFullScaleUnit = value; emit signalEventChangedSensorFullScaleUnit      (value);}
     void    setSensorFullScale    (double  value){ if(mSensorFullScale         == value)return; mSensorFullScale     = value; emit signalEventChangedSensorFullScale          (value);}
     void    setPressureLimit      (int     value){ if(mPressureLimit           == value)return; mPressureLimit       = value; emit signalEventChangedPressureLimit            (value);}
     void    setRunning            (int     value){ if(mRunning                 == value)return; mRunning             = value; emit signalEventChangedRunning                  (value);}
     void    setDataSetPresent     (int     value){ if(mDataSetPresent          == value)return; mDataSetPresent      = value; emit signalEventChangedDataSetPresent           (value);}
     void    setAbort              (int     value){ if(mAbort                   == value)return; mAbort               = value; emit signalEventChangedAbort                    (value);}
-    void    setIsOKOpenPressure   (int     value){ if(mIsOKOpenPressure        == value)return; mIsOKOpenPressure    = value; emit signalEventChangedIsOKOpenPressure         (value);}
-    void    setIsOKClosePressure  (int     value){ if(mIsOKClosePressure       == value)return; mIsOKClosePressure   = value; emit signalEventChangedIsOKClosePressure        (value);}
-    void    setPressureRaising    (int     value){ if(mPressureRaising         == value)return; mPressureRaising     = value; emit signalEventChangedPressureRaising          (value);}
-    void    setPressureStability  (int     value){ if(mPressureStability       == value)return; mPressureStability   = value; emit signalEventChangedPressureStability        (value);}
+    void    setAbortCause         (int     value){                                              mAbortCause          = value; emit signalEventChangedAbortCause               (value);}
     void    setIsShowState        (bool    value){ if(mIsShowState             == value)return; mIsShowState         = value; emit signalEventChangedIsShowState              (value);}
     void    setIsEdit             (bool    value){ if(mIsEdit                  == value)return; mIsEdit              = value; emit signalEventChangedIsEdit                   (value);}
     void    setStrStatus          (QString value){ if(mStrStatus               == value)return; mStrStatus           = value; emit signalEventChangedStrStatus                (value);}
@@ -97,10 +85,7 @@ signals:
     void signalEventChangedRunning             (int     value);
     void signalEventChangedDataSetPresent      (int     value);
     void signalEventChangedAbort               (int     value);
-    void signalEventChangedIsOKOpenPressure    (int     value);
-    void signalEventChangedIsOKClosePressure   (int     value);
-    void signalEventChangedPressureRaising     (int     value);
-    void signalEventChangedPressureStability   (int     value);
+    void signalEventChangedAbortCause          (int     value);
     void signalEventChangedIsShowState         (bool    value);
     void signalEventChangedIsEdit              (bool    value);
     void signalEventChangedStrStatus           (QString value);
@@ -294,10 +279,35 @@ private:
         setRunning          (dto.mRunning          );
         setDataSetPresent   (dto.mDataSetPresent   );
         setAbort            (dto.mAbort            );
-        setIsOKOpenPressure (dto.mIsOKOpenPressure );
-        setIsOKClosePressure(dto.mIsOKClosePressure);
-        setPressureRaising  (dto.mPressureRaising  );
-        setPressureStability(dto.mPressureStability);
+
+        if(dto.mIsOKOpenPressure)
+        {
+            setAbortCause(ValveEnumDef::LEARN_ABORT_OPEN_PRESSURE_TOO_HEIGHT);
+        }
+        else if(dto.mIsOKClosePressure)
+        {
+            setAbortCause(ValveEnumDef::LEARN_ABORT_CLOSE_PRESSURE_TOO_LOW);
+        }
+        else if(dto.mPressureRaising)
+        {
+            setAbortCause(ValveEnumDef::LEARN_ABORT_PRESSURE_RAISING);
+        }
+        else if(dto.mPressureStability)
+        {
+            setAbortCause(ValveEnumDef::LEARN_ABORT_PRESSURE_UNSTABLE);
+        }
+        else if(dto.mNegativeOpenPressure)
+        {
+            setAbortCause(ValveEnumDef::LEARN_ABORT_NEGATIVE_OPEN_PRESSURE);
+        }
+        else if(dto.mIsNotOpened)
+        {
+            setAbortCause(ValveEnumDef::LEARN_ABORT_IS_NOT_OPEN_PRESSURE);
+        }
+        else
+        {
+            setAbortCause(ValveEnumDef::LEARN_ABORT_NOT_FAIL);
+        }
     }
     void setState(eState state)
     {

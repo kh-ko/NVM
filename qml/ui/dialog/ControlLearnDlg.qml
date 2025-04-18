@@ -281,23 +281,29 @@ BaseSetupWindow{
 
                     Item{
                         id : abortBox
-                        height: 24 * GUISetting.scale
+                        height: (abortIcon.height)
                         anchors.top: stateFinishLabel.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
                         visible: dlgModel.mRunning !== ValveEnumDef.LEARN_RUN_STATE_RUNNING
 
                         Image{
                             id : abortIcon
                             width: 24 * GUISetting.scale; height: 24 * GUISetting.scale
-                            anchors.verticalCenter: parent.verticalCenter; anchors.topMargin: GUISetting.margin; anchors.left: parent.left;
+                            anchors.top: parent.top; anchors.left: parent.left;
                             source: dlgModel.mAbort === ValveEnumDef.LEARN_ABORT_OK ?  "/image/icon-info.png" : "/image/icon-warning.png"
                         }
 
                         NText{
                             id : stateAbortLabel
-                            anchors.verticalCenter: parent.verticalCenter; anchors.left: abortIcon.right; anchors.leftMargin: GUISetting.margin
+                            anchors.verticalCenter: abortIcon.verticalCenter; anchors.left: abortIcon.right; anchors.leftMargin: GUISetting.margin;
                             isBold: true
                             text : dlgModel.mAbort === ValveEnumDef.LEARN_ABORT_OK ? qsTr("Learn completed") :
-                                   dlgModel.mAbort === ValveEnumDef.LEARN_ABORT_CTRL_UNIT ? qsTr("Fail by control unit") : qsTr("Fail by user")
+                                   dlgModel.mAbort === ValveEnumDef.LEARN_ABORT_USER ? qsTr("Fail by user") :
+                                   (dlgModel.mAbortCause === ValveEnumDef.LEARN_ABORT_OPEN_PRESSURE_TOO_HEIGHT) ? qsTr("Fail by control unit : > 50% learn pressure limit (gas flow too high)") :
+                                   (dlgModel.mAbortCause === ValveEnumDef.LEARN_ABORT_CLOSE_PRESSURE_TOO_LOW  ) ? qsTr("Fail by control unit : < 10% learn pressure limit (gas flow too low)") :
+                                   (dlgModel.mAbortCause === ValveEnumDef.LEARN_ABORT_PRESSURE_RAISING        ) ? qsTr("Fail by control unit : pressure not raising during LEARN (gasflow missing)") :
+                                   (dlgModel.mAbortCause === ValveEnumDef.LEARN_ABORT_PRESSURE_UNSTABLE       ) ? qsTr("Fail by control unit : sensor unstable during LEARN") :
+                                   (dlgModel.mAbortCause === ValveEnumDef.LEARN_ABORT_NEGATIVE_OPEN_PRESSURE  ) ? qsTr("Fail by control unit : negative open pressure") :
+                                   (dlgModel.mAbortCause === ValveEnumDef.LEARN_ABORT_IS_NOT_OPEN_PRESSURE    ) ? qsTr("Fail by control unit : valve was not opened at start") : ""
                         }
                     }
                 }

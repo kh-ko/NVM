@@ -1261,25 +1261,29 @@ Q_DECLARE_METATYPE(ValveResponseInterfaceStatusRS232Dto);
 class ValveResponseLearnStatusDto : public ValveResponseDto
 {
 public:
-    int mRunning           = 0;
-    int mDataSetPresent    = 0;
-    int mAbort             = 0;
-    int mIsOKOpenPressure  = 0;
-    int mIsOKClosePressure = 0;
-    int mPressureRaising   = 0;
-    int mPressureStability = 0;
+    int mRunning              = 0;
+    int mDataSetPresent       = 0;
+    int mAbort                = 0;
+    int mIsOKOpenPressure     = 0;
+    int mIsOKClosePressure    = 0;
+    int mPressureRaising      = 0;
+    int mPressureStability    = 0;
+    int mNegativeOpenPressure = 0;
+    int mIsNotOpened          = 0;
 
     ValveResponseLearnStatusDto(){}
     ValveResponseLearnStatusDto(ValveRequestDto reqDto, QDateTime resDateTime, QString resData, bool isParsed, bool isSucc, bool isNetworkErr, QString errMsg =""):ValveResponseDto(reqDto, resDateTime, resData, isParsed, isSucc, isNetworkErr, errMsg){}
     ValveResponseLearnStatusDto(ValveResponseDto baseDto) : ValveResponseDto(baseDto){}
     ValveResponseLearnStatusDto(const ValveResponseLearnStatusDto& copy) : ValveResponseDto(copy),
-        mRunning          (copy.mRunning          ),
-        mDataSetPresent   (copy.mDataSetPresent   ),
-        mAbort            (copy.mAbort            ),
-        mIsOKOpenPressure (copy.mIsOKOpenPressure ),
-        mIsOKClosePressure(copy.mIsOKClosePressure),
-        mPressureRaising  (copy.mPressureRaising  ),
-        mPressureStability(copy.mPressureStability){}
+        mRunning             (copy.mRunning             ),
+        mDataSetPresent      (copy.mDataSetPresent      ),
+        mAbort               (copy.mAbort               ),
+        mIsOKOpenPressure    (copy.mIsOKOpenPressure    ),
+        mIsOKClosePressure   (copy.mIsOKClosePressure   ),
+        mPressureRaising     (copy.mPressureRaising     ),
+        mPressureStability   (copy.mPressureStability   ),
+        mNegativeOpenPressure(copy.mNegativeOpenPressure),
+        mIsNotOpened         (copy.mIsNotOpened         ){}
 
     ~ValveResponseLearnStatusDto(){}
 
@@ -1287,20 +1291,22 @@ public:
     {
         ValveResponseDto::operator=(other);
 
-        mRunning           = other.mRunning          ;
-        mDataSetPresent    = other.mDataSetPresent   ;
-        mAbort             = other.mAbort            ;
-        mIsOKOpenPressure  = other.mIsOKOpenPressure ;
-        mIsOKClosePressure = other.mIsOKClosePressure;
-        mPressureRaising   = other.mPressureRaising  ;
-        mPressureStability = other.mPressureStability;
+        mRunning              = other.mRunning             ;
+        mDataSetPresent       = other.mDataSetPresent      ;
+        mAbort                = other.mAbort               ;
+        mIsOKOpenPressure     = other.mIsOKOpenPressure    ;
+        mIsOKClosePressure    = other.mIsOKClosePressure   ;
+        mPressureRaising      = other.mPressureRaising     ;
+        mPressureStability    = other.mPressureStability   ;
+        mNegativeOpenPressure = other.mNegativeOpenPressure;
+        mIsNotOpened          = other.mIsNotOpened         ;
 
         return *this;
     }
 
     QString toString()
     {
-        return QString("%1, mRunning = %2, mDataSetPresent = %3, mAbort = %4, mIsOKOpenPressure = %5, mIsOKClosePressure = %6, mPressureRaising = %7,, mPressureStability = %8")
+        return QString("%1, mRunning = %2, mDataSetPresent = %3, mAbort = %4, mIsOKOpenPressure = %5, mIsOKClosePressure = %6, mPressureRaising = %7,, mPressureStability = %8, mNegativeOpenPressure = %9, mIsNotOpened = %10")
                         .arg(ValveResponseDto::toString())
                         .arg(mRunning          )
                         .arg(mDataSetPresent   )
@@ -1308,7 +1314,9 @@ public:
                         .arg(mIsOKOpenPressure )
                         .arg(mIsOKClosePressure)
                         .arg(mPressureRaising  )
-                        .arg(mPressureStability);
+                        .arg(mPressureStability)
+                        .arg(mNegativeOpenPressure)
+                        .arg(mIsNotOpened      );
     }
 };
 
