@@ -153,5 +153,6 @@
         <file>image/img_soao.png</file>
         <file>ui/dialog/ValveCalibrationExDlg.qml</file>
         <file>ui/dialog/PressureLearnList.qml</file>
+        <file>image/dimming.png</file>
     </qresource>
 </RCC>

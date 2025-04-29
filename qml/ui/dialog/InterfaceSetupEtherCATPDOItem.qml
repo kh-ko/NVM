@@ -9,6 +9,8 @@ RowLayout {
     id : item
 
     property var isHeader  : false
+    property var typeName: ""
+    property var indexName: ""
     property var item01Name: ""
     property var item02Name: ""
     property var item03Name: ""
@@ -37,8 +39,32 @@ RowLayout {
     }
 
     Rectangle{
-        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 4
+        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+        visible: typeName !== "dummy"
+        color : item.isHeader ? "#24A7FF" : "#E4E4E4"
 
+        NText{
+            anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin; anchors.verticalCenter: parent.verticalCenter;
+            isBold: item.isHeader
+            text : item.typeName
+        }
+    }
+
+    Rectangle{
+        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+        visible: typeName !== "dummy"
+        color : item.isHeader ? "#24A7FF" : "#E4E4E4"
+
+        NText{
+            anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin; anchors.verticalCenter: parent.verticalCenter;
+            isBold: item.isHeader
+            text : item.indexName
+        }
+    }
+
+    Rectangle{
+        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 4
+        visible: typeName !== "dummy"
         color : item.isHeader ? "#24A7FF" : "#E4E4E4"
 
         NText{
@@ -50,7 +76,7 @@ RowLayout {
 
     Rectangle{
         Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 4
-
+        visible: typeName !== "dummy"
         color : item.isHeader ? "#24A7FF" : "#E4E4E4"
 
         NText{
@@ -80,7 +106,7 @@ RowLayout {
 
     Rectangle{
         Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 4
-
+        visible: typeName !== "dummy"
         color : item.isHeader ? "#24A7FF" : "#E4E4E4"
 
         NText{
@@ -117,7 +143,7 @@ RowLayout {
 
     Rectangle{
         Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 4
-
+        visible: typeName !== "dummy"
         color : item.isHeader ? "#24A7FF" : "#E4E4E4"
 
         NText{

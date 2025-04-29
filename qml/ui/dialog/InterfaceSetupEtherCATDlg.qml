@@ -40,25 +40,25 @@ BaseSetupWindow{
     Component.onCompleted: {
         body = bodyImpl.createObject(contentBody)
         bodyHeight = body.height
-        bodyWidth  = 700 * GUISetting.scale
+        bodyWidth  = 800 * GUISetting.scale
     }
 
     InterfaceSetupEtherCATDlgModel{
         id : dlgModel
 
         Component.onCompleted : {
-            pdoListModel.append({"pdoDataName" : "pressure"                     , "itemIdx":0})
-            pdoListModel.append({"pdoDataName" : "pressure sensor 1"            , "itemIdx":1})
-            pdoListModel.append({"pdoDataName" : "pressure sensor 2"            , "itemIdx":2})
-            pdoListModel.append({"pdoDataName" : "position"                     , "itemIdx":3})
-            pdoListModel.append({"pdoDataName" : "target position"              , "itemIdx":4})
-            pdoListModel.append({"pdoDataName" : "cluster valve position"       , "itemIdx":5})
-            pdoListModel.append({"pdoDataName" : "pressure setpoint"            , "itemIdx":6})
-            pdoListModel.append({"pdoDataName" : "position setpoint"            , "itemIdx":7})
-            pdoListModel.append({"pdoDataName" : "pressure alignment setpoint"  , "itemIdx":8})
-            pdoListModel.append({"pdoDataName" : "external digital pressure 1"  , "itemIdx":9})
-            pdoListModel.append({"pdoDataName" : "external digital pressure 2"  , "itemIdx":10})
-            pdoListModel.append({"pdoDataName" : "cluster valve freeze position", "itemIdx":11})
+            pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "pressure"                      , "itemIdx":0})
+            pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "pressure sensor 1"             , "itemIdx":1})
+            pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "pressure sensor 2"             , "itemIdx":2})
+            pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "position"                      , "itemIdx":3})
+            pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "target position"               , "itemIdx":4})
+            pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "cluster valve position"        , "itemIdx":5})
+            pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "pressure setpoint"            , "itemIdx":6})
+            pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "position setpoint"            , "itemIdx":7})
+            pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "pressure alignment setpoint"  , "itemIdx":8})
+            pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "external digital pressure 1"  , "itemIdx":9})
+            pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "external digital pressure 2"  , "itemIdx":10})
+            pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "cluster valve freeze position", "itemIdx":11})
         }
 
         onSignalEventCompletedLoad: {
@@ -97,7 +97,7 @@ BaseSetupWindow{
 
             onGuiScaleChanged: {
                 bodyHeight = height
-                bodyWidth  = 700 * GUISetting.scale
+                bodyWidth  = 800 * GUISetting.scale
             }
 
             Rectangle{
@@ -136,14 +136,14 @@ BaseSetupWindow{
                     id : pdoDataTitle
                     anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                     isBold: true
-                    text : qsTr("PDO data")
+                    text : qsTr("PDO data(1 ~ 12)")
                 }
 
                 InterfaceSetupEtherCATPDOItem{
                     id : pdoListHeader
                     height: 34 * GUISetting.scale
                     anchors.top: pdoDataTitle.bottom; anchors.topMargin : GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
-                    isHeader  : true; item01Name: qsTr("data name"); item02Name: qsTr("data type"); item03Name: qsTr("range(from)"); item04Name: qsTr("range(to)"); itemModel : dlgModel.onCommandGetPDOItem(0)
+                    isHeader  : true; typeName : qsTr("type"); indexName : qsTr("seq"); item01Name: qsTr("data name"); item02Name: qsTr("data type"); item03Name: qsTr("range(from)"); item04Name: qsTr("range(to)"); itemModel : dlgModel.onCommandGetPDOItem(0)
                 }
 
                 NScrollView{
@@ -152,11 +152,12 @@ BaseSetupWindow{
                     anchors.top: pdoListHeader.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: pdoListHeader.left; anchors.right: pdoListHeader.right;
                     spacing : GUISetting.line_margin
 
+
                     model: pdoListModel
 
                     delegate : InterfaceSetupEtherCATPDOItem{
                         height: 34 * GUISetting.scale; width: pdoListView.width
-                        isHeader  : false; item01Name: pdoDataName; itemModel: dlgModel.onCommandGetPDOItem(itemIdx)
+                        isHeader  : false; typeName : pdoTypeName; indexName : itemIdx + 1; item01Name: pdoDataName; itemModel: dlgModel.onCommandGetPDOItem(itemIdx)
                         enabled: dlgModel.mProgress == 100 ? true : false
 
                         onSelDataTypeChanged:
@@ -164,6 +165,12 @@ BaseSetupWindow{
                             dlgModel.onCommandChangeDataType(selDataType);
                         }
                     }
+                }
+                Image {
+                    width: pdoListView.width; height: 34 * GUISetting.scale;
+                    anchors.left: pdoListView.left; anchors.right: pdoListView.right; anchors.bottom: pdoListView.bottom
+                    source: "/image/dimming.png"
+                    visible: !(pdoListView.contentY >= pdoListView.contentHeight - pdoListView.height)
                 }
             }
 
