@@ -87,7 +87,7 @@ BaseSetupWindow{
                         col02Text : dlgModel.mDIOpenValveIdx === 0 ? qsTr("not inverted") :
                                     dlgModel.mDIOpenValveIdx === 1 ? qsTr("inverted"    ) : qsTr("-"         );
                         col03Text : dlgModel.mDIOpenValveIdx !== 2 ? qsTr("enabled"     ) : qsTr("disabled"  );
-                        col04Text : qsTr("17");
+                        col04Text : model.mInterface === ValveEnumDef.INTERFACE_ETHERNET ? qsTr("17") : qsTr("17");
                         col05Text : dlgModel.mStatusDIOpen === 1 ? qsTr("ON") : qsTr("OFF")
                         isON: dlgModel.mStatusDIOpen === 1 ? true : false
                     }
@@ -98,7 +98,7 @@ BaseSetupWindow{
                         col02Text : dlgModel.mDICloseValveIdx === 0 ? qsTr("not inverted") :
                                     dlgModel.mDICloseValveIdx === 1 ? qsTr("inverted"    ) : qsTr("-"         );
                         col03Text : dlgModel.mDICloseValveIdx !== 2 ? qsTr("enabled"     ) : qsTr("disabled"  );
-                        col04Text : qsTr("15");
+                        col04Text : model.mInterface === ValveEnumDef.INTERFACE_ETHERNET ? qsTr("15") : qsTr("15");
                         col05Text : dlgModel.mStatusDIClose === 1 ? qsTr("ON") : qsTr("OFF")
                         isON: dlgModel.mStatusDIClose === 1 ? true : false
                     }
@@ -152,7 +152,7 @@ BaseSetupWindow{
                         col01Text : qsTr("opened");
                         col02Text : qsTr("-"         );
                         col03Text : qsTr("enabled"   )
-                        col04Text : qsTr("8");
+                        col04Text : model.mInterface === ValveEnumDef.INTERFACE_ETHERNET ? qsTr("8") : qsTr("8");
                         col05Text : dlgModel.mStatusDOOpen === 1 ? qsTr("ON") : qsTr("OFF")
                         isON: dlgModel.mStatusDOOpen === 1 ? true : false
                     }
@@ -162,7 +162,7 @@ BaseSetupWindow{
                         col01Text : qsTr("closed");
                         col02Text : qsTr("-"         );
                         col03Text : qsTr("enabled"   )
-                        col04Text : qsTr("9");
+                        col04Text : model.mInterface === ValveEnumDef.INTERFACE_ETHERNET ? qsTr("9") : qsTr("9");
                         col05Text : dlgModel.mStatusDOClose === 1 ? qsTr("ON") : qsTr("OFF")
                         isON: dlgModel.mStatusDOClose === 1 ? true : false
                     }

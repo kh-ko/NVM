@@ -101,6 +101,7 @@ HEADERS += \
     source/service/util/byteswap.h \
     source/service/util/exceptionutil.h \
     source/service/util/filewriterex.h \
+    source/service/util/fuactivekey.h \
     source/service/util/mathutil.h \
     source/service/util/unitutil.h \
     source/service/valve/device/ivalve.h \

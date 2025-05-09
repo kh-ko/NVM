@@ -154,5 +154,6 @@
         <file>ui/dialog/ValveCalibrationExDlg.qml</file>
         <file>ui/dialog/PressureLearnList.qml</file>
         <file>image/dimming.png</file>
+        <file>ui/dialog/FUOverDlg.qml</file>
     </qresource>
 </RCC>

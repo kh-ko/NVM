@@ -75,6 +75,11 @@ NWindow{
             }
         }
 
+        onSignalOverFUCount: {
+            var popup = fuOverDlg.createObject(nwindow)
+            popup.open();
+        }
+
         Component.onCompleted: {
             comportCombo.displayText = dlgModel.onCommandGetSelComPort()
         }
@@ -633,10 +638,26 @@ NWindow{
     }
 
     Component{
+        id : fuOverDlg
+        FUOverDlg
+        {
+            keyValue : dlgModel.mFUUnLockCode
+            onResult: {
+                dlgModel.onCommandResetFUCount()
+                nwindow.close()
+            }
+
+            onCancel: {
+                nwindow.close();
+            }
+        }
+    }
+
+    Component{
         id : passwordDlg
         PasswordDlg
         {
-            onResult: { caller.confirm()}
+            onResult: { caller.confirm() }
         }
     }
 

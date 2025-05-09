@@ -110,6 +110,7 @@ signals:
 public:
     explicit FirmwareUpdateDlgModel(QObject *parent = nullptr): QObject(parent)
     {
+        qDebug() << "[" << Q_FUNC_INFO << "[FirmwareUpdateDlgModel]" ;
         ENABLE_SLOT_VALVE_CHANGED_ACCESS;
         ENABLE_SLOT_VALVE_CHANGED_IS_RS232_TEST;
         ENABLE_SLOT_VALVE_RESULT_READY_DFU;

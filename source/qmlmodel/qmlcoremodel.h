@@ -5,6 +5,7 @@
 #include <QtMath>
 #include "source/qmlmodel/def/qmlenumdef.h"
 #include "source/util/etcutil.h"
+#include "source/service/util/fuactivekey.h"
 #include "source/service/util/unitutil.h"
 #include "source/service/util/mathutil.h"
 #include "source/service/coreservice.h"
@@ -946,6 +947,7 @@ public:
         ENABLE_SLOT_CORE_START;
 
         pCoreService->start(this);
+
     }
     ~QmlCoreModel()
     {

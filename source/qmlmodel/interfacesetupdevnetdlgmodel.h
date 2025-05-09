@@ -864,7 +864,8 @@ public slots:
         qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]";
 
         // khko : 00G 버젼 이후로 even 바이트를 만드는 것은 수동으로 설정할 수 있도록 한다.
-        if((mNewDevNetValveRev > mValveID) && isInternal == false )
+        // khko : 20250509 - AP system 등 과거 펌웨어일 경우 동작은 짝수바이트로 이루어지나 실제 Assy값에서는 설정이 안되는 경우가 있어 internal일 경우도 짝수 바이트 지정하도록 수정
+        if((mNewDevNetValveRev > mValveID) /*&& isInternal == false*/ )
             mpQmlInDummyItem->setIsSelected(!isInputEvenBytes());
 
         int nextIdx = 0;
@@ -907,7 +908,8 @@ public slots:
         }
 
         // khko : 00G 버젼 이후로 even 바이트를 만드는 것은 수동으로 설정할 수 있도록 한다.
-        if((mNewDevNetValveRev > mValveID) && isInternal == false )
+        // khko : 20250509 - AP system 등 과거 펌웨어일 경우 동작은 짝수바이트로 이루어지나 실제 Assy값에서는 설정이 안되는 경우가 있어 internal일 경우도 짝수 바이트 지정하도록 수정
+        if((mNewDevNetValveRev > mValveID) /*&& isInternal == false*/ )
             mpQmlOutDummyItem->setIsSelected(!isOutputEvenBytes());
 
         int nextIdx = 0;

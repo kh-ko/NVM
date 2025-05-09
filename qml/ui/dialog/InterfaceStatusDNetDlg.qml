@@ -613,7 +613,7 @@ BaseSetupWindow{
                     id : inputAssemblyTitle
                     anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                     isBold: true
-                    text : qsTr("Input assembly")
+                    text : qsTr("Input assembly(") + dlgModel.mInputAssemblyTotalByte + " bytes)"
                 }
 
                 InterfaceStatusDevNetItem{
@@ -674,7 +674,7 @@ BaseSetupWindow{
                     id : outputAssemblyTitle
                     anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                     isBold: true
-                    text : qsTr("Output assembly")
+                    text : qsTr("Output assembly(") + dlgModel.mOutputAssemblyTotalByte + " bytes)"
                 }
 
                 InterfaceStatusDevNetItem{

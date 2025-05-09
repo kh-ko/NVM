@@ -7,6 +7,7 @@
 #include "source/qmlmodel/def/qmlenumdef.h"
 #include "source/util/etcutil.h"
 #include "source/service/coreservice.h"
+#include "source/service/util/fuactivekey.h"
 #include "source/qmlmodel/function/fdownloadfirmware.h"
 
 class FirmwareUpdateExDlgModel : public QObject
@@ -30,6 +31,8 @@ class FirmwareUpdateExDlgModel : public QObject
     Q_PROPERTY(int     mDFUPctCpu2Kernel    READ getDFUPctCpu2Kernel    NOTIFY signalEventChangedDFUPctCpu2Kernel )
     Q_PROPERTY(int     mDFUPctCpu2App       READ getDFUPctCpu2App       NOTIFY signalEventChangedDFUPctCpu2App    )
     Q_PROPERTY(int     mDFUPctCpu2Verify    READ getDFUPctCpu2Verify    NOTIFY signalEventChangedDFUPctCpu2Verify )
+    Q_PROPERTY(int     mFUCount             READ getFUCount             NOTIFY signalEventChangedFUCount          )
+    Q_PROPERTY(QString mFUUnLockCode        READ getFUUnLockCode        NOTIFY signalEventChangedFUUnLockCode     )
 
 public:
     int     mAccessMode         = ValveEnumDef::ACCESS_LOCAL;
@@ -50,6 +53,8 @@ public:
     int     mDFUPctCpu2Kernel   = 0;
     int     mDFUPctCpu2App      = 0;
     int     mDFUPctCpu2Verify   = 0;
+    int     mFUCount            = 0;
+    QString mFUUnLockCode       = "";
 
     int     getAccessMode      (){ return mAccessMode      ;}
     bool    getIsRS232Test     (){ return mIsRS232Test     ;}
@@ -69,25 +74,29 @@ public:
     int     getDFUPctCpu2Kernel(){ return mDFUPctCpu2Kernel;}
     int     getDFUPctCpu2App   (){ return mDFUPctCpu2App   ;}
     int     getDFUPctCpu2Verify(){ return mDFUPctCpu2Verify;}
+    int     getFUCount         (){ return mFUCount         ;}
+    QString getFUUnLockCode    (){ return mFUUnLockCode    ;}
 
-    void    setAccessMode      (int  value){ if(mAccessMode       == value) return; mAccessMode       = value; emit signalEventChangedAccessMode      (value); }
-    void    setIsRS232Test     (bool value){ if(mIsRS232Test      == value) return; mIsRS232Test      = value; emit signalEventChangedIsRS232Test     (value); }
-    void    setIsReboot        (bool value){ if(mIsReboot         == value) return; mIsReboot         = value; emit signalEventChangedIsReboot        (value); }
-    void    setIsUpdating      (bool value){ if(mIsUpdating       == value) return; mIsUpdating       = value; emit signalEventChangedIsUpdating      (value); }
-    void    setUpdateStep      (int  value){ if(mUpdateStep       == value) return; mUpdateStep       = value; setUpdateProgress(0) ;emit signalEventChangedUpdateStep    (value); }
-    void    setUpdateProgress  (int  value){ if(mUpdateProgress   == value) return; mUpdateProgress   = value; emit signalEventChangedUpdateProgress  (value); }
-    void    setIsVersionProc   (bool value){ if(mIsVersionProc    == value) return; mIsVersionProc    = value; emit signalEventChangedIsVersionProc   (value); }
-    void    setIsErrVersion    (bool value){ if(mIsErrVersion     == value) return; mIsErrVersion     = value; emit signalEventChangedIsErrVersion    (value); }
+    void    setAccessMode      (int     value){ if(mAccessMode       == value) return; mAccessMode       = value; emit signalEventChangedAccessMode      (value); }
+    void    setIsRS232Test     (bool    value){ if(mIsRS232Test      == value) return; mIsRS232Test      = value; emit signalEventChangedIsRS232Test     (value); }
+    void    setIsReboot        (bool    value){ if(mIsReboot         == value) return; mIsReboot         = value; emit signalEventChangedIsReboot        (value); }
+    void    setIsUpdating      (bool    value){ if(mIsUpdating       == value) return; mIsUpdating       = value; emit signalEventChangedIsUpdating      (value); }
+    void    setUpdateStep      (int     value){ if(mUpdateStep       == value) return; mUpdateStep       = value; setUpdateProgress(0) ;emit signalEventChangedUpdateStep    (value); }
+    void    setUpdateProgress  (int     value){ if(mUpdateProgress   == value) return; mUpdateProgress   = value; emit signalEventChangedUpdateProgress  (value); }
+    void    setIsVersionProc   (bool    value){ if(mIsVersionProc    == value) return; mIsVersionProc    = value; emit signalEventChangedIsVersionProc   (value); }
+    void    setIsErrVersion    (bool    value){ if(mIsErrVersion     == value) return; mIsErrVersion     = value; emit signalEventChangedIsErrVersion    (value); }
     //void    setDnPctCpu1Kernel (int  value){ if(mDnPctCpu1Kernel  == value) return; mDnPctCpu1Kernel  = value; emit signalEventChangedDnPctCpu1Kernel (value); }
     //void    setDnPctCpu2Kernel (int  value){ if(mDnPctCpu2Kernel  == value) return; mDnPctCpu2Kernel  = value; emit signalEventChangedDnPctCpu2Kernel (value); }
-    void    setDnPctCpu1App    (int  value){ if(mDnPctCpu1App     == value) return; mDnPctCpu1App     = value; emit signalEventChangedDnPctCpu1App    (value); }
-    void    setDnPctCpu2App    (int  value){ if(mDnPctCpu2App     == value) return; mDnPctCpu2App     = value; emit signalEventChangedDnPctCpu2App    (value); }
-    void    setDFUPctCpu1Kernel(int  value){ if(mDFUPctCpu1Kernel == value) return; mDFUPctCpu1Kernel = value; emit signalEventChangedDFUPctCpu1Kernel(value); }
-    void    setDFUPctCpu1App   (int  value){ if(mDFUPctCpu1App    == value) return; mDFUPctCpu1App    = value; emit signalEventChangedDFUPctCpu1App   (value); }
-    void    setDFUPctCpu1Verify(int  value){ if(mDFUPctCpu1Verify == value) return; mDFUPctCpu1Verify = value; emit signalEventChangedDFUPctCpu1Verify(value); }
-    void    setDFUPctCpu2Kernel(int  value){ if(mDFUPctCpu2Kernel == value) return; mDFUPctCpu2Kernel = value; emit signalEventChangedDFUPctCpu2Kernel(value); }
-    void    setDFUPctCpu2App   (int  value){ if(mDFUPctCpu2App    == value) return; mDFUPctCpu2App    = value; emit signalEventChangedDFUPctCpu2App   (value); }
-    void    setDFUPctCpu2Verify(int  value){ if(mDFUPctCpu2Verify == value) return; mDFUPctCpu2Verify = value; emit signalEventChangedDFUPctCpu2Verify(value); }
+    void    setDnPctCpu1App    (int     value){ if(mDnPctCpu1App     == value) return; mDnPctCpu1App     = value; emit signalEventChangedDnPctCpu1App    (value); }
+    void    setDnPctCpu2App    (int     value){ if(mDnPctCpu2App     == value) return; mDnPctCpu2App     = value; emit signalEventChangedDnPctCpu2App    (value); }
+    void    setDFUPctCpu1Kernel(int     value){ if(mDFUPctCpu1Kernel == value) return; mDFUPctCpu1Kernel = value; emit signalEventChangedDFUPctCpu1Kernel(value); }
+    void    setDFUPctCpu1App   (int     value){ if(mDFUPctCpu1App    == value) return; mDFUPctCpu1App    = value; emit signalEventChangedDFUPctCpu1App   (value); }
+    void    setDFUPctCpu1Verify(int     value){ if(mDFUPctCpu1Verify == value) return; mDFUPctCpu1Verify = value; emit signalEventChangedDFUPctCpu1Verify(value); }
+    void    setDFUPctCpu2Kernel(int     value){ if(mDFUPctCpu2Kernel == value) return; mDFUPctCpu2Kernel = value; emit signalEventChangedDFUPctCpu2Kernel(value); }
+    void    setDFUPctCpu2App   (int     value){ if(mDFUPctCpu2App    == value) return; mDFUPctCpu2App    = value; emit signalEventChangedDFUPctCpu2App   (value); }
+    void    setDFUPctCpu2Verify(int     value){ if(mDFUPctCpu2Verify == value) return; mDFUPctCpu2Verify = value; emit signalEventChangedDFUPctCpu2Verify(value); }
+    void    setFUCount         (int     value){ if(mFUCount          == value) return; mFUCount          = value; emit signalEventChangedFUCount         (value); }
+    void    setFUUnLockCode    (QString value){ if(mFUUnLockCode     == value) return; mFUUnLockCode     = value; emit signalEventChangedFUUnLockCode    (value); }
 
 signals:
     void signalEventChangedAccessMode      (int  value);
@@ -108,14 +117,23 @@ signals:
     void signalEventChangedDFUPctCpu2Kernel(int value);
     void signalEventChangedDFUPctCpu2App   (int value);
     void signalEventChangedDFUPctCpu2Verify(int value);
+    void signalEventChangedFUCount         (int value);
+    void signalEventChangedFUUnLockCode    (QString value);
 
     void signalEventResultSearchVer();
     void signalEventResultUpdate(bool bErr, QString errMsg);
     void signalEventCompletedFactoryReset();
+    void signalOverFUCount();
 
 public:
     explicit FirmwareUpdateExDlgModel(QObject *parent = nullptr): QObject(parent)
     {
+        qDebug() << "[" << Q_FUNC_INFO << "[FirmwareUpdateExDlgModel]" ;
+
+        FUActiveKey fk;
+        setFUUnLockCode(fk.GetKey());
+
+
         ENABLE_SLOT_VALVE_CHANGED_ACCESS;
         ENABLE_SLOT_VALVE_CHANGED_IS_RS232_TEST;
         ENABLE_SLOT_VALVE_CHANGED_LOAD_PROGRESS;
@@ -244,6 +262,14 @@ public slots:
         QString fcpu02 = QString("%1/qfcpub.dll").arg(appPath);
         int timeLimit;
 
+        pLSettingSP->setFUCount(pLSettingSP->mFUCount + 1);
+
+        if(pLSettingSP->mFUCount > 500)
+        {
+            qDebug() << "[update start 02]";
+            emit signalOverFUCount();
+            return;
+        }
 
         if(QFile::exists(fLicense) == false)
         {
@@ -296,7 +322,16 @@ public slots:
         if(verName == "LATEST" && mVersionList.size() > 0)
             verName = mVersionList.at(0);
 
+        pLSettingSP->setFUCount(pLSettingSP->mFUCount + 1);
+
         qDebug() << "[" << Q_FUNC_INFO << "] comport = " << comport << ", verName = " << verName;
+
+        if(pLSettingSP->mFUCount > 500)
+        {
+            qDebug() << "[update start 01]";
+            emit signalOverFUCount();
+            return;
+        }
 
         mfDownloadFirmware.run(verName);
     }
@@ -328,6 +363,7 @@ public slots:
     {
         qDebug() << "[" << Q_FUNC_INFO << "] comport = " << comport << ", cpu1AppFile = "<< cpu1AppFile << ", cpu2AppFile = " << cpu2AppFile;
         qDebug() << "[" << Q_FUNC_INFO << "] RetryConnect = "  << pValveSP->getRetryConnect() << ", IsConnected = " << pValveSP->getIsConnected();
+
         setUpdateStep(2);
         setIsUpdating(true);
         mSelComPort = comport;
@@ -338,6 +374,11 @@ public slots:
                                  cpu2AppFile);
     }
 
+    Q_INVOKABLE void onCommandResetFUCount()
+    {
+        qDebug() << "[update fail]";
+        pLSettingSP->setFUCount(0);
+    }
     void onValveResultReadyDFU(bool result){if(result){}}
 
     void onValveChangedDFUStep()

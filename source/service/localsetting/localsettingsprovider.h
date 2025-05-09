@@ -51,6 +51,7 @@ private:
     const QString mChartMSecKey             = "display/chart_msec"             ;
     const QString mSequencerPerformedCntKey = "sequencer/performedcounter"     ;
     const QString mDevModeIsOnKey           = "dev/is_on"                      ;
+    const QString mFUCountKey               = "display/test_mode"              ;
 
 public:
     static LocalSettingSProvider * getInstance()
@@ -68,9 +69,9 @@ public:
     QList<int> mChartMSecOption = {30000, 60000, 120000, 300000};
 
     qint64  mMonitoringCycle       = 10;
-    QString mBuildVersion          = "1.9.80";
+    QString mBuildVersion          = "1.9.82";
     bool    mIsWithoutLogo         = false; // not used
-    int     mCompany               = (int)ValveEnumDef::COMPANY_SOAO;
+    int     mCompany               = (int)ValveEnumDef::COMPANY_NONE;
 
     bool    mIsDrawCurrPos         = true ;
     bool    mIsDrawTargetPos       = true ;
@@ -85,6 +86,7 @@ public:
     double  mAutoScaleMinMargin    = 0.1f;
     qint64  mSequencerPerformedCnt = 0;
     bool    mDevModeIsOn           = false;
+    int     mFUCount               = 0;
 
     explicit LocalSettingSProvider(QObject * parent = nullptr):QObject(parent)
     {
@@ -128,6 +130,7 @@ public:
     void setAutoScaleMinMargin   (double value){ CHECK_FALSE_RETURN(mIsRunning); internalAutoScaleMinMargin      (value); emit signalEventChangedAutoScaleMinMargin   ();}
     void setSequencerPerformedCnt(qint64 value){ CHECK_FALSE_RETURN(mIsRunning); internalSetSequencerPerformedCnt(value); emit signalEventChangedSequencerPerformedCnt();}
     void setDevModeIsOn          (bool   value){ CHECK_FALSE_RETURN(mIsRunning); internalSetDevModeIsOn          (value); emit signalEventChangedDevModeIsOn          ();}
+    void setFUCount              (int    value){ CHECK_FALSE_RETURN(mIsRunning); internalSetFUCount              (value); emit signalEventChangedFUCount              ();}
 
     qint64 convertChartMSecIdxToValue(int idx)
     {
@@ -203,6 +206,7 @@ private:
         mAutoScaleMinMargin    = mpSetting->value(mAutoScaleMinMarginKey   , 0.1  ).toDouble()  ;
         mSequencerPerformedCnt = mpSetting->value(mSequencerPerformedCntKey, 0    ).toLongLong();
         mDevModeIsOn           = mpSetting->value(mDevModeIsOnKey          , false).toBool()    ;
+        mFUCount               = mpSetting->value(mFUCountKey              , 0    ).toLongLong();
 
         internalSetMonitoringCycle      (mMonitoringCycle      );
         internalSetIsDrawCurrPos        (mIsDrawCurrPos        );
@@ -218,6 +222,7 @@ private:
         internalAutoScaleMinMargin      (mAutoScaleMinMargin   );
         internalSetSequencerPerformedCnt(mSequencerPerformedCnt);
         internalSetDevModeIsOn          (mDevModeIsOn          );
+        internalSetFUCount              (mFUCount              );
     }
 
     void internalSetMonitoringCycle      (qint64 value){ mMonitoringCycle       = value; mpSetting->setValue(mMonitoringCycleKey      , value);}
@@ -234,6 +239,7 @@ private:
     void internalAutoScaleMinMargin      (double value){ mAutoScaleMinMargin    = value; mpSetting->setValue(mAutoScaleMinMarginKey   , value);}
     void internalSetSequencerPerformedCnt(qint64 value){ mSequencerPerformedCnt = value; mpSetting->setValue(mSequencerPerformedCntKey, value);}
     void internalSetDevModeIsOn          (bool   value){ mDevModeIsOn           = value; mpSetting->setValue(mDevModeIsOnKey          , value);}
+    void internalSetFUCount              (int    value){ mFUCount               = value; mpSetting->setValue(mFUCountKey              , value);}
 
 signals:
     void signalEventStarted                     ();
@@ -252,5 +258,6 @@ signals:
     void signalEventChangedAutoScaleMinMargin   ();
     void signalEventChangedSequencerPerformedCnt();
     void signalEventChangedDevModeIsOn          ();
+    void signalEventChangedFUCount              ();
 };
 #endif // LOCALSETTINGSPROVIDER_H
