@@ -498,10 +498,13 @@ public slots:
         tempItem.mValue = ""; mExportCmdList.append(tempItem);
 
 
-        /* Pressure control learn param */
-        for(int i = 0; i < 104; i ++)
+        if(pValveSP->getLearnNotPresent() == false)
         {
-            tempItem.setCommand(QString("%1%2").arg(REQ_READ_LEARN_PARAM).arg(i, 3, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_LEARN_PARAM).arg(i, 3, 10, QChar('0'))); mExportCmdList.append(tempItem);
+            /* Pressure control learn param */
+            for(int i = 0; i < 104; i ++)
+            {
+                tempItem.setCommand(QString("%1%2").arg(REQ_READ_LEARN_PARAM).arg(i, 3, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_LEARN_PARAM).arg(i, 3, 10, QChar('0'))); mExportCmdList.append(tempItem);
+            }
         }
 
         /* NVM Settings */

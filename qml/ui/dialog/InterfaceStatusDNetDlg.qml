@@ -100,7 +100,7 @@ BaseSetupWindow{
                 id : devStatusItem
 
                 height: (GUISetting.margin + devStatusTitle.height) + (GUISetting.margin + devStatusBox.height) + GUISetting.margin;
-                width: (parent.width - (GUISetting.line_margin * 4)) / 3
+                width: (parent.width - (GUISetting.line_margin * 4)) / 4
                 anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin;
 
                 color: "#FFFFFF"
@@ -366,7 +366,7 @@ BaseSetupWindow{
                 id : generalSettingsItem
 
                 height: (GUISetting.margin + generalSettingsTitle.height + GUISetting.margin) + ((macBox.height + GUISetting.line_margin) * 15) + GUISetting.margin;
-                width: (parent.width - (GUISetting.line_margin * 4)) / 3
+                width: (parent.width - (GUISetting.line_margin * 4)) / 4
                 anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.left: devStatusItem.right; anchors.leftMargin: GUISetting.line_margin;
 
                 color: "#FFFFFF"
@@ -622,7 +622,8 @@ BaseSetupWindow{
                     anchors.top: inputAssemblyTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
                     isHeader: true
-                    item01Name: qsTr("index")
+                    item00Name: qsTr("id")
+                    item01Name: qsTr("address")
                     item02Name: qsTr("length")
                     item03Name: qsTr("object")
                 }
@@ -651,6 +652,7 @@ BaseSetupWindow{
 
                                 isHeader  : false;
 
+                                item00Name : parent.assemblyData.mSeq
                                 item01Name : parent.assemblyData.mIndex
                                 item02Name : parent.assemblyData.mLength
                                 item03Name : parent.assemblyData.mName
@@ -683,7 +685,8 @@ BaseSetupWindow{
                     anchors.top: outputAssemblyTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
                     isHeader: true
-                    item01Name: qsTr("index")
+                    item00Name: qsTr("id")
+                    item01Name: qsTr("address")
                     item02Name: qsTr("length")
                     item03Name: qsTr("object")
                 }
@@ -712,6 +715,7 @@ BaseSetupWindow{
 
                                 isHeader  : false;
 
+                                item00Name : parent.assemblyData.mSeq
                                 item01Name : parent.assemblyData.mIndex
                                 item02Name : parent.assemblyData.mLength
                                 item03Name : parent.assemblyData.mName

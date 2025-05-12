@@ -13,6 +13,7 @@ RowLayout {
     property bool   isSelected      : false
     property color  selectedColor   : "#24A7FF"
     property color  unSelectedColor : "#00000000"
+    property string item00Name      : ""
     property string item01Name      : ""
     property string item02Name      : ""
     property string item03Name      : ""
@@ -45,6 +46,18 @@ RowLayout {
                     item.clickedCheckBox()
                 }
             }
+        }
+    }
+
+    Rectangle{
+        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
+
+        color : item.isHeader ? "#24A7FF" : "#FFFFFF"
+
+        NText{
+            anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin; anchors.verticalCenter: parent.verticalCenter;
+            isBold: item.isHeader
+            text : item.item00Name
         }
     }
 

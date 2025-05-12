@@ -58,7 +58,7 @@ BaseSetupWindow{
     Component.onCompleted: {
         body = bodyImpl.createObject(contentBody)
         bodyHeight = body.height
-        bodyWidth  = 800 * GUISetting.scale
+        bodyWidth  = 900 * GUISetting.scale
     }
 
     InterfaceSetupDevNetDlgModel{
@@ -149,7 +149,7 @@ BaseSetupWindow{
 
             onGuiScaleChanged: {
                 bodyHeight = height
-                bodyWidth  = 800 * GUISetting.scale
+                bodyWidth  = 900 * GUISetting.scale
             }
 
             Rectangle{
@@ -592,7 +592,8 @@ BaseSetupWindow{
                     anchors.top: iAssemblyTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
                     isHeader: true
-                    item01Name: qsTr("index")
+                    item00Name: qsTr("id")
+                    item01Name: qsTr("address")
                     item02Name: qsTr("length")
                     item03Name: qsTr("object")
                     item04Name: qsTr("addinational information")
@@ -629,6 +630,7 @@ BaseSetupWindow{
 
                                 itemSeq    : parent.assemblyData.mSeq
                                 isSelected : parent.assemblyData.mIsSelected
+                                item00Name : "" + parent.assemblyData.mSeq
                                 item01Name : parent.assemblyData.mIndex < 0 ? "-" : ""+parent.assemblyData.mIndex
                                 item02Name : parent.assemblyData.mLength
                                 item03Name : parent.assemblyData.mName
@@ -665,7 +667,8 @@ BaseSetupWindow{
                     anchors.top: oAssemblyTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
                     isHeader: true
-                    item01Name: qsTr("index")
+                    item00Name: qsTr("id")
+                    item01Name: qsTr("address")
                     item02Name: qsTr("length")
                     item03Name: qsTr("object")
                     item04Name: qsTr("addinational information")
@@ -701,8 +704,8 @@ BaseSetupWindow{
                                 isHeader  : false;
                                 enabled: dlgModel.mProgress == 100 &&  parent.assemblyData.mEnable ? true : false
 
-                                itemSeq    : parent.assemblyData.mSeq
                                 isSelected : parent.assemblyData.mIsSelected
+                                item00Name : ""+parent.assemblyData.mSeq
                                 item01Name : parent.assemblyData.mIndex < 0 ? "-" : ""+parent.assemblyData.mIndex
                                 item02Name : parent.assemblyData.mLength
                                 item03Name : parent.assemblyData.mName
