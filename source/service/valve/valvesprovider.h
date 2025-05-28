@@ -596,6 +596,16 @@ public:
     int         getSensorVersion                (){ return mSensorVersion     ;}
     qint64      getScanRate                     (){ return mScanRate          ;}
     bool        getIsRS232Test                  (){ return mIsRS232Test       ;}
+    ParamItem * getParam(int id)
+    {
+        for(int i = 0; i < mParamList.count(); i ++)
+        {
+            if(mParamList[i]->mId == id)
+                return mParamList[i];
+        }
+
+        return nullptr;
+    }
 
     // set properties
     void        setIsRunning                    (bool        value){ if(mIsRunning          == value) return; mIsRunning          = value; emit signalEventChangedIsRunning         (value); }
@@ -1166,6 +1176,7 @@ public :
         qDebug() << "[ValveSProvider]Create";
         pConfigSP->loadValveParams();
 
+        mLoadParamList.append( 0);
         mLoadParamList.append(32);
         mLoadParamList.append(35);
         mLoadParamList.append(36);
