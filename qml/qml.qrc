@@ -155,5 +155,7 @@
         <file>ui/dialog/PressureLearnList.qml</file>
         <file>image/dimming.png</file>
         <file>ui/dialog/FUOverDlg.qml</file>
+        <file>image/serial_port.png</file>
+        <file>image/usb_port.png</file>
     </qresource>
 </RCC>

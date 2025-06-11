@@ -11,6 +11,7 @@ import GUISetting 1.0
 BaseSetupWindow{
     id : dialog
 
+    property bool isForUpdate : false
     property string mode : ""
     property var body : null
 
@@ -37,7 +38,7 @@ BaseSetupWindow{
 
         function commit()
         {
-            dlgModel.onCommandExportSetting()
+            dlgModel.onCommandExportSetting(dialog.isForUpdate)
             //wFileDialog.open()
         }
     }

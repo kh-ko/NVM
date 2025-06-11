@@ -280,7 +280,7 @@ public slots:
         {
             qDebug() << "[" << Q_FUNC_INFO << "]directly DFU";
             //onValveResultReadyDFU(true);
-            pValveSP->firmwareUpdate(mSelComPort, QSerialPort::Baud38400, QSerialPort::Data8, QSerialPort::OneStop, QSerialPort::NoParity, mCpu1KernelFile, mCpu2KernelFile, mCpu1AppFile, mCpu2AppFile);
+            pValveSP->firmwareUpdate("", mSelComPort, QSerialPort::Baud38400, QSerialPort::Data8, QSerialPort::OneStop, QSerialPort::NoParity, mCpu1KernelFile, mCpu2KernelFile, mCpu1AppFile, mCpu2AppFile);
         }
     }
 
@@ -324,6 +324,7 @@ private:
     int convertUIStep(int dfuStep)
     {
         switch (dfuStep) {
+        case (int)ValveFirmwareUpgradeDef::SET_BOOTMODE   : return FirmwareUpdateViaNetworkUiStepDef::CONNECT_SERIAL;
         case (int)ValveFirmwareUpgradeDef::CONNECT_SERIAL : return FirmwareUpdateViaNetworkUiStepDef::CONNECT_SERIAL;
         case (int)ValveFirmwareUpgradeDef::CPU1_DN_KERNEL : return FirmwareUpdateViaNetworkUiStepDef::CPU1_DN_KERNEL;
         case (int)ValveFirmwareUpgradeDef::CPU1_ERASE     : return FirmwareUpdateViaNetworkUiStepDef::CPU1_ERASE    ;

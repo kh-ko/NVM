@@ -14,6 +14,7 @@ Item {
     property var   fixedN   : 0
     property var   padN     : 0
     property bool  isHexMode : false
+    property bool  isAvaliableEmpty : false
     property bool  isSpecialFloatNode : false
     property alias textField : _textField
     property string test
@@ -22,6 +23,7 @@ Item {
 
     signal focusOutTextField()
     signal changedValue(var value)
+    signal inputEmpty()
     signal changedText()
 
     function setFloatValue(value)
@@ -273,6 +275,12 @@ Item {
 
             if(activeFocus === false)
             {
+                if(control.isAvaliableEmpty && text.length == 0)
+                {
+                    control.inputEmpty();
+                    return;
+                }
+
                 var value = control.isHexMode ? parseInt(text, 16) : parseFloat(text)
 
                 if(value > control.maxValue)

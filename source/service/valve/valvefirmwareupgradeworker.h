@@ -13,6 +13,7 @@
 #include <QFileInfo>
 
 #include "source/service/util/unitutil.h"
+#include "source/service/valve/ftdhelper.h"
 #include "source/service/valve/ValveConnection.h"
 #include "source/service/valve/valvesproviderdtoex.h"
 
@@ -72,7 +73,8 @@ class ValveFirmwareUpgradeDef: public QObject{
 public:
     enum eStep{
         READY          = 0,
-        CONNECT_SERIAL = READY          + 1,
+        SET_BOOTMODE   = READY          + 1,
+        CONNECT_SERIAL = SET_BOOTMODE   + 1,
         CPU1_DN_KERNEL = CONNECT_SERIAL + 1,
         CPU1_ERASE     = CPU1_DN_KERNEL + 1,
         CPU1_DN_APP    = CPU1_ERASE     + 1,
@@ -108,6 +110,7 @@ private:
     int           mPercentCpu2Verify = 0;
     QTimer      * mpTimer         = nullptr;
     SerialValve * mpValve         = nullptr;
+    QString       mServicePortType = "";
     QString       mComPort        ;
     QSerialPort::BaudRate mBaudRate;
     QSerialPort::DataBits mDataBit ;
@@ -181,11 +184,18 @@ signals:
 public slots:
     void onTimeout()
     {
+        //FT_HANDLE ftHandle;
+
         QString errMsg;
 
         qDebug() << "[" << Q_FUNC_INFO << "]step = " << mStep;
 
         switch (mStep) {
+        case (int)ValveFirmwareUpgradeDef::SET_BOOTMODE:
+            qDebug() << "[" << Q_FUNC_INFO << "]step = BOOT";
+            if(setBootMode(errMsg)){ setStep(ValveFirmwareUpgradeDef::CONNECT_SERIAL); startTimer(1000); }
+            else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
+            return;
         case (int)ValveFirmwareUpgradeDef::CONNECT_SERIAL:
             if(connectSerial(errMsg)){ setStep(ValveFirmwareUpgradeDef::CPU1_DN_KERNEL); startTimer(1000); }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
@@ -236,17 +246,21 @@ public slots:
             return;
 
         case (int)ValveFirmwareUpgradeDef::CPU2_RESET    :
-            if(resetCPU(mpValve, RESET_CPU2, errMsg)){ setStep(ValveFirmwareUpgradeDef::COMPLETE); startTimer(2000); }
+            if(resetCPU(mpValve, RESET_CPU2, errMsg))
+            {
+                setStep(ValveFirmwareUpgradeDef::COMPLETE); startTimer(2000);
+            }
             else{setStep(ValveFirmwareUpgradeDef::READY); emit signalEventResult(false, errMsg);}
             return;
 
         case (int)ValveFirmwareUpgradeDef::COMPLETE      :
             setStep(ValveFirmwareUpgradeDef::READY);
+            resetBootMode(errMsg);
             emit signalEventResult(true, "");
             return;
         }
     }
-    void onCommandUpgrade(QString comPort, int baudRate, int dataBit, int stopBit, int parity, QString cpu1KernelFile, QString cpu2KernelFile, QString cpu1AppFile, QString cpu2AppFile)
+    void onCommandUpgrade(QString servicePortType, QString comPort, int baudRate, int dataBit, int stopBit, int parity, QString cpu1KernelFile, QString cpu2KernelFile, QString cpu1AppFile, QString cpu2AppFile)
     {
         qDebug() << "[" << Q_FUNC_INFO << "]";
 
@@ -258,6 +272,7 @@ public slots:
             return;
         }
 
+        mServicePortType = servicePortType;
         mComPort  = comPort;
         mBaudRate = (QSerialPort::BaudRate)baudRate;
         mDataBit  = (QSerialPort::DataBits)dataBit;
@@ -273,7 +288,7 @@ public slots:
         mCpu1AppFile    = cpu1AppFile   ;
         mCpu2KernelFile = cpu2KernelFile;
         mCpu2AppFile    = cpu2AppFile   ;
-        setStep(ValveFirmwareUpgradeDef::CONNECT_SERIAL);
+        setStep(ValveFirmwareUpgradeDef::SET_BOOTMODE);
 
         startTimer(1000);
     }
@@ -302,6 +317,36 @@ private:
 
         mpTimer->stop();
         mpTimer->start(msec);
+    }
+
+    bool setBootMode(QString errMsg)
+    {
+        if(mServicePortType != "USB")
+            return true;
+
+        FTDHelper ftdHelper;
+
+        if(ftdHelper.readyPort(mComPort.mid(3).toLong(), errMsg) == false)
+        {
+            qDebug() << "[" << Q_FUNC_INFO << "]" << errMsg;
+            return false;
+        }
+        return true;
+    }
+
+    bool resetBootMode(QString errMsg)
+    {
+        if(mServicePortType != "USB")
+            return true;
+
+        FTDHelper ftdHelper;
+
+        if(ftdHelper.finishPort(mComPort.mid(3).toLong(), errMsg) == false)
+        {
+            qDebug() << "[" << Q_FUNC_INFO << "]" << errMsg;
+            return false;
+        }
+        return true;
     }
 
     bool connectSerial(QString errMsg)

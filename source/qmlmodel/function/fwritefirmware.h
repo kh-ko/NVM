@@ -74,7 +74,7 @@ public:
     void run(QString comport, QString cpu1KernelFile, QString cpu1AppFile, QString cpu2KernelFile, QString cpu2AppFile)
     {
         qDebug() << "[" << Q_FUNC_INFO << "] RetryConnect = "  << pValveSP->getRetryConnect() << ", IsConnected = " << pValveSP->getIsConnected();
-        pValveSP->firmwareUpdate(comport, QSerialPort::Baud38400, QSerialPort::Data8, QSerialPort::OneStop, QSerialPort::NoParity, cpu1KernelFile, cpu2KernelFile, cpu1AppFile, cpu2AppFile);
+        pValveSP->firmwareUpdate("",comport, QSerialPort::Baud38400, QSerialPort::Data8, QSerialPort::OneStop, QSerialPort::NoParity, cpu1KernelFile, cpu2KernelFile, cpu1AppFile, cpu2AppFile);
     }
 
 public slots:

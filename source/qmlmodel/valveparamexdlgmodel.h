@@ -56,6 +56,13 @@ public slots:
         setValue(QString("%1").arg(value));
         setIsEdit(true);
     }
+
+    Q_INVOKABLE void setEmptyValue()
+    {
+        setValue("");
+        setIsEdit(false);
+    }
+
 signals:
 
     void signalEventChangedIsPresent(bool    value);

@@ -1151,7 +1151,7 @@ signals:
     void signalCommandSetMonitoringCycle          (qint64 monitoringCycle, ValveRequestDto monitoringDto);
     void signalCommandSearch                      (                             );
     void signalCommandSearchStop                  (                             );
-    void signalCommandFirmwareUpdate              (QString comPort, int baudRate, int dataBit, int stopBit, int parity, QString cpu1KernelFile, QString cpu2KernelFile, QString cpu1AppFile, QString cpu2AppFile);
+    void signalCommandFirmwareUpdate              (QString servicePortType, QString comPort, int baudRate, int dataBit, int stopBit, int parity, QString cpu1KernelFile, QString cpu2KernelFile, QString cpu1AppFile, QString cpu2AppFile);
     void signalCommandReadyFirmwareUpdate         (                             );
     void signalCommandConnect                     (int type, QString devAddr    );
     void signalCommandReConnect                   (                             );
@@ -1266,7 +1266,7 @@ public :
 
         mpDFUWorkerThread->start();
 
-        connect(this         , SIGNAL(signalCommandFirmwareUpdate        (QString, int, int, int, int, QString, QString, QString, QString)), mpDFUWorker, SLOT(onCommandUpgrade          (QString, int, int, int, int, QString, QString, QString, QString)));
+        connect(this         , SIGNAL(signalCommandFirmwareUpdate        (QString, QString, int, int, int, int, QString, QString, QString, QString)), mpDFUWorker, SLOT(onCommandUpgrade          (QString, QString, int, int, int, int, QString, QString, QString, QString)));
         connect(mpDFUWorker  , SIGNAL(signalEventChangedStep             (int                                                            )), this       , SLOT(onChangedDFUStep          (int                                                            )));
         connect(mpDFUWorker  , SIGNAL(signalEventChangedPercentCpu1Kernel(int                                                            )), this       , SLOT(onChangedDFUPctCpu1Kernel(int                                                            )));
         connect(mpDFUWorker  , SIGNAL(signalEventChangedPercentCpu2Kernel(int                                                            )), this       , SLOT(onChangedDFUPctCpu2Kernel(int                                                            )));
@@ -1318,7 +1318,7 @@ public :
 
         if(mpDFUWorker != nullptr)
         {
-            disconnect(this         , SIGNAL(signalCommandFirmwareUpdate        (QString, int, int, int, int, QString, QString, QString, QString)), mpDFUWorker, SLOT(onCommandUpgrade         (QString, int, int, int, int, QString, QString, QString, QString)));
+            disconnect(this         , SIGNAL(signalCommandFirmwareUpdate        (QString, QString, int, int, int, int, QString, QString, QString, QString)), mpDFUWorker, SLOT(onCommandUpgrade         (QString, QString, int, int, int, int, QString, QString, QString, QString)));
             disconnect(mpDFUWorker  , SIGNAL(signalEventChangedStep             (int                                                            )), this       , SLOT(onChangedDFUStep         (int                                                            )));
             disconnect(mpDFUWorker  , SIGNAL(signalEventChangedPercentCpu1Kernel(int                                                            )), this       , SLOT(onChangedDFUPctCpu1Kernel(int                                                            )));
             disconnect(mpDFUWorker  , SIGNAL(signalEventChangedPercentCpu2Kernel(int                                                            )), this       , SLOT(onChangedDFUPctCpu2Kernel(int                                                            )));
@@ -1365,10 +1365,10 @@ public :
         emit signalCommandSearchStop();
     }
 
-    void firmwareUpdate(QString comPort, int baudRate, int dataBit, int stopBit, int parity, QString cpu1KernelFile, QString cpu2KernelFile, QString cpu1AppFile, QString cpu2AppFile)
+    void firmwareUpdate(QString servicePortType, QString comPort, int baudRate, int dataBit, int stopBit, int parity, QString cpu1KernelFile, QString cpu2KernelFile, QString cpu1AppFile, QString cpu2AppFile)
     {
         qDebug() << "[" <<Q_FUNC_INFO << "]";
-        emit signalCommandFirmwareUpdate(comPort, baudRate, dataBit, stopBit, parity, cpu1KernelFile, cpu2KernelFile, cpu1AppFile, cpu2AppFile);
+        emit signalCommandFirmwareUpdate(servicePortType, comPort, baudRate, dataBit, stopBit, parity, cpu1KernelFile, cpu2KernelFile, cpu1AppFile, cpu2AppFile);
     }
 
     void readyFirmwareUpdate()

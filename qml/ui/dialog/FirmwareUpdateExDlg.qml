@@ -118,10 +118,75 @@ NWindow{
             color : "#E4E4E4"
 
             Rectangle{
+                width: (parent.width - (GUISetting.line_margin * 3))/2;
+                anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin
+
+                visible: dlgModel.mServicePortType === ""
+                color: "#FFFFFF"
+
+                NText{
+                    id : labelSerialSvcPort
+                    anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    isBold: true
+                    text : qsTr("If the service port is a RS232 type")
+                }
+
+                Image{
+                    id : imgSerialPort
+                    anchors.top: labelSerialSvcPort.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin;
+                    source: "/image/serial_port.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                NButton{
+                    anchors.top: imgSerialPort.bottom; anchors.topMargin: GUISetting.margin; anchors.horizontalCenter: parent.horizontalCenter
+                    width: 200 * GUISetting.scale; height: 30 * GUISetting.scale;
+                    text.text : qsTr("Firmware update via RS232")
+
+                    onClick: {
+                        dlgModel.onCommandSetServicePortType("RS232");
+                    }
+                }
+            }
+
+            Rectangle{
+                width: (parent.width - (GUISetting.line_margin * 3))/2;
+                anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.bottom: parent.bottom; anchors.bottomMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin
+
+                visible: dlgModel.mServicePortType === ""
+                color: "#FFFFFF"
+
+                NText{
+                    id : labelUsbSvcPort
+                    anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    isBold: true
+                    text : qsTr("If the service port is a USB type")
+                }
+
+                Image{
+                    id : imgUsbPort
+                    anchors.top: labelUsbSvcPort.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin;
+                    source: "/image/usb_port.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                NButton{
+                    anchors.top: imgUsbPort.bottom; anchors.topMargin: GUISetting.margin; anchors.horizontalCenter: parent.horizontalCenter
+                    width: 200 * GUISetting.scale; height: 30 * GUISetting.scale;
+                    text.text : qsTr("Firmware update via USB")
+
+                    onClick: {
+                        dlgModel.onCommandSetServicePortType("USB");
+                    }
+                }
+            }
+
+            Rectangle{
                 id : stepItem
 
                 height: (GUISetting.margin + stepTitle.height) + (GUISetting.margin + stepProgressBox.height) + GUISetting.margin;
                 anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin;
+                visible: dlgModel.mServicePortType !== ""
 
                 color: "#FFFFFF"
 
@@ -159,6 +224,7 @@ NWindow{
                 anchors.top: stepItem.bottom; anchors.topMargin: GUISetting.line_margin;
                 anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.line_margin;
 
+                visible: dlgModel.mServicePortType !== ""
                 color: "#FFFFFF"
 
                 Item{

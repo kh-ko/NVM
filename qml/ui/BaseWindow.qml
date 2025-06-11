@@ -851,6 +851,7 @@ Window {
                     popup = advancedToolBackupNRestoreDlg.createObject(window);
                     popup.show();
                     popup.firmwareUpdateMethod = method
+                    popup.isForUpdate = true;
                     popup.fnBackup();
                 }
                 else

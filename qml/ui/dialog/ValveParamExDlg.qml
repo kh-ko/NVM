@@ -542,6 +542,11 @@ NWindow{ // khko_todo
                             //isHexMode : true
                             fixedN : 0
                             //padN   : 6
+                            isAvaliableEmpty: true
+
+                            onInputEmpty: {
+                                parent.parent.paramItemModel.setEmptyValue();
+                            }
 
                             onChangedValue: {
                                 parent.parent.paramItemModel.editValue(value)

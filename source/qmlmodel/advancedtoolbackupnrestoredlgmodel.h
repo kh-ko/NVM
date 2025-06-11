@@ -460,9 +460,9 @@ public slots:
         emit signalEventWrittenSettingToFile();
     }
 
-    Q_INVOKABLE void onCommandExportSetting()
+    Q_INVOKABLE void onCommandExportSetting(bool isForUpdate)
     {
-        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]";
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]isForUpdate = " << isForUpdate;
 
         ValveCommandItem tempItem;
 
@@ -484,18 +484,21 @@ public slots:
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_06), QString("%1").arg(REQ_WRITE_SETPOINT_06)); mExportCmdList.append(tempItem);
 
 
-        /* valve params */
-        tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_START));
-        tempItem.mValue = ""; mExportCmdList.append(tempItem);
-        for(int i = 0; i < 100; i ++)
+        if(isForUpdate == false)
         {
-            if(i < 17 || i == 51)
-                continue;
+            /* valve params */
+            tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_START));
+            tempItem.mValue = ""; mExportCmdList.append(tempItem);
+            for(int i = 0; i < 100; i ++)
+            {
+                if(i < 17 || i == 51)
+                    continue;
 
-            tempItem.setCommand(QString("%1%2").arg(REQ_READ_VALVE_PARAM).arg(i, 2, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(i, 2, 10, QChar('0'))); mExportCmdList.append(tempItem);
+                tempItem.setCommand(QString("%1%2").arg(REQ_READ_VALVE_PARAM).arg(i, 2, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(i, 2, 10, QChar('0'))); mExportCmdList.append(tempItem);
+            }
+            tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_END));
+            tempItem.mValue = ""; mExportCmdList.append(tempItem);
         }
-        tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_END));
-        tempItem.mValue = ""; mExportCmdList.append(tempItem);
 
 
         if(pValveSP->getLearnNotPresent() == false)

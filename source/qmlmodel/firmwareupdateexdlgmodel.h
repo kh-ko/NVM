@@ -15,6 +15,7 @@ class FirmwareUpdateExDlgModel : public QObject
     Q_OBJECT
     Q_PROPERTY(int     mAccessMode          READ getAccessMode          NOTIFY signalEventChangedAccessMode       )
     Q_PROPERTY(bool    mIsRS232Test         READ getIsRS232Test         NOTIFY signalEventChangedIsRS232Test      )
+    Q_PROPERTY(QString mServicePortType     READ getServicePortType     NOTIFY signalEventChangedServicePortType  )
     Q_PROPERTY(bool    mIsReboot            READ getIsReboot            NOTIFY signalEventChangedIsReboot         )
     Q_PROPERTY(bool    mIsUpdating          READ getIsUpdating          NOTIFY signalEventChangedIsUpdating       )
     Q_PROPERTY(int     mUpdateStep          READ getUpdateStep          NOTIFY signalEventChangedUpdateStep       )
@@ -37,6 +38,7 @@ class FirmwareUpdateExDlgModel : public QObject
 public:
     int     mAccessMode         = ValveEnumDef::ACCESS_LOCAL;
     bool    mIsRS232Test        = false;
+    QString mServicePortType    = "";
     bool    mIsReboot           = false;
     bool    mIsUpdating         = false;
     int     mUpdateStep         = 0;
@@ -58,6 +60,7 @@ public:
 
     int     getAccessMode      (){ return mAccessMode      ;}
     bool    getIsRS232Test     (){ return mIsRS232Test     ;}
+    QString getServicePortType (){ return mServicePortType ;}
     bool    getIsReboot        (){ return mIsReboot        ;}
     bool    getIsUpdating      (){ return mIsUpdating      ;}
     int     getUpdateStep      (){ return mUpdateStep      ;}
@@ -79,6 +82,7 @@ public:
 
     void    setAccessMode      (int     value){ if(mAccessMode       == value) return; mAccessMode       = value; emit signalEventChangedAccessMode      (value); }
     void    setIsRS232Test     (bool    value){ if(mIsRS232Test      == value) return; mIsRS232Test      = value; emit signalEventChangedIsRS232Test     (value); }
+    void    setServicePortType (QString value){ if(mServicePortType  == value) return; mServicePortType  = value; emit signalEventChangedServicePortType (value); }
     void    setIsReboot        (bool    value){ if(mIsReboot         == value) return; mIsReboot         = value; emit signalEventChangedIsReboot        (value); }
     void    setIsUpdating      (bool    value){ if(mIsUpdating       == value) return; mIsUpdating       = value; emit signalEventChangedIsUpdating      (value); }
     void    setUpdateStep      (int     value){ if(mUpdateStep       == value) return; mUpdateStep       = value; setUpdateProgress(0) ;emit signalEventChangedUpdateStep    (value); }
@@ -101,6 +105,7 @@ public:
 signals:
     void signalEventChangedAccessMode      (int  value);
     void signalEventChangedIsRS232Test     (bool value);
+    void signalEventChangedServicePortType (QString value);
     void signalEventChangedIsReboot        (bool value);
     void signalEventChangedIsUpdating      (bool value);
     void signalEventChangedUpdateStep      (int  value);
@@ -182,6 +187,11 @@ public slots:
     void onValveChangedIsRS232Test()
     {
         setIsRS232Test(pValveSP->getIsRS232Test());
+    }
+
+    Q_INVOKABLE void onCommandSetServicePortType(QString value)
+    {
+        setServicePortType(value);
     }
 
     Q_INVOKABLE QString onCommandGetSelComPort()
@@ -367,7 +377,7 @@ public slots:
         setUpdateStep(2);
         setIsUpdating(true);
         mSelComPort = comport;
-        pValveSP->firmwareUpdate(comport, QSerialPort::Baud38400, QSerialPort::Data8, QSerialPort::OneStop, QSerialPort::NoParity,
+        pValveSP->firmwareUpdate(mServicePortType, comport, QSerialPort::Baud38400, QSerialPort::Data8, QSerialPort::OneStop, QSerialPort::NoParity,
                                  QString("%1/firmware/kernel_cpu01.txt").arg(QApplication::applicationDirPath()),
                                  QString("%1/firmware/kernel_cpu02.txt").arg(QApplication::applicationDirPath()),
                                  cpu1AppFile,
@@ -453,6 +463,7 @@ private:
     int convertUIStep(int dfuStep)
     {
         switch (dfuStep) {
+        case (int)ValveFirmwareUpgradeDef::SET_BOOTMODE   : return 2 ;
         case (int)ValveFirmwareUpgradeDef::CONNECT_SERIAL : return 2 ;
         case (int)ValveFirmwareUpgradeDef::CPU1_DN_KERNEL : return 3 ;
         case (int)ValveFirmwareUpgradeDef::CPU1_ERASE     : return 4 ;
@@ -464,6 +475,7 @@ private:
         case (int)ValveFirmwareUpgradeDef::CPU2_DN_APP    : return 10;
         case (int)ValveFirmwareUpgradeDef::CPU2_VERIFY    : return 11;
         case (int)ValveFirmwareUpgradeDef::CPU2_RESET     : return 12;
+        case (int)ValveFirmwareUpgradeDef::COMPLETE       : return 12;
         }
         return 0;
     }

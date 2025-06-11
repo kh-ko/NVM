@@ -17,6 +17,7 @@ SOURCES += \
         source/logger/nsdebug.cpp \
         source/main.cpp \
         source/nchart/nchartcontrol.cpp \
+        source/service/valve/ftdhelper.cpp \
         source/util/etcutil.cpp
 
 RESOURCES += qml/qml.qrc
@@ -33,6 +34,9 @@ QML_DESIGNER_IMPORT_PATH =
 # Default rules for deployment.
 target.path = /home/pi/apps/$${TARGET}
 INSTALLS += target
+
+INCLUDEPATH += $$PWD/lib
+LIBS += -L$$PWD/lib -lftd2xx
 
 HEADERS += \
     source/logger/nsdebug.h \
@@ -106,6 +110,7 @@ HEADERS += \
     source/service/util/unitutil.h \
     source/service/valve/device/ivalve.h \
     source/service/valve/device/serialvalve.h \
+    source/service/valve/ftdhelper.h \
     source/service/valve/valveayncworker.h \
     source/service/valve/valveconnection.h \
     source/service/valve/valveconnectoption.h \

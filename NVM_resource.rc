@@ -1,7 +1,5 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"D:\\myfolder\\Work\\06.NCPA\\03.NVM\\03.Source\\work\\NVM\\SoAo-icon.ico"
-
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0
 	PRODUCTVERSION 0,0,0,0
