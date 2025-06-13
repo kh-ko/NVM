@@ -147,7 +147,7 @@ public slots:
     }
 
 public :
-    void run(QString ver)
+    void run(QString ver, QString servicePortType)
     {
         QStringList verPath;
 
@@ -161,16 +161,33 @@ public :
         verPath = ver.split("/");
         mDownFileList.clear();
 
-        if(verPath.at(verPath.size() - 1) == "LATEST")
+        if(servicePortType != "USB")
         {
-            mDownFileList.append(QString("app_cpu01.txt").arg(verPath.at(verPath.size() - 1)));
-            mDownFileList.append(QString("app_cpu02.txt").arg(verPath.at(verPath.size() - 1)));
+            if(verPath.at(verPath.size() - 1) == "LATEST")
+            {
+                mDownFileList.append(QString("app_cpu01.txt").arg(verPath.at(verPath.size() - 1)));
+                mDownFileList.append(QString("app_cpu02.txt").arg(verPath.at(verPath.size() - 1)));
+            }
+            else
+            {
+                mDownFileList.append(QString("VALVE_CPU1_%1_FLASH.txt").arg(verPath.at(verPath.size() - 1)));
+                mDownFileList.append(QString("VALVE_CPU2_%1_FLASH.txt").arg(verPath.at(verPath.size() - 1)));
+            }
         }
         else
         {
-            mDownFileList.append(QString("VALVE_CPU1_%1_FLASH.txt").arg(verPath.at(verPath.size() - 1)));
-            mDownFileList.append(QString("VALVE_CPU2_%1_FLASH.txt").arg(verPath.at(verPath.size() - 1)));
+            if(verPath.at(verPath.size() - 1) == "LATEST")
+            {
+                mDownFileList.append(QString("app_cpu01_new.txt").arg(verPath.at(verPath.size() - 1)));
+                mDownFileList.append(QString("app_cpu02_new.txt").arg(verPath.at(verPath.size() - 1)));
+            }
+            else
+            {
+                mDownFileList.append(QString("VALVE_CPU1_%1_FLASH_NEW.txt").arg(verPath.at(verPath.size() - 1)));
+                mDownFileList.append(QString("VALVE_CPU2_%1_FLASH_NEW.txt").arg(verPath.at(verPath.size() - 1)));
+            }
         }
+
         mRemoteFilePath = QString("%1/%2").arg(mRemoteFileBasePath).arg(ver);
         setDownloadStep(0);
 

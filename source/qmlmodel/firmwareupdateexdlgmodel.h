@@ -268,10 +268,21 @@ public slots:
 
         QString appPath = QApplication::applicationDirPath();
         QString fLicense = QString("%1/qdatetimelim.dll").arg(appPath);
-        QString fcpu01 = QString("%1/qfcpua.dll").arg(appPath);
-        QString fcpu02 = QString("%1/qfcpub.dll").arg(appPath);
+        QString fcpu01 = ""; //QString("%1/qfcpua.dll").arg(appPath);
+        QString fcpu02 = ""; //QString("%1/qfcpub.dll").arg(appPath);
+
         int timeLimit;
 
+        if(mServicePortType != "USB")
+        {
+            fcpu01 = QString("%1/qfcpua.dll").arg(appPath);
+            fcpu02 = QString("%1/qfcpub.dll").arg(appPath);
+        }
+        else
+        {
+            fcpu01 = QString("%1/qfcpuan.dll").arg(appPath);
+            fcpu02 = QString("%1/qfcpubn.dll").arg(appPath);
+        }
         pLSettingSP->setFUCount(pLSettingSP->mFUCount + 1);
 
         if(pLSettingSP->mFUCount > 500)
@@ -343,7 +354,7 @@ public slots:
             return;
         }
 
-        mfDownloadFirmware.run(verName);
+        mfDownloadFirmware.run(verName, mServicePortType);
     }
 
     //void onChangedDnProgressCpu1Kernel(qint64 value){setUpdateProgress(value); setDnPctCpu1Kernel(value); qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]" << value;}
