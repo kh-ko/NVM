@@ -14,7 +14,7 @@ class SensorSetupExDlgModel : public QObject
     Q_OBJECT
     Q_PROPERTY(int      mAccessMode                       READ getAccessMode                     NOTIFY signalEventChangedAccessMode                      )
     Q_PROPERTY(bool     mIsRS232Test                      READ getIsRS232Test                    NOTIFY signalEventChangedIsRS232Test                     )
-    Q_PROPERTY(bool     mIsLowCostAPC                     READ getIsLowCostAPC                   NOTIFY signalEventChangedIsLowCostAPC                    )
+    //Q_PROPERTY(bool     mIsLowCostAPC                     READ getIsLowCostAPC                   NOTIFY signalEventChangedIsLowCostAPC                    )
     Q_PROPERTY(bool     mIsSensor02Support                READ getIsSensor02Support              NOTIFY signalEventChangedIsSensor02Support               )
     Q_PROPERTY(int      mS01AnalActive                    READ getS01AnalActive                  NOTIFY signalEventChangedS01AnalActive                   )
     Q_PROPERTY(int      mS01Selection                     READ getS01Selection                   NOTIFY signalEventChangedS01Selection                    )
@@ -101,7 +101,7 @@ class SensorSetupExDlgModel : public QObject
 public:
     int      mAccessMode                     = ValveEnumDef::ACCESS_LOCAL;
     bool     mIsRS232Test                    = false;
-    bool     mIsLowCostAPC                   = false;
+    //bool     mIsLowCostAPC                   = false;
     bool     mIsSensor02Support              = false;
     int      mS01AnalActive                  = 0;
     int      mS01Selection                   = 0;
@@ -187,7 +187,7 @@ public:
 
     int      getAccessMode                    (){ return mAccessMode                    ; }
     bool     getIsRS232Test                   (){ return mIsRS232Test                   ; }
-    bool     getIsLowCostAPC                  (){ return mIsLowCostAPC                  ; }
+    //bool     getIsLowCostAPC                  (){ return mIsLowCostAPC                  ; }
     bool     getIsSensor02Support             (){ return mIsSensor02Support             ; }
     int      getS01AnalActive                 (){ return mS01AnalActive                 ; }
     int      getS01Selection                  (){ return mS01Selection                  ; }
@@ -273,7 +273,7 @@ public:
 
     void    setAccessMode                    (int     value){ if(mAccessMode                     == value) return; mAccessMode                     = value; emit signalEventChangedAccessMode                    (value);}
     void    setIsRS232Test                   (bool    value){ if(mIsRS232Test                    == value) return; mIsRS232Test                    = value; emit signalEventChangedIsRS232Test                   (value);}
-    void    setIsLowCostAPC                  (bool    value){ if(mIsLowCostAPC                   == value) return; mIsLowCostAPC                   = value; emit signalEventChangedIsLowCostAPC                  (value);}
+    //void    setIsLowCostAPC                  (bool    value){ if(mIsLowCostAPC                   == value) return; mIsLowCostAPC                   = value; emit signalEventChangedIsLowCostAPC                  (value);}
     void    setIsSensor02Support             (bool    value){ if(mIsSensor02Support              == value) return; mIsSensor02Support              = value; emit signalEventChangedIsSensor02Support             (value);}
     void    setS01AnalActive                 (int     value){ if(mS01AnalActive                  == value) return; mS01AnalActive                  = value; emit signalEventChangedS01AnalActive                 (value);}
     void    setS01Selection                  (int     value){ if(mS01Selection                   == value) return; mS01Selection                   = value; emit signalEventChangedS01Selection                  (value);}
@@ -360,7 +360,7 @@ public:
 signals:
     void signalEventChangedAccessMode                    (int     value);
     void signalEventChangedIsRS232Test                   (bool    value);
-    void signalEventChangedIsLowCostAPC                  (bool    value);
+    //void signalEventChangedIsLowCostAPC                  (bool    value);
     void signalEventChangedIsSensor02Support             (bool    value);
     void signalEventChangedS01AnalActive                 (int     value);
     void signalEventChangedS01Selection                  (int     value);
@@ -532,7 +532,7 @@ public:
         onValveChangedAccess();
         onValveChangedIsRS232Test();
         onValveChangedSensorVersion();
-        setIsLowCostAPC(pValveSP->getParam(0)->mValue == 5);
+        //setIsLowCostAPC(pValveSP->getParam(0)->mValue == 5);
 
         mTimer.setSingleShot(true);
         connect(&mTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
@@ -663,11 +663,11 @@ public slots:
 
         mIsWritten              = true;
 
-        if(mIsLowCostAPC)
-        {
-            s02Selection = 0;
-            s02SourceIdx = 0;
-        }
+        //if(mIsLowCostAPC)
+       // {
+         //   s02Selection = 0;
+         //   s02SourceIdx = 0;
+       // }
 
         mWriteSelection                   = ( s01Selection & 0x01 ) | (( s02Selection & 0x01 ) << 1 );
         mWriteS01AnalActive               = s01AnalActive              ;
@@ -797,15 +797,16 @@ public slots:
         else
         {
             setS01Selection(selS01);
+            setS02Selection(selS02);
 
-            if(mIsLowCostAPC)
-            {
-                setS02Selection(false);
-            }
-            else
-            {
-                setS02Selection(selS02);
-            }
+            //if(mIsLowCostAPC)
+            //{
+            //    setS02Selection(false);
+            //}
+            //else
+            //{
+            //    setS02Selection(selS02);
+            //}
         }
 
         setState((eState)(mState + 1));
@@ -1356,14 +1357,15 @@ public slots:
         }
         else
         {
-            if(mIsLowCostAPC)
-            {
-                setS02SourceIdx(0);
-            }
-            else
-            {
-                setS02SourceIdx(dto.mValue.toInt());
-            }
+            setS02SourceIdx(dto.mValue.toInt());
+            //if(mIsLowCostAPC)
+            //{
+            //    setS02SourceIdx(0);
+            //}
+            //else
+            //{
+            //    setS02SourceIdx(dto.mValue.toInt());
+            //}
         }
 
         setState((eState)(mState + 1));

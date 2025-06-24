@@ -804,7 +804,7 @@ BaseSetupWindow{
                     anchors.top: _sensor02Title.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrS02SourceIdx ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100 && !dlgModel.mIsLowCostAPC
+                    enabled: dialog.progress === 100 // && !dlgModel.mIsLowCostAPC
 
                     model: dlgModel.mIsSensor02Support ? ["none", "analog", "digital"] : ["none", "undefined", "digital"]
 
@@ -828,7 +828,7 @@ BaseSetupWindow{
                     anchors.top: _sensor02Title.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.5//GUISetting.margin
 
                     textColor: dlgModel.mErrS02Selection ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100 && !dlgModel.mIsLowCostAPC
+                    enabled: dialog.progress === 100 // && !dlgModel.mIsLowCostAPC
 
                     model: ["not selected", "selected"]
 
