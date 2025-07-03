@@ -444,7 +444,7 @@ BaseSetupWindow{
                     visible: dialog.unlock
 
                     fontFamily: FontManager.codingName
-                    model: ["Unknown", "N : Non-Sealing", "S : Sealing", "F : FCup-Sealing", "X : Multi-position"]
+                    model: ["Unknown", "N : Non-Sealing", "S : Sealing", "F : FCup-Sealing", "X : Pendulum"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -512,7 +512,7 @@ BaseSetupWindow{
                     visible: dialog.unlock
 
                     fontFamily: FontManager.codingName
-                    model: ["Unknown", "K : ISO-KF", "F : ISO-F", "C : CF", "P : ISO-K", "X : Controller only", "V : VF"]
+                    model: ["Unknown", "K : ISO-KF", "F : ISO-F", "C : CF", "P : ISO-K", "X : Controller only", "V : VF", "J : JIS"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
