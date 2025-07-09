@@ -158,7 +158,7 @@ Window {
         {
             var popup;
             var lastValue = parseInt(model.mFirmwareVersion.slice(-4), 16);
-            if (lastValue > 479) {
+            if (lastValue > 0x479) {
                 popup = valveCalibrationExDlg.createObject(window)    ; popup.show();
             } else {
                 popup = valveCalibrationDlg.createObject(window)      ; popup.show();
