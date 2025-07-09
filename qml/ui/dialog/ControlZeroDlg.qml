@@ -312,10 +312,10 @@ BaseSetupWindow{
                     id : applyBtn
                     height: GUISetting.popup_btnbox_btn_height; width: parent.width / 2
                     anchors.verticalCenter: parent.verticalCenter; anchors.horizontalCenter: parent.horizontalCenter
-                    enabled: dlgModel.mIsOpenedValve  && dlgModel.mProgress === 100
+                    enabled: dlgModel.mIsOpenedValve && dlgModel.mZeroEnable && dlgModel.mProgress === 100
 
-                    bgColor: dlgModel.mIsOpenedValve ? "#24A7FF" : "#FFFFFF"
-                    text.color: dlgModel.mIsOpenedValve ? "#FFFFFF" : "#000000"
+                    bgColor: dlgModel.mZeroEnable && dlgModel.mIsOpenedValve ? "#24A7FF" : "#FFFFFF"
+                    text.color: dlgModel.mZeroEnable && dlgModel.mIsOpenedValve ? "#FFFFFF" : "#000000"
                     text.text: qsTr("ZERO")
 
                     onClick: {
