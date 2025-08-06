@@ -2261,6 +2261,9 @@ public :
                                                    .arg(secondAnswerIdx);
 
 
+
+        qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd;
+
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceCfgRS232, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
 
@@ -2328,11 +2331,16 @@ public :
         qDebug() << "[" << Q_FUNC_INFO << "]cmd = " << cmd;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceEthernetPort02, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
-    void setInterfaceConfigFieldbusNodeAddr(int nodeAddr, void * userData, int retryCnt = 0)
+    void setInterfaceConfigFieldbusNodeAddr(int nodeAddr, int type, int diOpenidx, int diCloseIdx, void * userData, int retryCnt = 0)
     {
-        QString cmd = QString("%1%2%3").arg(REQ_WRITE_INTERFACE_CFG_FIELDBUS_NODE_ADDR)
-                                           .arg(nodeAddr, 3,10, QChar('0'))
-                                           .arg("00000");
+        QString cmd = QString("%1%2%3%4%5%6%7").arg(REQ_WRITE_INTERFACE_CFG_FIELDBUS_NODE_ADDR)
+                                            .arg(nodeAddr, 3,10, QChar('0'))
+                                            .arg(type)
+                                            .arg("0")
+                                            .arg(diOpenidx)
+                                            .arg(diCloseIdx)
+                                            .arg("0");
+        qDebug() << "[" << Q_FUNC_INFO << "]cmd = " << cmd;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceCfgFieldbusNodeAddr, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData));
     }
     void setSensorScale(int sensor01Unit, int sensor01FullScale, int sensor01SignExp, int sensor01Exp, int sensor02Unit, int sensor02FullScale, int sensor02SignExp, int sensor02Exp, void * userData, int retryCnt = 0)
@@ -6239,8 +6247,11 @@ public slots:
             QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
 
             int startIdx = 0;
-            signalDto.mNodeAddr = value.mid(startIdx,3).toInt(); startIdx += 5;
+            signalDto.mNodeAddr = value.mid(startIdx,3).toInt(); startIdx += 3;
+            signalDto.mType     = value.mid(startIdx,1).toInt(); startIdx += 1;
             startIdx += 1;
+            signalDto.mDiOpen   = value.mid(startIdx,1).toInt(); startIdx += 1;
+            signalDto.mDiClose  = value.mid(startIdx,1).toInt(); startIdx += 1;
         }while(false);
 
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)

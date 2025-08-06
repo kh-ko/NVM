@@ -376,6 +376,8 @@ public slots:
     void onValveReadedValveParam(ValveResponseValveParamDto dto)
     {
         QString temp;
+        QString strFirmwareVer = "0000";
+        int nfirmwareVer       = 0;
 
         if((mState != eState::STATE_READ_VALVE_TYPE
             && mState != eState::STATE_READ_VALVE_ID_1
@@ -442,7 +444,10 @@ public slots:
             setNewDevNetValveRev(temp.toInt(nullptr, 36));
             setValveID((mValveID01 * 36 * 36) + (mValveID02 * 36) + mValveID03);
 
-            if(mNewDevNetValveRev > mValveID)
+            strFirmwareVer = pValveSP->getFirmwareVersion();
+            nfirmwareVer = strFirmwareVer.right(4).toInt(nullptr, 16);
+
+            if(mNewDevNetValveRev > mValveID && 0x587 > nfirmwareVer)
             {
                 mInputTable.at(mInputTable.size() - 1)->setEnable(false);
                 mOutputTable.at(mOutputTable.size() - 1)->setEnable(false);

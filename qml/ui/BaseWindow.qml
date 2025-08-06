@@ -22,7 +22,7 @@ Window {
     property FatalErrorDlg fatalErrorDlgObj: null
 
     visible: true
-    title: model.mCompany !== ValveEnumDef.COMPANY_NOVA ? qsTr("New Valve Manager") : qsTr("NVM - NOVASEN Valve Manager")
+    title: (model.mCompany !== ValveEnumDef.COMPANY_NOVA) && (model.mCompany !== ValveEnumDef.COMPANY_APSYS) ? qsTr("New Valve Manager") : qsTr("NVM - NOVASEN Valve Manager")
 
     width: 1024; height: 705
     minimumHeight: 705; minimumWidth: 1024
@@ -209,7 +209,7 @@ Window {
             {
                 popup = interfaceStatusDNetDlg.createObject(window);
             }
-            else if(model.mInterface === ValveEnumDef.INTERFACE_RS232 || model.mInterface === ValveEnumDef.INTERFACE_RS232_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_RS485 ||  model.mInterface === ValveEnumDef.INTERFACE_RS485_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_ETHERNET || model.mInterface === ValveEnumDef.INTERFACE_ETHERNET_WITH_ANALOGOUTPUT)
+            else if(model.mInterface === ValveEnumDef.INTERFACE_RS232 || model.mInterface === ValveEnumDef.INTERFACE_RS232_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_RS485 ||  model.mInterface === ValveEnumDef.INTERFACE_RS485_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_ETHERNET || model.mInterface === ValveEnumDef.INTERFACE_ETHERNET_WITH_ANALOGOUTPUT || model.mInterface === ValveEnumDef.INTERFACE_PROFIBUS)
             {
                 popup = interfaceStatusRS232Dlg.createObject(window);
             }
@@ -343,6 +343,7 @@ Window {
             Layout.preferredWidth: 118; Layout.fillHeight: true; Layout.fillWidth: true
 
             isDevMode      : model.mIsDevMode
+            company        : model.mCompany
             access         : model.mIsRS232Test ? ValveEnumDef.ACCESS_LOCAL : model.mAccess
             mode           : model.mMode
             isOpen         : model.mIsOpen

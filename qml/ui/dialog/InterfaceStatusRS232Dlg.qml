@@ -15,7 +15,8 @@ BaseSetupWindow{
 
     titleText   : model.mInterface === ValveEnumDef.INTERFACE_RS232 || model.mInterface === ValveEnumDef.INTERFACE_RS232_WITH_ANALOGOUTPUT ? qsTr("Interface status(RS232)") :
                   model.mInterface === ValveEnumDef.INTERFACE_RS485 ||  model.mInterface === ValveEnumDef.INTERFACE_RS485_WITH_ANALOGOUTPUT ? qsTr("Interface status(RS485)") :
-                  model.mInterface === ValveEnumDef.INTERFACE_ETHERNET || model.mInterface === ValveEnumDef.INTERFACE_ETHERNET_WITH_ANALOGOUTPUT? qsTr("Interface status(Ethernet)"):""
+                  model.mInterface === ValveEnumDef.INTERFACE_ETHERNET || model.mInterface === ValveEnumDef.INTERFACE_ETHERNET_WITH_ANALOGOUTPUT? qsTr("Interface status(Ethernet)") :
+                  model.mInterface === ValveEnumDef.INTERFACE_PROFIBUS ? qsTr("Interface status(Profibus)") : "";
     progress    : dlgModel.mProgress
     strStatus   : dlgModel.mStrStatus
     errMsg      : dlgModel.mErrMsg

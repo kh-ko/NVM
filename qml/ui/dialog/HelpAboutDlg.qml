@@ -57,7 +57,7 @@ BaseSetupWindow{
                     anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: 50 * GUISetting.scale; anchors.right: parent.right; anchors.rightMargin: 50 * GUISetting.scale
                     Image{
                         anchors.fill: parent
-                        source: dialog.company === ValveEnumDef.COMPANY_NOVA ? "/image/img-novasen.png" : "/image/img_soao.png"
+                        source: (dialog.company === ValveEnumDef.COMPANY_NOVA) || (dialog.company === ValveEnumDef.COMPANY_APSYS) ? "/image/img-novasen.png" : "/image/img_soao.png"
                         fillMode: Image.PreserveAspectFit
                     }
                 }

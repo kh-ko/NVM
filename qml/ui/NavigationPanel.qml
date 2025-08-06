@@ -380,7 +380,7 @@ Rectangle {
     Image{
         id : logoImg
         anchors.left: navigatelist.left; anchors.leftMargin: 20; anchors.right: navigatelist.right; anchors.rightMargin: 20; anchors.bottom: parent.bottom; anchors.bottomMargin: panel.company !== ValveEnumDef.COMPANY_NONE ? 20 : 0
-        source: panel.company == ValveEnumDef.COMPANY_NOVA ? "/image/img_novasen_ex.png" : "/image/img_soao.png"
+        source: (panel.company === ValveEnumDef.COMPANY_NOVA) || (panel.company === ValveEnumDef.COMPANY_APSYS) ? "/image/img_novasen_ex.png" : "/image/img_soao.png"
         fillMode: Image.PreserveAspectFit
         height: panel.company == ValveEnumDef.COMPANY_NONE ? 0 : undefined //panel.isLogoVisible ? undefined : 0
     }

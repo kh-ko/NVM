@@ -440,7 +440,7 @@ BaseSetupWindow{
                     anchors.top: s01SubTitleZeroAdj.bottom; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrS01ZeroAdjEnable ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && dlgModel.mCompany !== ValveEnumDef.COMPANY_APSYS
 
                     model: ["disabled","enabled"]
 
@@ -471,7 +471,7 @@ BaseSetupWindow{
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: s01SubTitleZeroAdj.bottom; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.5//GUISetting.margin
 
-                    enabled: dialog.progress === 100 && _s01ZeroAdjEnable.currentIndex == 1
+                    enabled: dialog.progress === 100 && _s01ZeroAdjEnable.currentIndex == 1 && dlgModel.mCompany !== ValveEnumDef.COMPANY_APSYS
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS01ZeroAdjOffsetValue ? "#FF0000" : "#000000"
@@ -498,7 +498,7 @@ BaseSetupWindow{
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _s01ZeroAdjOffsetValue.bottom; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && dlgModel.mCompany !== ValveEnumDef.COMPANY_APSYS
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS01ZeroAdjOffsetLimMin ? "#FF0000" : "#000000"
@@ -525,7 +525,7 @@ BaseSetupWindow{
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _s01ZeroAdjOffsetValue.bottom; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.5//GUISetting.margin
 
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && dlgModel.mCompany !== ValveEnumDef.COMPANY_APSYS
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS01ZeroAdjOffsetLimMax ? "#FF0000" : "#000000"
@@ -968,7 +968,7 @@ BaseSetupWindow{
                     anchors.top: s02SubTitleZeroAdj.bottom; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrS02ZeroAdjEnable ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && dlgModel.mCompany !== ValveEnumDef.COMPANY_APSYS
 
                     model: ["disabled","enabled"]
 
@@ -999,7 +999,7 @@ BaseSetupWindow{
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: s02SubTitleZeroAdj.bottom; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.5//GUISetting.margin
 
-                    enabled: dialog.progress === 100 && _s02ZeroAdjEnable.currentIndex == 1
+                    enabled: dialog.progress === 100 && _s02ZeroAdjEnable.currentIndex == 1 && dlgModel.mCompany !== ValveEnumDef.COMPANY_APSYS
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS02ZeroAdjOffsetValue ? "#FF0000" : "#000000"
@@ -1026,7 +1026,7 @@ BaseSetupWindow{
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _s02ZeroAdjOffsetValue.bottom; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && dlgModel.mCompany !== ValveEnumDef.COMPANY_APSYS
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS02ZeroAdjOffsetLimMin ? "#FF0000" : "#000000"
@@ -1053,7 +1053,7 @@ BaseSetupWindow{
                     width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _s02ZeroAdjOffsetValue.bottom; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.5//GUISetting.margin
 
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && dlgModel.mCompany !== ValveEnumDef.COMPANY_APSYS
 
                     textField.validator: DoubleValidator{}
                     textField.color: dlgModel.mErrS02ZeroAdjOffsetLimMax ? "#FF0000" : "#000000"

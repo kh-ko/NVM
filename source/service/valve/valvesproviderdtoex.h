@@ -834,6 +834,9 @@ class ValveResponseInterfaceConfigFieldbusNodeAddrDto : public ValveResponseDto
 {
 public:
     int mNodeAddr  = 0;
+    int mType      = 0;
+    int mDiOpen    = 0;
+    int mDiClose   = 0;
     QString mDummy = "";
 
     ValveResponseInterfaceConfigFieldbusNodeAddrDto(){}
@@ -841,6 +844,9 @@ public:
     ValveResponseInterfaceConfigFieldbusNodeAddrDto(ValveResponseDto baseDto) : ValveResponseDto(baseDto){}
     ValveResponseInterfaceConfigFieldbusNodeAddrDto(const ValveResponseInterfaceConfigFieldbusNodeAddrDto& copy) : ValveResponseDto(copy),
         mNodeAddr(copy.mNodeAddr),
+        mType    (copy.mType    ),
+        mDiOpen  (copy.mDiOpen  ),
+        mDiClose (copy.mDiClose ),
         mDummy   (copy.mDummy   ){}
 
     ~ValveResponseInterfaceConfigFieldbusNodeAddrDto(){}
@@ -850,6 +856,9 @@ public:
         ValveResponseDto::operator=(other);
 
         mNodeAddr = other.mNodeAddr;
+        mType     = other.mType   ;
+        mDiOpen   = other.mDiOpen ;
+        mDiClose  = other.mDiClose;
         mDummy    = other.mDummy   ;
 
         return *this;

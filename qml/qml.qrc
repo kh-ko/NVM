@@ -157,5 +157,6 @@
         <file>ui/dialog/FUOverDlg.qml</file>
         <file>image/serial_port.png</file>
         <file>image/usb_port.png</file>
+        <file>ui/dialog/InterfaceSetupProfibusPDOItem.qml</file>
     </qresource>
 </RCC>

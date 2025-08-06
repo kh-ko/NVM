@@ -764,9 +764,10 @@ public:
     };
 
     enum eCompany{
-        COMPANY_NONE = 0,
-        COMPANY_NOVA = 1,
-        COMPANY_SOAO = 2
+        COMPANY_NONE  = 0,
+        COMPANY_NOVA  = 1,
+        COMPANY_SOAO  = 2,
+        COMPANY_APSYS = 3
     };
 };
 

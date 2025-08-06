@@ -169,6 +169,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<InterfaceSetupRS232DlgModel>("InterfaceSetupRS232DlgModel", 1, 0, "InterfaceSetupRS232DlgModel");
     qmlRegisterType<InterfaceSetupEtherNETDlgModel>("InterfaceSetupEtherNETDlgModel", 1, 0, "InterfaceSetupEtherNETDlgModel");
     qmlRegisterType<InterfaceSetupProfibusDlgModel>("InterfaceSetupProfibusDlgModel", 1, 0, "InterfaceSetupProfibusDlgModel");
+    qmlRegisterType<InterfaceSetupProfibusItemModel>("InterfaceSetupProfibusItemModel", 1, 0, "InterfaceSetupProfibusItemModel");
     qmlRegisterType<InterfaceStatusLogicDlgModel>("InterfaceStatusLogicDlgModel", 1, 0, "InterfaceStatusLogicDlgModel");
     qmlRegisterType<InterfaceStatusEtherCATDlgModel>("InterfaceStatusEtherCATDlgModel", 1, 0, "InterfaceStatusEtherCATDlgModel");
     qmlRegisterType<InterfaceStatusDNetDlgModel>("InterfaceStatusDNetDlgModel", 1, 0, "InterfaceStatusDNetDlgModel");

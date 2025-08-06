@@ -252,6 +252,8 @@ public slots:
 
     void onValveReadedInterfaceCfgRS232(ValveResponseInterfaceConfigRS232Dto dto)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << dto.mResData;
+
         if(mState != eState::STATE_READ_CFG || dto.mReqDto.mpRef != this)
             return;
 

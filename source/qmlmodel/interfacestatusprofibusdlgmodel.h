@@ -7,6 +7,7 @@
 #include "source/util/etcutil.h"
 #include "source/service/coreservice.h"
 
+
 class InterfaceStatusProfibusDlgModel : public QObject
 {
     Q_OBJECT

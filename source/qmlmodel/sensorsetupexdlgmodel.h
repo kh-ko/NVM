@@ -12,6 +12,7 @@
 class SensorSetupExDlgModel : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int      mCompany                          READ getCompany                        NOTIFY signalEventChangedCompany                         )
     Q_PROPERTY(int      mAccessMode                       READ getAccessMode                     NOTIFY signalEventChangedAccessMode                      )
     Q_PROPERTY(bool     mIsRS232Test                      READ getIsRS232Test                    NOTIFY signalEventChangedIsRS232Test                     )
     //Q_PROPERTY(bool     mIsLowCostAPC                     READ getIsLowCostAPC                   NOTIFY signalEventChangedIsLowCostAPC                    )
@@ -99,6 +100,7 @@ class SensorSetupExDlgModel : public QObject
     Q_PROPERTY(int      mProgress                         READ getProgress                       NOTIFY signalEventChangedProgress                        )
 
 public:
+    //int      mCompany                        = (int)ValveEnumDef::COMPANY_NONE;
     int      mAccessMode                     = ValveEnumDef::ACCESS_LOCAL;
     bool     mIsRS232Test                    = false;
     //bool     mIsLowCostAPC                   = false;
@@ -185,6 +187,7 @@ public:
     QString  mErrMsg2            = "";
     int      mProgress           = 0 ;
 
+    int      getCompany                       (){ return pLSettingSP->mCompany          ; }
     int      getAccessMode                    (){ return mAccessMode                    ; }
     bool     getIsRS232Test                   (){ return mIsRS232Test                   ; }
     //bool     getIsLowCostAPC                  (){ return mIsLowCostAPC                  ; }
@@ -271,6 +274,7 @@ public:
     QString  getErrMsg2          (){ return mErrMsg2          ; }
     int      getProgress         (){ return mProgress         ; }
 
+    void    setCompany                       (int     value){ /*if(mCompany                        == value) return; mCompany                        = value; emit signalEventChangedCompany                       (value);*/}
     void    setAccessMode                    (int     value){ if(mAccessMode                     == value) return; mAccessMode                     = value; emit signalEventChangedAccessMode                    (value);}
     void    setIsRS232Test                   (bool    value){ if(mIsRS232Test                    == value) return; mIsRS232Test                    = value; emit signalEventChangedIsRS232Test                   (value);}
     //void    setIsLowCostAPC                  (bool    value){ if(mIsLowCostAPC                   == value) return; mIsLowCostAPC                   = value; emit signalEventChangedIsLowCostAPC                  (value);}
@@ -358,6 +362,7 @@ public:
     void    setProgress                      (int     value){ if(mProgress                       == value)return; mProgress                        = value; emit signalEventChangedProgress                      (value);}
 
 signals:
+    void signalEventChangedCompany                       (int     value);
     void signalEventChangedAccessMode                    (int     value);
     void signalEventChangedIsRS232Test                   (bool    value);
     //void signalEventChangedIsLowCostAPC                  (bool    value);

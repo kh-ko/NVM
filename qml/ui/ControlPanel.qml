@@ -11,6 +11,7 @@ Rectangle {
     id : panel
 
     property bool isDevMode : false
+    property var  company : ValveEnumDef.COMPANY_NOVA
     property var  access : ValveEnumDef.ACCESS_REMOTE
     property var  mode : ValveEnumDef.MODE_INIT
     property bool isOpen  : false
@@ -65,7 +66,8 @@ Rectangle {
 
             enabled:    panel.access === ValveEnumDef.ACCESS_LOCAL
                      && panel.mode !== ValveEnumDef.MODE_SAFETY && panel.mode !== ValveEnumDef.MODE_INTERLOCK_CLOSE_DI &&  panel.mode !== ValveEnumDef.MODE_INTERLOCK_OPEN_DI
-                     && panel.connected && !GlobalUiValue.disableWinCreateBtn
+                     && panel.connected
+                     && panel.company !== ValveEnumDef.COMPANY_APSYS && !GlobalUiValue.disableWinCreateBtn
 
             onClick: { panel.clickZero()}
         }
