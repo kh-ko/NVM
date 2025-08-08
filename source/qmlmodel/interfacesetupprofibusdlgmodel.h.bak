@@ -474,33 +474,6 @@ public slots:
         setState(eState::STATE_WRITE_DI);
     }
 
-    Q_INVOKABLE void onCommandExportGSD(int protocolVersion, QString filePath)
-    {
-        FileWriterEx file;
-        QStringList contents;
-        int splitIdx = filePath.lastIndexOf("/")+1;
-        QString dir = filePath.left(splitIdx);
-        QString fileName = filePath.mid(splitIdx);
-
-        QFile::copy(QString("%1/ref_sample/gsd_V%2_sample.gsd").arg(QApplication::applicationDirPath()).arg(protocolVersion), filePath);
-
-        //if(file.open(dir, fileName, FileWriterEx::FILE_OPEN_NEWWRITE) == false)
-        //{
-        //    setErrMsg2("export failed(1)");
-        //    return;
-        //}
-        //
-        //contents = createGSDContents(protocolVersion);
-        //
-        //foreach(QString line, contents)
-        //{
-        //    file.appendLine(line);
-        //}
-        //
-        //file.close();
-        return;
-    }
-
     void onValveWrittenInterfaceConfigEthCATDi(ValveResponseDto dto)
     {
         if(mState != eState::STATE_WRITE_DI || dto.mReqDto.mpRef != this)
@@ -678,8 +651,7 @@ private:
                     if(pItem->getErrDataType() || pItem->getErrRangeFrom() || pItem->getErrRangeTo())
                         isPDOErr = true;
                 }
-
-                onCommandSetEdit(isPDOErr || getErrDIFunction() || getErrDIMode() || getErrDIInput() || getErrDOFunction() || getErrDOMode() || getErrDOOutput() || getErrNodeAddr() || getErrTypeIdx());
+                onCommandSetEdit(isPDOErr || getErrDIOpenValveIdx() || getErrDICloseValveIdx() || getErrNodeAddr() || getErrTypeIdx());
             }
         }
         else if(mState >= STATE_WRITE_DI && mState <= STATE_WRITE_PDO_END)
@@ -758,7 +730,7 @@ public slots:
             break;
 
         case (int)eState::STATE_WRITE_NODE_ADDR:
-            pValveSP->setInterfaceConfigFieldbusNodeAddr(mWriteNodeAddr, mWriteType, this);
+            pValveSP->setInterfaceConfigFieldbusNodeAddr(mWriteNodeAddr, mWriteType, mWriteDIOpenValveIdx,  mWriteDICloseValveIdx, this);
             break;
 
         default:
@@ -859,37 +831,6 @@ private:
         }
 
         return "DINT";
-    }
-
-    QStringList createGSDContents(int protocolVersion)
-    {
-        QStringList contents;
-        QFile file;
-        //int inputLength = 0;
-        //int outputLength = 0;
-        QString inputObjectNames;
-        QString outputObjectNames;
-
-        file.setFileName(QString("%1/ref_sample/gsd_V%2_sample.gsd").arg(QApplication::applicationDirPath()).arg(protocolVersion));
-        file.open(QFile::ReadOnly);
-
-        if(file.isOpen() == false)
-        {
-            setErrMsg2("export failed(2)");
-            return contents;
-        }
-
-        QTextStream out(&file);
-        out.setCodec("utf-8");
-
-        do{
-            QString line = out.readLine();
-            contents.append(line);
-
-        }while(!out.atEnd());
-
-        file.close();
-        return contents;
     }
 };
 #endif // INTERFACESETUPPROFIBUSDLGMODEL_H

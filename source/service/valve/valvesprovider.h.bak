@@ -6250,6 +6250,8 @@ public slots:
             signalDto.mNodeAddr = value.mid(startIdx,3).toInt(); startIdx += 3;
             signalDto.mType     = value.mid(startIdx,1).toInt(); startIdx += 1;
             startIdx += 1;
+            signalDto.mDiOpen   = value.mid(startIdx,1).toInt(); startIdx += 1;
+            signalDto.mDiClose  = value.mid(startIdx,1).toInt(); startIdx += 1;
         }while(false);
 
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)

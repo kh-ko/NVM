@@ -853,6 +853,8 @@ public:
 
         mNodeAddr = other.mNodeAddr;
         mType     = other.mType   ;
+        mDiOpen   = other.mDiOpen ;
+        mDiClose  = other.mDiClose;
         mDummy    = other.mDummy   ;
 
         return *this;

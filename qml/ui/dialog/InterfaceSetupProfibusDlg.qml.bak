@@ -25,16 +25,12 @@ BaseSetupWindow{
 
     function commit()
     {
-        var type       = body.typeCombo.currentIndex
-        var diFunction = body.diFunctionCombo.currentIndex
-        var diMode     = body.diModeCombo.currentIndex
-        var diInput    = body.diInputCombo.currentIndex
-        var doFunction = body.doFunctionCombo.currentIndex
-        var doMode     = body.doModeCombo.currentIndex
-        var doOutput   = body.doOutputCombo.currentIndex
+        var type     = body.typeCombo.currentIndex
+        var diOpen   = body.diOpenCombo.currentIndex
+        var diClose  = body.diCloseCombo.currentIndex
         var nodeAddr = parseInt(body.nodeAddr.textField.text)
 
-        dlgModel.onCommandApply(type, diFunction, diMode, diInput, doFunction, doMode, doOutput, nodeAddr)
+        dlgModel.onCommandApply(type, diOpen, diClose, nodeAddr)
     }
 
     Component.onCompleted: {
@@ -52,23 +48,19 @@ BaseSetupWindow{
             pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "pressure sensor 2"             , "itemIdx":2})
             pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "position"                      , "itemIdx":3})
             pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "target position"               , "itemIdx":4})
-            //pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "cluster valve position"        , "itemIdx":5})
+            pdoListModel.append({"pdoTypeName":"IN", "pdoDataName" : "cluster valve position"        , "itemIdx":5})
             pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "pressure setpoint"            , "itemIdx":6})
             pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "position setpoint"            , "itemIdx":7})
             pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "pressure alignment setpoint"  , "itemIdx":8})
             pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "external digital pressure 1"  , "itemIdx":9})
             pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "external digital pressure 2"  , "itemIdx":10})
-            //pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "cluster valve freeze position", "itemIdx":11})
+            pdoListModel.append({"pdoTypeName":"OUT", "pdoDataName" : "cluster valve freeze position", "itemIdx":11})
         }
 
         onSignalEventCompletedLoad: {
             body.typeCombo.currentIndex    = dlgModel.mTypeIdx
-            body.diFunctionCombo.currentIndex  = dlgModel.mDIFunction
-            body.diModeCombo.currentIndex      = dlgModel.mDIMode
-            body.diInputCombo.currentIndex     = dlgModel.mDIInput
-            body.doFunctionCombo.currentIndex  = dlgModel.mDOFunction
-            body.doModeCombo.currentIndex      = dlgModel.mDOMode
-            body.doOutputCombo.currentIndex    = dlgModel.mDOOutput
+            body.diOpenCombo.currentIndex  = dlgModel.mDIOpenValveIdx
+            body.diCloseCombo.currentIndex = dlgModel.mDICloseValveIdx
             body.nodeAddr.textField.text   = ""+dlgModel.mNodeAddr
 
             onCommandSetEdit(false);
@@ -84,12 +76,8 @@ BaseSetupWindow{
 
         Rectangle{
             property alias typeCombo       : _typeCombo
-            property alias diFunctionCombo : _diFunctionCombo
-            property alias diModeCombo     : _diModeCombo
-            property alias diInputCombo    : _diInputCombo
-            property alias doFunctionCombo : _doFunctionCombo
-            property alias doModeCombo     : _doModeCombo
-            property alias doOutputCombo   : _doOutputCombo
+            property alias diOpenCombo     : _diOpenCombo
+            property alias diCloseCombo    : _diCloseCombo
             property alias nodeAddr        : _nodeAddr
             property alias baudRate        : _baudrateCombo
             property real  guiScale        : GUISetting.scale
@@ -174,7 +162,7 @@ BaseSetupWindow{
 
                     enabled: dlgModel.mProgress == 100
 
-                    model: ["v1", "v2"]
+                    model: ["normal", "extension"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -243,7 +231,7 @@ BaseSetupWindow{
             Rectangle{
                 id : diItem
 
-                height: (GUISetting.margin + diTitle.height) + (GUISetting.margin + _diFunctionCombo.height) + (GUISetting.margin + _diModeCombo.height) + (GUISetting.margin + _diInputCombo.height) + GUISetting.margin;
+                height: (GUISetting.margin + diTitle.height) + (GUISetting.margin + _diOpenCombo.height) + (GUISetting.margin + _diCloseCombo.height) + GUISetting.margin;
                 width: (parent.width - (GUISetting.line_margin * 3)) / 2
                 anchors.top: _typeCombo.currentIndex == 1 ? pdoDataItem.bottom : commParams.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin;
 
@@ -257,15 +245,14 @@ BaseSetupWindow{
                 }
 
                 NComboBox{
-                    id : _diFunctionCombo
-                    width : 200 * GUISetting.scale
-                    height: 24  * GUISetting.scale
+                    id : _diOpenCombo
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: diTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    textColor: dlgModel.mErrDIFunction ? "#FF0000" : "#000000"
+                    textColor: dlgModel.mErrDIOpenValveIdx ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100
 
-                    model: ["interlock close","interlock open"]
+                    model: ["not inverted","inverted", "disabled"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -273,19 +260,19 @@ BaseSetupWindow{
                 }
 
                 NText{
-                    anchors.verticalCenter: _diFunctionCombo.verticalCenter; anchors.left: _diFunctionCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
-                    text : qsTr("function")
+                    anchors.verticalCenter: _diOpenCombo.verticalCenter; anchors.left: _diOpenCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    text : qsTr("open valve")
                 }
 
                 NComboBox{
-                    id : _diModeCombo
-                    width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
-                    anchors.top: _diFunctionCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    id : _diCloseCombo
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    anchors.top: _diOpenCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    textColor: dlgModel.mErrDIMode ? "#FF0000" : "#000000"
+                    textColor: dlgModel.mErrDICloseValveIdx ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100
 
-                    model: ["no","yes"]
+                    model: ["not inverted","inverted", "disabled"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -293,28 +280,8 @@ BaseSetupWindow{
                 }
 
                 NText{
-                    anchors.verticalCenter: _diModeCombo.verticalCenter; anchors.left: _diModeCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
-                    text : qsTr("inverted")
-                }
-
-                NComboBox{
-                    id : _diInputCombo
-                    width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
-                    anchors.top: _diModeCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left : parent.left; anchors.leftMargin : GUISetting.margin
-
-                    textColor: dlgModel.mErrDIInput ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
-
-                    model: ["no","yes"]
-
-                    onCurrentIndexChanged: {
-                        dlgModel.onCommandSetEdit(true)
-                    }
-                }
-
-                NText{
-                    anchors.verticalCenter: _diInputCombo.verticalCenter; anchors.left: _diInputCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
-                    text : qsTr("disable")
+                    anchors.verticalCenter: _diCloseCombo.verticalCenter; anchors.left: _diCloseCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    text : qsTr("close valve")
                 }
             }
 
@@ -334,63 +301,33 @@ BaseSetupWindow{
                 }
 
                 NComboBox{
-                    id : _doFunctionCombo
-                    width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
+                    id : doOpenedCombo
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: doTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    textColor: dlgModel.mErrDOFunction ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100
-
-                    model: ["close","open", "On"]
-
-                    onCurrentIndexChanged: {
-                        dlgModel.onCommandSetEdit(true)
-                    }
+                    currentIndex: 0
+                    model: ["open"]
                 }
 
                 NText{
-                    anchors.verticalCenter: _doFunctionCombo.verticalCenter; anchors.left: _doFunctionCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
-                    text : qsTr("function")
+                    anchors.verticalCenter: doOpenedCombo.verticalCenter; anchors.left: doOpenedCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    text : qsTr("opened valve")
                 }
 
                 NComboBox{
-                    id : _doModeCombo
-                    width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
-                    anchors.top: _doFunctionCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    id : doClosedCombo
+                    width: 100 * GUISetting.scale; height: 24 * GUISetting.scale
+                    anchors.top: doOpenedCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    textColor: dlgModel.mErrDOMode ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100
-
-                    model: ["no","yes"]
-
-                    onCurrentIndexChanged: {
-                        dlgModel.onCommandSetEdit(true)
-                    }
+                    currentIndex: 0
+                    model: ["close"]
                 }
 
                 NText{
-                    anchors.verticalCenter: _doModeCombo.verticalCenter; anchors.left: _doModeCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
-                    text : qsTr("inverted")
-                }
-
-                NComboBox{
-                    id : _doOutputCombo
-                    width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
-                    anchors.top: _doModeCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-
-                    textColor: dlgModel.mErrDOOutput ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
-
-                    model: ["no","yes"]
-
-                    onCurrentIndexChanged: {
-                        dlgModel.onCommandSetEdit(true)
-                    }
-                }
-
-                NText{
-                    anchors.verticalCenter: _doOutputCombo.verticalCenter; anchors.left: _doOutputCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
-                    text : qsTr("disable")
+                    anchors.verticalCenter: doClosedCombo.verticalCenter; anchors.left: doClosedCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    text : qsTr("closed valve")
                 }
             }
 
@@ -425,39 +362,23 @@ BaseSetupWindow{
                             dialog.commit()
                         }
                     }
-
-                    NButton{
-                        id : exportToEDS
-                        Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredWidth: 1
-                        enabled: dialog.progress === 100
-
-                        bgColor: "#FFFFFF"
-                        text.text: qsTr("export pdo settings to GSD file")
-
-                        onClick: {
-                            wFileDialog.protocolVersion = body.typeCombo.currentIndex;
-                            wFileDialog.open();
-                        }
-                    }
                 }
             }
         }
     }
 
     FileDialog{
-        property int protocolVersion : 0
-
         id: wFileDialog
-        title: qsTr("export pdo settings to GSD file")
-        //folder: "./"
-        fileMode: FileDialog.SaveFile
-        nameFilters: ["GSD files (*.gsd)"]
+            title: qsTr("export configuration")
+            //folder: "./"
+            fileMode: FileDialog.SaveFile
+            nameFilters: ["XML files (*.xml)"]
 
-        onAccepted: {
-            dlgModel.onCommandExportGSD(protocolVersion, currentFile.toString().split("///")[1])
-        }
-        onRejected: {
-        }
-        visible : false
+            onAccepted: {
+                dlgModel.onCommandExportGSD(currentFile.toString().split("///")[1])
+            }
+            onRejected: {
+            }
+            visible : false
     }
 }
