@@ -155,10 +155,10 @@ private:
     QTimer mTimer;
     eState mState         = eState::STATE_READY;
 
-    void startTimer()
+    void startTimer(int msec = 100)
     {
         mTimer.stop();
-        mTimer.start(100);
+        mTimer.start(msec);
     }
 
     void setState(eState state, bool immediately = false)
@@ -269,6 +269,7 @@ public slots:
             tempItem.setCommand(QString("%1").arg(REQ_READ_SENSEX_CROSSOVER_HIGH             ), QString("%1").arg(REQ_WRITE_SENSEX_CROSSOVER_HIGH             )); mExportCmdList.append(tempItem);
             tempItem.setCommand(QString("%1").arg(REQ_READ_SENSEX_CROSSOVER_DELA             ), QString("%1").arg(REQ_WRITE_SENSEX_CROSSOVER_DELA             )); mExportCmdList.append(tempItem);
         }
+        tempItem.setCommand("delay", "delay"); mExportCmdList.append(tempItem);
         setState((eState)(mState + 1));
     }
 
@@ -312,6 +313,7 @@ public slots:
             tempItem.setCommand(QString("%1").arg(REQ_READ_FIXED2_CTRL_RAMP_MODE ), QString("%1").arg(REQ_WRITE_FIXED2_CTRL_RAMP_MODE )); mExportCmdList.append(tempItem);
             tempItem.setCommand(QString("%1").arg(REQ_READ_FIXED2_CTRL_DIR       ), QString("%1").arg(REQ_WRITE_FIXED2_CTRL_DIR       )); mExportCmdList.append(tempItem);
         }
+        tempItem.setCommand("delay", "delay"); mExportCmdList.append(tempItem);
         setState((eState)(mState + 1));
     }
 
@@ -452,8 +454,14 @@ public slots:
 
         foreach(ValveCommandItem item, mExportCmdList)
         {
-            if(item.mValue != "skip")
+            if(item.mReadCommand == "delay")
+            {
+                file.appendLine("delay");
+            }
+            else if(item.mValue != "skip")
+            {
                 file.appendLine(QString("%1%2").arg(item.mWriteCommand).arg(item.mValue));
+            }
         }
         file.close();
 
@@ -474,6 +482,7 @@ public slots:
         /* valve setup */
         //tempItem.setCommand(QString("%1").arg(REQ_READ_VALVE_SPEED), QString("%1").arg(REQ_WRITE_VALVE_SPEED)); mValveSetupCmdList.append(tempItem);
         tempItem.setCommand(QString("%1").arg(REQ_READ_VALVE_SETUP), QString("%1").arg(REQ_WRITE_VALVE_SETUP)); mExportCmdList.append(tempItem);
+        tempItem.setCommand("delay", "delay")                                                                 ; mExportCmdList.append(tempItem);
 
         /* set point */
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_01), QString("%1").arg(REQ_WRITE_SETPOINT_01)); mExportCmdList.append(tempItem);
@@ -482,6 +491,7 @@ public slots:
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_04), QString("%1").arg(REQ_WRITE_SETPOINT_04)); mExportCmdList.append(tempItem);
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_05), QString("%1").arg(REQ_WRITE_SETPOINT_05)); mExportCmdList.append(tempItem);
         tempItem.setCommand(QString("%1").arg(REQ_READ_SETPOINT_06), QString("%1").arg(REQ_WRITE_SETPOINT_06)); mExportCmdList.append(tempItem);
+        tempItem.setCommand("delay", "delay")                                                                 ; mExportCmdList.append(tempItem);
 
 
         if(isForUpdate == false)
@@ -499,6 +509,7 @@ public slots:
             tempItem.setCommand(QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_END));
             tempItem.mValue = ""; mExportCmdList.append(tempItem);
         }
+        tempItem.setCommand("delay", "delay"); mExportCmdList.append(tempItem);
 
 
         if(pValveSP->getLearnNotPresent() == false)
@@ -508,6 +519,7 @@ public slots:
             {
                 tempItem.setCommand(QString("%1%2").arg(REQ_READ_LEARN_PARAM).arg(i, 3, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_LEARN_PARAM).arg(i, 3, 10, QChar('0'))); mExportCmdList.append(tempItem);
             }
+            tempItem.setCommand("delay", "delay"); mExportCmdList.append(tempItem);
         }
 
         /* NVM Settings */
@@ -573,6 +585,7 @@ public slots:
             tempItem.setCommand(QString("%1").arg(REQ_READ_INTERFACE_CONFIG_LOGIC), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_LOGIC)); mExportCmdList.append(tempItem);
             break;
         }
+        tempItem.setCommand("delay", "delay"); mExportCmdList.append(tempItem);
         setState(eState::STATE_EXPORT_SENSOR_CHECK);
     }
 
@@ -594,6 +607,20 @@ public slots:
                 mExportCmdIdx++;
                 setState(mState);
             }
+            else if(mExportCmdList.at(mExportCmdIdx).mReadCommand == "delay")
+            {
+                mExportCmdIdx++;
+                if(mExportCmdIdx == mExportCmdList.size())
+                {
+                    //emit signalEventCompletedExport();
+                    setState(eState::STATE_EXPORT_LEARNLIST);
+                    return;
+                }
+                else
+                {
+                    setState(mState);
+                }
+            }
             else
             {
                 pValveSP->customRequest(mExportCmdList.at(mExportCmdIdx).mReadCommand, this);
@@ -608,6 +635,20 @@ public slots:
             break;
 
         case STATE_IMPORT_SETTING:
+            if(mImportCmdList.at(mImportCmdIdx) == "delay")
+            {
+                mImportCmdIdx++;
+
+                if(mImportCmdIdx == mImportCmdList.size())
+                {
+                    emit signalEventWrittenSettingToValve();
+                    setState(eState::STATE_READY);
+                    return;
+                }
+
+                startTimer(3000);
+                return;
+            }
             pValveSP->customRequest(mImportCmdList.at(mImportCmdIdx), this);
             break;
         }

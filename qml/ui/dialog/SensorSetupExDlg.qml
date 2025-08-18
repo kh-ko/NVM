@@ -1324,7 +1324,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _crossoverMod.verticalCenter; anchors.left: _crossoverMod.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("mod")
+                    text : qsTr("mode")
                 }
 
                 NInputNumber{
@@ -1348,7 +1348,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _crossoverDela.verticalCenter; anchors.left: _crossoverDela.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("dela[sec]")
+                    text : qsTr("delay[sec]")
                 }
 
                 NInputNumber{
