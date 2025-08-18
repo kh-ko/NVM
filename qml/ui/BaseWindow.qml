@@ -596,6 +596,7 @@ Window {
         InterfaceSetupEtherCATDlg{
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
+            company    : model.mCompany
         }
     }
     Component{
@@ -603,6 +604,7 @@ Window {
         InterfaceSetupDevNetDlg{
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
+            company    : model.mCompany
         }
     }
     Component{
@@ -625,6 +627,7 @@ Window {
         InterfaceSetupProfibusDlg{
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
+            company    : model.mCompany
         }
     }
 

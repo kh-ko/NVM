@@ -602,6 +602,20 @@ public slots:
                 mExportCmdIdx++;
                 setState(mState);
             }
+            else if(mExportCmdList.at(mExportCmdIdx).mReadCommand == "delay")
+            {
+                mExportCmdIdx++;
+                if(mExportCmdIdx == mExportCmdList.size())
+                {
+                    //emit signalEventCompletedExport();
+                    setState(eState::STATE_EXPORT_LEARNLIST);
+                    return;
+                }
+                else
+                {
+                    setState(mState);
+                }
+            }
             else
             {
                 pValveSP->customRequest(mExportCmdList.at(mExportCmdIdx).mReadCommand, this);
@@ -616,6 +630,20 @@ public slots:
             break;
 
         case STATE_IMPORT_SETTING:
+            if(mImportCmdList.at(mImportCmdIdx) == "delay")
+            {
+                mImportCmdIdx++;
+
+                if(mImportCmdIdx == mImportCmdList.size())
+                {
+                    emit signalEventWrittenSettingToValve();
+                    setState(eState::STATE_READY);
+                    return;
+                }
+
+                startTimer(20000);
+                return;
+            }
             pValveSP->customRequest(mImportCmdList.at(mImportCmdIdx), this);
             break;
         }

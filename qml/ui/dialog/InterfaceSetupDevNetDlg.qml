@@ -13,6 +13,7 @@ BaseSetupWindow{
 
     readonly property int emptyHeight : 24 * GUISetting.scale
     property var body : null
+    property var company : ValveEnumDef.COMPANY_NOVA
 
     titleText   : qsTr("Interface setup(D-Net)")
     progress    : dlgModel.mProgress
@@ -435,7 +436,7 @@ BaseSetupWindow{
                     anchors.top: diTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDIActivation ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["enable","disable"]
 
@@ -455,7 +456,7 @@ BaseSetupWindow{
                     anchors.top: _diActivationCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDIFunction ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["interlock close","interlock open"]
 
@@ -475,7 +476,7 @@ BaseSetupWindow{
                     anchors.top: _diFunctionCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDIPolarity ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["not inverted","inverted"]
 
@@ -516,7 +517,7 @@ BaseSetupWindow{
                     anchors.top: doTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDOActivation ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["enable","disable"]
 
@@ -536,7 +537,7 @@ BaseSetupWindow{
                     anchors.top: _doActivationCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDOFunction ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["close","open", "constantly ON"]
 
@@ -556,7 +557,7 @@ BaseSetupWindow{
                     anchors.top: _doFunctionCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDOPolarity ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["not inverted","inverted"]
 

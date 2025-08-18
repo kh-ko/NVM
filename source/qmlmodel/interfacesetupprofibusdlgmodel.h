@@ -660,6 +660,11 @@ private:
 
         mState = state;
 
+        if(pLSettingSP->mCompany == ValveEnumDef::COMPANY_APSYS && (mState == STATE_WRITE_DI || mState == STATE_WRITE_DO))
+        {
+            mState = STATE_WRITE_NODE_ADDR;
+        }
+
         if(mIsWritten == false && mState == STATE_READY)
         {
             emit signalEventCompletedLoad();

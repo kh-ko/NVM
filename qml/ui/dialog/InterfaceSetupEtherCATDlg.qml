@@ -13,6 +13,7 @@ BaseSetupWindow{
 
     readonly property int emptyHeight : 24 * GUISetting.scale
     property var body : null
+    property var company : ValveEnumDef.COMPANY_NOVA
 
     titleText   : qsTr("Interface setup(EtherCAT)")
     progress    : dlgModel.mProgress
@@ -197,7 +198,7 @@ BaseSetupWindow{
                     anchors.top: diTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDIFunction ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["interlock close","interlock open"]
 
@@ -217,7 +218,7 @@ BaseSetupWindow{
                     anchors.top: _diFunctionCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDIMode ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["no","yes"]
 
@@ -237,7 +238,7 @@ BaseSetupWindow{
                     anchors.top: _diModeCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left : parent.left; anchors.leftMargin : GUISetting.margin
 
                     textColor: dlgModel.mErrDIInput ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["no","yes"]
 
@@ -273,7 +274,7 @@ BaseSetupWindow{
                     anchors.top: doTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDOFunction ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["close","open", "On"]
 
@@ -293,7 +294,7 @@ BaseSetupWindow{
                     anchors.top: _doFunctionCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDOMode ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["no","yes"]
 
@@ -313,7 +314,7 @@ BaseSetupWindow{
                     anchors.top: _doModeCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
                     textColor: dlgModel.mErrDOOutput ? "#FF0000" : "#000000"
-                    enabled: dialog.progress === 100
+                    enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
                     model: ["no","yes"]
 
