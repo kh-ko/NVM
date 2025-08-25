@@ -491,7 +491,7 @@ public slots:
             tempItem.mValue = ""; mExportCmdList.append(tempItem);
             for(int i = 0; i < 100; i ++)
             {
-                if(i < 17 || i == 51)
+                if(i < 14 || i == 51)
                     continue;
 
                 tempItem.setCommand(QString("%1%2").arg(REQ_READ_VALVE_PARAM).arg(i, 2, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(i, 2, 10, QChar('0'))); mExportCmdList.append(tempItem);
