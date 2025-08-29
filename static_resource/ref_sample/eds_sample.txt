@@ -1,0 +1,37 @@
+$ NOVASEN-DNS Electronic Data Sheet
+$ Version 1.0
+
+$ File Description Section
+[File]
+        DescText =
+        CreateDate =
+        CreateTime =
+        ModDate =
+        ModTime =
+        Revision =
+
+$ Device Description Section
+[Device]
+        VendCode =
+        VendName =
+        ProdType =
+        ProdTypeStr =
+        ProdCode =
+        MajRev =
+        MinRev =
+        ProdName =
+        Catalog =
+
+$ I/O Characteristics Section
+[IO_Info]
+
+        Default =
+
+        PollInfo =
+		
+        Input1 =
+		
+        Output1 =
+		
+$ End of NOVASEN-DNS EDS File
+

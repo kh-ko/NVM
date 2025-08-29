@@ -5163,6 +5163,8 @@ public slots:
 
                 setLoadProgress(mLoadProgress + 1);
 
+                qDebug() << "TEST : " << mLoadProgress << "," << ValveEnumDef::LOAD_SENSOR_02_TIME_FILTER << "," << ValveEnumDef::LOAD_PARAM_98;
+
                 if(mLoadProgress < (int)ValveEnumDef::LOAD_PARAM_99)
                 {
                     readValveParam(mLoadParamList[mLoadProgress - (int)ValveEnumDef::LOAD_SENSOR_02_TIME_FILTER], this);

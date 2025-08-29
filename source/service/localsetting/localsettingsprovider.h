@@ -69,9 +69,9 @@ public:
     QList<int> mChartMSecOption = {30000, 60000, 120000, 300000};
 
     qint64  mMonitoringCycle       = 10;
-    QString mBuildVersion          = "1.9.96";
+    QString mBuildVersion          = "1.9.97";
     bool    mIsWithoutLogo         = false; // not used
-    int     mCompany               = (int)ValveEnumDef::COMPANY_NONE;
+    int     mCompany               = (int)ValveEnumDef::COMPANY_SOAO;
 
     bool    mIsDrawCurrPos         = true ;
     bool    mIsDrawTargetPos       = true ;
@@ -157,29 +157,29 @@ private:
     bool           mIsRunning  = false;
 
     QString readVersionFile() {
-        // 실행 파일 경로 가져오기
+        // ???? ???? ??? ????????
         QString executablePath = QCoreApplication::applicationDirPath();
 
-        // config/ui/version.txt 경로 생성
+        // config/ui/version.txt ??? ????
         QString filePath = QDir(executablePath).filePath("config/ui/version.txt");
 
-        // QFile 객체 생성
+        // QFile ??u ????
         QFile file(filePath);
 
-        // 파일 열기
+        // ???? ????
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qWarning() << "파일을 열 수 없습니다:" << filePath;
+            qWarning() << "??????????????????:" << filePath;
             return mBuildVersion;
         }
 
-        // 파일 내용 읽기
+        // ???? ???? ????
         QTextStream in(&file);
         QString fileContents = in.readAll();
 
-        // 파일 닫기
+        // ???? ????
         file.close();
 
-        return fileContents.trimmed();  // 결과에서 공백 제거
+        return fileContents.trimmed();  // ??????? ???? ????
     }
 
     void load()
@@ -261,3 +261,17 @@ signals:
     void signalEventChangedFUCount              ();
 };
 #endif // LOCALSETTINGSPROVIDER_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+

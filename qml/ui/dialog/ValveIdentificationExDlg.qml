@@ -444,7 +444,7 @@ BaseSetupWindow{
                     visible: dialog.unlock
 
                     fontFamily: FontManager.codingName
-                    model: ["Unknown", "N : Non-Sealing", "S : Sealing", "F : FCup-Sealing", "X : Pendulum"]
+                    model: ["Unknown", "N : Non-Sealing", "S : Sealing", "F : FCup-Sealing", "X : Pendulum-No Heating", "H : Pendulum-Heating"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
@@ -546,7 +546,7 @@ BaseSetupWindow{
                     visible: dialog.unlock
 
                     fontFamily: FontManager.codingName
-                    model: ["Unknown", "A : Aluminum", "S : SUS304", "L : SUS316L", "X : Multi-position", "H : Aluminum-Hard"]
+                    model: ["Unknown", "A : Aluminum", "S : SUS304", "L : SUS316L", "X : Multi-position", "H : Aluminum-Hard", "B : Aluminum-Blank", "N : Aluminum-Nickel Coated"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)
