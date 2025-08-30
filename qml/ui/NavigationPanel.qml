@@ -14,6 +14,7 @@ Rectangle {
     property bool isConnected   : false
     property bool isSupportPFO  : false
     property bool isLogoVisible : false
+    property bool isApSysCtrlMonitor : true
     property int  company       : 0
 
     color : "#FFFFFF"
@@ -30,6 +31,7 @@ Rectangle {
     signal clickPressureCtrlSetup()
     signal clickPressureCtrlLearnParam()
     signal clickPressureCtrlLearnList()
+    signal clickPressureCtrlGainMointoring()
     signal clickInterfaceSetup()
     signal clickInterfaceStatus()
     signal clickInterfaceTrace()
@@ -183,7 +185,7 @@ Rectangle {
                 anchors.top: exBtnSensor.bottom;
 
                 titleText.text: qsTr("Pressure control")
-                expendHeight : titleBox.height + (children.length - 1) * GUISetting.exbtnitem_height // NExButtonItem height is 18
+                expendHeight : isApSysCtrlMonitor ? titleBox.height + (children.length - 1) * GUISetting.exbtnitem_height  : titleBox.height + (children.length - 2) * GUISetting.exbtnitem_height // NExButtonItem height is 18
 
                 NExButtonItem{
                     id : menuPressControlSetup
@@ -202,10 +204,18 @@ Rectangle {
                 }
                 NExButtonItem{
                     id : menuPressControlLearnList
-                    anchors.bottom: parent.bottom
+                    anchors.bottom: panel.isApSysCtrlMonitor ? menuPressCtrlGainMonitor.top : parent.bottom
                     text.text: qsTr("Learn list")
                     enabled : panel.isConnected && !GlobalUiValue.disableWinCreateBtn
                     onClicked: { panel.clickPressureCtrlLearnList() }
+                }
+                NExButtonItem{
+                    id : menuPressCtrlGainMonitor
+                    visible: panel.isApSysCtrlMonitor
+                    anchors.bottom: parent.bottom
+                    text.text: qsTr("Monitoring gain")
+                    enabled : panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+                    onClicked: { panel.clickPressureCtrlGainMointoring() }
                 }
             }
 

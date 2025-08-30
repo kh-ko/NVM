@@ -43,6 +43,7 @@ HEADERS += \
     source/nchart/nchartcontrol.h \
     source/nchart/nchartpointbuffer.h \
     source/nchart/nchartview.h \
+    source/qmlmodel/pressurectrlgainmonitordlgmodel.h \
     source/qmlmodel/advancedtoolbackupnrestoredlgmodel.h \
     source/qmlmodel/advancedtooltestdlgmodel.h \
     source/qmlmodel/advencedtooldiskhoricalibdlgmodel.h \

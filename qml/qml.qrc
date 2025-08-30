@@ -158,5 +158,6 @@
         <file>image/serial_port.png</file>
         <file>image/usb_port.png</file>
         <file>ui/dialog/InterfaceSetupProfibusPDOItem.qml</file>
+        <file>ui/dialog/PressureCtrlGainMonitorDlg.qml</file>
     </qresource>
 </RCC>

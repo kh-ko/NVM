@@ -2517,6 +2517,7 @@ public :
 
     void customRequest(QString command, void * userData, int retryCnt = 0)
     {
+        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << command;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenCustomCommand, nullptr, command, "", 0, retryCnt, userData));
     }
 

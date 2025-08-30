@@ -134,12 +134,13 @@ Window {
         width: GUISetting.navi_panel_width
         anchors.top: title.bottom; anchors.topMargin: 2; anchors.bottom: statusBar.top; anchors.bottomMargin : 2;
 
-        isLogoVisible  : !model.mIsWithoutLogo
-        isRunSequencer : seqTestDlg.isRun
-        isZeroEnable   : model.mZeroEnable
-        isConnected    : model.mIsValveConnect
-        isSupportPFO   : model.mIsSupportPFO
-        company        : model.mCompany
+        isLogoVisible     : !model.mIsWithoutLogo
+        isRunSequencer    : seqTestDlg.isRun
+        isZeroEnable      : model.mZeroEnable
+        isConnected       : model.mIsValveConnect
+        isSupportPFO      : model.mIsSupportPFO
+        isApSysCtrlMonitor: parseInt(model.mFirmwareVersion.slice(-4), 16) > 0x590 && model.mCompany === ValveEnumDef.COMPANY_APSYS
+        company           : model.mCompany
 
         onClickValveIdentification    : { var popup = valveIdentificationExDlg.createObject(window) ; popup.show(); }
         onClickValveSetup             : { var popup = valveSetupDlg.createObject(window)            ; popup.show(); }
@@ -164,13 +165,14 @@ Window {
                 popup = valveCalibrationDlg.createObject(window)      ; popup.show();
             }
         }
-        onClickSensorSetup            : { var popup = sensorSetupExDlg.createObject(window)         ; popup.show(); }
-        onClickSensorAnalysis         : { var popup = sensorAnalysisDlg.createObject(window)        ; popup.show(); }
-        onClickPressureCtrlSetup      : { var popup = pressureCtrlFloatSetupDlg.createObject(window); popup.show(); }
-        onClickPressureCtrlLearnParam : { var popup = pressureCtrlLearnParamDlg.createObject(window); popup.show(); }//popup.open(); }
-        onClickPressureCtrlLearnList  : { var popup = pressureCtrlLearnListDlg.createObject(window) ; popup.show(); }//popup.open(); }
-        onClickNCPASettings           : { var popup = ncpaSettingsDlg.createObject(window)          ; popup.show(); }
-        onClickInterfaceSetup         : {
+        onClickSensorSetup                : { var popup = sensorSetupExDlg.createObject(window)          ; popup.show(); }
+        onClickSensorAnalysis             : { var popup = sensorAnalysisDlg.createObject(window)         ; popup.show(); }
+        onClickPressureCtrlSetup          : { var popup = pressureCtrlFloatSetupDlg.createObject(window) ; popup.show(); }
+        onClickPressureCtrlLearnParam     : { var popup = pressureCtrlLearnParamDlg.createObject(window) ; popup.show(); }//popup.open(); }
+        onClickPressureCtrlLearnList      : { var popup = pressureCtrlLearnListDlg.createObject(window)  ; popup.show(); }//popup.open(); }
+        onClickPressureCtrlGainMointoring : { var popup = pressureCtrlGainMonitorDlg.createObject(window); popup.show(); }
+        onClickNCPASettings               : { var popup = ncpaSettingsDlg.createObject(window)           ; popup.show(); }
+        onClickInterfaceSetup             : {
             var popup
             if(model.mInterface == ValveEnumDef.INTERFACE_ETHERCAT)
             {
@@ -572,6 +574,14 @@ Window {
     Component{
         id : pressureCtrlLearnListDlg
         PressureLearnList{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
+    }
+
+    Component{
+        id : pressureCtrlGainMonitorDlg
+        PressureCtrlGainMonitorDlg{
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
         }

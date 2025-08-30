@@ -202,4 +202,9 @@ echo Created folder structure:
 dir "..\build_cursor\make_version" /b
 echo.
 echo Task completed!
+
+endlocal
+
+call copy_src.bat
+
 pause

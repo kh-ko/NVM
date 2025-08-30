@@ -23,6 +23,7 @@
 #include "source/qmlmodel/pressurectrlfloatsetupdlgmodel.h"
 #include "source/qmlmodel/pressurectrllearnparamdlgmodel.h"
 #include "source/qmlmodel/pressurectrllearnlistdlgmodel.h"
+#include "source/qmlmodel/pressurectrlgainmonitordlgmodel.h"
 #include "source/qmlmodel/ncpasettingsdlgmodel.h"
 #include "source/qmlmodel/interfacesetupdevnetdlgmodel.h"
 #include "source/qmlmodel/interfacesetuplogicdlgmodel.h"
@@ -160,6 +161,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<PressureCtrlLearnParamItemModel>("PressureCtrlLearnParamItemModel", 1, 0, "PressureCtrlLearnParamItemModel");
     qmlRegisterType<PressureCtrlLearnListItemModel>("PressureCtrlLearnListItemModel", 1, 0, "PressureCtrlLearnListItemModel");
     qmlRegisterType<PressureCtrlLearnListDlgModel>("PressureCtrlLearnListDlgModel", 1, 0, "PressureCtrlLearnListDlgModel");
+    qmlRegisterType<PressureCtrlGainMonitorDlgModel>("PressureCtrlGainMonitorDlgModel", 1, 0, "PressureCtrlGainMonitorDlgModel");
     qmlRegisterType<NCPASettingsDlgModel>("NCPASettingsDlgModel", 1, 0, "NCPASettingsDlgModel");
     qmlRegisterType<InterfaceSetupDevNetDlgModel>("InterfaceSetupDevNetDlgModel", 1, 0, "InterfaceSetupDevNetDlgModel");
     qmlRegisterType<InterfaceSetupDevNetAssemblyItemModel>("InterfaceSetupDevNetAssemblyItemModel", 1, 0, "InterfaceSetupDevNetAssemblyItemModel");
