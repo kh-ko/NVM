@@ -15,17 +15,20 @@
 #include "source/qmlmodel/valvesetupdlgmodel.h"
 #include "source/qmlmodel/changeaccessdlgmodel.h"
 #include "source/qmlmodel/valveparamexdlgmodel.h"
+#include "source/qmlmodel/valveparampmdlgmodel.h"
 #include "source/qmlmodel/valverecoverydlgmodel.h"
 #include "source/qmlmodel/sensorsetupdlgmodel.h"
 #include "source/qmlmodel/sensorsetupexdlgmodel.h"
 #include "source/qmlmodel/sensoranalysisdlgmodel.h"
 #include "source/qmlmodel/pressurectrlsetupdlgmodel.h"
 #include "source/qmlmodel/pressurectrlfloatsetupdlgmodel.h"
+#include "source/qmlmodel/pressurectrlforpmprotodlgmodel.h"
 #include "source/qmlmodel/pressurectrllearnparamdlgmodel.h"
 #include "source/qmlmodel/pressurectrllearnlistdlgmodel.h"
 #include "source/qmlmodel/pressurectrlgainmonitordlgmodel.h"
 #include "source/qmlmodel/ncpasettingsdlgmodel.h"
 #include "source/qmlmodel/interfacesetupdevnetdlgmodel.h"
+#include "source/qmlmodel/interfacesetupdevnetrangedlgmodel.h"
 #include "source/qmlmodel/interfacesetuplogicdlgmodel.h"
 #include "source/qmlmodel/interfacesetupethercatdlgmodel.h"
 #include "source/qmlmodel/interfacesetuprs232dlgmodel.h"
@@ -151,12 +154,16 @@ int main(int argc, char *argv[])
     qmlRegisterType<ChangeAccessDlgModel>("ChangeAccessDlgModel", 1, 0, "ChangeAccessDlgModel");
     qmlRegisterType<ValveParamExItemModel>("ValveParamExItemModel", 1, 0, "ValveParamExItemModel");
     qmlRegisterType<ValveParamExDlgModel>("ValveParamExDlgModel", 1, 0, "ValveParamExDlgModel");
+    qmlRegisterType<ValveParamPMItemModel>("ValveParamPMItemModel", 1, 0, "ValveParamPMItemModel");
+    qmlRegisterType<ValveParamPMDlgModel>("ValveParamPMDlgModel", 1, 0, "ValveParamPMDlgModel");
     qmlRegisterType<ValveRecoveryDlgModel>("ValveRecoveryDlgModel", 1, 0, "ValveRecoveryDlgModel");
     qmlRegisterType<SensorSetupDlgModel>("SensorSetupDlgModel", 1, 0, "SensorSetupDlgModel");
     qmlRegisterType<SensorSetupExDlgModel>("SensorSetupExDlgModel", 1, 0, "SensorSetupExDlgModel");
     qmlRegisterType<SensorAnalysisDlgModel>("SensorAnalysisDlgModel", 1, 0, "SensorAnalysisDlgModel");
     qmlRegisterType<PressureCtrlSetupDlgModel>("PressureCtrlSetupDlgModel", 1, 0, "PressureCtrlSetupDlgModel");
     qmlRegisterType<PressureCtrlFloatSetupDlgModel>("PressureCtrlFloatSetupDlgModel", 1, 0, "PressureCtrlFloatSetupDlgModel");
+    qmlRegisterType<PressureCtrlControllerItem>("PressureCtrlControllerItem", 1, 0, "PressureCtrlControllerItem");
+    qmlRegisterType<PressureCtrlForPmProtoDlgModel>("PressureCtrlForPmProtoDlgModel", 1, 0, "PressureCtrlForPmProtoDlgModel");
     qmlRegisterType<PressureCtrlLearnParamDlgModel>("PressureCtrlLearnParamDlgModel", 1, 0, "PressureCtrlLearnParamDlgModel");
     qmlRegisterType<PressureCtrlLearnParamItemModel>("PressureCtrlLearnParamItemModel", 1, 0, "PressureCtrlLearnParamItemModel");
     qmlRegisterType<PressureCtrlLearnListItemModel>("PressureCtrlLearnListItemModel", 1, 0, "PressureCtrlLearnListItemModel");
@@ -164,6 +171,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<PressureCtrlGainMonitorDlgModel>("PressureCtrlGainMonitorDlgModel", 1, 0, "PressureCtrlGainMonitorDlgModel");
     qmlRegisterType<NCPASettingsDlgModel>("NCPASettingsDlgModel", 1, 0, "NCPASettingsDlgModel");
     qmlRegisterType<InterfaceSetupDevNetDlgModel>("InterfaceSetupDevNetDlgModel", 1, 0, "InterfaceSetupDevNetDlgModel");
+    qmlRegisterType<InterfaceSetupDevNetRangeItemModel>("InterfaceSetupDevNetRangeItemModel", 1, 0, "InterfaceSetupDevNetRangeItemModel");
+    qmlRegisterType<InterfaceSetupDevNetRangeDlgModel>("InterfaceSetupDevNetRangeDlgModel", 1, 0, "InterfaceSetupDevNetRangeDlgModel");
     qmlRegisterType<InterfaceSetupDevNetAssemblyItemModel>("InterfaceSetupDevNetAssemblyItemModel", 1, 0, "InterfaceSetupDevNetAssemblyItemModel");
     qmlRegisterType<InterfaceSetupLogicDlgModel>("InterfaceSetupLogicDlgModel", 1, 0, "InterfaceSetupLogicDlgModel");
     qmlRegisterType<InterfaceSetupEtherCATDlgModel>("InterfaceSetupEtherCATDlgModel", 1, 0, "InterfaceSetupEtherCATDlgModel");

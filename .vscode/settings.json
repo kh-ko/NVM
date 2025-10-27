@@ -6,6 +6,7 @@
         "type_traits": "cpp",
         "xlocmon": "cpp",
         "xtr1common": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "xstring": "cpp"
     }
 }

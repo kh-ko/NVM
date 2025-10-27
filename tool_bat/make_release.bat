@@ -132,7 +132,7 @@ if exist "..\build_cursor\release_apsys\release\NVM.exe" (
     
     REM Qt 배포 파일 생성
     echo Creating Qt deployment package for apsystem...
-    "C:\Qt\5.15.2\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-apsys\NVM.exe" --qmldir "..\qml"
+    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-apsys\NVM.exe" --qmldir "..\qml"
     echo Qt deployment package created for apsystem.
     
     REM static_resource 복사
@@ -149,7 +149,7 @@ if exist "..\build_cursor\release_none\release\NVM.exe" (
     
     REM Qt 배포 파일 생성
     echo Creating Qt deployment package for none...
-    "C:\Qt\5.15.2\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-none\NVM.exe" --qmldir "..\qml"
+    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-none\NVM.exe" --qmldir "..\qml"
     echo Qt deployment package created for none.
     
     REM static_resource 복사
@@ -166,7 +166,7 @@ if exist "..\build_cursor\release_nova\release\NVM.exe" (
     
     REM Qt 배포 파일 생성
     echo Creating Qt deployment package for nova...
-    "C:\Qt\5.15.2\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-nova\NVM.exe" --qmldir "..\qml"
+    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-nova\NVM.exe" --qmldir "..\qml"
     echo Qt deployment package created for nova.
     
     REM static_resource 복사
@@ -183,7 +183,7 @@ if exist "..\build_cursor\release_soao\release\NVM.exe" (
     
     REM Qt 배포 파일 생성
     echo Creating Qt deployment package for soao...
-    "C:\Qt\5.15.2\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-soao\NVM.exe" --qmldir "..\qml"
+    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-soao\NVM.exe" --qmldir "..\qml"
     echo Qt deployment package created for soao.
     
     REM static_resource 복사
@@ -203,8 +203,8 @@ dir "..\build_cursor\make_version" /b
 echo.
 echo Task completed!
 
-endlocal
-
 call copy_src.bat
+
+endlocal
 
 pause

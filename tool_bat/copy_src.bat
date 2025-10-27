@@ -1,11 +1,15 @@
 @echo off
-setlocal enabledelayedexpansion
+REM Use the local environment from the calling script (make_release.bat)
+REM setlocal enabledelayedexpansion
 
 REM =================================================================
 REM                          CONFIGURATION
 REM =================================================================
-REM Set the release version here.
-set "VERSION=1.9.97"
+REM Get the release version from make_release.bat
+REM If VERSION is not set, use default value
+if not defined VERSION (
+    set "VERSION=1.9.97"
+)
 
 
 REM =================================================================
@@ -81,5 +85,5 @@ echo The release package has been created at the following path:
 echo %CD%\%DEST_PATH%
 echo.
 
-endlocal
+REM endlocal - not needed when called from make_release.bat
 

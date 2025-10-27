@@ -29,6 +29,7 @@ Rectangle {
     signal clickSensorSetup()
     signal clickSensorAnalysis()
     signal clickPressureCtrlSetup()
+    signal clickPressureCtrlAdvanSetup()
     signal clickPressureCtrlLearnParam()
     signal clickPressureCtrlLearnList()
     signal clickPressureCtrlGainMointoring()
@@ -189,12 +190,22 @@ Rectangle {
 
                 NExButtonItem{
                     id : menuPressControlSetup
-                    anchors.bottom: menuPressControlLearnParam.top
+                    anchors.bottom: menuPressControlAdvanSetup.top
                     enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
                     text.text: qsTr("Setup")
 
                     onClicked: { panel.clickPressureCtrlSetup() }
                 }
+
+                NExButtonItem{
+                    id : menuPressControlAdvanSetup
+                    anchors.bottom: menuPressControlLearnParam.top
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+                    text.text: qsTr("Advanced Setup")
+
+                    onClicked: { panel.clickPressureCtrlAdvanSetup()}
+                }
+
                 NExButtonItem{
                     id : menuPressControlLearnParam
                     anchors.bottom: menuPressControlLearnList.top

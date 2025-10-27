@@ -67,6 +67,23 @@ public:
     }
 
 
+    static bool DoubleEqual(QString v1, QString v2){
+        bool ret = false;
+
+        double dv1 = v1.toDouble();
+        double dv2 = v2.toDouble();
+
+        double min = qMin(dv1,dv2);
+        double diff = qAbs(dv1 - dv2);
+
+        min = qAbs(min);
+
+        ret = (diff <= min * 0.000001);
+
+        return ret;
+    }
+
+
     MathUtil(){}
     ~MathUtil(){}
 

@@ -99,6 +99,8 @@
 		{"seq":96,"desc":"Stable_Mode_Enable(1,(OFF/ON))"},
 		{"seq":97,"desc":"I_Enable(1,(OFF/ON))"},
 		{"seq":98,"desc":"End_Percent(99, (50 ~ 100%)"},
-		{"seq":99,"desc":"Adaptive stable percent(50, (1 ~ 10000)"}
+		{"seq":99,"desc":"Adaptive stable percent(50, (1 ~ 10000)"},
+		{"seq":100,"desc":"Adaptive Conductance Method (3, 0~3)"},
+		{"seq":101,"desc":"Adaptive Disk Back time (500, 0~5000)"}
 	]
 }

@@ -43,6 +43,8 @@ HEADERS += \
     source/nchart/nchartcontrol.h \
     source/nchart/nchartpointbuffer.h \
     source/nchart/nchartview.h \
+    source/qmlmodel/interfacesetupdevnetrangedlgmodel.h \
+    source/qmlmodel/pressurectrlforpmprotodlgmodel.h \
     source/qmlmodel/pressurectrlgainmonitordlgmodel.h \
     source/qmlmodel/advancedtoolbackupnrestoredlgmodel.h \
     source/qmlmodel/advancedtooltestdlgmodel.h \
@@ -94,6 +96,7 @@ HEADERS += \
     source/qmlmodel/valvecyclecounterdlgmodel.h \
     source/qmlmodel/valveidentificationexdlgmodel.h \
     source/qmlmodel/valveparamexdlgmodel.h \
+    source/qmlmodel/valveparampmdlgmodel.h \
     source/qmlmodel/valvepowerfailstatusdlgmodel.h \
     source/qmlmodel/valverecoverydlgmodel.h \
     source/qmlmodel/valvesetupdlgmodel.h \

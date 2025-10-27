@@ -159,5 +159,10 @@
         <file>image/usb_port.png</file>
         <file>ui/dialog/InterfaceSetupProfibusPDOItem.qml</file>
         <file>ui/dialog/PressureCtrlGainMonitorDlg.qml</file>
+        <file>ui/dialog/PressureCtrlForPmProtoDlg.qml</file>
+        <file>ui/dialog/PressureCtrlForPmProtoControllerBox.qml</file>
+        <file>ui/dialog/InterfaceSetupDevNetRangeDlg.qml</file>
+        <file>ui/dialog/InterfaceSetupDevNetRangeDataItem.qml</file>
+        <file>ui/dialog/ValveParamPMDlg.qml</file>
     </qresource>
 </RCC>

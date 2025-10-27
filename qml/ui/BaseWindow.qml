@@ -144,7 +144,19 @@ Window {
 
         onClickValveIdentification    : { var popup = valveIdentificationExDlg.createObject(window) ; popup.show(); }
         onClickValveSetup             : { var popup = valveSetupDlg.createObject(window)            ; popup.show(); }
-        onClickValveParameters        : { var popup = valveParamExDlg.createObject(window)          ; popup.show(); }
+        onClickValveParameters        :
+        {
+            var lastValue = parseInt(model.mFirmwareVersion.slice(-4), 16);
+
+            if(lastValue > 0x601)
+            {
+                var popup = valveParamPMDlg.createObject(window)          ; popup.show();
+            }
+            else
+            {
+                var popup = valveParamExDlg.createObject(window)          ; popup.show();
+            }
+        }
         onClickValveCycleCounter      : { var popup = valveCycleCounterDlg.createObject(window)     ; popup.show(); }
         onClickValvePowerFailStatus   : { var popup = valvePowerFailStatusDlg.createObject(window)  ; popup.show(); }
         onClickValveRecovery          :
@@ -168,6 +180,7 @@ Window {
         onClickSensorSetup                : { var popup = sensorSetupExDlg.createObject(window)          ; popup.show(); }
         onClickSensorAnalysis             : { var popup = sensorAnalysisDlg.createObject(window)         ; popup.show(); }
         onClickPressureCtrlSetup          : { var popup = pressureCtrlFloatSetupDlg.createObject(window) ; popup.show(); }
+        onClickPressureCtrlAdvanSetup     : { var popup = pressureCtrlAdvanSetupDlg.createObject(window) ; popup.show(); }
         onClickPressureCtrlLearnParam     : { var popup = pressureCtrlLearnParamDlg.createObject(window) ; popup.show(); }//popup.open(); }
         onClickPressureCtrlLearnList      : { var popup = pressureCtrlLearnListDlg.createObject(window)  ; popup.show(); }//popup.open(); }
         onClickPressureCtrlGainMointoring : { var popup = pressureCtrlGainMonitorDlg.createObject(window); popup.show(); }
@@ -507,6 +520,14 @@ Window {
     }
 
     Component{
+        id : valveParamPMDlg
+        ValveParamPMDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+        }
+    }
+
+    Component{
         id : valveRecoveryDlg
         ValveRecoveryDlg
         {
@@ -565,6 +586,19 @@ Window {
         }
     }
     Component{
+        id : pressureCtrlAdvanSetupDlg
+        PressureCtrlForPmProtoDlg{
+            connectInfo: model.mConnectionInfo
+            valveID    : model.mValveID
+
+            onSignalEventOccurErr: {
+                close()
+                var popup = pressureCtrlSetupDlg.createObject(window); popup.show();
+            }
+        }
+    }
+
+    Component{
         id : pressureCtrlLearnParamDlg
         PressureCtrlLearnParamDlg{
             connectInfo: model.mConnectionInfo
@@ -615,8 +649,21 @@ Window {
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
             company    : model.mCompany
+            firmwareVer: parseInt(model.mFirmwareVersion.slice(-4), 16)
+
+            onClickRangeSetting: {
+                 var popup = interfaceSetupDevNetRangeDlg.createObject(window) ; popup.show();
+            }
         }
     }
+
+    Component{
+        id : interfaceSetupDevNetRangeDlg
+        InterfaceSetupDevNetRangeDlg{
+
+        }
+    }
+
     Component{
         id : interfaceSetupRS232Dlg
         InterfaceSetupRS232Dlg{

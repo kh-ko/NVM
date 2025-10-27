@@ -2198,6 +2198,7 @@ public :
 
     void setInterfaceConfigEthCATPDODataType(int idx, int dataType, void * userData, int retryCnt = 0)
     {
+
         QString cmd = QString("%1%2%3%4").arg(REQ_WRITE_INTERFACE_CFG_ETHCAT_PDO_DATA_TYPE)
                                            .arg(idx, 2, 10, QChar('0'))
                                            .arg(dataType, 1, 10, QChar('0'))
@@ -2517,7 +2518,7 @@ public :
 
     void customRequest(QString command, void * userData, int retryCnt = 0)
     {
-        qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << command;
+        //qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << command;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenCustomCommand, nullptr, command, "", 0, retryCnt, userData));
     }
 

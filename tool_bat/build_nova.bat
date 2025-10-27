@@ -39,12 +39,12 @@ echo.
 echo Setting up build environment...
 
 REM MinGW 환경 설정
-set MINGW_COMPILER_PATH=C:\Qt\5.15.2\Tools\mingw810_32\bin
-set MINGW_QT_PATH=C:\Qt\5.15.2\5.15.2\mingw81_32\bin
+set MINGW_COMPILER_PATH=C:\Qt\Tools\mingw810_32\bin
+set MINGW_QT_PATH=C:\Qt\5.15.2\mingw81_32\bin
 set PATH=%MINGW_COMPILER_PATH%;%MINGW_QT_PATH%;%PATH%
 
 REM 환경변수로 경로 설정 현재 경로 NVM/build_cursor/release_nova/
-set QT_PATH="C:\Qt\5.15.2\5.15.2\mingw81_32\bin\qmake.exe"
+set QT_PATH="C:\Qt\5.15.2\mingw81_32\bin\qmake.exe"
 set PRO_PATH="..\..\NVM.pro"
 
 call %QT_PATH% %PRO_PATH%

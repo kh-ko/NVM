@@ -478,7 +478,7 @@ BaseSetupWindow{
                     visible: dialog.unlock
 
                     fontFamily: FontManager.codingName
-                    model: ["Unknown", "040 : DN40", "050 : DN50", "063 : DN63" , "080 : DN80" , "100 : DN100" , "160 : DN160" , "200 : DN200" , "250 : DN250", "025 : DN25", "320 : DN320"]
+                    model: ["Unknown", "040 : DN40", "050 : DN50", "063 : DN63" , "080 : DN80" , "100 : DN100" , "160 : DN160" , "200 : DN200" , "250 : DN250", "025 : DN25", "320 : DN320", "350 : DN350", "400 : DN400"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)

@@ -218,5 +218,10 @@ public:
         return "";
     }
 
+    int getValveParamDescCount()
+    {
+        return mValveParamDescTable.count();
+    }
+
 };
 #endif // CONFIGSPROVIDER_H

@@ -14,6 +14,9 @@ BaseSetupWindow{
     readonly property int emptyHeight : 24 * GUISetting.scale
     property var body : null
     property var company : ValveEnumDef.COMPANY_NOVA
+    property int firmwareVer : 0
+
+    signal clickRangeSetting()
 
     titleText   : qsTr("Interface setup(D-Net)")
     progress    : dlgModel.mProgress
@@ -224,6 +227,8 @@ BaseSetupWindow{
                     width: 120 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _baudrateCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
+                    visible : (dialog.firmwareVer < 0x601)
+
                     enabled: dialog.progress === 100 && dlgModel.mEnablePositionUnitIdx
 
                     model: ["counts","percent","degrees"]
@@ -261,6 +266,8 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _positionUnitCombo.verticalCenter; anchors.left: _positionUnitCombo.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrPositionUnitIdx ? "#FF0000" : "#000000"
+
+                    visible : (dialog.firmwareVer < 0x601)
                     text : qsTr("position unit")
                 }
 
@@ -279,7 +286,7 @@ BaseSetupWindow{
                     anchors.top: _positionUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                     //anchors.verticalCenter: positionRangeFromLabel.verticalCenter; anchors.left: positionRangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _positionUnitCombo.right
 
-                    visible: _positionUnitCombo.currentIndex == 0
+                    visible: _positionUnitCombo.currentIndex == 0 && (dialog.firmwareVer < 0x601)
                     textField.validator: DoubleValidator{}
                     stepValue : 1; minValue:0; maxValue: 999999999
                     fixedN : 3
@@ -294,6 +301,8 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _positionRange.verticalCenter; anchors.left: _positionRange.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrPositionRange ? "#FF0000" : "#000000"
+
+                    visible: _positionUnitCombo.currentIndex == 0 && (dialog.firmwareVer < 0x601)
                     text : qsTr("Max")
                 }
 
@@ -302,6 +311,7 @@ BaseSetupWindow{
                     width: 120 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _positionRange.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
+                    visible : (dialog.firmwareVer < 0x601)
                     enabled: dialog.progress === 100  && dlgModel.mEnablePressureUnitIdx
 
                     model: ["counts","percent","psi","Torr","mTorr","bar","mbar","pa","atm"]
@@ -345,6 +355,8 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _pressureUnitCombo.verticalCenter; anchors.left: _pressureUnitCombo.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrPressureUnitIdx ? "#FF0000" : "#000000"
+
+                    visible: (dialog.firmwareVer < 0x601)
                     text : qsTr("pressure unit")
                 }
 
@@ -362,7 +374,7 @@ BaseSetupWindow{
                     //anchors.verticalCenter: sensor01RangeFromLabel.verticalCenter; anchors.left: sensor01RangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _pressureUnitCombo.right
                     anchors.top: _pressureUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
-                    visible: _pressureUnitCombo.currentIndex == 0
+                    visible: _pressureUnitCombo.currentIndex == 0 && (dialog.firmwareVer < 0x601)
                     textField.validator: DoubleValidator{}
                     stepValue : 1; minValue:0; maxValue: 999999999
                     fixedN : 4
@@ -377,7 +389,7 @@ BaseSetupWindow{
                 NText{
                     anchors.verticalCenter: _sensor01Range.verticalCenter; anchors.left: _sensor01Range.right; anchors.leftMargin: GUISetting.margin
                     color: dlgModel.mErrSensor01Range ? "#FF0000" : "#000000"
-                    visible: _pressureUnitCombo.currentIndex == 0
+                    visible: _pressureUnitCombo.currentIndex == 0 && (dialog.firmwareVer < 0x601)
                     text : qsTr("MAX") //_pressureUnitCombo.currentIndex > 1 ? qsTr("sensor 1 range") : qsTr("sensor range")
                  }
 
@@ -411,6 +423,20 @@ BaseSetupWindow{
                     color: dlgModel.mErrSensor02Range ? "#FF0000" : "#000000"
                     visible: false//_pressureUnitCombo.currentIndex > 1
                     text : qsTr("sensor 2 range")
+                }
+
+                NButton{
+                    id : advanceRangeSetting
+                    height: 24 * GUISetting.scale
+                    anchors.top: _baudrateCombo.bottom; anchors.topMargin: GUISetting.margin * 1.5; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin:GUISetting.margin;
+
+                    visible : firmwareVer > 0x600
+                    bgColor: "#FFFFFF"
+                    text.text: qsTr("Range Setting")
+
+                    onClick: {
+                        dialog.clickRangeSetting();
+                    }
                 }
             }
 
