@@ -389,7 +389,11 @@ public slots:
     Q_INVOKABLE ValveParamPMItemModel * onCommandGetParamItem(int idx)
     {
         if(idx >= mpParamList.count())
-            return &mDummyParamItem;
+        {
+            if(mpDummyParamItem == nullptr)
+                mpDummyParamItem = new ValveParamPMItemModel(this);
+            return mpDummyParamItem;
+        }
 
         return mpParamList[idx];
     }
@@ -402,7 +406,7 @@ public slots:
 private:
     bool                            mRebootCheck = false;
     QList<ValveParamPMItemModel *>  mpParamList;
-    ValveParamPMItemModel           mDummyParamItem;
+    ValveParamPMItemModel *         mpDummyParamItem = nullptr;
 
 private:
     int STATE_WRITE_REBOOT          = 0;

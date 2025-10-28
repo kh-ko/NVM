@@ -595,7 +595,7 @@ public slots:
         setErrMsg("");
 
         /* valve setup */
-        //tempItem.setCommand(QString("%1").arg(REQ_READ_VALVE_SPEED), QString("%1").arg(REQ_WRITE_VALVE_SPEED)); mValveSetupCmdList.append(tempItem);
+        tempItem.setCommand("Valve Speed", QString("-")                           , QString("%1").arg(REQ_WRITE_VALVE_SPEED)); tempItem.mValue = QString("%1").arg(pValveSP->getValveSpeed(), 4, 10, QChar('0')); mExportCmdList.append(tempItem);
         tempItem.setCommand("Valve Setup", QString("%1").arg(REQ_READ_VALVE_SETUP), QString("%1").arg(REQ_WRITE_VALVE_SETUP)); mExportCmdList.append(tempItem);
 
         /* set point */
