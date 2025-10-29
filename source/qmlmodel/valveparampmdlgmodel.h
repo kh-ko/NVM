@@ -193,18 +193,18 @@ public slots:
 
     void onValveWrittenCustomRequest(ValveResponseDto dto){
 
-        if(dto.mIsNetworkErr || dto.mResData.startsWith("p:00") == false)
+        if(dto.mIsNetworkErr || (dto.mResData.startsWith("p:00") == false && dto.mReqDto.mReqCommand.startsWith("p:01")))
         {
             setErrMsg("receive protocol error");
             setState(mState);
             return;
         }
 
-        if(dto.mResData.startsWith("p:000B"))
+        if(dto.mReqDto.mReqCommand.startsWith("p:0B"))
         {
             onValveReadedValveParam(dto);
         }
-        else if(dto.mResData.startsWith("p:0001"))
+        else if(dto.mReqDto.mReqCommand.startsWith("p:01"))
         {
             onValveWrittenValveParam(dto);
         }
@@ -212,8 +212,7 @@ public slots:
 
     void onValveReadedValveParam(ValveResponseDto dto)
     {
-        int id    = dto.mResData.mid(QString("p:0001B0000100").length(), 2).toInt(nullptr, 16);
-        int value = dto.mResData.mid(QString("p:0001B000010000").length()).toInt();
+        int id    = dto.mReqDto.mReqCommand.mid(QString("p:01B0000100").length(), 2).toInt(nullptr, 16);
 
         if(id != convertParamID(mState) || dto.mReqDto.mpRef != this)
             return;
@@ -222,10 +221,17 @@ public slots:
 
         setErrMsg("");
 
-        setParamByController(dto.mIsSucc, id, value);
 
+        if(dto.mResData.startsWith("p:00") == false)
+        {
+            setParamByController(false, id, 0);
+        }
+        else
+        {
+            int value = dto.mResData.mid(QString("p:0001B000010000").length()).toInt();
+            setParamByController(dto.mIsSucc, id, value);
+        }
         emit signalEventProcIdx(convertParamID(mState));
-
         setState(mState + 1);
     }
 

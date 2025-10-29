@@ -319,114 +319,114 @@ public slots:
 
 
         /* pressure control for pm protocol */
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Algorithm Mode)"       , QString("p:0B0711010000"), QString("p:010711010000")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Gain Factor)"          , QString("p:0B0711020300"), QString("p:010711020300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Delta Factor)"         , QString("p:0B0711020700"), QString("p:010711020700")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Sensor Delay)"         , QString("p:0B0711020400"), QString("p:010711020400")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Learn Data Selection)" , QString("p:0B0711020500"), QString("p:010711020500")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Direction)"            , QString("p:0B0711020600"), QString("p:010711020600")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 P Gain Factor)"        , QString("p:0B0711020100"), QString("p:010711020100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 I Gain Factor)"        , QString("p:0B0711020200"), QString("p:010711020200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Pressure Scaler)"      , QString("p:0B0711022300"), QString("p:010711022300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Enable)"          , QString("p:0B0711030100"), QString("p:010711030100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Time)"            , QString("p:0B0711030200"), QString("p:010711030200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Slope)"           , QString("p:0B0711030300"), QString("p:010711030300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Mode)"            , QString("p:0B0711030400"), QString("p:010711030400")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp StartValue)"      , QString("p:0B0711030500"), QString("p:010711030500")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Type)"            , QString("p:0B0711030600"), QString("p:010711030600")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Algorithm Mode)"       , QString("p:0B0712010000"), QString("p:010712010000")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Gain Factor)"          , QString("p:0B0712020300"), QString("p:010712020300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Delta Factor)"         , QString("p:0B0712020700"), QString("p:010712020700")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Sensor Delay)"         , QString("p:0B0712020400"), QString("p:010712020400")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Learn Data Selection)" , QString("p:0B0712020500"), QString("p:010712020500")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Direction)"            , QString("p:0B0712020600"), QString("p:010712020600")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 P Gain Factor)"        , QString("p:0B0712020100"), QString("p:010712020100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 I Gain Factor)"        , QString("p:0B0712020200"), QString("p:010712020200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Pressure Scaler)"      , QString("p:0B0712022300"), QString("p:010712022300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Enable)"          , QString("p:0B0712030100"), QString("p:010712030100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Time)"            , QString("p:0B0712030200"), QString("p:010712030200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Slope)"           , QString("p:0B0712030300"), QString("p:010712030300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Mode)"            , QString("p:0B0712030400"), QString("p:010712030400")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp StartValue)"      , QString("p:0B0712030500"), QString("p:010712030500")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Type)"            , QString("p:0B0712030600"), QString("p:010712030600")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Algorithm Mode)"       , QString("p:0B0713010000"), QString("p:010713010000")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Gain Factor)"          , QString("p:0B0713020300"), QString("p:010713020300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Delta Factor)"         , QString("p:0B0713020700"), QString("p:010713020700")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Sensor Delay)"         , QString("p:0B0713020400"), QString("p:010713020400")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Learn Data Selection)" , QString("p:0B0713020500"), QString("p:010713020500")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Direction)"            , QString("p:0B0713020600"), QString("p:010713020600")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 P Gain Factor)"        , QString("p:0B0713020100"), QString("p:010713020100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 I Gain Factor)"        , QString("p:0B0713020200"), QString("p:010713020200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Pressure Scaler)"      , QString("p:0B0713022300"), QString("p:010713022300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Enable)"          , QString("p:0B0713030100"), QString("p:010713030100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Time)"            , QString("p:0B0713030200"), QString("p:010713030200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Slope)"           , QString("p:0B0713030300"), QString("p:010713030300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Mode)"            , QString("p:0B0713030400"), QString("p:010713030400")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp StartValue)"      , QString("p:0B0713030500"), QString("p:010713030500")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Type)"            , QString("p:0B0713030600"), QString("p:010713030600")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Algorithm Mode)"       , QString("p:0B0714010000"), QString("p:010714010000")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Gain Factor)"          , QString("p:0B0714020300"), QString("p:010714020300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Delta Factor)"         , QString("p:0B0714020700"), QString("p:010714020700")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Sensor Delay)"         , QString("p:0B0714020400"), QString("p:010714020400")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Learn Data Selection)" , QString("p:0B0714020500"), QString("p:010714020500")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Direction)"            , QString("p:0B0714020600"), QString("p:010714020600")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 P Gain Factor)"        , QString("p:0B0714020100"), QString("p:010714020100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 I Gain Factor)"        , QString("p:0B0714020200"), QString("p:010714020200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Pressure Scaler)"      , QString("p:0B0714022300"), QString("p:010714022300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Enable)"          , QString("p:0B0714030100"), QString("p:010714030100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Time)"            , QString("p:0B0714030200"), QString("p:010714030200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Slope)"           , QString("p:0B0714030300"), QString("p:010714030300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Mode)"            , QString("p:0B0714030400"), QString("p:010714030400")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp StartValue)"      , QString("p:0B0714030500"), QString("p:010714030500")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Type)"            , QString("p:0B0714030600"), QString("p:010714030600")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (controller S LECTOR)"               , QString("p:0B0710000000"), QString("p:010710000000")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Default Selected Contrller)"        , QString("p:0B0705000000"), QString("p:010705000000")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Position Restriction Enable)"       , QString("p:0B0730120100"), QString("p:010730120100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Position Restriction Max)"          , QString("p:0B0730120300"), QString("p:010730120300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Position Restriction Min)"          , QString("p:0B0730120200"), QString("p:010730120200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Enable)"             , QString("p:0B0730170100"), QString("p:010730170100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Mode)"               , QString("p:0B0730170200"), QString("p:010730170200")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Pressure Rising)"    , QString("p:0B0730172000"), QString("p:010730172000")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Pressure Falling)"   , QString("p:0B0730172100"), QString("p:010730172100")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection bitmap)"             , QString("p:0B0730170300"), QString("p:010730170300")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold Condition)", QString("p:0B0730171000"), QString("p:010730171000")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold 1)"        , QString("p:0B0730170400"), QString("p:010730170400")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold 2)"        , QString("p:0B0730170500"), QString("p:010730170500")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold 3)"        , QString("p:0B0730170600"), QString("p:010730170600")); mExportCmdList.append(tempItem);
-        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold 4)"        , QString("p:0B0730170700"), QString("p:010730170700")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Algorithm Mode)"       , QString("p:0B0711010000"), QString("p:010711010000"), QString("p:000B0711010000")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Gain Factor)"          , QString("p:0B0711020300"), QString("p:010711020300"), QString("p:000B0711020300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Delta Factor)"         , QString("p:0B0711020700"), QString("p:010711020700"), QString("p:000B0711020700")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Sensor Delay)"         , QString("p:0B0711020400"), QString("p:010711020400"), QString("p:000B0711020400")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Learn Data Selection)" , QString("p:0B0711020500"), QString("p:010711020500"), QString("p:000B0711020500")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Direction)"            , QString("p:0B0711020600"), QString("p:010711020600"), QString("p:000B0711020600")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 P Gain Factor)"        , QString("p:0B0711020100"), QString("p:010711020100"), QString("p:000B0711020100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 I Gain Factor)"        , QString("p:0B0711020200"), QString("p:010711020200"), QString("p:000B0711020200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Pressure Scaler)"      , QString("p:0B0711022300"), QString("p:010711022300"), QString("p:000B0711022300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Enable)"          , QString("p:0B0711030100"), QString("p:010711030100"), QString("p:000B0711030100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Time)"            , QString("p:0B0711030200"), QString("p:010711030200"), QString("p:000B0711030200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Slope)"           , QString("p:0B0711030300"), QString("p:010711030300"), QString("p:000B0711030300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Mode)"            , QString("p:0B0711030400"), QString("p:010711030400"), QString("p:000B0711030400")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp StartValue)"      , QString("p:0B0711030500"), QString("p:010711030500"), QString("p:000B0711030500")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 1 Ramp Type)"            , QString("p:0B0711030600"), QString("p:010711030600"), QString("p:000B0711030600")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Algorithm Mode)"       , QString("p:0B0712010000"), QString("p:010712010000"), QString("p:000B0712010000")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Gain Factor)"          , QString("p:0B0712020300"), QString("p:010712020300"), QString("p:000B0712020300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Delta Factor)"         , QString("p:0B0712020700"), QString("p:010712020700"), QString("p:000B0712020700")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Sensor Delay)"         , QString("p:0B0712020400"), QString("p:010712020400"), QString("p:000B0712020400")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Learn Data Selection)" , QString("p:0B0712020500"), QString("p:010712020500"), QString("p:000B0712020500")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Direction)"            , QString("p:0B0712020600"), QString("p:010712020600"), QString("p:000B0712020600")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 P Gain Factor)"        , QString("p:0B0712020100"), QString("p:010712020100"), QString("p:000B0712020100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 I Gain Factor)"        , QString("p:0B0712020200"), QString("p:010712020200"), QString("p:000B0712020200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Pressure Scaler)"      , QString("p:0B0712022300"), QString("p:010712022300"), QString("p:000B0712022300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Enable)"          , QString("p:0B0712030100"), QString("p:010712030100"), QString("p:000B0712030100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Time)"            , QString("p:0B0712030200"), QString("p:010712030200"), QString("p:000B0712030200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Slope)"           , QString("p:0B0712030300"), QString("p:010712030300"), QString("p:000B0712030300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Mode)"            , QString("p:0B0712030400"), QString("p:010712030400"), QString("p:000B0712030400")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp StartValue)"      , QString("p:0B0712030500"), QString("p:010712030500"), QString("p:000B0712030500")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 2 Ramp Type)"            , QString("p:0B0712030600"), QString("p:010712030600"), QString("p:000B0712030600")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Algorithm Mode)"       , QString("p:0B0713010000"), QString("p:010713010000"), QString("p:000B0713010000")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Gain Factor)"          , QString("p:0B0713020300"), QString("p:010713020300"), QString("p:000B0713020300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Delta Factor)"         , QString("p:0B0713020700"), QString("p:010713020700"), QString("p:000B0713020700")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Sensor Delay)"         , QString("p:0B0713020400"), QString("p:010713020400"), QString("p:000B0713020400")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Learn Data Selection)" , QString("p:0B0713020500"), QString("p:010713020500"), QString("p:000B0713020500")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Direction)"            , QString("p:0B0713020600"), QString("p:010713020600"), QString("p:000B0713020600")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 P Gain Factor)"        , QString("p:0B0713020100"), QString("p:010713020100"), QString("p:000B0713020100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 I Gain Factor)"        , QString("p:0B0713020200"), QString("p:010713020200"), QString("p:000B0713020200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Pressure Scaler)"      , QString("p:0B0713022300"), QString("p:010713022300"), QString("p:000B0713022300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Enable)"          , QString("p:0B0713030100"), QString("p:010713030100"), QString("p:000B0713030100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Time)"            , QString("p:0B0713030200"), QString("p:010713030200"), QString("p:000B0713030200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Slope)"           , QString("p:0B0713030300"), QString("p:010713030300"), QString("p:000B0713030300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Mode)"            , QString("p:0B0713030400"), QString("p:010713030400"), QString("p:000B0713030400")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp StartValue)"      , QString("p:0B0713030500"), QString("p:010713030500"), QString("p:000B0713030500")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 3 Ramp Type)"            , QString("p:0B0713030600"), QString("p:010713030600"), QString("p:000B0713030600")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Algorithm Mode)"       , QString("p:0B0714010000"), QString("p:010714010000"), QString("p:000B0714010000")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Gain Factor)"          , QString("p:0B0714020300"), QString("p:010714020300"), QString("p:000B0714020300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Delta Factor)"         , QString("p:0B0714020700"), QString("p:010714020700"), QString("p:000B0714020700")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Sensor Delay)"         , QString("p:0B0714020400"), QString("p:010714020400"), QString("p:000B0714020400")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Learn Data Selection)" , QString("p:0B0714020500"), QString("p:010714020500"), QString("p:000B0714020500")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Direction)"            , QString("p:0B0714020600"), QString("p:010714020600"), QString("p:000B0714020600")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 P Gain Factor)"        , QString("p:0B0714020100"), QString("p:010714020100"), QString("p:000B0714020100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 I Gain Factor)"        , QString("p:0B0714020200"), QString("p:010714020200"), QString("p:000B0714020200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Pressure Scaler)"      , QString("p:0B0714022300"), QString("p:010714022300"), QString("p:000B0714022300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Enable)"          , QString("p:0B0714030100"), QString("p:010714030100"), QString("p:000B0714030100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Time)"            , QString("p:0B0714030200"), QString("p:010714030200"), QString("p:000B0714030200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Slope)"           , QString("p:0B0714030300"), QString("p:010714030300"), QString("p:000B0714030300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Mode)"            , QString("p:0B0714030400"), QString("p:010714030400"), QString("p:000B0714030400")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp StartValue)"      , QString("p:0B0714030500"), QString("p:010714030500"), QString("p:000B0714030500")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller 4 Ramp Type)"            , QString("p:0B0714030600"), QString("p:010714030600"), QString("p:000B0714030600")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (controller S LECTOR)"               , QString("p:0B0710000000"), QString("p:010710000000"), QString("p:000B0710000000")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Default Selected Contrller)"        , QString("p:0B0705000000"), QString("p:010705000000"), QString("p:000B0705000000")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Position Restriction Enable)"       , QString("p:0B0730120100"), QString("p:010730120100"), QString("p:000B0730120100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Position Restriction Max)"          , QString("p:0B0730120300"), QString("p:010730120300"), QString("p:000B0730120300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Position Restriction Min)"          , QString("p:0B0730120200"), QString("p:010730120200"), QString("p:000B0730120200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Enable)"             , QString("p:0B0730170100"), QString("p:010730170100"), QString("p:000B0730170100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Mode)"               , QString("p:0B0730170200"), QString("p:010730170200"), QString("p:000B0730170200")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Pressure Rising)"    , QString("p:0B0730172000"), QString("p:010730172000"), QString("p:000B0730172000")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Pressure Falling)"   , QString("p:0B0730172100"), QString("p:010730172100"), QString("p:000B0730172100")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection bitmap)"             , QString("p:0B0730170300"), QString("p:010730170300"), QString("p:000B0730170300")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold Condition)", QString("p:0B0730171000"), QString("p:010730171000"), QString("p:000B0730171000")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold 1)"        , QString("p:0B0730170400"), QString("p:010730170400"), QString("p:000B0730170400")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold 2)"        , QString("p:0B0730170500"), QString("p:010730170500"), QString("p:000B0730170500")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold 3)"        , QString("p:0B0730170600"), QString("p:010730170600"), QString("p:000B0730170600")); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Pressure Control Advenced Configuration (Auto Selection Threshold 4)"        , QString("p:0B0730170700"), QString("p:010730170700"), QString("p:000B0730170700")); mExportCmdList.append(tempItem);
 
         /* device net advenced range backup */
-        firmwareVer = pValveSP->getFirmwareVersion().mid(4).toInt(nullptr, 16);
+        //firmwareVer = pValveSP->getFirmwareVersion().mid(4).toInt(nullptr, 16);
 
-        if(firmwareVer > 0x600 && pValveSP->getInterface() ==  ValveEnumDef::INTERFACE_DEVICENET)
-        {
-            tempItem.setCommand("Interface(Device Net) Advenced 1 Position Unit", QString("a:7250000B"), QString("a:7250010B")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 2 Pressure Unit", QString("a:7250000A"), QString("a:7250010A")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 1 Range Type"  , QString("i:2300"), QString("s:2300")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 2 Range Type"  , QString("i:2301"), QString("s:2301")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 3 Range Type"  , QString("i:2302"), QString("s:2302")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 4 Range Type"  , QString("i:2303"), QString("s:2303")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 5 Range Type"  , QString("i:2304"), QString("s:2304")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 6 Range Type"  , QString("i:2305"), QString("s:2305")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 7 Range Type"  , QString("i:2306"), QString("s:2306")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 8 Range Type"  , QString("i:2307"), QString("s:2307")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 9 Range Type"  , QString("i:2308"), QString("s:2308")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 10 Range Type" , QString("i:2309"), QString("s:2309")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 11 Range Type" , QString("i:2310"), QString("s:2310")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 12 Range Type" , QString("i:2311"), QString("s:2311")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 1 Range Value" , QString("i:2400"), QString("s:2400")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 2 Range Value" , QString("i:2401"), QString("s:2401")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 3 Range Value" , QString("i:2402"), QString("s:2402")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 4 Range Value" , QString("i:2403"), QString("s:2403")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 5 Range Value" , QString("i:2404"), QString("s:2404")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 6 Range Value" , QString("i:2405"), QString("s:2405")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 7 Range Value" , QString("i:2406"), QString("s:2406")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 8 Range Value" , QString("i:2407"), QString("s:2407")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 9 Range Value" , QString("i:2408"), QString("s:2408")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 10 Range Value", QString("i:2409"), QString("s:2409")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 11 Range Value", QString("i:2410"), QString("s:2410")); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) Advenced 12 Range Value", QString("i:2411"), QString("s:2411")); mExportCmdList.append(tempItem);
-        }
+        //if(firmwareVer > 0x600 && pValveSP->getInterface() ==  ValveEnumDef::INTERFACE_DEVICENET)
+        //{
+        //    tempItem.setCommand("Interface(Device Net) Advenced 1 Position Unit", QString("a:7250000B"), QString("a:7250010B")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 2 Pressure Unit", QString("a:7250000A"), QString("a:7250010A")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 1 Range Type"  , QString("i:2300"), QString("s:2300")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 2 Range Type"  , QString("i:2301"), QString("s:2301")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 3 Range Type"  , QString("i:2302"), QString("s:2302")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 4 Range Type"  , QString("i:2303"), QString("s:2303")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 5 Range Type"  , QString("i:2304"), QString("s:2304")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 6 Range Type"  , QString("i:2305"), QString("s:2305")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 7 Range Type"  , QString("i:2306"), QString("s:2306")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 8 Range Type"  , QString("i:2307"), QString("s:2307")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 9 Range Type"  , QString("i:2308"), QString("s:2308")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 10 Range Type" , QString("i:2309"), QString("s:2309")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 11 Range Type" , QString("i:2310"), QString("s:2310")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 12 Range Type" , QString("i:2311"), QString("s:2311")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 1 Range Value" , QString("i:2400"), QString("s:2400")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 2 Range Value" , QString("i:2401"), QString("s:2401")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 3 Range Value" , QString("i:2402"), QString("s:2402")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 4 Range Value" , QString("i:2403"), QString("s:2403")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 5 Range Value" , QString("i:2404"), QString("s:2404")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 6 Range Value" , QString("i:2405"), QString("s:2405")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 7 Range Value" , QString("i:2406"), QString("s:2406")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 8 Range Value" , QString("i:2407"), QString("s:2407")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 9 Range Value" , QString("i:2408"), QString("s:2408")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 10 Range Value", QString("i:2409"), QString("s:2409")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 11 Range Value", QString("i:2410"), QString("s:2410")); mExportCmdList.append(tempItem);
+        //    tempItem.setCommand("Interface(Device Net) Advenced 12 Range Value", QString("i:2411"), QString("s:2411")); mExportCmdList.append(tempItem);
+        //}
         setState((eState)(mState + 1));
     }
 
@@ -608,18 +608,39 @@ public slots:
 
         if(isForUpdate == false)
         {
-            /* valve params */
-            tempItem.setCommand("Param Start", QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_START));
-            tempItem.mValue = ""; mExportCmdList.append(tempItem);
-            for(int i = 0; i < 100; i ++)
+            int nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
+            if(nfirmwareVer > 0x601)
             {
-                if(i < 14 || i == 51)
-                    continue;
+                int paramCount = pConfigSP->getValveParamDescCount();
 
-                tempItem.setCommand(QString("Param Value(%1)").arg(i), QString("%1%2").arg(REQ_READ_VALVE_PARAM).arg(i, 2, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(i, 2, 10, QChar('0'))); mExportCmdList.append(tempItem);
+                pConfigSP->loadValveParams();
+
+                for(int i = 0; i < paramCount; i ++)
+                {
+                    if(i < 14 || i == 51)
+                        continue;
+
+                    QString readCmd  = QString("p:0BB0000100%1").arg(i, 2, 16, QChar('0'));
+                    QString writeCmd = QString("p:01B0000100%1").arg(i, 2, 16, QChar('0'));
+
+                    tempItem.setCommand(QString("Param Value(%1)").arg(i), readCmd, writeCmd, "p:000BB000010000"); mExportCmdList.append(tempItem);
+                }
             }
-            tempItem.setCommand("Param End", QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_END));
-            tempItem.mValue = ""; mExportCmdList.append(tempItem);
+            else
+            {
+            /* valve params */
+                tempItem.setCommand("Param Start", QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_START));
+                tempItem.mValue = ""; mExportCmdList.append(tempItem);
+                for(int i = 0; i < 100; i ++)
+                {
+                    if(i < 14 || i == 51)
+                        continue;
+
+                    tempItem.setCommand(QString("Param Value(%1)").arg(i), QString("%1%2").arg(REQ_READ_VALVE_PARAM).arg(i, 2, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(i, 2, 10, QChar('0'))); mExportCmdList.append(tempItem);
+                }
+                tempItem.setCommand("Param End", QString("-"), QString("%1").arg(REQ_WRITE_VALVE_PARAM_END));
+                tempItem.mValue = ""; mExportCmdList.append(tempItem);
+            }
         }
 
 

@@ -495,11 +495,11 @@ public slots:
     {
         if(mState == STATE_WRITE_POSI_UNIT)
         {
-            pValveSP->setInterfaceConfigDNetPosUnit("0", this);
+            pValveSP->setInterfaceConfigDNetPosUnit(QString("%1").arg(4097,4,16,QChar('0')), this);
         }
         else if(mState == STATE_WRITE_PRES_UNIT)
         {
-            pValveSP->setInterfaceConfigDNetPressureUnit("0", this);
+            pValveSP->setInterfaceConfigDNetPressureUnit(QString("%1").arg(4097,4,16,QChar('0')), this);
         }
         else if(mState >= STATE_READ_CTRL_01_TYPE && mState <= STATE_READ_CTRL_12_TYPE)
         {
