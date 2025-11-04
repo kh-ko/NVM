@@ -587,6 +587,8 @@ public slots:
     {
         qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]isForUpdate = " << isForUpdate;
 
+        pConfigSP->loadValveParams();
+
         ValveCommandItem tempItem;
 
         mExportCmdIdx = 0;
@@ -620,6 +622,12 @@ public slots:
                     if(i < 14 || i == 51)
                         continue;
 
+                    QString paramDesc = pConfigSP->getValveParamDesc(i);
+                    if((paramDesc.length() > 0) && (paramDesc.contains("(read)", Qt::CaseInsensitive)))
+                    {
+                        continue;
+                    }
+
                     QString readCmd  = QString("p:0BB0000100%1").arg(i, 2, 16, QChar('0'));
                     QString writeCmd = QString("p:01B0000100%1").arg(i, 2, 16, QChar('0'));
 
@@ -635,6 +643,12 @@ public slots:
                 {
                     if(i < 14 || i == 51)
                         continue;
+
+                    QString paramDesc = pConfigSP->getValveParamDesc(i);
+                    if((paramDesc.length() > 0) && (paramDesc.contains("(read)", Qt::CaseInsensitive)))
+                    {
+                        continue;
+                    }
 
                     tempItem.setCommand(QString("Param Value(%1)").arg(i), QString("%1%2").arg(REQ_READ_VALVE_PARAM).arg(i, 2, 10, QChar('0')), QString("%1%2").arg(REQ_WRITE_VALVE_PARAM).arg(i, 2, 10, QChar('0'))); mExportCmdList.append(tempItem);
                 }

@@ -20,19 +20,19 @@ echo.
 
 echo Creating folders...
 REM make_version 폴더가 이미 있으면 모든 내용 삭제 후 새로 생성
-if exist "..\build_cursor\make_version" (
+if exist "..\..\Binary\build_cursor\make_version" (
     echo make_version already exists.
-    rmdir /s /q "..\build_cursor\make_version"
+    rmdir /s /q "..\..\Binary\build_cursor\make_version"
     echo make_version folder deleted.
 )
-mkdir "..\build_cursor\make_version"
+mkdir "..\..\Binary\build_cursor\make_version"
 echo make_version folder created.
 
 REM 각 회사별 폴더 생성
-mkdir "..\build_cursor\make_version\NVM(%VERSION%)-none" 2>nul
-mkdir "..\build_cursor\make_version\NVM(%VERSION%)-apsys" 2>nul
-mkdir "..\build_cursor\make_version\NVM(%VERSION%)-nova" 2>nul
-mkdir "..\build_cursor\make_version\NVM(%VERSION%)-soao" 2>nul
+mkdir "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-none" 2>nul
+mkdir "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-apsys" 2>nul
+mkdir "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-nova" 2>nul
+mkdir "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-soao" 2>nul
 
 echo make_version folder created.
 echo   - NVM(%VERSION%)-none
@@ -126,68 +126,68 @@ echo.
 echo Configuring deployment folder...
 
 REM apsystem
-if exist "..\build_cursor\release_apsys\release\NVM.exe" (
-    copy "..\build_cursor\release_apsys\release\NVM.exe" "..\build_cursor\make_version\NVM(%VERSION%)-apsys\"
-    echo release_apsys\release\NVM.exe copied to "..\build_cursor\make_version\NVM(%VERSION%)-apsys"
+if exist "..\..\Binary\build_cursor\release_apsys\release\NVM.exe" (
+    copy "..\..\Binary\build_cursor\release_apsys\release\NVM.exe" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-apsys\"
+    echo release_apsys\release\NVM.exe copied to "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-apsys"
     
     REM Qt 배포 파일 생성
     echo Creating Qt deployment package for apsystem...
-    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-apsys\NVM.exe" --qmldir "..\qml"
+    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-apsys\NVM.exe" --qmldir "..\qml"
     echo Qt deployment package created for apsystem.
     
     REM static_resource 복사
-    xcopy "..\static_resource\*" "..\build_cursor\make_version\NVM(%VERSION%)-apsys\" /E /I /Y /Q
+    xcopy "..\static_resource\*" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-apsys\" /E /I /Y /Q
     echo Static resources copied successfully.
 ) else (
     echo Warning: release_apsys\release\NVM.exe not found!
 )
 
 REM none
-if exist "..\build_cursor\release_none\release\NVM.exe" (
-    copy "..\build_cursor\release_none\release\NVM.exe" "..\build_cursor\make_version\NVM(%VERSION%)-none\"
-    echo release_none\release\NVM.exe copied to "..\build_cursor\make_version\NVM(%VERSION%)-none"
+if exist "..\..\Binary\build_cursor\release_none\release\NVM.exe" (
+    copy "..\..\Binary\build_cursor\release_none\release\NVM.exe" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-none\"
+    echo release_none\release\NVM.exe copied to "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-none"
     
     REM Qt 배포 파일 생성
     echo Creating Qt deployment package for none...
-    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-none\NVM.exe" --qmldir "..\qml"
+    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-none\NVM.exe" --qmldir "..\qml"
     echo Qt deployment package created for none.
     
     REM static_resource 복사
-    xcopy "..\static_resource\*" "..\build_cursor\make_version\NVM(%VERSION%)-none\" /E /I /Y /Q
+    xcopy "..\static_resource\*" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-none\" /E /I /Y /Q
     echo Static resources copied successfully.
 ) else (
     echo Warning: release_none\release\NVM.exe not found!
 )
 
 REM novasen
-if exist "..\build_cursor\release_nova\release\NVM.exe" (
-    copy "..\build_cursor\release_nova\release\NVM.exe" "..\build_cursor\make_version\NVM(%VERSION%)-nova\"
-    echo release_nova\release\NVM.exe copied to "..\build_cursor\make_version\NVM(%VERSION%)-nova"
+if exist "..\..\Binary\build_cursor\release_nova\release\NVM.exe" (
+    copy "..\..\Binary\build_cursor\release_nova\release\NVM.exe" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-nova\"
+    echo release_nova\release\NVM.exe copied to "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-nova"
     
     REM Qt 배포 파일 생성
     echo Creating Qt deployment package for nova...
-    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-nova\NVM.exe" --qmldir "..\qml"
+    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-nova\NVM.exe" --qmldir "..\qml"
     echo Qt deployment package created for nova.
     
     REM static_resource 복사
-    xcopy "..\static_resource\*" "..\build_cursor\make_version\NVM(%VERSION%)-nova\" /E /I /Y /Q
+    xcopy "..\static_resource\*" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-nova\" /E /I /Y /Q
     echo Static resources copied successfully.
 ) else (
     echo Warning: release_nova\release\NVM.exe not found!
 )
 
 REM soao
-if exist "..\build_cursor\release_soao\release\NVM.exe" (
-    copy "..\build_cursor\release_soao\release\NVM.exe" "..\build_cursor\make_version\NVM(%VERSION%)-soao\"
-    echo release_soao\release\NVM.exe copied to "..\build_cursor\make_version\NVM(%VERSION%)-soao"
+if exist "..\..\Binary\build_cursor\release_soao\release\NVM.exe" (
+    copy "..\..\Binary\build_cursor\release_soao\release\NVM.exe" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-soao\"
+    echo release_soao\release\NVM.exe copied to "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-soao"
     
     REM Qt 배포 파일 생성
     echo Creating Qt deployment package for soao...
-    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\build_cursor\make_version\NVM(%VERSION%)-soao\NVM.exe" --qmldir "..\qml"
+    "C:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-soao\NVM.exe" --qmldir "..\qml"
     echo Qt deployment package created for soao.
     
     REM static_resource 복사
-    xcopy "..\static_resource\*" "..\build_cursor\make_version\NVM(%VERSION%)-soao\" /E /I /Y /Q
+    xcopy "..\static_resource\*" "..\..\Binary\build_cursor\make_version\NVM(%VERSION%)-soao\" /E /I /Y /Q
     echo Static resources copied successfully.
 ) else (
     echo Warning: release_soao\release\NVM.exe not found!
@@ -199,7 +199,7 @@ echo Version %VERSION% deployment package created successfully!
 echo ========================================
 echo.
 echo Created folder structure:
-dir "..\build_cursor\make_version" /b
+dir "..\..\Binary\build_cursor\make_version" /b
 echo.
 echo Task completed!
 
@@ -208,3 +208,4 @@ call copy_src.bat
 endlocal
 
 pause
+

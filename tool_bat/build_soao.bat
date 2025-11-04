@@ -27,13 +27,25 @@ if exist "..\NVM_resource_soao_icon.rc" (
     echo Warning: NVM_resource_soao_icon.rc file not found!
 )
 
-cd ..\build_cursor\release_soao
+REM Create build directory if it doesn't exist
+if not exist "..\..\Binary\build_cursor\release_soao" (
+    echo Creating release_soao directory...
+    mkdir "..\..\Binary\build_cursor\release_soao"
+)
+
+cd ..\..\Binary\build_cursor\release_soao
+if %ERRORLEVEL% NEQ 0 (
+    echo ERROR: Failed to change directory to release_soao
+    echo Current directory: %CD%
+    pause
+    exit /b 1
+)
 
 echo.
 echo Cleaning previous build files...
 if exist release rmdir /s /q release
 if exist debug rmdir /s /q debug
-del /Q * 2>nul
+del /Q *.o *.cpp *.h Makefile* 2>nul
 echo Clean completed.
 echo.
 echo Setting up build environment...
@@ -45,7 +57,7 @@ set PATH=%MINGW_COMPILER_PATH%;%MINGW_QT_PATH%;%PATH%
 
 REM 환경변수로 경로 설정 현재 경로 NVM/build_cursor/release_soao/
 set QT_PATH="C:\Qt\5.15.2\mingw81_32\bin\qmake.exe"
-set PRO_PATH="..\..\NVM.pro"
+set PRO_PATH="..\..\..\Source\NVM.pro"
 
 call %QT_PATH% %PRO_PATH%
 if %ERRORLEVEL% EQU 0 (
@@ -62,12 +74,18 @@ if %ERRORLEVEL% EQU 0 (
 )
 
 echo Copying static resources...
-if exist "..\..\static_resource" (
+if exist "..\..\..\Source\static_resource" (
     echo Copying static_resource files to soao folder...
-    xcopy "..\..\static_resource\*" ".\release" /E /I /Y /Q
+    xcopy "..\..\..\Source\static_resource\*" ".\release" /E /I /Y /Q
     echo Static resources copied successfully.
 ) else (
     echo Warning: static_resource folder not found!
 )
 
-cd ..\..\tool_bat
+cd ..\..\..\Source\tool_bat
+if %ERRORLEVEL% NEQ 0 (
+    echo ERROR: Failed to return to tool_bat directory
+    pause
+    exit /b 1
+)
+

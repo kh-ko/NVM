@@ -1,6 +1,6 @@
 @echo off
 REM Use the local environment from the calling script (make_release.bat)
-REM setlocal enabledelayedexpansion
+setlocal enabledelayedexpansion
 
 REM =================================================================
 REM                          CONFIGURATION
@@ -20,8 +20,7 @@ echo =================== [ Start Release Script ] ===================
 echo.
 
 REM 1. Get the current date in YYYYMMDD format.
-for /f "tokens=2 delims==" %%a in ('wmic os get localdatetime /value') do set "dt=%%a"
-set "TODAY=%dt:~0,8%"
+for /f "tokens=*" %%a in ('powershell -Command "Get-Date -Format 'yyyyMMdd'"') do set "TODAY=%%a"
 
 echo   - Release Version: %VERSION%
 echo   - Release Date: %TODAY%
@@ -32,9 +31,9 @@ REM Source Path: ..\ (e.g., C:\Source\work\NVM)
 REM Destination Base Path: ..\..\.. (e.g., C:\Source)
 
 set "SOURCE_PATH=.."
-set "DEST_BASE_PATH=..\..\.."
+set "DEST_BASE_PATH=..\.."
 set "RELEASE_FOLDER_NAME=%TODAY%-v%VERSION%"
-set "DEST_PATH=%DEST_BASE_PATH%\%RELEASE_FOLDER_NAME%\NVM"
+set "DEST_PATH=%DEST_BASE_PATH%\%RELEASE_FOLDER_NAME%\Source"
 
 echo   - Source Path (Absolute): %CD%\%SOURCE_PATH%
 echo   - Destination Path (Absolute): %CD%\%DEST_PATH%
@@ -85,5 +84,5 @@ echo The release package has been created at the following path:
 echo %CD%\%DEST_PATH%
 echo.
 
-REM endlocal - not needed when called from make_release.bat
+endlocal
 
