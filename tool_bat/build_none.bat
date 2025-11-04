@@ -51,7 +51,7 @@ call %QT_PATH% %PRO_PATH%
 if %ERRORLEVEL% EQU 0 (
     echo qmake completed successfully
     echo Starting build in Release mode...
-    mingw32-make release
+    mingw32-make -j4 release
     if %ERRORLEVEL% EQU 0 (
         echo Build completed successfully!
     ) else (
