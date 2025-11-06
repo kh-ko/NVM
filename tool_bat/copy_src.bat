@@ -32,7 +32,7 @@ REM Destination Base Path: ..\..\.. (e.g., C:\Source)
 
 set "SOURCE_PATH=.."
 set "DEST_BASE_PATH=..\.."
-set "RELEASE_FOLDER_NAME=%TODAY%-v%VERSION%"
+set "RELEASE_FOLDER_NAME=%TODAY%-ver%VERSION%"
 set "DEST_PATH=%DEST_BASE_PATH%\%RELEASE_FOLDER_NAME%\Source"
 
 echo   - Source Path (Absolute): %CD%\%SOURCE_PATH%

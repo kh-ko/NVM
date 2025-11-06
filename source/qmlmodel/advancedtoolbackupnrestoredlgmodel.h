@@ -611,7 +611,7 @@ public slots:
         if(isForUpdate == false)
         {
             int nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
-            if(nfirmwareVer > 0x601)
+            if(nfirmwareVer >= 0x600)
             {
                 int paramCount = pConfigSP->getValveParamDescCount();
 
