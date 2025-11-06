@@ -182,6 +182,11 @@
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_PRESSURE_UNIT              connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetPressureUnit    (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetPressureUnit  (ValveResponseSimpleValueDto                       )))
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_S01_GAIN                   connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetSensor01Gain    (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetSensor01Gain  (ValveResponseSimpleValueDto                       )))
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_S02_GAIN                   connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetSensor02Gain    (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetSensor02Gain  (ValveResponseSimpleValueDto                       )))
+#define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_POS_UNIT               connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetOutPosUnit      (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetOutPosUnit     (ValveResponseSimpleValueDto                      )))
+#define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_POS_GAIN               connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetOutPosGain      (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetOutPosGain     (ValveResponseSimpleValueDto                      )))
+#define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_PRESSURE_UNIT          connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetOutPressureUnit (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetOutPressureUnit(ValveResponseSimpleValueDto                      )))
+#define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_S01_GAIN               connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetOutSensor01Gain (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetOutSensor01Gain(ValveResponseSimpleValueDto                      )))
+#define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_S02_GAIN               connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetOutSensor02Gain (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetOutSensor02Gain(ValveResponseSimpleValueDto                      )))
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_INPUT_ASS                  connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetInputAss        (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetInputAss      (ValveResponseSimpleValueDto                       )))
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUTPUT_ASS                 connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetOutputAss       (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetOutputAss     (ValveResponseSimpleValueDto                       )))
 #define ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_DEV_STATUS                 connect(ValveSProvider::getInstance(), SIGNAL(signalEventReadedInterfaceCfgDNetDevStatus       (ValveResponseSimpleValueDto                     )), this, SLOT(onValveReadedInterfaceCfgDNetDevStatus     (ValveResponseSimpleValueDto                       )))
@@ -310,6 +315,11 @@
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_PRESSURE_UNIT          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetPressureUnit(ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetPressureUnit(ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_S01_GAIN               connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetSensor01Gain(ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetSensor01Gain(ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_S02_GAIN               connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetSensor02Gain(ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetSensor02Gain(ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_POS_UNIT           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetOutPosUnit     (ValveResponseDto                             )), this, SLOT(onValveWrittenInterfaceConfigDNetOutPosUnit     (ValveResponseDto                             )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_POS_GAIN           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetOutPosGain     (ValveResponseDto                             )), this, SLOT(onValveWrittenInterfaceConfigDNetOutPosGain     (ValveResponseDto                             )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_PRESSURE_UNIT      connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetOutPressureUnit(ValveResponseDto                             )), this, SLOT(onValveWrittenInterfaceConfigDNetOutPressureUnit(ValveResponseDto                             )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_S01_GAIN           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetOutSensor01Gain(ValveResponseDto                             )), this, SLOT(onValveWrittenInterfaceConfigDNetOutSensor01Gain(ValveResponseDto                             )))
+#define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_S02_GAIN           connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetOutSensor02Gain(ValveResponseDto                             )), this, SLOT(onValveWrittenInterfaceConfigDNetOutSensor02Gain(ValveResponseDto                             )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_INPUT_ASS              connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetInputAss    (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetInputAss    (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUTPUT_ASS             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetOutputAss   (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetOutputAss   (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_DI                     connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenInterfaceConfigDNetDi          (ValveResponseDto                                )), this, SLOT(onValveWrittenInterfaceConfigDNetDi          (ValveResponseDto                                )))
@@ -968,6 +978,11 @@ signals:
     void signalEventReadedInterfaceCfgDNetPressureUnit (ValveResponseSimpleValueDto                      dto);
     void signalEventReadedInterfaceCfgDNetSensor01Gain (ValveResponseSimpleValueDto                      dto);
     void signalEventReadedInterfaceCfgDNetSensor02Gain (ValveResponseSimpleValueDto                      dto);
+    void signalEventReadedInterfaceCfgDNetOutPosUnit     (ValveResponseSimpleValueDto                    dto);
+    void signalEventReadedInterfaceCfgDNetOutPosGain     (ValveResponseSimpleValueDto                    dto);
+    void signalEventReadedInterfaceCfgDNetOutPressureUnit(ValveResponseSimpleValueDto                    dto);
+    void signalEventReadedInterfaceCfgDNetOutSensor01Gain(ValveResponseSimpleValueDto                    dto);
+    void signalEventReadedInterfaceCfgDNetOutSensor02Gain(ValveResponseSimpleValueDto                    dto);
     void signalEventReadedInterfaceCfgDNetInputAss     (ValveResponseSimpleValueDto                      dto);
     void signalEventReadedInterfaceCfgDNetOutputAss    (ValveResponseSimpleValueDto                      dto);
     void signalEventReadedInterfaceCfgDNetDevStatus    (ValveResponseSimpleValueDto                      dto);
@@ -1108,6 +1123,11 @@ signals:
     void signalEventWrittenInterfaceConfigDNetPressureUnit(ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceConfigDNetSensor01Gain(ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceConfigDNetSensor02Gain(ValveResponseDto                                 dto);
+    void signalEventWrittenInterfaceConfigDNetOutPosUnit     (ValveResponseDto                              dto);
+    void signalEventWrittenInterfaceConfigDNetOutPosGain     (ValveResponseDto                              dto);
+    void signalEventWrittenInterfaceConfigDNetOutPressureUnit(ValveResponseDto                              dto);
+    void signalEventWrittenInterfaceConfigDNetOutSensor01Gain(ValveResponseDto                              dto);
+    void signalEventWrittenInterfaceConfigDNetOutSensor02Gain(ValveResponseDto                              dto);
     void signalEventWrittenInterfaceConfigDNetInputAss    (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceConfigDNetOutputAss   (ValveResponseDto                                 dto);
     void signalEventWrittenInterfaceCfgRS232              (ValveResponseDto                                 dto);
@@ -1728,6 +1748,11 @@ public :
     void readInterfaceConfigDNetPressureUnit(void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetPressureUnit, nullptr, REQ_READ_INTERFACE_CFG_DNET_PRESSURE_UNIT, REQ_READ_INTERFACE_CFG_DNET_PRESSURE_UNIT, RES_INTERFACE_CFG_DNET_PRESSURE_UNIT_DATA_LEN, retryCnt, userData));}
     void readInterfaceConfigDNetSensor01Gain(void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetSensor01Gain, nullptr, REQ_READ_INTERFACE_CFG_DNET_S01_GAIN     , REQ_READ_INTERFACE_CFG_DNET_S01_GAIN     , RES_INTERFACE_CFG_DNET_S01_GAIN_DATA_LEN     , retryCnt, userData));}
     void readInterfaceConfigDNetSensor02Gain(void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetSensor02Gain, nullptr, REQ_READ_INTERFACE_CFG_DNET_S02_GAIN     , REQ_READ_INTERFACE_CFG_DNET_S02_GAIN     , RES_INTERFACE_CFG_DNET_S02_GAIN_DATA_LEN     , retryCnt, userData));}
+    void readInterfaceConfigDNetOutPosUnit     (void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetOutPosUnit     , nullptr, REQ_READ_INTERFACE_CFG_DNET_OUT_POS_UNIT     , REQ_READ_INTERFACE_CFG_DNET_OUT_POS_UNIT     , RES_INTERFACE_CFG_DNET_OUT_POS_UNIT_DATA_LEN     , retryCnt, userData));}
+    void readInterfaceConfigDNetOutPosGain     (void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetOutPosGain     , nullptr, REQ_READ_INTERFACE_CFG_DNET_OUT_POS_GAIN     , REQ_READ_INTERFACE_CFG_DNET_OUT_POS_GAIN     , RES_INTERFACE_CFG_DNET_OUT_POS_GAIN_DATA_LEN     , retryCnt, userData));}
+    void readInterfaceConfigDNetOutPressureUnit(void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetOutPressureUnit, nullptr, REQ_READ_INTERFACE_CFG_DNET_OUT_PRESSURE_UNIT, REQ_READ_INTERFACE_CFG_DNET_OUT_PRESSURE_UNIT, RES_INTERFACE_CFG_DNET_OUT_PRESSURE_UNIT_DATA_LEN, retryCnt, userData));}
+    void readInterfaceConfigDNetOutSensor01Gain(void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetOutSensor01Gain, nullptr, REQ_READ_INTERFACE_CFG_DNET_OUT_S01_GAIN     , REQ_READ_INTERFACE_CFG_DNET_OUT_S01_GAIN     , RES_INTERFACE_CFG_DNET_OUT_S01_GAIN_DATA_LEN     , retryCnt, userData));}
+    void readInterfaceConfigDNetOutSensor02Gain(void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetOutSensor02Gain, nullptr, REQ_READ_INTERFACE_CFG_DNET_OUT_S02_GAIN     , REQ_READ_INTERFACE_CFG_DNET_OUT_S02_GAIN     , RES_INTERFACE_CFG_DNET_OUT_S02_GAIN_DATA_LEN     , retryCnt, userData));}
     void readInterfaceConfigDNetInputAss    (void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetInputAss    , nullptr, REQ_READ_INTERFACE_CFG_DNET_IN_ASS       , REQ_READ_INTERFACE_CFG_DNET_IN_ASS       , RES_INTERFACE_CFG_DNET_IN_ASS_DATA_LEN       , retryCnt, userData));}
     void readInterfaceConfigDNetOutputAss   (void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetOutputAss   , nullptr, REQ_READ_INTERFACE_CFG_DNET_OUT_ASS      , REQ_READ_INTERFACE_CFG_DNET_OUT_ASS      , RES_INTERFACE_CFG_DNET_OUT_ASS_DATA_LEN      , retryCnt, userData));}
     void readInterfaceConfigDNetDevStatus   (void * userData, int retryCnt = 0){qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]"; emit signalCommandRequest(ValveRequestDto(this, staticProcReadInterfaceCfgDNetDevStatus   , nullptr, REQ_READ_INTERFACE_CFG_DNET_DEV_STATUS   , REQ_READ_INTERFACE_CFG_DNET_DEV_STATUS   , RES_INTERFACE_CFG_DNET_DEV_STATUS_DATA_LEN   , retryCnt, userData));}
@@ -2245,6 +2270,12 @@ public :
     void setInterfaceConfigDNetPressureUnit(QString unit    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_PRESSURE_UNIT).arg(unit    ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetPressureUnit, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
     void setInterfaceConfigDNetSensor01Gain(QString gain    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_S01_GAIN     ).arg(gain    ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetSensor01Gain, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
     void setInterfaceConfigDNetSensor02Gain(QString gain    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_S02_GAIN     ).arg(gain    ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetSensor02Gain, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
+    void setInterfaceConfigDNetOutPosUnit     (QString unit    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_POS_UNIT     ).arg(unit    ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetOutPosUnit     , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
+    void setInterfaceConfigDNetOutPosGain     (QString gain    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_POS_GAIN     ).arg(gain    ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetOutPosGain     , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
+    void setInterfaceConfigDNetOutPressureUnit(QString unit    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_PRESSURE_UNIT).arg(unit    ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetOutPressureUnit, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
+    void setInterfaceConfigDNetOutSensor01Gain(QString gain    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_S01_GAIN     ).arg(gain    ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetOutSensor01Gain, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
+    void setInterfaceConfigDNetOutSensor02Gain(QString gain    , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_S02_GAIN     ).arg(gain    ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetOutSensor02Gain, staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
+
     void setInterfaceConfigDNetInputAss    (QString index   , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_IN_ASS       ).arg(index   ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetInputAss    , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
     void setInterfaceConfigDNetOutputAss   (QString index   , void * userData, int retryCnt = 0){QString cmd = QString("%1%2").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_ASS      ).arg(index   ); qDebug() << "[khko_debug]" << Q_FUNC_INFO << "]cmd = "<< cmd; emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenInterfaceConfigDNetOutputAss   , staticProcReadValveStatus, cmd, "", 0, retryCnt, userData)); }
 
@@ -5692,6 +5723,116 @@ public slots:
             emit signalEventReadedInterfaceCfgDNetSensor02Gain(signalDto);
         }
     }
+    static void staticProcReadInterfaceCfgDNetOutPosUnit(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceCfgDNetOutPosUnit(pResData);}
+    void procReadInterfaceCfgDNetOutPosUnit(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceCfgDNetOutPosUnit(signalDto);
+        }
+    }
+    static void staticProcReadInterfaceCfgDNetOutPosGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceCfgDNetOutPosGain(pResData);}
+    void procReadInterfaceCfgDNetOutPosGain(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceCfgDNetOutPosGain(signalDto);
+        }
+    }
+    static void staticProcReadInterfaceCfgDNetOutPressureUnit(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceCfgDNetOutPressureUnit(pResData);}
+    void procReadInterfaceCfgDNetOutPressureUnit(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceCfgDNetOutPressureUnit(signalDto);
+        }
+    }
+    static void staticProcReadInterfaceCfgDNetOutSensor01Gain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceCfgDNetOutSensor01Gain(pResData);}
+    void procReadInterfaceCfgDNetOutSensor01Gain(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceCfgDNetOutSensor01Gain(signalDto);
+        }
+    }
+    static void staticProcReadInterfaceCfgDNetOutSensor02Gain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceCfgDNetOutSensor02Gain(pResData);}
+    void procReadInterfaceCfgDNetOutSensor02Gain(void * pResData)
+    {
+        ValveResponseDto * pResDto = (ValveResponseDto *)pResData; pResDto->mIsParsed = true;
+        ValveResponseSimpleValueDto signalDto(*pResDto);
+
+        do{
+            if(!signalDto.mIsSucc)
+            {
+                break;
+            }
+
+            QString value = signalDto.mResData.mid(signalDto.mReqDto.mCheckString.length()).trimmed();
+
+            signalDto.mValue = value;
+        }while(false);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventReadedInterfaceCfgDNetOutSensor02Gain(signalDto);
+        }
+    }
     static void staticProcReadInterfaceCfgDNetInputAss(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procReadInterfaceCfgDNetInputAss(pResData);}
     void procReadInterfaceCfgDNetInputAss(void * pResData)
     {
@@ -6961,6 +7102,61 @@ public slots:
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventWrittenInterfaceConfigDNetSensor02Gain(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceConfigDNetOutPosUnit(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceCfgDNetOutPosUnit(pResData);}
+    void procWrittenInterfaceCfgDNetOutPosUnit(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceConfigDNetOutPosUnit(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceConfigDNetOutPosGain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceCfgDNetOutPosGain(pResData);}
+    void procWrittenInterfaceCfgDNetOutPosGain(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceConfigDNetOutPosGain(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceConfigDNetOutPressureUnit(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceCfgDNetOutPressureUnit(pResData);}
+    void procWrittenInterfaceCfgDNetOutPressureUnit(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceConfigDNetOutPressureUnit(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceConfigDNetOutSensor01Gain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceCfgDNetOutSensor01Gain(pResData);}
+    void procWrittenInterfaceCfgDNetOutSensor01Gain(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceConfigDNetOutSensor01Gain(signalDto);
+        }
+    }
+
+    static void staticProcWrittenInterfaceConfigDNetOutSensor02Gain(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenInterfaceCfgDNetOutSensor02Gain(pResData);}
+    void procWrittenInterfaceCfgDNetOutSensor02Gain(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenInterfaceConfigDNetOutSensor02Gain(signalDto);
         }
     }
 

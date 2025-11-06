@@ -26,8 +26,12 @@ class InterfaceSetupDevNetDlgModel : public QObject
     Q_PROPERTY(int      mPositionUnitIdx        READ getPositionUnitIdx        NOTIFY signalEventChangedPositionUnitIdx      )
     Q_PROPERTY(double   mPositionRange          READ getPositionRange          NOTIFY signalEventChangedPositionRange        )
     Q_PROPERTY(int      mPressureUnitIdx        READ getPressureUnitIdx        NOTIFY signalEventChangedPressureUnitIdx      )
-    Q_PROPERTY(double   mSensor01Range          READ getSensor01Range          NOTIFY signalEventChangedSensor01Range        )
-    Q_PROPERTY(double   mSensor02Range          READ getSensor02Range          NOTIFY signalEventChangedSensor02Range        )
+    Q_PROPERTY(double   mSensorRange            READ getSensorRange            NOTIFY signalEventChangedSensorRange          )
+    Q_PROPERTY(int      mOutPositionUnitIdx     READ getOutPositionUnitIdx     NOTIFY signalEventChangedOutPositionUnitIdx   )
+    Q_PROPERTY(double   mOutPositionRange       READ getOutPositionRange       NOTIFY signalEventChangedOutPositionRange     )
+    Q_PROPERTY(int      mOutPressureUnitIdx     READ getOutPressureUnitIdx     NOTIFY signalEventChangedOutPressureUnitIdx   )
+    Q_PROPERTY(double   mOutSensorRange         READ getOutSensorRange         NOTIFY signalEventChangedOutSensorRange       )
+
     Q_PROPERTY(int      mInAssTableIdx          READ getInAssTableIdx          NOTIFY signalEventChangedInAssTableIdx        )
     Q_PROPERTY(int      mOutAssTableIdx         READ getOutAssTableIdx         NOTIFY signalEventChangedOutAssTableIdx       )
     Q_PROPERTY(int      mDIActivation           READ getDIActivation           NOTIFY signalEventChangedDIActivation         )
@@ -43,8 +47,11 @@ class InterfaceSetupDevNetDlgModel : public QObject
     Q_PROPERTY(bool     mErrPositionUnitIdx     READ getErrPositionUnitIdx     NOTIFY signalEventChangedErrPositionUnitIdx   )
     Q_PROPERTY(bool     mErrPositionRange       READ getErrPositionRange       NOTIFY signalEventChangedErrPositionRange     )
     Q_PROPERTY(bool     mErrPressureUnitIdx     READ getErrPressureUnitIdx     NOTIFY signalEventChangedErrPressureUnitIdx   )
-    Q_PROPERTY(bool     mErrSensor01Range       READ getErrSensor01Range       NOTIFY signalEventChangedErrSensor01Range     )
-    Q_PROPERTY(bool     mErrSensor02Range       READ getErrSensor02Range       NOTIFY signalEventChangedErrSensor02Range     )
+    Q_PROPERTY(bool     mErrSensorRange         READ getErrSensorRange         NOTIFY signalEventChangedErrSensorRange       )
+    Q_PROPERTY(bool     mErrOutPositionUnitIdx  READ getErrOutPositionUnitIdx  NOTIFY signalEventChangedErrOutPositionUnitIdx)
+    Q_PROPERTY(bool     mErrOutPositionRange    READ getErrOutPositionRange    NOTIFY signalEventChangedErrOutPositionRange  )
+    Q_PROPERTY(bool     mErrOutPressureUnitIdx  READ getErrOutPressureUnitIdx  NOTIFY signalEventChangedErrOutPressureUnitIdx)
+    Q_PROPERTY(bool     mErrOutSensorRange      READ getErrOutSensorRange      NOTIFY signalEventChangedErrOutSensorRange    )
     Q_PROPERTY(bool     mErrInAssTableIdx       READ getErrInAssTableIdx       NOTIFY signalEventChangedErrInAssTableIdx     )
     Q_PROPERTY(bool     mErrOutAssTableIdx      READ getErrOutAssTableIdx      NOTIFY signalEventChangedErrOutAssTableIdx    )
     Q_PROPERTY(bool     mErrDIActivation        READ getErrDIActivation        NOTIFY signalEventChangedErrDIActivation      )
@@ -53,23 +60,6 @@ class InterfaceSetupDevNetDlgModel : public QObject
     Q_PROPERTY(bool     mErrDOActivation        READ getErrDOActivation        NOTIFY signalEventChangedErrDOActivation      )
     Q_PROPERTY(bool     mErrDOFunction          READ getErrDOFunction          NOTIFY signalEventChangedErrDOFunction        )
     Q_PROPERTY(bool     mErrDOPolarity          READ getErrDOPolarity          NOTIFY signalEventChangedErrDOPolarity        )
-
-    Q_PROPERTY(bool     mEnableMacAddr          READ getEnableMacAddr          NOTIFY signalEventChangedEnableMacAddr        )
-    Q_PROPERTY(bool     mEnableBaudrateIdx      READ getEnableBaudrateIdx      NOTIFY signalEventChangedEnableBaudrateIdx    )
-    Q_PROPERTY(bool     mEnableDataTypeIdx      READ getEnableDataTypeIdx      NOTIFY signalEventChangedEnableDataTypeIdx    )
-    Q_PROPERTY(bool     mEnablePositionUnitIdx  READ getEnablePositionUnitIdx  NOTIFY signalEventChangedEnablePositionUnitIdx)
-    Q_PROPERTY(bool     mEnablePositionRange    READ getEnablePositionRange    NOTIFY signalEventChangedEnablePositionRange  )
-    Q_PROPERTY(bool     mEnablePressureUnitIdx  READ getEnablePressureUnitIdx  NOTIFY signalEventChangedEnablePressureUnitIdx)
-    Q_PROPERTY(bool     mEnableSensor01Range    READ getEnableSensor01Range    NOTIFY signalEventChangedEnableSensor01Range  )
-    Q_PROPERTY(bool     mEnableSensor02Range    READ getEnableSensor02Range    NOTIFY signalEventChangedEnableSensor02Range  )
-    Q_PROPERTY(bool     mEnableInAssTableIdx    READ getEnableInAssTableIdx    NOTIFY signalEventChangedEnableInAssTableIdx  )
-    Q_PROPERTY(bool     mEnableOutAssTableIdx   READ getEnableOutAssTableIdx   NOTIFY signalEventChangedEnableOutAssTableIdx )
-    Q_PROPERTY(bool     mEnableDIActivation     READ getEnableDIActivation     NOTIFY signalEventChangedEnableDIActivation   )
-    Q_PROPERTY(bool     mEnableDIFunction       READ getEnableDIFunction       NOTIFY signalEventChangedEnableDIFunction     )
-    Q_PROPERTY(bool     mEnableDIPolarity       READ getEnableDIPolarity       NOTIFY signalEventChangedEnableDIPolarity     )
-    Q_PROPERTY(bool     mEnableDOActivation     READ getEnableDOActivation     NOTIFY signalEventChangedEnableDOActivation   )
-    Q_PROPERTY(bool     mEnableDOFunction       READ getEnableDOFunction       NOTIFY signalEventChangedEnableDOFunction     )
-    Q_PROPERTY(bool     mEnableDOPolarity       READ getEnableDOPolarity       NOTIFY signalEventChangedEnableDOPolarity     )
 
     Q_PROPERTY(bool     mIsEdit                 READ getIsEdit                 NOTIFY signalEventChangedIsEdit               )
     Q_PROPERTY(QString  mStrStatus              READ getStrStatus              NOTIFY signalEventChangedStrStatus            )
@@ -89,8 +79,11 @@ public:
     int      mPositionUnitIdx     = 0;
     double   mPositionRange       = 0;
     int      mPressureUnitIdx     = 0;
-    double   mSensor01Range       = 0;
-    double   mSensor02Range       = 0;
+    double   mSensorRange         = 0;
+    int      mOutPositionUnitIdx  = 0;
+    double   mOutPositionRange    = 0;
+    int      mOutPressureUnitIdx  = 0;
+    double   mOutSensorRange      = 0;
     int      mInAssTableIdx       = 0;
     int      mOutAssTableIdx      = 0;
     int      mDIActivation        = 0;
@@ -100,39 +93,25 @@ public:
     int      mDOFunction          = 0;
     int      mDOPolarity          = 0;
 
-    bool     mErrMacAddr         = false;
-    bool     mErrBaudrateIdx     = false;
-    bool     mErrDataTypeIdx     = false;
-    bool     mErrPositionUnitIdx = false;
-    bool     mErrPositionRange   = false;
-    bool     mErrPressureUnitIdx = false;
-    bool     mErrSensor01Range   = false;
-    bool     mErrSensor02Range   = false;
-    bool     mErrInAssTableIdx   = false;
-    bool     mErrOutAssTableIdx  = false;
-    bool     mErrDIActivation    = false;
-    bool     mErrDIFunction      = false;
-    bool     mErrDIPolarity      = false;
-    bool     mErrDOActivation    = false;
-    bool     mErrDOFunction      = false;
-    bool     mErrDOPolarity      = false;
-
-    bool     mEnableMacAddr         = true;
-    bool     mEnableBaudrateIdx     = true;
-    bool     mEnableDataTypeIdx     = true;
-    bool     mEnablePositionUnitIdx = true;
-    bool     mEnablePositionRange   = true;
-    bool     mEnablePressureUnitIdx = true;
-    bool     mEnableSensor01Range   = true;
-    bool     mEnableSensor02Range   = true;
-    bool     mEnableInAssTableIdx   = true;
-    bool     mEnableOutAssTableIdx  = true;
-    bool     mEnableDIActivation    = true;
-    bool     mEnableDIFunction      = true;
-    bool     mEnableDIPolarity      = true;
-    bool     mEnableDOActivation    = true;
-    bool     mEnableDOFunction      = true;
-    bool     mEnableDOPolarity      = true;
+    bool     mErrMacAddr            = false;
+    bool     mErrBaudrateIdx        = false;
+    bool     mErrDataTypeIdx        = false;
+    bool     mErrPositionUnitIdx    = false;
+    bool     mErrPositionRange      = false;
+    bool     mErrPressureUnitIdx    = false;
+    bool     mErrSensorRange        = false;
+    bool     mErrOutPositionUnitIdx = false;
+    bool     mErrOutPositionRange   = false;
+    bool     mErrOutPressureUnitIdx = false;
+    bool     mErrOutSensorRange     = false;
+    bool     mErrInAssTableIdx      = false;
+    bool     mErrOutAssTableIdx     = false;
+    bool     mErrDIActivation       = false;
+    bool     mErrDIFunction         = false;
+    bool     mErrDIPolarity         = false;
+    bool     mErrDOActivation       = false;
+    bool     mErrDOFunction         = false;
+    bool     mErrDOPolarity         = false;
 
     bool    mIsEdit                   = false;
     QString mStrStatus                = "Loading";
@@ -150,8 +129,11 @@ public:
     int     getPositionUnitIdx        (){return mPositionUnitIdx      ;}
     double  getPositionRange          (){return mPositionRange        ;}
     int     getPressureUnitIdx        (){return mPressureUnitIdx      ;}
-    double  getSensor01Range          (){return mSensor01Range        ;}
-    double  getSensor02Range          (){return mSensor02Range        ;}
+    double  getSensorRange            (){return mSensorRange          ;}
+    int     getOutPositionUnitIdx     (){return mOutPositionUnitIdx   ;}
+    double  getOutPositionRange       (){return mOutPositionRange     ;}
+    int     getOutPressureUnitIdx     (){return mOutPressureUnitIdx   ;}
+    double  getOutSensorRange         (){return mOutSensorRange       ;}
     int     getInAssTableIdx          (){return mInAssTableIdx        ;}
     int     getOutAssTableIdx         (){return mOutAssTableIdx       ;}
     int     getDIActivation           (){return mDIActivation         ;}
@@ -166,8 +148,11 @@ public:
     bool    getErrPositionUnitIdx     (){return mErrPositionUnitIdx   ;}
     bool    getErrPositionRange       (){return mErrPositionRange     ;}
     bool    getErrPressureUnitIdx     (){return mErrPressureUnitIdx   ;}
-    bool    getErrSensor01Range       (){return mErrSensor01Range     ;}
-    bool    getErrSensor02Range       (){return mErrSensor02Range     ;}
+    bool    getErrSensorRange         (){return mErrSensorRange       ;}
+    bool    getErrOutPositionUnitIdx  (){return mErrOutPositionUnitIdx;}
+    bool    getErrOutPositionRange    (){return mErrOutPositionRange  ;}
+    bool    getErrOutPressureUnitIdx  (){return mErrOutPressureUnitIdx;}
+    bool    getErrOutSensorRange      (){return mErrOutSensorRange    ;}
     bool    getErrInAssTableIdx       (){return mErrInAssTableIdx     ;}
     bool    getErrOutAssTableIdx      (){return mErrOutAssTableIdx    ;}
     bool    getErrDIActivation        (){return mErrDIActivation      ;}
@@ -176,22 +161,6 @@ public:
     bool    getErrDOActivation        (){return mErrDOActivation      ;}
     bool    getErrDOFunction          (){return mErrDOFunction        ;}
     bool    getErrDOPolarity          (){return mErrDOPolarity        ;}
-    bool    getEnableMacAddr          (){return mEnableMacAddr        ;}
-    bool    getEnableBaudrateIdx      (){return mEnableBaudrateIdx    ;}
-    bool    getEnableDataTypeIdx      (){return mEnableDataTypeIdx    ;}
-    bool    getEnablePositionUnitIdx  (){return mEnablePositionUnitIdx;}
-    bool    getEnablePositionRange    (){return mEnablePositionRange  ;}
-    bool    getEnablePressureUnitIdx  (){return mEnablePressureUnitIdx;}
-    bool    getEnableSensor01Range    (){return mEnableSensor01Range  ;}
-    bool    getEnableSensor02Range    (){return mEnableSensor02Range  ;}
-    bool    getEnableInAssTableIdx    (){return mEnableInAssTableIdx  ;}
-    bool    getEnableOutAssTableIdx   (){return mEnableOutAssTableIdx ;}
-    bool    getEnableDIActivation     (){return mEnableDIActivation   ;}
-    bool    getEnableDIFunction       (){return mEnableDIFunction     ;}
-    bool    getEnableDIPolarity       (){return mEnableDIPolarity     ;}
-    bool    getEnableDOActivation     (){return mEnableDOActivation   ;}
-    bool    getEnableDOFunction       (){return mEnableDOFunction     ;}
-    bool    getEnableDOPolarity       (){return mEnableDOPolarity     ;}
     bool    getIsEdit                 (){return mIsEdit               ;}
     QString getStrStatus              (){return mStrStatus            ;}
     QString getErrMsg                 (){return mErrMsg               ;}
@@ -208,8 +177,11 @@ public:
     void setPositionUnitIdx      (int     value){if(mPositionUnitIdx       == value)return; mPositionUnitIdx       = value; emit signalEventChangedPositionUnitIdx      (value);}
     void setPositionRange        (double  value){if(mPositionRange         == value)return; mPositionRange         = value; emit signalEventChangedPositionRange        (value);}
     void setPressureUnitIdx      (int     value){if(mPressureUnitIdx       == value)return; mPressureUnitIdx       = value; emit signalEventChangedPressureUnitIdx      (value);}
-    void setSensor01Range        (double  value){if(mSensor01Range         == value)return; mSensor01Range         = value; emit signalEventChangedSensor01Range        (value);}
-    void setSensor02Range        (double  value){if(mSensor02Range         == value)return; mSensor02Range         = value; emit signalEventChangedSensor02Range        (value);}
+    void setSensorRange          (double  value){if(mSensorRange           == value)return; mSensorRange           = value; emit signalEventChangedSensorRange          (value);}
+    void setOutPositionUnitIdx   (int     value){if(mOutPositionUnitIdx    == value)return; mOutPositionUnitIdx    = value; emit signalEventChangedOutPositionUnitIdx   (value);}
+    void setOutPositionRange     (double  value){if(mOutPositionRange      == value)return; mOutPositionRange      = value; emit signalEventChangedOutPositionRange     (value);}
+    void setOutPressureUnitIdx   (int     value){if(mOutPressureUnitIdx    == value)return; mOutPressureUnitIdx    = value; emit signalEventChangedOutPressureUnitIdx   (value);}
+    void setOutSensorRange       (double  value){if(mOutSensorRange        == value)return; mOutSensorRange        = value; emit signalEventChangedOutSensorRange       (value);}
     void setInAssTableIdx        (int     value){if(mInAssTableIdx         == value)return; mInAssTableIdx         = value; emit signalEventChangedInAssTableIdx        (value);}
     void setOutAssTableIdx       (int     value){if(mOutAssTableIdx        == value)return; mOutAssTableIdx        = value; emit signalEventChangedOutAssTableIdx       (value);}
     void setDIActivation         (int     value){if(mDIActivation          == value)return; mDIActivation          = value; emit signalEventChangedDIActivation         (value);}
@@ -224,8 +196,11 @@ public:
     void setErrPositionUnitIdx   (bool    value){if(mErrPositionUnitIdx    == value)return; mErrPositionUnitIdx    = value; emit signalEventChangedErrPositionUnitIdx   (value);}
     void setErrPositionRange     (bool    value){if(mErrPositionRange      == value)return; mErrPositionRange      = value; emit signalEventChangedErrPositionRange     (value);}
     void setErrPressureUnitIdx   (bool    value){if(mErrPressureUnitIdx    == value)return; mErrPressureUnitIdx    = value; emit signalEventChangedErrPressureUnitIdx   (value);}
-    void setErrSensor01Range     (bool    value){if(mErrSensor01Range      == value)return; mErrSensor01Range      = value; emit signalEventChangedErrSensor01Range     (value);}
-    void setErrSensor02Range     (bool    value){if(mErrSensor02Range      == value)return; mErrSensor02Range      = value; emit signalEventChangedErrSensor02Range     (value);}
+    void setErrSensorRange       (bool    value){if(mErrSensorRange        == value)return; mErrSensorRange        = value; emit signalEventChangedErrSensorRange       (value);}
+    void setErrOutPositionUnitIdx(bool    value){if(mErrOutPositionUnitIdx == value)return; mErrOutPositionUnitIdx = value; emit signalEventChangedErrOutPositionUnitIdx(value);}
+    void setErrOutPositionRange  (bool    value){if(mErrOutPositionRange   == value)return; mErrOutPositionRange   = value; emit signalEventChangedErrOutPositionRange  (value);}
+    void setErrOutPressureUnitIdx(bool    value){if(mErrOutPressureUnitIdx == value)return; mErrOutPressureUnitIdx = value; emit signalEventChangedErrOutPressureUnitIdx(value);}
+    void setErrOutSensorRange    (bool    value){if(mErrOutSensorRange     == value)return; mErrOutSensorRange     = value; emit signalEventChangedErrOutSensorRange    (value);}
     void setErrInAssTableIdx     (bool    value){if(mErrInAssTableIdx      == value)return; mErrInAssTableIdx      = value; emit signalEventChangedErrInAssTableIdx     (value);}
     void setErrOutAssTableIdx    (bool    value){if(mErrOutAssTableIdx     == value)return; mErrOutAssTableIdx     = value; emit signalEventChangedErrOutAssTableIdx    (value);}
     void setErrDIActivation      (bool    value){if(mErrDIActivation       == value)return; mErrDIActivation       = value; emit signalEventChangedErrDIActivation      (value);}
@@ -234,22 +209,6 @@ public:
     void setErrDOActivation      (bool    value){if(mErrDOActivation       == value)return; mErrDOActivation       = value; emit signalEventChangedErrDOActivation      (value);}
     void setErrDOFunction        (bool    value){if(mErrDOFunction         == value)return; mErrDOFunction         = value; emit signalEventChangedErrDOFunction        (value);}
     void setErrDOPolarity        (bool    value){if(mErrDOPolarity         == value)return; mErrDOPolarity         = value; emit signalEventChangedErrDOPolarity        (value);}
-    void setEnableMacAddr        (bool    value){if(mEnableMacAddr         == value)return; mEnableMacAddr         = value; emit signalEventChangedEnableMacAddr        (value);}
-    void setEnableBaudrateIdx    (bool    value){if(mEnableBaudrateIdx     == value)return; mEnableBaudrateIdx     = value; emit signalEventChangedEnableBaudrateIdx    (value);}
-    void setEnableDataTypeIdx    (bool    value){if(mEnableDataTypeIdx     == value)return; mEnableDataTypeIdx     = value; emit signalEventChangedEnableDataTypeIdx    (value);}
-    void setEnablePositionUnitIdx(bool    value){if(mEnablePositionUnitIdx == value)return; mEnablePositionUnitIdx = value; emit signalEventChangedEnablePositionUnitIdx(value);}
-    void setEnablePositionRange  (bool    value){if(mEnablePositionRange   == value)return; mEnablePositionRange   = value; emit signalEventChangedEnablePositionRange  (value);}
-    void setEnablePressureUnitIdx(bool    value){if(mEnablePressureUnitIdx == value)return; mEnablePressureUnitIdx = value; emit signalEventChangedEnablePressureUnitIdx(value);}
-    void setEnableSensor01Range  (bool    value){if(mEnableSensor01Range   == value)return; mEnableSensor01Range   = value; emit signalEventChangedEnableSensor01Range  (value);}
-    void setEnableSensor02Range  (bool    value){if(mEnableSensor02Range   == value)return; mEnableSensor02Range   = value; emit signalEventChangedEnableSensor02Range  (value);}
-    void setEnableInAssTableIdx  (bool    value){if(mEnableInAssTableIdx   == value)return; mEnableInAssTableIdx   = value; emit signalEventChangedEnableInAssTableIdx  (value);}
-    void setEnableOutAssTableIdx (bool    value){if(mEnableOutAssTableIdx  == value)return; mEnableOutAssTableIdx  = value; emit signalEventChangedEnableOutAssTableIdx (value);}
-    void setEnableDIActivation   (bool    value){if(mEnableDIActivation    == value)return; mEnableDIActivation    = value; emit signalEventChangedEnableDIActivation   (value);}
-    void setEnableDIFunction     (bool    value){if(mEnableDIFunction      == value)return; mEnableDIFunction      = value; emit signalEventChangedEnableDIFunction     (value);}
-    void setEnableDIPolarity     (bool    value){if(mEnableDIPolarity      == value)return; mEnableDIPolarity      = value; emit signalEventChangedEnableDIPolarity     (value);}
-    void setEnableDOActivation   (bool    value){if(mEnableDOActivation    == value)return; mEnableDOActivation    = value; emit signalEventChangedEnableDOActivation   (value);}
-    void setEnableDOFunction     (bool    value){if(mEnableDOFunction      == value)return; mEnableDOFunction      = value; emit signalEventChangedEnableDOFunction     (value);}
-    void setEnableDOPolarity     (bool    value){if(mEnableDOPolarity      == value)return; mEnableDOPolarity      = value; emit signalEventChangedEnableDOPolarity     (value);}
     void setIsEdit               (bool    value){if(mIsEdit                == value)return; mIsEdit                = value; emit signalEventChangedIsEdit               (value);}
     void setStrStatus            (QString value){if(mStrStatus             == value)return; mStrStatus             = value; emit signalEventChangedStrStatus            (value);}
     void setErrMsg               (QString value){if(mErrMsg                == value)return; mErrMsg                = value; emit signalEventChangedErrMsg               (value);}
@@ -267,8 +226,11 @@ signals:
     void signalEventChangedPositionUnitIdx      (int     value);
     void signalEventChangedPositionRange        (double  value);
     void signalEventChangedPressureUnitIdx      (int     value);
-    void signalEventChangedSensor01Range        (double  value);
-    void signalEventChangedSensor02Range        (double  value);
+    void signalEventChangedSensorRange          (double  value);
+    void signalEventChangedOutPositionUnitIdx   (int     value);
+    void signalEventChangedOutPositionRange     (double  value);
+    void signalEventChangedOutPressureUnitIdx   (int     value);
+    void signalEventChangedOutSensorRange       (double  value);
     void signalEventChangedInAssTableIdx        (int     value);
     void signalEventChangedOutAssTableIdx       (int     value);
     void signalEventChangedDIActivation         (int     value);
@@ -283,8 +245,11 @@ signals:
     void signalEventChangedErrPositionUnitIdx   (bool    value);
     void signalEventChangedErrPositionRange     (bool    value);
     void signalEventChangedErrPressureUnitIdx   (bool    value);
-    void signalEventChangedErrSensor01Range     (bool    value);
-    void signalEventChangedErrSensor02Range     (bool    value);
+    void signalEventChangedErrSensorRange       (bool    value);
+    void signalEventChangedErrOutPositionUnitIdx(bool    value);
+    void signalEventChangedErrOutPositionRange  (bool    value);
+    void signalEventChangedErrOutPressureUnitIdx(bool    value);
+    void signalEventChangedErrOutSensorRange    (bool    value);
     void signalEventChangedErrInAssTableIdx     (bool    value);
     void signalEventChangedErrOutAssTableIdx    (bool    value);
     void signalEventChangedErrDIActivation      (bool    value);
@@ -329,6 +294,11 @@ public:
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_PRESSURE_UNIT    ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_S01_GAIN         ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_S02_GAIN         ;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_POS_UNIT     ;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_POS_GAIN     ;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_PRESSURE_UNIT;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_S01_GAIN     ;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_S02_GAIN     ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_INPUT_ASS        ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUTPUT_ASS       ;
         ENABLE_SLOT_VALVE_READED_IF_CONFIG_DNET_DI            ;
@@ -340,6 +310,11 @@ public:
         ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_PRESSURE_UNIT;
         ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_S01_GAIN     ;
         ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_S02_GAIN     ;
+        ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_POS_UNIT     ;
+        ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_POS_GAIN     ;
+        ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_PRESSURE_UNIT;
+        ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_S01_GAIN     ;
+        ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUT_S02_GAIN     ;
         ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_INPUT_ASS    ;
         ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_OUTPUT_ASS   ;
         ENABLE_SLOT_VALVE_WRITTEN_IF_CONFIG_DNET_DI           ;
@@ -516,8 +491,6 @@ public slots:
             return;
         }
 
-        setEnableMacAddr(true);
-
         if(mIsWritten)
         {
             //setErrMacAddr(mWriteMAC != dto.mMacAddr);
@@ -545,8 +518,6 @@ public slots:
             return;
         }
 
-        setEnableBaudrateIdx(true);
-
         qDebug() << "[khko_debug][" << Q_FUNC_INFO << "]" << QString("res = %1, write = %2, baudrate = %3").arg(dto.mResData).arg(mWriteBaudrateIdx).arg(dto.mBaudrate);
 
         if(mIsWritten)
@@ -567,6 +538,8 @@ public slots:
     {
         if(mState != eState::STATE_READ_POS_UNIT || dto.mReqDto.mpRef != this)
             return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
 
         setErrMsg(dto.mErrMsg);
 
@@ -595,6 +568,8 @@ public slots:
         if(mState != eState::STATE_READ_POS_GAIN || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
+
         setErrMsg(dto.mErrMsg);
 
         if(!dto.mIsSucc)
@@ -622,6 +597,8 @@ public slots:
         if(mState != eState::STATE_READ_PRESSURE_UNIT || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
+
         setErrMsg(dto.mErrMsg);
 
         if(!dto.mIsSucc)
@@ -648,6 +625,8 @@ public slots:
         if(mState != eState::STATE_READ_S01_GAIN || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
+
         setErrMsg(dto.mErrMsg);
 
         if(!dto.mIsSucc)
@@ -658,11 +637,11 @@ public slots:
 
         if(mIsWritten)
         {
-            setErrSensor01Range((mWriteSensor01Gain != dto.mValue.toLower()));
+            setErrSensorRange((mWriteSensor01Gain != dto.mValue.toLower()));
         }
         else
         {
-            setSensor01Range(calRange(dto.mValue));
+            setSensorRange(calRange(dto.mValue));
         }
 
         mReadedSensor01Gain = dto.mValue.toLower();
@@ -674,6 +653,8 @@ public slots:
         if(mState != eState::STATE_READ_S02_GAIN || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
+
         setErrMsg(dto.mErrMsg);
 
         if(!dto.mIsSucc)
@@ -684,17 +665,169 @@ public slots:
 
         if(mIsWritten)
         {
-            setErrSensor01Range((mWriteSensor02Gain != dto.mValue.toLower()));
+            if(mWriteSensor02Gain != dto.mValue.toLower())
+            {
+                // Sensor 2의 값을 화면에 안보이므로 그냥 Sensor의 오류로 보여준다.
+                setErrSensorRange(true);
+            }
         }
         else
         {
-            setSensor02Range(calRange(dto.mValue));
+            //setSensor02Range(calRange(dto.mValue));
         }
 
         mReadedSensor02Gain = dto.mValue.toLower();
 
+        int nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
+        if(nfirmwareVer < 0x604)
+        {
+            setState(STATE_READ_IN_ASS);
+        }
+        else
+        {
+            setState((eState)(mState + 1));
+        }
+
         setState((eState)(mState + 1));
     }
+
+    void onValveReadedInterfaceCfgDNetOutPosUnit(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_POS_UNIT || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(!dto.mIsSucc)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(mIsWritten)
+        {
+            setErrOutPositionUnitIdx(mWriteOutPosUnit != dto.mValue.toLower());
+        }
+        else
+        {
+            setOutPositionUnitIdx(transUnitToPosIdx(dto.mValue));
+        }
+
+        setState((eState)(mState + 1));
+    }
+
+    void onValveReadedInterfaceCfgDNetOutPosGain(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_POS_GAIN || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(!dto.mIsSucc)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(mIsWritten)
+        {
+            setErrOutPositionRange((mWriteOutPosGain != dto.mValue.toLower()));
+        }
+        else
+        {
+            setOutPositionRange(calRange(dto.mValue));
+        }
+
+        setState((eState)(mState + 1));
+    }
+
+    void onValveReadedInterfaceCfgDNetOutPressureUnit(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_PRESSURE_UNIT || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(!dto.mIsSucc)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(mIsWritten)
+        {
+            setErrOutPressureUnitIdx(mWriteOutPressureUnit != dto.mValue.toLower());
+        }
+        else
+        {
+            setOutPressureUnitIdx(transUnitToPressureIdx(dto.mValue));
+        }
+
+        setState((eState)(mState + 1));
+    }
+    void onValveReadedInterfaceCfgDNetOutSensor01Gain(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_S01_GAIN || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(!dto.mIsSucc)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(mIsWritten)
+        {
+            setErrOutSensorRange((mWriteOutSensor01Gain != dto.mValue.toLower()));
+        }
+        else
+        {
+            setOutSensorRange(calRange(dto.mValue));
+        }
+
+        setState((eState)(mState + 1));
+    }
+    void onValveReadedInterfaceCfgDNetOutSensor02Gain(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_S02_GAIN || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand << ", RES = " << dto.mResData;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(!dto.mIsSucc)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(mIsWritten)
+        {
+            if(mWriteOutSensor02Gain != dto.mValue.toLower())
+            {
+                // Sensor 2의 값을 화면에 안보이므로 그냥 Sensor의 오류로 보여준다.
+                setErrOutSensorRange(true);
+            }
+        }
+        else
+        {
+            //setSensor02Range(calRange(dto.mValue));
+        }
+
+        setState((eState)(mState + 1));
+    }
+
     void onValveReadedInterfaceCfgDNetInputAss(ValveResponseSimpleValueDto dto)
     {
         if(mState != eState::STATE_READ_IN_ASS || dto.mReqDto.mpRef != this)
@@ -806,8 +939,11 @@ public slots:
                              getErrPositionUnitIdx()||
                              getErrPositionRange  ()||
                              getErrPressureUnitIdx()||
-                             getErrSensor01Range  ()||
-                             getErrSensor02Range  ()||
+                             getErrSensorRange    ()||
+                             getErrOutPositionUnitIdx()||
+                             getErrOutPositionRange  ()||
+                             getErrOutPressureUnitIdx()||
+                             getErrOutSensorRange    ()||
                              getErrInAssTableIdx  ()||
                              getErrOutAssTableIdx ()||
                              getErrDIActivation   ()||
@@ -934,7 +1070,7 @@ public slots:
         setIsEdit(value);
     }
 
-    Q_INVOKABLE void onCommandApply(int mac, int baudrateIdx, int posUnitIdx, double posRange, int pressureUnitIdx, double s01Range, double s02Range, int diActivation, int diFunction, int diPolarity, int doActivation, int doFunction, int doPolarity)
+    Q_INVOKABLE void onCommandApply(int mac, int baudrateIdx, int posUnitIdx, double posRange, int pressureUnitIdx, double sensorRange, int outPosUnitIdx, double outPosRange, int outPressureUnitIdx, double outSensorRange, int diActivation, int diFunction, int diPolarity, int doActivation, int doFunction, int doPolarity)
     {
         mIsWritten         = true        ;
 
@@ -943,8 +1079,13 @@ public slots:
         mWritePosUnit         = transIdxToPosUnit                    (posUnitIdx     );
         mWritePosGain         = calGain                              (posRange       );
         mWritePressureUnit    = transIdxToPressureUnit               (pressureUnitIdx);
-        mWriteSensor01Gain    = calGain                              (s01Range       );
-        mWriteSensor02Gain    = calGain                              (s02Range       );
+        mWriteSensor01Gain    = calGain                              (sensorRange    );
+        mWriteSensor02Gain    = calGain                              (sensorRange    );
+        mWriteOutPosUnit      = transIdxToPosUnit                    (outPosUnitIdx     );
+        mWriteOutPosGain      = calGain                              (outPosRange       );
+        mWriteOutPressureUnit = transIdxToPressureUnit               (outPressureUnitIdx);
+        mWriteOutSensor01Gain = calGain                              (outSensorRange    );
+        mWriteOutSensor02Gain = calGain                              (outSensorRange    );
         mWriteInAssembly      = transInputAssemblySeqArrayToHexValue (               );
         mWriteOutAssembly     = transOutputAssemblySeqArrayToHexValue(               );
 
@@ -1059,6 +1200,8 @@ public slots:
         if(mState != eState::STATE_WRITE_POS_UNIT || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
+
         if(dto.mIsNetworkErr)
         {
             setState(mState);
@@ -1076,6 +1219,8 @@ public slots:
     {
         if(mState != eState::STATE_WRITE_POS_GAIN || dto.mReqDto.mpRef != this)
             return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
 
         if(dto.mIsNetworkErr)
         {
@@ -1095,6 +1240,8 @@ public slots:
         if(mState != eState::STATE_WRITE_PRESSURE_UNIT || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
+
         if(dto.mIsNetworkErr)
         {
             setState(mState);
@@ -1113,6 +1260,8 @@ public slots:
         if(mState != eState::STATE_WRITE_S01_GAIN || dto.mReqDto.mpRef != this)
             return;
 
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
+
         if(dto.mIsNetworkErr)
         {
             setState(mState);
@@ -1130,6 +1279,116 @@ public slots:
     {
         if(mState != eState::STATE_WRITE_S02_GAIN || dto.mReqDto.mpRef != this)
             return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(!dto.mIsSucc)
+        {
+            setErrMsg2(dto.mErrMsg);
+        }
+
+        int nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
+        if(nfirmwareVer < 0x604)
+        {
+            setState(STATE_WRITE_IN_ASS);
+        }
+        else
+        {
+            setState((eState)(mState + 1));
+        }
+    }
+
+    void onValveWrittenInterfaceConfigDNetOutPosUnit(ValveResponseDto dto)
+    {
+        if(mState != eState::STATE_WRITE_OUT_POS_UNIT || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(!dto.mIsSucc)
+        {
+            setErrMsg2(dto.mErrMsg);
+        }
+
+        setState((eState)(mState + 1));
+    }
+    void onValveWrittenInterfaceConfigDNetOutPosGain     (ValveResponseDto dto)
+    {
+        if(mState != eState::STATE_WRITE_OUT_POS_GAIN || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(!dto.mIsSucc)
+        {
+            setErrMsg2(dto.mErrMsg);
+        }
+
+        setState((eState)(mState + 1));
+    }
+    void onValveWrittenInterfaceConfigDNetOutPressureUnit(ValveResponseDto dto)
+    {
+        if(mState != eState::STATE_WRITE_OUT_PRESSURE_UNIT || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(!dto.mIsSucc)
+        {
+            setErrMsg2(dto.mErrMsg);
+        }
+
+        setState((eState)(mState + 1));
+    }
+    void onValveWrittenInterfaceConfigDNetOutSensor01Gain(ValveResponseDto dto)
+    {
+        if(mState != eState::STATE_WRITE_OUT_S01_GAIN || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(!dto.mIsSucc)
+        {
+            setErrMsg2(dto.mErrMsg);
+        }
+
+        setState((eState)(mState + 1));
+    }
+    void onValveWrittenInterfaceConfigDNetOutSensor02Gain(ValveResponseDto dto)
+    {
+        if(mState != eState::STATE_WRITE_OUT_S02_GAIN || dto.mReqDto.mpRef != this)
+            return;
+
+        qDebug() << "[" << Q_FUNC_INFO << "]" << dto.mReqDto.mReqCommand;
 
         if(dto.mIsNetworkErr)
         {
@@ -1219,35 +1478,45 @@ public slots:
 
 private:
     enum eState{
-        STATE_WRITE_MAC           = 0                            ,
-        STATE_WRITE_BAUDRATE      = STATE_WRITE_MAC           + 1,
-        STATE_WRITE_POS_UNIT      = STATE_WRITE_BAUDRATE      + 1,
-        STATE_WRITE_POS_GAIN      = STATE_WRITE_POS_UNIT      + 1,
-        STATE_WRITE_PRESSURE_UNIT = STATE_WRITE_POS_GAIN      + 1,
-        STATE_WRITE_S01_GAIN      = STATE_WRITE_PRESSURE_UNIT + 1,
-        STATE_WRITE_S02_GAIN      = STATE_WRITE_S01_GAIN      + 1,
-        STATE_WRITE_IN_ASS        = STATE_WRITE_S02_GAIN      + 1,
-        STATE_WRITE_OUT_ASS       = STATE_WRITE_IN_ASS        + 1,
-        STATE_WRITE_DI            = STATE_WRITE_OUT_ASS       + 1,
-        STATE_WRITE_DO            = STATE_WRITE_DI            + 1,
-        STATE_READ_VALVE_TYPE     = STATE_WRITE_DO            + 1,
-        STATE_READ_VALVE_ID_1     = STATE_READ_VALVE_TYPE     + 1,
-        STATE_READ_VALVE_ID_2     = STATE_READ_VALVE_ID_1     + 1,
-        STATE_READ_VALVE_ID_3     = STATE_READ_VALVE_ID_2     + 1,
-        STATE_READ_PROD_TYPE      = STATE_READ_VALVE_ID_3     + 1,
-        STATE_READ_PROD_CODE      = STATE_READ_PROD_TYPE      + 1,
-        STATE_READ_MAC            = STATE_READ_PROD_CODE      + 1,
-        STATE_READ_BAUDRATE       = STATE_READ_MAC            + 1,
-        STATE_READ_POS_UNIT       = STATE_READ_BAUDRATE       + 1,
-        STATE_READ_POS_GAIN       = STATE_READ_POS_UNIT       + 1,
-        STATE_READ_PRESSURE_UNIT  = STATE_READ_POS_GAIN       + 1,
-        STATE_READ_S01_GAIN       = STATE_READ_PRESSURE_UNIT  + 1,
-        STATE_READ_S02_GAIN       = STATE_READ_S01_GAIN       + 1,
-        STATE_READ_IN_ASS         = STATE_READ_S02_GAIN       + 1,
-        STATE_READ_OUT_ASS        = STATE_READ_IN_ASS         + 1,
-        STATE_READ_DI             = STATE_READ_OUT_ASS        + 1,
-        STATE_READ_DO             = STATE_READ_DI             + 1,
-        STATE_READY               = STATE_READ_DO             + 1
+        STATE_WRITE_MAC               = 0                                ,
+        STATE_WRITE_BAUDRATE          = STATE_WRITE_MAC               + 1,
+        STATE_WRITE_POS_UNIT          = STATE_WRITE_BAUDRATE          + 1,
+        STATE_WRITE_POS_GAIN          = STATE_WRITE_POS_UNIT          + 1,
+        STATE_WRITE_PRESSURE_UNIT     = STATE_WRITE_POS_GAIN          + 1,
+        STATE_WRITE_S01_GAIN          = STATE_WRITE_PRESSURE_UNIT     + 1,
+        STATE_WRITE_S02_GAIN          = STATE_WRITE_S01_GAIN          + 1,
+        STATE_WRITE_OUT_POS_UNIT      = STATE_WRITE_S02_GAIN          + 1,
+        STATE_WRITE_OUT_POS_GAIN      = STATE_WRITE_OUT_POS_UNIT      + 1,
+        STATE_WRITE_OUT_PRESSURE_UNIT = STATE_WRITE_OUT_POS_GAIN      + 1,
+        STATE_WRITE_OUT_S01_GAIN      = STATE_WRITE_OUT_PRESSURE_UNIT + 1,
+        STATE_WRITE_OUT_S02_GAIN      = STATE_WRITE_OUT_S01_GAIN      + 1,
+        STATE_WRITE_IN_ASS            = STATE_WRITE_OUT_S02_GAIN      + 1,
+        STATE_WRITE_OUT_ASS           = STATE_WRITE_IN_ASS            + 1,
+        STATE_WRITE_DI                = STATE_WRITE_OUT_ASS           + 1,
+        STATE_WRITE_DO                = STATE_WRITE_DI                + 1,
+        STATE_READ_VALVE_TYPE         = STATE_WRITE_DO                + 1,
+        STATE_READ_VALVE_ID_1         = STATE_READ_VALVE_TYPE         + 1,
+        STATE_READ_VALVE_ID_2         = STATE_READ_VALVE_ID_1         + 1,
+        STATE_READ_VALVE_ID_3         = STATE_READ_VALVE_ID_2         + 1,
+        STATE_READ_PROD_TYPE          = STATE_READ_VALVE_ID_3         + 1,
+        STATE_READ_PROD_CODE          = STATE_READ_PROD_TYPE          + 1,
+        STATE_READ_MAC                = STATE_READ_PROD_CODE          + 1,
+        STATE_READ_BAUDRATE           = STATE_READ_MAC                + 1,
+        STATE_READ_POS_UNIT           = STATE_READ_BAUDRATE           + 1,
+        STATE_READ_POS_GAIN           = STATE_READ_POS_UNIT           + 1,
+        STATE_READ_PRESSURE_UNIT      = STATE_READ_POS_GAIN           + 1,
+        STATE_READ_S01_GAIN           = STATE_READ_PRESSURE_UNIT      + 1,
+        STATE_READ_S02_GAIN           = STATE_READ_S01_GAIN           + 1,
+        STATE_READ_OUT_POS_UNIT       = STATE_READ_S02_GAIN           + 1,
+        STATE_READ_OUT_POS_GAIN       = STATE_READ_OUT_POS_UNIT       + 1,
+        STATE_READ_OUT_PRESSURE_UNIT  = STATE_READ_OUT_POS_GAIN       + 1,
+        STATE_READ_OUT_S01_GAIN       = STATE_READ_OUT_PRESSURE_UNIT  + 1,
+        STATE_READ_OUT_S02_GAIN       = STATE_READ_OUT_S01_GAIN       + 1,
+        STATE_READ_IN_ASS             = STATE_READ_OUT_S02_GAIN       + 1,
+        STATE_READ_OUT_ASS            = STATE_READ_IN_ASS             + 1,
+        STATE_READ_DI                 = STATE_READ_OUT_ASS            + 1,
+        STATE_READ_DO                 = STATE_READ_DI                 + 1,
+        STATE_READY                   = STATE_READ_DO                 + 1
     };
 
     QTimer mTimer;
@@ -1261,11 +1530,16 @@ private:
     bool    mIsWritten            = false;
     int     mWriteMAC             = 0;
     int     mWriteBaudrateIdx     = 0;
-    QString mWritePosUnit         = "1001";
+    QString mWritePosUnit         = "1001"    ;
     QString mWritePosGain         = "3F800000";
-    QString mWritePressureUnit    = "1001";
+    QString mWritePressureUnit    = "1001"    ;
     QString mWriteSensor01Gain    = "3F800000";
     QString mWriteSensor02Gain    = "3F800000";
+    QString mWriteOutPosUnit      = "1001"    ;
+    QString mWriteOutPosGain      = "3F800000";
+    QString mWriteOutPressureUnit = "1001"    ;
+    QString mWriteOutSensor01Gain = "3F800000";
+    QString mWriteOutSensor02Gain = "3F800000";
     QString mWriteInAssembly      = "00";
     QString mWriteOutAssembly     = "00";
     int     mWriteDIActivation    = 0;
@@ -1353,85 +1627,44 @@ public slots:
     {
         switch ((int)mState)
         {
-        case (int)STATE_WRITE_MAC          : if(mReadedMAC          == mWriteMAC          && mErrMacAddr         == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetMacAddress   (QString("%1").arg(mWriteMAC, 2, 16, QChar('0'))        , this); break;
-        case (int)STATE_WRITE_BAUDRATE     : if(mReadedBaudrateIdx  == mWriteBaudrateIdx  && mErrBaudrateIdx     == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetBaudrate     (QString("%1").arg(mWriteBaudrateIdx, 2, 10, QChar('0')), this); break;
-        case (int)STATE_WRITE_POS_UNIT     : if(mReadedPosUnit      == mWritePosUnit      && mErrPositionUnitIdx == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetPosUnit      (mWritePosUnit                                          , this); break;
-        case (int)STATE_WRITE_POS_GAIN     : if(mReadedPosGain      == mWritePosGain      && mErrPositionRange   == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetPosGain      (mWritePosGain                                          , this); break;
-        case (int)STATE_WRITE_PRESSURE_UNIT: if(mReadedPressureUnit == mWritePressureUnit && mErrPressureUnitIdx == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetPressureUnit (mWritePressureUnit                                     , this); break;
-        case (int)STATE_WRITE_S01_GAIN     : if(mReadedSensor01Gain == mWriteSensor01Gain && mErrSensor01Range   == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetSensor01Gain (mWriteSensor01Gain                                     , this); break;
-        case (int)STATE_WRITE_S02_GAIN     : if(mReadedSensor02Gain == mWriteSensor02Gain && mErrSensor02Range   == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetSensor02Gain (mWriteSensor02Gain                                     , this); break;
-        case (int)STATE_WRITE_IN_ASS       : if(mReadedInAssembly   == mWriteInAssembly   && mErrInAssTableIdx   == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetInputAss     (mWriteInAssembly                                       , this); break;
-        case (int)STATE_WRITE_OUT_ASS      : if(mReadedOutAssembly  == mWriteOutAssembly  && mErrOutAssTableIdx  == false){setState((eState)(mState + 1), true); return;} pValveSP->setInterfaceConfigDNetOutputAss    (mWriteOutAssembly                                      , this); break;
-        case (int)STATE_WRITE_DI           :
-            if(   mReadedDIActivation == mWriteDIActivation && mErrDIActivation == false
-               && mReadedDIFunction   == mWriteDIFunction   && mErrDIFunction   == false
-               && mReadedDIPolarity   == mWriteDIPolarity   && mErrDIPolarity   == false)
-            {
-                setState((eState)(mState + 1), true);
-                return;
-            }
-            pValveSP->setInterfaceConfigDNetDi(mWriteDIActivation, mWriteDIFunction, mWriteDIPolarity , this);
-            break;
-        case (int)STATE_WRITE_DO           :
-            if(   mReadedDOActivation == mWriteDOActivation && mErrDOActivation == false
-               && mReadedDOFunction   == mWriteDOFunction   && mErrDOFunction   == false
-               && mReadedDOPolarity   == mWriteDOPolarity   && mErrDOPolarity   == false)
-            {
-                setState((eState)(mState + 1), true);
-                return;
-            }
-            pValveSP->setInterfaceConfigDNetDo(mWriteDOActivation, mWriteDOFunction, mWriteDOPolarity , this);
-            break;
-        case (int)STATE_READ_VALVE_TYPE    : if(mReadedValveType    != 0                                                               ){setState((eState)(mState + 1), true); return;} pValveSP->readValveParam                  (1, this); break;
-        case (int)STATE_READ_VALVE_ID_1    : pValveSP->readValveParam( 9, this); break;
-        case (int)STATE_READ_VALVE_ID_2    : pValveSP->readValveParam(10, this); break;
-        case (int)STATE_READ_VALVE_ID_3    : pValveSP->readValveParam(11, this); break;
-        case (int)STATE_READ_PROD_TYPE     : pValveSP->readValveParam(34, this); break;
-        case (int)STATE_READ_PROD_CODE     : pValveSP->readValveParam(33, this); break;
-        case (int)STATE_READ_MAC           : if(mReadedMAC          == mWriteMAC          && mErrMacAddr         == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetMac         (this); break;
-        case (int)STATE_READ_BAUDRATE      : if(mReadedBaudrateIdx  == mWriteBaudrateIdx  && mErrBaudrateIdx     == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
-        case (int)STATE_READ_POS_UNIT      : if(mReadedPosUnit      == mWritePosUnit      && mErrPositionUnitIdx == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetPosUnit     (this); break;
-        case (int)STATE_READ_POS_GAIN      : if(mReadedPosGain      == mWritePosGain      && mErrPositionRange   == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetPosGain     (this); break;
-        case (int)STATE_READ_PRESSURE_UNIT : if(mReadedPressureUnit == mWritePressureUnit && mErrPressureUnitIdx == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetPressureUnit(this); break;
-        case (int)STATE_READ_S01_GAIN      : if(mReadedSensor01Gain == mWriteSensor01Gain && mErrSensor01Range   == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetSensor01Gain(this); break;
-        case (int)STATE_READ_S02_GAIN      : if(mReadedSensor02Gain == mWriteSensor02Gain && mErrSensor02Range   == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetSensor02Gain(this); break;
-        case (int)STATE_READ_IN_ASS        : if(mReadedInAssembly   == mWriteInAssembly   && mErrInAssTableIdx   == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetInputAss    (this); break;
-        case (int)STATE_READ_OUT_ASS       : if(mReadedOutAssembly  == mWriteOutAssembly  && mErrOutAssTableIdx  == false && mIsWritten){setState((eState)(mState + 1), true); return;} pValveSP->readInterfaceConfigDNetOutputAss   (this); break;
-        case (int)STATE_READ_DI            :
-            if(   mReadedDIActivation == mWriteDIActivation && mErrDIActivation == false
-               && mReadedDIFunction   == mWriteDIFunction   && mErrDIFunction   == false
-               && mReadedDIPolarity   == mWriteDIPolarity   && mErrDIPolarity   == false
-               && mIsWritten)
-            {
-                setState((eState)(mState + 1), true);
-                return;
-            }
-            pValveSP->readInterfaceConfigDNetDi          (this); break;
-        case (int)STATE_READ_DO            :
-            if(   mReadedDOActivation == mWriteDOActivation && mErrDOActivation == false
-               && mReadedDOFunction   == mWriteDOFunction   && mErrDOFunction   == false
-               && mReadedDOPolarity   == mWriteDOPolarity   && mErrDOPolarity   == false
-               && mIsWritten)
-            {
-                onCommandSetEdit(getErrDataTypeIdx    ()||
-                                 getErrPositionUnitIdx()||
-                                 getErrPositionRange  ()||
-                                 getErrPressureUnitIdx()||
-                                 getErrSensor01Range  ()||
-                                 getErrSensor02Range  ()||
-                                 getErrInAssTableIdx  ()||
-                                 getErrOutAssTableIdx ()||
-                                 getErrDIActivation   ()||
-                                 getErrDIFunction     ()||
-                                 getErrDIPolarity     ()||
-                                 getErrDOActivation   ()||
-                                 getErrDOFunction     ()||
-                                 getErrDOPolarity     ());
-
-                setState((eState)(mState + 1), true);
-                return;
-            }
-            pValveSP->readInterfaceConfigDNetDo          (this); break;
+        case (int)STATE_WRITE_MAC              : pValveSP->setInterfaceConfigDNetMacAddress   (QString("%1").arg(mWriteMAC, 2, 16, QChar('0'))        , this); break;
+        case (int)STATE_WRITE_BAUDRATE         : pValveSP->setInterfaceConfigDNetBaudrate     (QString("%1").arg(mWriteBaudrateIdx, 2, 10, QChar('0')), this); break;
+        case (int)STATE_WRITE_POS_UNIT         : pValveSP->setInterfaceConfigDNetPosUnit      (mWritePosUnit                                          , this); break;
+        case (int)STATE_WRITE_POS_GAIN         : pValveSP->setInterfaceConfigDNetPosGain      (mWritePosGain                                          , this); break;
+        case (int)STATE_WRITE_PRESSURE_UNIT    : pValveSP->setInterfaceConfigDNetPressureUnit (mWritePressureUnit                                     , this); break;
+        case (int)STATE_WRITE_S01_GAIN         : pValveSP->setInterfaceConfigDNetSensor01Gain (mWriteSensor01Gain                                     , this); break;
+        case (int)STATE_WRITE_S02_GAIN         : pValveSP->setInterfaceConfigDNetSensor02Gain (mWriteSensor02Gain                                     , this); break;
+        case (int)STATE_WRITE_OUT_POS_UNIT     : pValveSP->setInterfaceConfigDNetOutPosUnit      (mWriteOutPosUnit                                          , this); break;
+        case (int)STATE_WRITE_OUT_POS_GAIN     : pValveSP->setInterfaceConfigDNetOutPosGain      (mWriteOutPosGain                                          , this); break;
+        case (int)STATE_WRITE_OUT_PRESSURE_UNIT: pValveSP->setInterfaceConfigDNetOutPressureUnit (mWriteOutPressureUnit                                     , this); break;
+        case (int)STATE_WRITE_OUT_S01_GAIN     : pValveSP->setInterfaceConfigDNetOutSensor01Gain (mWriteOutSensor01Gain                                     , this); break;
+        case (int)STATE_WRITE_OUT_S02_GAIN     : pValveSP->setInterfaceConfigDNetOutSensor02Gain (mWriteOutSensor02Gain                                     , this); break;
+        case (int)STATE_WRITE_IN_ASS           : pValveSP->setInterfaceConfigDNetInputAss     (mWriteInAssembly                                       , this); break;
+        case (int)STATE_WRITE_OUT_ASS          : pValveSP->setInterfaceConfigDNetOutputAss    (mWriteOutAssembly                                      , this); break;
+        case (int)STATE_WRITE_DI               : pValveSP->setInterfaceConfigDNetDi           (mWriteDIActivation, mWriteDIFunction, mWriteDIPolarity , this); break;
+        case (int)STATE_WRITE_DO               : pValveSP->setInterfaceConfigDNetDo           (mWriteDOActivation, mWriteDOFunction, mWriteDOPolarity , this); break;
+        case (int)STATE_READ_VALVE_TYPE        : if(mReadedValveType != 0 ){setState((eState)(mState + 1), true); return;} pValveSP->readValveParam(1, this); break;
+        case (int)STATE_READ_VALVE_ID_1        : pValveSP->readValveParam( 9, this); break;
+        case (int)STATE_READ_VALVE_ID_2        : pValveSP->readValveParam(10, this); break;
+        case (int)STATE_READ_VALVE_ID_3        : pValveSP->readValveParam(11, this); break;
+        case (int)STATE_READ_PROD_TYPE         : pValveSP->readValveParam(34, this); break;
+        case (int)STATE_READ_PROD_CODE         : pValveSP->readValveParam(33, this); break;
+        case (int)STATE_READ_MAC               : pValveSP->readInterfaceConfigDNetMac         (this); break;
+        case (int)STATE_READ_BAUDRATE          : pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
+        case (int)STATE_READ_POS_UNIT          : pValveSP->readInterfaceConfigDNetPosUnit     (this); break;
+        case (int)STATE_READ_POS_GAIN          : pValveSP->readInterfaceConfigDNetPosGain     (this); break;
+        case (int)STATE_READ_PRESSURE_UNIT     : pValveSP->readInterfaceConfigDNetPressureUnit(this); break;
+        case (int)STATE_READ_S01_GAIN          : pValveSP->readInterfaceConfigDNetSensor01Gain(this); break;
+        case (int)STATE_READ_S02_GAIN          : pValveSP->readInterfaceConfigDNetSensor02Gain(this); break;
+        case (int)STATE_READ_OUT_POS_UNIT      : pValveSP->readInterfaceConfigDNetOutPosUnit     (this); break;
+        case (int)STATE_READ_OUT_POS_GAIN      : pValveSP->readInterfaceConfigDNetOutPosGain     (this); break;
+        case (int)STATE_READ_OUT_PRESSURE_UNIT : pValveSP->readInterfaceConfigDNetOutPressureUnit(this); break;
+        case (int)STATE_READ_OUT_S01_GAIN      : pValveSP->readInterfaceConfigDNetOutSensor01Gain(this); break;
+        case (int)STATE_READ_OUT_S02_GAIN      : pValveSP->readInterfaceConfigDNetOutSensor02Gain(this); break;
+        case (int)STATE_READ_IN_ASS            : pValveSP->readInterfaceConfigDNetInputAss    (this); break;
+        case (int)STATE_READ_OUT_ASS           : pValveSP->readInterfaceConfigDNetOutputAss   (this); break;
+        case (int)STATE_READ_DI                : pValveSP->readInterfaceConfigDNetDi          (this); break;
+        case (int)STATE_READ_DO                : pValveSP->readInterfaceConfigDNetDo          (this); break;
         }
     }
 

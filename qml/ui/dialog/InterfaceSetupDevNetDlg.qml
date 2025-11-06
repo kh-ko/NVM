@@ -41,14 +41,11 @@ BaseSetupWindow{
         var posUnitIdx      = body.positionUnitCombo.currentIndex
         var posRange        = parseFloat(body.positionRange.textField.text)
         var pressureUnitIdx = body.pressureUnitCombo.currentIndex
-
-        if(pressureUnitIdx < 2)
-        {
-            body.sensor02Range.textField.text = body.sensor01Range.textField.text
-        }
-
-        var s01Range        = parseFloat(body.sensor01Range.textField.text)
-        var s02Range        = parseFloat(body.sensor02Range.textField.text)
+        var sensorRange     = parseFloat(body.sensorRange.textField.text)
+        var outPosUnitIdx      = body.outPositionUnitCombo.currentIndex
+        var outPosRange        = parseFloat(body.outPositionRange.textField.text)
+        var outPressureUnitIdx = body.outPressureUnitCombo.currentIndex
+        var outSensorRange     = parseFloat(body.outSensorRange.textField.text)
         var diActivation    = body.diActivationCombo.currentIndex
         var diFunction      = body.diFunctionCombo.currentIndex
         var diPolarity      = body.diPolarityCombo.currentIndex
@@ -56,7 +53,7 @@ BaseSetupWindow{
         var doFunction      = body.doFunctionCombo.currentIndex
         var doPolarity      = body.doPolarityCombo.currentIndex
 
-        dlgModel.onCommandApply(macAddr, baudrateIdx, posUnitIdx, posRange, pressureUnitIdx, s01Range, s02Range, diActivation, diFunction, diPolarity, doActivation, doFunction, doPolarity)
+        dlgModel.onCommandApply(macAddr, baudrateIdx, posUnitIdx, posRange, pressureUnitIdx, sensorRange, outPosUnitIdx, outPosRange, outPressureUnitIdx, outSensorRange, diActivation, diFunction, diPolarity, doActivation, doFunction, doPolarity)
     }
 
     Component.onCompleted: {
@@ -74,8 +71,11 @@ BaseSetupWindow{
             body.positionUnitCombo.currentIndex  = dlgModel.mPositionUnitIdx
             body.positionRange.setValue(dlgModel.mPositionRange)
             body.pressureUnitCombo.currentIndex  = dlgModel.mPressureUnitIdx
-            body.sensor01Range.setValue(dlgModel.mSensor01Range)
-            body.sensor02Range.setValue(dlgModel.mSensor02Range)
+            body.sensorRange.setValue(dlgModel.mSensorRange)
+            body.outPositionUnitCombo.currentIndex  = dlgModel.mOutPositionUnitIdx
+            body.outPositionRange.setValue(dlgModel.mOutPositionRange)
+            body.outPressureUnitCombo.currentIndex  = dlgModel.mOutPressureUnitIdx
+            body.outSensorRange.setValue(dlgModel.mOutSensorRange)
 
             body.diActivationCombo.currentIndex  = dlgModel.mDIActivation
             body.diFunctionCombo.currentIndex    = dlgModel.mDIFunction
@@ -136,8 +136,11 @@ BaseSetupWindow{
             property alias positionUnitCombo : _positionUnitCombo
             property alias positionRange     : _positionRange
             property alias pressureUnitCombo : _pressureUnitCombo
-            property alias sensor01Range     : _sensor01Range
-            property alias sensor02Range     : _sensor02Range
+            property alias sensorRange       : _sensorRange
+            property alias outPositionUnitCombo : _outPositionUnitCombo
+            property alias outPositionRange     : _outPositionRange
+            property alias outPressureUnitCombo : _outPressureUnitCombo
+            property alias outSensorRange       : _outSensorRange
             property alias diActivationCombo : _diActivationCombo
             property alias diFunctionCombo   : _diFunctionCombo
             property alias diPolarityCombo   : _diPolarityCombo
@@ -156,286 +159,353 @@ BaseSetupWindow{
                 bodyWidth  = 900 * GUISetting.scale
             }
 
-            Rectangle{
+            ScrollView{
                 id : genSettings
-
-                height: (GUISetting.margin + genSettingsTitle.height    )
-                        + (GUISetting.margin + _macAddr.height          )
-                        + (GUISetting.margin + _baudrateCombo.height    )
-                        + (GUISetting.margin + _positionUnitCombo.height)
-                        + (GUISetting.margin + _positionRange.height    )
-                        + (GUISetting.margin + _pressureUnitCombo.height)
-                        + (GUISetting.margin + _sensor01Range.height     )
-                        + (GUISetting.margin + _sensor02Range.height     ) + GUISetting.margin
                 anchors.top: parent.top; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.line_margin;
-                width: 250 * GUISetting.scale
+                height: 269 * GUISetting.scale; width: 250 * GUISetting.scale
+                clip: true
+                padding: GUISetting.margin
 
-                color: "#FFFFFF"
 
-                NText{
-                    id : genSettingsTitle
-                    anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                    isBold: true
-                    text : qsTr("General interface settings")
-                }
+                background: Rectangle { color: "#ffffff" }
 
-                NInputNumber{
-                    id : _macAddr
+                ScrollBar.vertical {
+                    id : vSBar
 
-                    height: 24 * GUISetting.scale; width: 120 * GUISetting.scale
-                    anchors.top: genSettingsTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    active: true
+                    orientation: Qt.Vertical
+                    width: 6
+                    height: genSettings.availableHeight
+                    anchors.right: genSettings.right
+                    anchors.rightMargin: 4
+                    policy: height  < genSettings.contentHeight ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
 
-                    enabled: dlgModel.mEnableMacAddr && dlgModel.mProgress == 100
+                    contentItem: Rectangle
+                    {
+                        width: 6
+                        //implicitHeight: 100
+                        radius: width / 2
+                        color: vSBar.pressed ?  "#39000000" : "#59000000"
+                    }
 
-                    textField.validator: IntValidator{}
-                    stepValue : 1; minValue:0; maxValue: 63
-                    fixedN : 0
-
-                    onChangedText: {
-                        dlgModel.onCommandSetEdit(true)
+                    background: Rectangle{
+                        anchors.fill: parent
+                        color : "#00000000"
                     }
                 }
 
-                NText{
-                    anchors.verticalCenter: _macAddr.verticalCenter; anchors.left: _macAddr.right; anchors.leftMargin: GUISetting.margin
-                    color: dlgModel.mErrMacAddr ? "#FF0000" : "#000000"
-                    text : qsTr("MAC address")
-                }
+                /*ScrollBar.vertical: ScrollBar {
+                    id : vSBar
 
-                NComboBox{
-                    id : _baudrateCombo
-                    width: 120 * GUISetting.scale; height: 24 * GUISetting.scale
-                    anchors.top: _macAddr.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                    active: true
+                    orientation: Qt.Vertical
+                    width: 6
+                    height: genSettings.availableHeight
+                    anchors.right: genSettings.right
+                    anchors.rightMargin: 4
+                    policy: height  < genSettings.contentHeight ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
 
-                    enabled: dlgModel.mEnableBaudrateIdx && dlgModel.mProgress == 100
-
-                    model: ["125k","250k", "500k", "auto"]
-
-                    onCurrentIndexChanged: {
-                        dlgModel.onCommandSetEdit(true)
+                    contentItem: Rectangle
+                    {
+                        width: 6
+                        //implicitHeight: 100
+                        radius: width / 2
+                        color: vSBar.pressed ?  "#39000000" : "#59000000"
                     }
-                }
 
-                NText{
-                    anchors.verticalCenter: _baudrateCombo.verticalCenter; anchors.left: _baudrateCombo.right; anchors.leftMargin: GUISetting.margin
-                    color: dlgModel.mErrBaudrateIdx ? "#FF0000" : "#000000"
-                    text : qsTr("baudrate")
-                }
-
-                NComboBox{
-                    id : _positionUnitCombo
-                    width: 120 * GUISetting.scale; height: 24 * GUISetting.scale
-                    anchors.top: _baudrateCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-
-                    //visible : (dialog.firmwareVer < 0x601)
-
-                    enabled: dialog.progress === 100 && dlgModel.mEnablePositionUnitIdx
-
-                    model: ["counts","percent","degrees"]
-
-                    onCurrentIndexChanged: {
-
-                        if(currentIndex == 0)
-                        {
-                            // todo : sync value
-                            _positionRange.setValue(dlgModel.mPositionRange)
-                        }
-
-                        /*
-                        if(currentIndex == 1)
-                        {
-                            _positionRange.fixedN = 0
-                            _positionRange.setValue(100)
-                        }
-                        else if(currentIndex == 2)
-                        {
-
-                            _positionRange.fixedN = 0
-                            _positionRange.setValue(90)
-                        }
-                        else
-                        {
-                            _positionRange.fixedN = 3
-                            _positionRange.setValue(10000)
-                        }
-                        */
-                        dlgModel.onCommandSetEdit(true)
+                    background: Rectangle{
+                        anchors.fill: parent
+                        color : "#00000000"
                     }
-                }
+                }*/
 
-                NText{
-                    anchors.verticalCenter: _positionUnitCombo.verticalCenter; anchors.left: _positionUnitCombo.right; anchors.leftMargin: GUISetting.margin
-                    color: dlgModel.mErrPositionUnitIdx ? "#FF0000" : "#000000"
+                ColumnLayout{
+                    width: parent.availableWidth
+                    spacing: GUISetting.margin
 
-                    //visible : (dialog.firmwareVer < 0x601)
-                    text : qsTr("position unit")
-                }
-
-
-//                NText{
-//                    id : positionRangeFromLabel
-//                    anchors.top: _positionUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-//                    visible: _positionUnitCombo.currentIndex == 0
-//                    text : qsTr("0 ~")
-//                }
-
-                NInputNumber{
-                    id : _positionRange
-
-                    height: 24 * GUISetting.scale; width: 120 * GUISetting.scale
-                    anchors.top: _positionUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                    //anchors.verticalCenter: positionRangeFromLabel.verticalCenter; anchors.left: positionRangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _positionUnitCombo.right
-
-                    //visible: _positionUnitCombo.currentIndex == 0 && (dialog.firmwareVer < 0x601)
-                    textField.validator: DoubleValidator{}
-                    stepValue : 1; minValue:0; maxValue: 999999999
-                    fixedN : 3
-
-                    enabled: dialog.progress === 100 && _positionUnitCombo.currentIndex == 0
-
-                    onChangedText: {
-                        dlgModel.onCommandSetEdit(true)
+                    NText{
+                        id : genSettingsTitle
+                        Layout.fillWidth: true; isBold: true
+                        text : qsTr("General interface settings")
                     }
-                }
 
-                NText{
-                    anchors.verticalCenter: _positionRange.verticalCenter; anchors.left: _positionRange.right; anchors.leftMargin: GUISetting.margin
-                    color: dlgModel.mErrPositionRange ? "#FF0000" : "#000000"
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
+                        NInputNumber{
+                            id : _macAddr
+                            height : parent.height; width: 120 * GUISetting.scale;
+                            enabled: dlgModel.mProgress == 100
 
-                    visible: _positionUnitCombo.currentIndex == 0 //&& (dialog.firmwareVer < 0x601)
-                    text : qsTr("Max")
-                }
+                            textField.validator: IntValidator{}
+                            stepValue : 1; minValue:0; maxValue: 63; fixedN : 0
 
-                NComboBox{
-                    id : _pressureUnitCombo
-                    width: 120 * GUISetting.scale; height: 24 * GUISetting.scale
-                    anchors.top: _positionRange.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-
-                    //visible : (dialog.firmwareVer < 0x601)
-                    enabled: dialog.progress === 100  && dlgModel.mEnablePressureUnitIdx
-
-                    model: ["counts","percent","psi","Torr","mTorr","bar","mbar","pa","atm"]
-
-
-                    onCurrentIndexChanged: {
-                        if(currentIndex == 0)
-                        {
-                            _sensor01Range.setValue(dlgModel.mSensor01Range)
-                            _sensor02Range.setValue(dlgModel.mSensor02Range)
-                            // todo : sync value
+                            onChangedText: { dlgModel.onCommandSetEdit(true) }
                         }
 
-                        /*
-                        if(currentIndex == 1)
-                        {
-                            _sensor01Range.fixedN = 0
-                            _sensor02Range.fixedN = 0
-                            _sensor01Range.setValue(100)
-                            _sensor02Range.setValue(100)
+                        NText{
+                            anchors.verticalCenter: _macAddr.verticalCenter; anchors.left: _macAddr.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrMacAddr ? "#FF0000" : "#000000"
+                            text : qsTr("MAC address")
                         }
-                        else if(currentIndex > 1)
-                        {
-                            _sensor01Range.fixedN = dlgModel.onCommandGetSensorRange01FixedN(currentIndex)
-                            _sensor02Range.fixedN = dlgModel.onCommandGetSensorRange02FixedN(currentIndex)
-                            _sensor01Range.setValue(dlgModel.onCommandGetS01FullScale(currentIndex))
-                            _sensor02Range.setValue(dlgModel.onCommandGetS02FullScale(currentIndex))
+                    }
+
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
+
+                        NComboBox{
+                            id : _baudrateCombo
+                            height : parent.height; width: 120 * GUISetting.scale;
+
+                            enabled: dlgModel.mProgress == 100
+
+                            model: ["125k","250k", "500k", "auto"]
+
+                            onCurrentIndexChanged: {
+                                dlgModel.onCommandSetEdit(true)
+                            }
                         }
-                        else
-                        {
-                            _sensor01Range.setValue(10000)
-                            _sensor02Range.setValue(10000)
-                            _sensor01Range.fixedN = 3
-                            _sensor02Range.fixedN = 3
+
+                        NText{
+                            anchors.verticalCenter: _baudrateCombo.verticalCenter; anchors.left: _baudrateCombo.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrBaudrateIdx ? "#FF0000" : "#000000"
+                            text : qsTr("baudrate")
                         }
-                        */
-                        dlgModel.onCommandSetEdit(true)
                     }
-                }
 
-                NText{
-                    anchors.verticalCenter: _pressureUnitCombo.verticalCenter; anchors.left: _pressureUnitCombo.right; anchors.leftMargin: GUISetting.margin
-                    color: dlgModel.mErrPressureUnitIdx ? "#FF0000" : "#000000"
-
-                    //visible: (dialog.firmwareVer < 0x601)
-                    text : qsTr("pressure unit")
-                }
-
-//                NText{
-//                    id : sensor01RangeFromLabel
-//                    anchors.top: _pressureUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-//                    visible: _pressureUnitCombo.currentIndex == 0
-//                    text : qsTr("0 ~")
-//                }
-
-                NInputNumber{
-                    id : _sensor01Range
-
-                    height: 24 * GUISetting.scale; width: 120 * GUISetting.scale
-                    //anchors.verticalCenter: sensor01RangeFromLabel.verticalCenter; anchors.left: sensor01RangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _pressureUnitCombo.right
-                    anchors.top: _pressureUnitCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-
-                    visible: _pressureUnitCombo.currentIndex == 0 //&& (dialog.firmwareVer < 0x601)
-                    textField.validator: DoubleValidator{}
-                    stepValue : 1; minValue:0; maxValue: 999999999
-                    fixedN : 4
-
-                    enabled: dialog.progress === 100 && _pressureUnitCombo.currentIndex == 0
-
-                    onChangedText: {
-                        dlgModel.onCommandSetEdit(true)
+                    NText{
+                        Layout.fillWidth: true; isBold: true
+                        text : firmwareVer > 0x603 ?  qsTr("In Range") : qsTr("In/Out Range")
                     }
-                }
 
-                NText{
-                    anchors.verticalCenter: _sensor01Range.verticalCenter; anchors.left: _sensor01Range.right; anchors.leftMargin: GUISetting.margin
-                    color: dlgModel.mErrSensor01Range ? "#FF0000" : "#000000"
-                    visible: _pressureUnitCombo.currentIndex == 0 //&& (dialog.firmwareVer < 0x601)
-                    text : qsTr("MAX") //_pressureUnitCombo.currentIndex > 1 ? qsTr("sensor 1 range") : qsTr("sensor range")
-                 }
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
 
-                NText{
-                    id : sensor02RangeFromLabel
-                    anchors.top: _sensor01Range.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                    visible: false//_pressureUnitCombo.currentIndex > 1
-                    text : qsTr("0 ~")
-                }
+                        NComboBox{
+                            id : _positionUnitCombo
+                            height : parent.height; width: 120 * GUISetting.scale;
 
-                NInputNumber{
-                    id : _sensor02Range
+                            enabled: dialog.progress === 100
 
-                    height: 24 * GUISetting.scale; width: 120 * GUISetting.scale
-                    anchors.verticalCenter: sensor02RangeFromLabel.verticalCenter; anchors.left: sensor02RangeFromLabel.right; anchors.leftMargin: GUISetting.margin; anchors.right: _sensor01Range.right
+                            model: ["counts","percent","degrees"]
 
-                    stepValue : 1; minValue:0; maxValue: 999999999
-                    fixedN : 4
+                            onCurrentIndexChanged: {
 
-                    visible: false//_pressureUnitCombo.currentIndex > 1
-                    textField.validator: DoubleValidator{}
-                    enabled: dialog.progress === 100 && _pressureUnitCombo.currentIndex == 0
+                                if(currentIndex == 0)
+                                {
+                                    _positionRange.setValue(dlgModel.mPositionRange)
+                                }
 
-                    onChangedText: {
-                        dlgModel.onCommandSetEdit(true)
+                                dlgModel.onCommandSetEdit(true)
+                            }
+                        }
+
+                        NText{
+                            anchors.verticalCenter: _positionUnitCombo.verticalCenter; anchors.left: _positionUnitCombo.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrPositionUnitIdx ? "#FF0000" : "#000000"
+
+                            text : qsTr("position unit")
+                        }
                     }
-                }
 
-                NText{
-                    anchors.verticalCenter: _sensor02Range.verticalCenter; anchors.left: _sensor02Range.right; anchors.leftMargin: GUISetting.margin
-                    color: dlgModel.mErrSensor02Range ? "#FF0000" : "#000000"
-                    visible: false//_pressureUnitCombo.currentIndex > 1
-                    text : qsTr("sensor 2 range")
-                }
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
+                        visible: _positionUnitCombo.currentIndex == 0
 
-                NButton{
-                    id : advanceRangeSetting
-                    height: 24 * GUISetting.scale
-                    anchors.top: _baudrateCombo.bottom; anchors.topMargin: GUISetting.margin * 1.5; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin:GUISetting.margin;
+                        NInputNumber{
+                            id : _positionRange
+                            height : parent.height; width: 120 * GUISetting.scale;
 
-                    visible : false //firmwareVer > 0x600
-                    bgColor: "#FFFFFF"
-                    text.text: qsTr("Range Setting")
+                            enabled: dialog.progress === 100 && _positionUnitCombo.currentIndex == 0
 
-                    onClick: {
-                        dialog.clickRangeSetting();
+                            textField.validator: DoubleValidator{}
+                            stepValue : 1; minValue:0; maxValue: 999999999
+                            fixedN : 3
+
+                            onChangedText: {
+                                dlgModel.onCommandSetEdit(true)
+                            }
+                        }
+
+                        NText{
+                            anchors.verticalCenter: _positionRange.verticalCenter; anchors.left: _positionRange.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrPositionRange ? "#FF0000" : "#000000"
+
+                            text : qsTr("Max")
+                        }
+                    }
+
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
+
+                        NComboBox{
+                            id : _pressureUnitCombo
+                            height : parent.height; width: 120 * GUISetting.scale;
+
+                            enabled: dialog.progress === 100
+
+                            model: ["counts","percent","psi","Torr","mTorr","bar","mbar","pa","atm"]
+
+
+                            onCurrentIndexChanged: {
+                                if(currentIndex == 0)
+                                {
+                                    _sensorRange.setValue(dlgModel.mSensorRange)
+                                }
+                                dlgModel.onCommandSetEdit(true)
+                            }
+                        }
+
+                        NText{
+                            anchors.verticalCenter: _pressureUnitCombo.verticalCenter; anchors.left: _pressureUnitCombo.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrPressureUnitIdx ? "#FF0000" : "#000000"
+
+                            text : qsTr("pressure unit")
+                        }
+                    }
+
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
+                        visible: _pressureUnitCombo.currentIndex == 0
+
+                        NInputNumber{
+                            id : _sensorRange
+                            height : parent.height; width: 120 * GUISetting.scale;
+
+                            enabled: dialog.progress === 100 && _pressureUnitCombo.currentIndex == 0
+
+                            textField.validator: DoubleValidator{}
+                            stepValue : 1; minValue:0; maxValue: 999999999
+                            fixedN : 4
+
+                            onChangedText: {
+                                dlgModel.onCommandSetEdit(true)
+                            }
+                        }
+
+                        NText{
+                            anchors.verticalCenter: _sensorRange.verticalCenter; anchors.left: _sensorRange.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrSensorRange ? "#FF0000" : "#000000"
+
+                            text : qsTr("MAX")
+                        }
+                    }
+
+                    NText{
+                        Layout.fillWidth: true; isBold: true
+                        visible: firmwareVer > 0x603
+                        text : qsTr("Out Range")
+                    }
+
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
+                        visible: firmwareVer > 0x603
+
+                        NComboBox{
+                            id : _outPositionUnitCombo
+                            height : parent.height; width: 120 * GUISetting.scale;
+
+                            enabled: dialog.progress === 100
+
+                            model: ["counts","percent","degrees"]
+
+                            onCurrentIndexChanged: {
+
+                                if(currentIndex == 0)
+                                {
+                                    _outPositionRange.setValue(dlgModel.mOutPositionRange)
+                                }
+
+                                dlgModel.onCommandSetEdit(true)
+                            }
+                        }
+
+                        NText{
+                            anchors.verticalCenter: _outPositionUnitCombo.verticalCenter; anchors.left: _outPositionUnitCombo.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrOutPositionUnitIdx ? "#FF0000" : "#000000"
+
+                            text : qsTr("position unit")
+                        }
+                    }
+
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
+                        visible: _outPositionUnitCombo.currentIndex == 0 && firmwareVer > 0x603
+
+                        NInputNumber{
+                            id : _outPositionRange
+                            height : parent.height; width: 120 * GUISetting.scale;
+                            enabled: dialog.progress === 100 && _outPositionUnitCombo.currentIndex == 0
+
+                            textField.validator: DoubleValidator{}
+                            stepValue : 1; minValue:0; maxValue: 999999999
+                            fixedN : 3
+
+                            onChangedText: {
+                                dlgModel.onCommandSetEdit(true)
+                            }
+                        }
+
+                        NText{
+                            anchors.verticalCenter: _outPositionRange.verticalCenter; anchors.left: _outPositionRange.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrOutPositionRange ? "#FF0000" : "#000000"
+
+                            text : qsTr("Max")
+                        }
+                    }
+
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
+                        visible: firmwareVer > 0x603
+
+                        NComboBox{
+                            id : _outPressureUnitCombo
+                            height : parent.height; width: 120 * GUISetting.scale;
+
+                            enabled: dialog.progress === 100
+
+                            model: ["counts","percent","psi","Torr","mTorr","bar","mbar","pa","atm"]
+
+
+                            onCurrentIndexChanged: {
+                                if(currentIndex == 0)
+                                {
+                                    _outSensorRange.setValue(dlgModel.mOutSensorRange)
+                                }
+                                dlgModel.onCommandSetEdit(true)
+                            }
+                        }
+
+                        NText{
+                            anchors.verticalCenter: _outPressureUnitCombo.verticalCenter; anchors.left: _outPressureUnitCombo.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrOutPressureUnitIdx ? "#FF0000" : "#000000"
+
+                            text : qsTr("pressure unit")
+                        }
+                    }
+
+                    Item{
+                        Layout.fillWidth: true; height: 24 * GUISetting.scale;
+                        visible: _outPressureUnitCombo.currentIndex == 0 && firmwareVer > 0x603
+
+                        NInputNumber{
+                            id : _outSensorRange
+                            height : parent.height; width: 120 * GUISetting.scale;
+                            enabled: dialog.progress === 100 && _outPressureUnitCombo.currentIndex == 0
+
+                            textField.validator: DoubleValidator{}
+                            stepValue : 1; minValue:0; maxValue: 999999999
+                            fixedN : 4
+
+                            onChangedText: {
+                                dlgModel.onCommandSetEdit(true)
+                            }
+                        }
+
+                        NText{
+                            anchors.verticalCenter: _outSensorRange.verticalCenter; anchors.left: _outSensorRange.right; anchors.leftMargin: GUISetting.margin
+                            color: dlgModel.mErrOutSensorRange ? "#FF0000" : "#000000"
+                            text : qsTr("MAX")
+                        }
                     }
                 }
             }

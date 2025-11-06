@@ -585,6 +585,8 @@ public slots:
 
     Q_INVOKABLE void onCommandExportSetting(bool isForUpdate)
     {
+        int nfirmwareVer;
+
         qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]isForUpdate = " << isForUpdate;
 
         pConfigSP->loadValveParams();
@@ -693,6 +695,17 @@ public slots:
             tempItem.setCommand("Interface(Device Net) Pressure Unit"         , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_PRESSURE_UNIT), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_PRESSURE_UNIT)); mExportCmdList.append(tempItem);
             tempItem.setCommand("Interface(Device Net) Pressure Sensor 1 Gain", QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_S01_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_S01_GAIN     )); mExportCmdList.append(tempItem);
             tempItem.setCommand("Interface(Device Net) Pressure Sensor 2 Gain", QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_S02_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_S02_GAIN     )); mExportCmdList.append(tempItem);
+
+            nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
+            if(nfirmwareVer >= 0x604)
+            {
+                tempItem.setCommand("Interface(Device Net) Out Position Unit"         , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_POS_UNIT     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_POS_UNIT     )); mExportCmdList.append(tempItem);
+                tempItem.setCommand("Interface(Device Net) Out Position Gain"         , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_POS_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_POS_GAIN     )); mExportCmdList.append(tempItem);
+                tempItem.setCommand("Interface(Device Net) Out Pressure Unit"         , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_PRESSURE_UNIT), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_PRESSURE_UNIT)); mExportCmdList.append(tempItem);
+                tempItem.setCommand("Interface(Device Net) Out Pressure Sensor 1 Gain", QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_S01_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_S01_GAIN     )); mExportCmdList.append(tempItem);
+                tempItem.setCommand("Interface(Device Net) Out Pressure Sensor 2 Gain", QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_S02_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_S02_GAIN     )); mExportCmdList.append(tempItem);
+            }
+
             tempItem.setCommand("Interface(Device Net) input assembly"        , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_IN_ASS       ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_IN_ASS       )); mExportCmdList.append(tempItem);
             tempItem.setCommand("Interface(Device Net) output assembly"       , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_ASS      ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_ASS      )); mExportCmdList.append(tempItem);
             break;
