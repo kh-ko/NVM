@@ -687,8 +687,6 @@ public slots:
         {
             setState((eState)(mState + 1));
         }
-
-        setState((eState)(mState + 1));
     }
 
     void onValveReadedInterfaceCfgDNetOutPosUnit(ValveResponseSimpleValueDto dto)

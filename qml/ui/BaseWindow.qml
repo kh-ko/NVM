@@ -660,7 +660,6 @@ Window {
     Component{
         id : interfaceSetupDevNetRangeDlg
         InterfaceSetupDevNetRangeDlg{
-
         }
     }
 
@@ -708,6 +707,7 @@ Window {
         InterfaceStatusDNetDlg{
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
+            firmwareVer: parseInt(model.mFirmwareVersion.slice(-4), 16)
         }
     }
     Component{

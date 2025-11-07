@@ -101,6 +101,8 @@
 		{"seq":98,"desc":"End_Percent(99, (50 ~ 100%)"},
 		{"seq":99,"desc":"Adaptive stable percent(50, (1 ~ 10000)"},
 		{"seq":100,"desc":"Adaptive Conductance Method (3, 0~3)"},
-		{"seq":101,"desc":"Adaptive Disk Back time (500, 0~5000)"}
+		{"seq":101,"desc":"Adaptive Disk Back time (500, 0~5000)"},
+		{"seq":102,"desc":"Profibus gsd Version (0, 0~1)"},
+		{"seq":103,"desc":"Devicenet Revision (0x0101)"}
 	]
 }

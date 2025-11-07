@@ -28,6 +28,11 @@ class InterfaceStatusDNetDlgModel : public QObject
     Q_PROPERTY(QString mPressureUnitValue        READ getPressureUnitValue       NOTIFY signalEventChangedPressureUnitValue      )
     Q_PROPERTY(QString mSensor01RangeValue       READ getSensor01RangeValue      NOTIFY signalEventChangedSensor01RangeValue     )
     Q_PROPERTY(QString mSensor02RangeValue       READ getSensor02RangeValue      NOTIFY signalEventChangedSensor02RangeValue     )
+    Q_PROPERTY(QString mOutPositionUnitValue     READ getOutPositionUnitValue    NOTIFY signalEventChangedOutPositionUnitValue   )
+    Q_PROPERTY(QString mOutPositionRangeValue    READ getOutPositionRangeValue   NOTIFY signalEventChangedOutPositionRangeValue  )
+    Q_PROPERTY(QString mOutPressureUnitValue     READ getOutPressureUnitValue    NOTIFY signalEventChangedOutPressureUnitValue   )
+    Q_PROPERTY(QString mOutSensor01RangeValue    READ getOutSensor01RangeValue   NOTIFY signalEventChangedOutSensor01RangeValue  )
+    Q_PROPERTY(QString mOutSensor02RangeValue    READ getOutSensor02RangeValue   NOTIFY signalEventChangedOutSensor02RangeValue  )
     Q_PROPERTY(int     mDIActivation             READ getDIActivation            NOTIFY signalEventChangedDIActivation           )
     Q_PROPERTY(int     mDIFunction               READ getDIFunction              NOTIFY signalEventChangedDIFunction             )
     Q_PROPERTY(int     mDIPolarity               READ getDIPolarity              NOTIFY signalEventChangedDIPolarity             )
@@ -71,6 +76,11 @@ public:
     QString mPressureUnitValue       = "unknow";
     QString mSensor01RangeValue      = 0;
     QString mSensor02RangeValue      = 0;
+    QString mOutPositionUnitValue    = "unknow";
+    QString mOutPositionRangeValue   = 0;
+    QString mOutPressureUnitValue    = "unknow";
+    QString mOutSensor01RangeValue   = 0;
+    QString mOutSensor02RangeValue   = 0;
     int     mDIActivation            = 0;
     int     mDIFunction              = 0;
     int     mDIPolarity              = 0;
@@ -113,6 +123,11 @@ public:
     QString getPressureUnitValue      (){return mPressureUnitValue      ;}
     QString getSensor01RangeValue     (){return mSensor01RangeValue     ;}
     QString getSensor02RangeValue     (){return mSensor02RangeValue     ;}
+    QString getOutPositionUnitValue   (){return mOutPositionUnitValue   ;}
+    QString getOutPositionRangeValue  (){return mOutPositionRangeValue  ;}
+    QString getOutPressureUnitValue   (){return mOutPressureUnitValue   ;}
+    QString getOutSensor01RangeValue  (){return mOutSensor01RangeValue  ;}
+    QString getOutSensor02RangeValue  (){return mOutSensor02RangeValue  ;}
     int     getDIActivation           (){return mDIActivation           ;}
     int     getDIFunction             (){return mDIFunction             ;}
     int     getDIPolarity             (){return mDIPolarity             ;}
@@ -155,6 +170,12 @@ public:
     void setPressureUnitValue      (QString value){if(mPressureUnitValue       == value)return; mPressureUnitValue        = value; emit signalEventChangedPressureUnitValue      (value);}
     void setSensor01RangeValue     (QString value){if(mSensor01RangeValue      == value)return; mSensor01RangeValue       = value; emit signalEventChangedSensor01RangeValue     (value);}
     void setSensor02RangeValue     (QString value){if(mSensor02RangeValue      == value)return; mSensor02RangeValue       = value; emit signalEventChangedSensor02RangeValue     (value);}
+    void setOutPositionUnitValue   (QString value){if(mOutPositionUnitValue    == value)return; mOutPositionUnitValue     = value; emit signalEventChangedOutPositionUnitValue   (value);}
+    void setOutPositionRangeValue  (QString value){if(mOutPositionRangeValue   == value)return; mOutPositionRangeValue    = value; emit signalEventChangedOutPositionRangeValue  (value);}
+    void setOutPressureUnitValue   (QString value){if(mOutPressureUnitValue    == value)return; mOutPressureUnitValue     = value; emit signalEventChangedOutPressureUnitValue   (value);}
+    void setOutSensor01RangeValue  (QString value){if(mOutSensor01RangeValue   == value)return; mOutSensor01RangeValue    = value; emit signalEventChangedOutSensor01RangeValue  (value);}
+    void setOutSensor02RangeValue  (QString value){if(mOutSensor02RangeValue   == value)return; mOutSensor02RangeValue    = value; emit signalEventChangedOutSensor02RangeValue  (value);}
+
     void setDIActivation           (int     value){if(mDIActivation            == value)return; mDIActivation             = value; emit signalEventChangedDIActivation           (value);}
     void setDIFunction             (int     value){if(mDIFunction              == value)return; mDIFunction               = value; emit signalEventChangedDIFunction             (value);}
     void setDIPolarity             (int     value){if(mDIPolarity              == value)return; mDIPolarity               = value; emit signalEventChangedDIPolarity             (value);}
@@ -199,6 +220,11 @@ signals:
     void signalEventChangedPressureUnitValue      (QString value);
     void signalEventChangedSensor01RangeValue     (QString value);
     void signalEventChangedSensor02RangeValue     (QString value);
+    void signalEventChangedOutPositionUnitValue   (QString value);
+    void signalEventChangedOutPositionRangeValue  (QString value);
+    void signalEventChangedOutPressureUnitValue   (QString value);
+    void signalEventChangedOutSensor01RangeValue  (QString value);
+    void signalEventChangedOutSensor02RangeValue  (QString value);
     void signalEventChangedDIActivation           (int     value);
     void signalEventChangedDIFunction             (int     value);
     void signalEventChangedDIPolarity             (int     value);
@@ -239,6 +265,11 @@ public:
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_PRESSURE_UNIT    ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_S01_GAIN         ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_S02_GAIN         ;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_POS_UNIT     ;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_POS_GAIN     ;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_PRESSURE_UNIT;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_S01_GAIN     ;
+        ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUT_S02_GAIN     ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_INPUT_ASS        ;
         ENABLE_SLOT_VALVE_READED_IF_CFG_DNET_OUTPUT_ASS       ;
         ENABLE_SLOT_VALVE_READED_IF_CONFIG_DNET_DI            ;
@@ -462,8 +493,7 @@ public slots:
 
         if(dto.mIsSucc)
         {
-            int prec = 3;//calPositionFixedN(getPositionUnitIdx(getPositionUnitValue()));
-            setPositionRangeValue(QString("%1").arg(calRange(dto.mValue),  0, 'f', prec)); // todo fixed (3)
+            setPositionRangeValue(formatDoubleToString(calRange(dto.mValue), 6)); // todo fixed (3)
         }
         else
             setPositionRangeValue("not supported");
@@ -508,8 +538,7 @@ public slots:
 
         if(dto.mIsSucc)
         {
-            int prec = 3;//calPressureFixedN(getPressureUnitIdx(getPressureUnitValue()), pValveSP->getS01FullScalePrec(), pValveSP->getS01SullScaleUnit());
-            setSensor01RangeValue(QString("%1").arg(calRange(dto.mValue),  0, 'f', prec)); // todo fixed (3)
+            setSensor01RangeValue(formatDoubleToString(calRange(dto.mValue), 6)); // todo fixed (3)
         }
         else
             setSensor01RangeValue("not supported");
@@ -532,11 +561,122 @@ public slots:
 
         if(dto.mIsSucc)
         {
-            int prec = 3;//calPressureFixedN(getPressureUnitIdx(getPressureUnitValue()), pValveSP->getS02FullScalePrec(), pValveSP->getS02SullScaleUnit());
-            setSensor02RangeValue(QString("%1").arg(calRange(dto.mValue),  0, 'f', prec)); // todo fixed (3)
+            setSensor02RangeValue(formatDoubleToString(calRange(dto.mValue), 6)); // todo fixed (3)
         }
         else
             setSensor02RangeValue("not supported");
+
+        setState((eState)(mState + 1));
+    }
+
+    void onValveReadedInterfaceCfgDNetOutPosUnit(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_POS_UNIT || dto.mReqDto.mpRef != this)
+            return;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(dto.mIsSucc)
+            setOutPositionUnitValue(transValueToUnitStr(dto.mValue));
+        else
+            setOutPositionUnitValue("not supported");
+
+        setState((eState)(mState + 1));
+    }
+
+    void onValveReadedInterfaceCfgDNetOutPosGain(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_POS_GAIN || dto.mReqDto.mpRef != this)
+            return;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(dto.mIsSucc)
+        {
+            setOutPositionRangeValue(formatDoubleToString(calRange(dto.mValue), 6)); // todo fixed (3)
+        }
+        else
+            setOutPositionRangeValue("not supported");
+
+
+        setState((eState)(mState + 1));
+    }
+
+    void onValveReadedInterfaceCfgDNetOutPressureUnit(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_PRESSURE_UNIT || dto.mReqDto.mpRef != this)
+            return;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(dto.mIsSucc)
+            setOutPressureUnitValue(transValueToUnitStr(dto.mValue));
+        else
+            setOutPressureUnitValue("not supported");
+
+        setState((eState)(mState + 1));
+    }
+
+    void onValveReadedInterfaceCfgDNetOutSensor01Gain(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_S01_GAIN || dto.mReqDto.mpRef != this)
+            return;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(dto.mIsSucc)
+        {
+            setOutSensor01RangeValue(formatDoubleToString(calRange(dto.mValue), 6)); // todo fixed (3)
+        }
+        else
+            setOutSensor01RangeValue("not supported");
+
+        setState((eState)(mState + 1));
+    }
+
+    void onValveReadedInterfaceCfgDNetOutSensor02Gain(ValveResponseSimpleValueDto dto)
+    {
+        if(mState != eState::STATE_READ_OUT_S02_GAIN || dto.mReqDto.mpRef != this)
+            return;
+
+        setErrMsg(dto.mErrMsg);
+
+        if(dto.mIsNetworkErr)
+        {
+            setState(mState);
+            return;
+        }
+
+        if(dto.mIsSucc)
+        {
+            setOutSensor02RangeValue(formatDoubleToString(calRange(dto.mValue), 6)); // todo fixed (3)
+        }
+        else
+            setOutSensor02RangeValue("not supported");
 
         setState((eState)(mState + 1));
     }
@@ -825,26 +965,31 @@ public slots:
 
 private:
     enum eState{
-        STATE_READ_FIRMWARE_ID    = 0,
-        STATE_READ_SERIALNUM      = STATE_READ_FIRMWARE_ID   + 1,
-        STATE_READ_VALVE_ID_1     = STATE_READ_SERIALNUM     + 1,
-        STATE_READ_VALVE_ID_2     = STATE_READ_VALVE_ID_1    + 1,
-        STATE_READ_VALVE_ID_3     = STATE_READ_VALVE_ID_2    + 1,
-        STATE_READ_POS_UNIT       = STATE_READ_VALVE_ID_3    + 1,
-        STATE_READ_POS_GAIN       = STATE_READ_POS_UNIT      + 1,
-        STATE_READ_PRESSURE_UNIT  = STATE_READ_POS_GAIN      + 1,
-        STATE_READ_S01_GAIN       = STATE_READ_PRESSURE_UNIT + 1,
-        STATE_READ_S02_GAIN       = STATE_READ_S01_GAIN      + 1,
-        STATE_READ_IN_ASS         = STATE_READ_S02_GAIN      + 1,
-        STATE_READ_OUT_ASS        = STATE_READ_IN_ASS        + 1,
-        STATE_READ_DI             = STATE_READ_OUT_ASS       + 1,
-        STATE_READ_DO             = STATE_READ_DI            + 1,
-        STATE_READ_IO_STATUS      = STATE_READ_DO            + 1,
-        STATE_READ_DSTATUS        = STATE_READ_IO_STATUS     + 1,
-        STATE_READ_EX_STATUS      = STATE_READ_DSTATUS       + 1,
-        STATE_READ_BAUDRATE       = STATE_READ_EX_STATUS     + 1,
-        STATE_READ_MAC            = STATE_READ_BAUDRATE      + 1,
-        STATE_OVER                = STATE_READ_MAC           + 1
+        STATE_READ_FIRMWARE_ID       = 0,
+        STATE_READ_SERIALNUM         = STATE_READ_FIRMWARE_ID       + 1,
+        STATE_READ_VALVE_ID_1        = STATE_READ_SERIALNUM         + 1,
+        STATE_READ_VALVE_ID_2        = STATE_READ_VALVE_ID_1        + 1,
+        STATE_READ_VALVE_ID_3        = STATE_READ_VALVE_ID_2        + 1,
+        STATE_READ_POS_UNIT          = STATE_READ_VALVE_ID_3        + 1,
+        STATE_READ_POS_GAIN          = STATE_READ_POS_UNIT          + 1,
+        STATE_READ_PRESSURE_UNIT     = STATE_READ_POS_GAIN          + 1,
+        STATE_READ_S01_GAIN          = STATE_READ_PRESSURE_UNIT     + 1,
+        STATE_READ_S02_GAIN          = STATE_READ_S01_GAIN          + 1,
+        STATE_READ_OUT_POS_UNIT      = STATE_READ_S02_GAIN          + 1,
+        STATE_READ_OUT_POS_GAIN      = STATE_READ_OUT_POS_UNIT      + 1,
+        STATE_READ_OUT_PRESSURE_UNIT = STATE_READ_OUT_POS_GAIN      + 1,
+        STATE_READ_OUT_S01_GAIN      = STATE_READ_OUT_PRESSURE_UNIT + 1,
+        STATE_READ_OUT_S02_GAIN      = STATE_READ_OUT_S01_GAIN      + 1,
+        STATE_READ_IN_ASS            = STATE_READ_OUT_S02_GAIN      + 1,
+        STATE_READ_OUT_ASS           = STATE_READ_IN_ASS            + 1,
+        STATE_READ_DI                = STATE_READ_OUT_ASS           + 1,
+        STATE_READ_DO                = STATE_READ_DI                + 1,
+        STATE_READ_IO_STATUS         = STATE_READ_DO                + 1,
+        STATE_READ_DSTATUS           = STATE_READ_IO_STATUS         + 1,
+        STATE_READ_EX_STATUS         = STATE_READ_DSTATUS           + 1,
+        STATE_READ_BAUDRATE          = STATE_READ_EX_STATUS         + 1,
+        STATE_READ_MAC               = STATE_READ_BAUDRATE          + 1,
+        STATE_OVER                   = STATE_READ_MAC               + 1
     };
 
     QTimer mTimer;
@@ -900,25 +1045,30 @@ public slots:
     {
         switch ((int)mState)
         {
-        case (int)eState::STATE_READ_VALVE_ID_1   : pValveSP->readValveParam( 9, this); break;
-        case (int)eState::STATE_READ_VALVE_ID_2   : pValveSP->readValveParam(10, this); break;
-        case (int)eState::STATE_READ_VALVE_ID_3   : pValveSP->readValveParam(11, this); break;
-        case (int)eState::STATE_READ_MAC          : pValveSP->readInterfaceConfigDNetMac         (this); break;
-        case (int)eState::STATE_READ_BAUDRATE     : pValveSP->readInterfaceConfigDNetBaudrate    (this); break;
-        case (int)eState::STATE_READ_FIRMWARE_ID  : pValveSP->readInterfaceDNetFirmwareID        (this); break;
-        case (int)eState::STATE_READ_SERIALNUM    : pValveSP->readInterfaceDNetSerialNum         (this); break;
-        case (int)eState::STATE_READ_POS_UNIT     : pValveSP->readInterfaceConfigDNetPosUnit     (this); break;
-        case (int)eState::STATE_READ_POS_GAIN     : pValveSP->readInterfaceConfigDNetPosGain     (this); break;
-        case (int)eState::STATE_READ_PRESSURE_UNIT: pValveSP->readInterfaceConfigDNetPressureUnit(this); break;
-        case (int)eState::STATE_READ_S01_GAIN     : pValveSP->readInterfaceConfigDNetSensor01Gain(this); break;
-        case (int)eState::STATE_READ_S02_GAIN     : pValveSP->readInterfaceConfigDNetSensor02Gain(this); break;
-        case (int)eState::STATE_READ_IN_ASS       : pValveSP->readInterfaceConfigDNetInputAss    (this); break;
-        case (int)eState::STATE_READ_OUT_ASS      : pValveSP->readInterfaceConfigDNetOutputAss   (this); break;
-        case (int)eState::STATE_READ_DI           : pValveSP->readInterfaceConfigDNetDi          (this); break;
-        case (int)eState::STATE_READ_DO           : pValveSP->readInterfaceConfigDNetDo          (this); break;
-        case (int)eState::STATE_READ_IO_STATUS    : pValveSP->readInterfaceStatusDNet            (this); break;
-        case (int)eState::STATE_READ_DSTATUS      : pValveSP->readInterfaceConfigDNetDevStatus   (this); break;
-        case (int)eState::STATE_READ_EX_STATUS    : pValveSP->readInterfaceConfigDNetExStatus    (this); break;
+        case (int)eState::STATE_READ_VALVE_ID_1       : pValveSP->readValveParam( 9, this); break;
+        case (int)eState::STATE_READ_VALVE_ID_2       : pValveSP->readValveParam(10, this); break;
+        case (int)eState::STATE_READ_VALVE_ID_3       : pValveSP->readValveParam(11, this); break;
+        case (int)eState::STATE_READ_MAC              : pValveSP->readInterfaceConfigDNetMac            (this); break;
+        case (int)eState::STATE_READ_BAUDRATE         : pValveSP->readInterfaceConfigDNetBaudrate       (this); break;
+        case (int)eState::STATE_READ_FIRMWARE_ID      : pValveSP->readInterfaceDNetFirmwareID           (this); break;
+        case (int)eState::STATE_READ_SERIALNUM        : pValveSP->readInterfaceDNetSerialNum            (this); break;
+        case (int)eState::STATE_READ_POS_UNIT         : pValveSP->readInterfaceConfigDNetPosUnit        (this); break;
+        case (int)eState::STATE_READ_POS_GAIN         : pValveSP->readInterfaceConfigDNetPosGain        (this); break;
+        case (int)eState::STATE_READ_PRESSURE_UNIT    : pValveSP->readInterfaceConfigDNetPressureUnit   (this); break;
+        case (int)eState::STATE_READ_S01_GAIN         : pValveSP->readInterfaceConfigDNetSensor01Gain   (this); break;
+        case (int)eState::STATE_READ_S02_GAIN         : pValveSP->readInterfaceConfigDNetSensor02Gain   (this); break;
+        case (int)eState::STATE_READ_OUT_POS_UNIT     : pValveSP->readInterfaceConfigDNetOutPosUnit     (this); break;
+        case (int)eState::STATE_READ_OUT_POS_GAIN     : pValveSP->readInterfaceConfigDNetOutPosGain     (this); break;
+        case (int)eState::STATE_READ_OUT_PRESSURE_UNIT: pValveSP->readInterfaceConfigDNetOutPressureUnit(this); break;
+        case (int)eState::STATE_READ_OUT_S01_GAIN     : pValveSP->readInterfaceConfigDNetOutSensor01Gain(this); break;
+        case (int)eState::STATE_READ_OUT_S02_GAIN     : pValveSP->readInterfaceConfigDNetOutSensor02Gain(this); break;
+        case (int)eState::STATE_READ_IN_ASS           : pValveSP->readInterfaceConfigDNetInputAss       (this); break;
+        case (int)eState::STATE_READ_OUT_ASS          : pValveSP->readInterfaceConfigDNetOutputAss      (this); break;
+        case (int)eState::STATE_READ_DI               : pValveSP->readInterfaceConfigDNetDi             (this); break;
+        case (int)eState::STATE_READ_DO               : pValveSP->readInterfaceConfigDNetDo             (this); break;
+        case (int)eState::STATE_READ_IO_STATUS        : pValveSP->readInterfaceStatusDNet               (this); break;
+        case (int)eState::STATE_READ_DSTATUS          : pValveSP->readInterfaceConfigDNetDevStatus      (this); break;
+        case (int)eState::STATE_READ_EX_STATUS        : pValveSP->readInterfaceConfigDNetExStatus       (this); break;
         }
     }
 
@@ -1058,6 +1208,49 @@ private:
         case 2: return 0;
         default: return 3;
         }
+    }
+
+    QString formatDoubleToString(double value, int prec)
+    {
+        // 0. 0은 0으로 처리
+        if (value == 0.0)
+        {
+            return QString("0");
+        }
+
+        // 1. 유효숫자 자릿수(sig_prec)를 기반으로 'f' 포맷에 사용할
+        //    소수점 이하 자릿수(f_prec)를 계산합니다.
+
+        // 값의 크기(지수)를 구합니다. (예: 123.45 -> 2, 0.00123 -> -3)
+        int magnitude = qFloor(qLn(value)/ qLn(10));
+
+        // (필요한 유효숫자) - (정수부 자릿수) = (필요한 소수점 이하 자릿수)
+        int f_prec = prec - int(magnitude) - 1;
+
+        if (f_prec < 0)
+        {
+            f_prec = 0;
+        }
+
+        //qDebug
+
+        // 3. 'f' 포맷으로 문자열 변환
+        QString str = QString::number(value, 'f', f_prec);
+
+        // 4. 기존 로직을 그대로 사용하여 불필요한 0과 . 제거
+        if (str.contains('.'))
+        {
+            while (str.endsWith('0'))
+            {
+                str.chop(1);
+            }
+
+            if (str.endsWith('.'))
+            {
+                str.chop(1);
+            }
+        }
+        return str;
     }
 
     int calPressureFixedN(int unitIdx, int fullScalePrec, int fullScaleUnit)

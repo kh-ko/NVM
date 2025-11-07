@@ -12,6 +12,7 @@ BaseSetupWindow{
     id : dialog
 
     property var body : null
+    property var firmwareVer : 0
 
     titleText   : qsTr("Interface status(D-Net)")
     progress    : dlgModel.mProgress
@@ -392,7 +393,7 @@ BaseSetupWindow{
 
                     NText{
                         id : _macValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
                         isBold: true
                         text : dlgModel.mMacValue
                     }
@@ -412,7 +413,7 @@ BaseSetupWindow{
 
                     NText{
                         id : _baudrateValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
                         isBold: true
                         text : dlgModel.mBaudrate
                     }
@@ -432,7 +433,7 @@ BaseSetupWindow{
 
                     NText{
                         id : _firmwareValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
                         isBold: true
                         text : dlgModel.mFirmwareValue
                     }
@@ -452,53 +453,11 @@ BaseSetupWindow{
 
                     NText{
                         id : _serialNumValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
                         isBold: true
                         text : dlgModel.mSerialNumValue
                     }
                 }
-
-                /*
-                Rectangle{
-                    id : inputAssemblyBox
-                    height: 30 * GUISetting.scale
-                    anchors.top: serialNumBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
-
-                    color: "#E4E4E4"
-
-                    NText{
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("input assembly")
-                    }
-
-                    NText{
-                        id : _inputAssemblyValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
-                        isBold: true
-                        text : qsTr("0")
-                    }
-                }
-
-                Rectangle{
-                    id : outputAssemblyBox
-                    height: 30 * GUISetting.scale
-                    anchors.top: inputAssemblyBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
-
-                    color: "#E4E4E4"
-
-                    NText{
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("output assembly")
-                    }
-
-                    NText{
-                        id : _outputAssemblyValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
-                        isBold: true
-                        text : qsTr("0")
-                    }
-                }
-                */
 
                 Rectangle{
                     id : positionUnitBox
@@ -509,12 +468,12 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("position unit")
+                        text : firmwareVer > 0x603 ?  qsTr("position unit (in)") : qsTr("position unit")
                     }
 
                     NText{
                         id : _positionUnitValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
                         isBold: true
                         text : dlgModel.mPositionUnitValue
                     }
@@ -529,12 +488,12 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("position gain")
+                        text : firmwareVer > 0x603 ?  qsTr("position gain (in)") : qsTr("position gain")
                     }
 
                     NText{
                         id : _positionRangeValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
                         isBold: true
                         text : dlgModel.mPositionUnitValue !== "counts" ? "-" : dlgModel.mPositionRangeValue
                     }
@@ -549,12 +508,12 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("pressure unit")
+                        text : firmwareVer > 0x603 ?  qsTr("pressure unit (in)") : qsTr("pressure unit")
                     }
 
                     NText{
                         id : _pressureUnitValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
                         isBold: true
                         text : dlgModel.mPressureUnitValue
                     }
@@ -569,12 +528,12 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("sensor 1 gain")
+                        text : firmwareVer > 0x603 ?  qsTr("sensor 1 gain (in)") : qsTr("sensor 1 gain")
                     }
 
                     NText{
                         id : _sensor01RangeValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
                         isBold: true
                         text : dlgModel.mPressureUnitValue !== "counts" ? "-" : dlgModel.mSensor01RangeValue
                     }
@@ -589,14 +548,119 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : qsTr("sensor 2 gain")
+                        text : firmwareVer > 0x603 ?  qsTr("sensor 2 gain (in)") : qsTr("sensor 2 gain")
                     }
 
                     NText{
                         id : _sensor02RangeValue
-                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
                         isBold: true
                         text : dlgModel.mPressureUnitValue !== "counts" ? "-" : dlgModel.mSensor02RangeValue
+                    }
+                }
+
+                Rectangle{
+                    id : outPositionUnitBox
+                    height: 30 * GUISetting.scale
+                    anchors.top: sensor02RangeBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
+                    visible: firmwareVer > 0x603
+                    color: "#E4E4E4"
+
+                    NText{
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                        text : qsTr("position unit (out)")
+                    }
+
+                    NText{
+                        id : _outPositionUnitValue
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
+                        isBold: true
+                        text : dlgModel.mOutPositionUnitValue
+                    }
+                }
+
+                Rectangle{
+                    id : outPositionRangeBox
+                    height: 30 * GUISetting.scale
+                    anchors.top: outPositionUnitBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
+                    visible: firmwareVer > 0x603
+                    color: "#E4E4E4"
+
+                    NText{
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                        text : qsTr("position gain (out)")
+                    }
+
+                    NText{
+                        id : _outPositionRangeValue
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
+                        isBold: true
+                        text : dlgModel.mOutPositionUnitValue !== "counts" ? "-" : dlgModel.mOutPositionRangeValue
+                    }
+                }
+
+                Rectangle{
+                    id : outPressureUnitBox
+                    height: 30 * GUISetting.scale
+                    anchors.top: outPositionRangeBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
+                    visible: firmwareVer > 0x603
+                    color: "#E4E4E4"
+
+                    NText{
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                        text : qsTr("pressure unit (out)")
+                    }
+
+                    NText{
+                        id : _outPressureUnitValue
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
+                        isBold: true
+                        text : dlgModel.mOutPressureUnitValue
+                    }
+                }
+
+                Rectangle{
+                    id : outSensor01RangeBox
+                    height: 30 * GUISetting.scale
+                    anchors.top: outPressureUnitBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
+                    visible: firmwareVer > 0x603
+                    color: "#E4E4E4"
+
+                    NText{
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                        text : qsTr("sensor 1 gain (out)")
+                    }
+
+                    NText{
+                        id : _outSensor01RangeValue
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
+                        isBold: true
+                        text : dlgModel.mOutPressureUnitValue !== "counts" ? "-" : dlgModel.mOutSensor01RangeValue
+                    }
+                }
+
+                Rectangle{
+                    id : outSensor02RangeBox
+                    height: 30 * GUISetting.scale
+                    anchors.top: outSensor01RangeBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
+                    visible: firmwareVer > 0x603
+                    color: "#E4E4E4"
+
+                    NText{
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+                        text : qsTr("sensor 2 gain (out)")
+                    }
+
+                    NText{
+                        id : _outSensor02RangeValue
+                        anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: parent.width * 0.6
+                        isBold: true
+                        text : dlgModel.mOutPressureUnitValue !== "counts" ? "-" : dlgModel.mOutSensor02RangeValue
                     }
                 }
             }
