@@ -177,6 +177,16 @@ NWindow{
 
                     onClick: {
                         dlgModel.onCommandSetServicePortType("USB");
+
+                        if(comportCombo.displayText == "")
+                            step = step + 1
+                        else if(comportCombo.displayText != "" && nwindow.method == "local")
+                        {
+                            dlgModel.onCommandUpdateFromInternalFile(comportCombo.displayText)
+                            step = step + 3
+                        }
+                        else
+                            step = step + 2
                     }
                 }
             }

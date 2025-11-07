@@ -321,6 +321,8 @@ private:
 
     bool setBootMode(QString errMsg)
     {
+        qDebug() << "[" << Q_FUNC_INFO << "] service port type = " << mServicePortType;
+
         if(mServicePortType != "USB")
             return true;
 
