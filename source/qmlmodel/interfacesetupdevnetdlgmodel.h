@@ -679,13 +679,14 @@ public slots:
         mReadedSensor02Gain = dto.mValue.toLower();
 
         int nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
-        if(nfirmwareVer < 0x604)
+
+        if(nfirmwareVer >= 0x604 || (pLSettingSP->mCompany == ValveEnumDef::COMPANY_APSYS && nfirmwareVer >= 0x59B))
         {
-            setState(STATE_READ_IN_ASS);
+            setState((eState)(mState + 1));
         }
         else
         {
-            setState((eState)(mState + 1));
+            setState(STATE_READ_IN_ASS);
         }
     }
 
@@ -1292,13 +1293,13 @@ public slots:
         }
 
         int nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
-        if(nfirmwareVer < 0x604)
+        if(nfirmwareVer >= 0x604 || (pLSettingSP->mCompany == ValveEnumDef::COMPANY_APSYS && nfirmwareVer >= 0x59B))
         {
-            setState(STATE_WRITE_IN_ASS);
+            setState((eState)(mState + 1));
         }
         else
         {
-            setState((eState)(mState + 1));
+            setState(STATE_WRITE_IN_ASS);
         }
     }
 

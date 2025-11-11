@@ -697,7 +697,7 @@ public slots:
             tempItem.setCommand("Interface(Device Net) Pressure Sensor 2 Gain", QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_S02_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_S02_GAIN     )); mExportCmdList.append(tempItem);
 
             nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
-            if(nfirmwareVer >= 0x604)
+            if(nfirmwareVer >= 0x604 || (pLSettingSP->mCompany == ValveEnumDef::COMPANY_APSYS && nfirmwareVer >= 0x59B))
             {
                 tempItem.setCommand("Interface(Device Net) Out Position Unit"         , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_POS_UNIT     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_POS_UNIT     )); mExportCmdList.append(tempItem);
                 tempItem.setCommand("Interface(Device Net) Out Position Gain"         , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_POS_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_POS_GAIN     )); mExportCmdList.append(tempItem);
