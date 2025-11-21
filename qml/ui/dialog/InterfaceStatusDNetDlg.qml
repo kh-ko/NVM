@@ -13,6 +13,7 @@ BaseSetupWindow{
 
     property var body : null
     property var firmwareVer : 0
+    property var company
 
     titleText   : qsTr("Interface status(D-Net)")
     progress    : dlgModel.mProgress
@@ -468,7 +469,7 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : firmwareVer > 0x603 ?  qsTr("position unit (in)") : qsTr("position unit")
+                        text : (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B)) ?  qsTr("position unit (in)") : qsTr("position unit")
                     }
 
                     NText{
@@ -488,7 +489,7 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : firmwareVer > 0x603 ?  qsTr("position gain (in)") : qsTr("position gain")
+                        text : (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B)) ?  qsTr("position gain (in)") : qsTr("position gain")
                     }
 
                     NText{
@@ -508,7 +509,7 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : firmwareVer > 0x603 ?  qsTr("pressure unit (in)") : qsTr("pressure unit")
+                        text : (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B)) ?  qsTr("pressure unit (in)") : qsTr("pressure unit")
                     }
 
                     NText{
@@ -528,7 +529,7 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : firmwareVer > 0x603 ?  qsTr("sensor 1 gain (in)") : qsTr("sensor 1 gain")
+                        text : (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B)) ?  qsTr("sensor 1 gain (in)") : qsTr("sensor 1 gain")
                     }
 
                     NText{
@@ -548,7 +549,7 @@ BaseSetupWindow{
 
                     NText{
                         anchors.verticalCenter: parent.verticalCenter; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
-                        text : firmwareVer > 0x603 ?  qsTr("sensor 2 gain (in)") : qsTr("sensor 2 gain")
+                        text : (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B)) ?  qsTr("sensor 2 gain (in)") : qsTr("sensor 2 gain")
                     }
 
                     NText{
@@ -564,7 +565,7 @@ BaseSetupWindow{
                     height: 30 * GUISetting.scale
                     anchors.top: sensor02RangeBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: firmwareVer > 0x603
+                    visible: (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
                     color: "#E4E4E4"
 
                     NText{
@@ -585,7 +586,7 @@ BaseSetupWindow{
                     height: 30 * GUISetting.scale
                     anchors.top: outPositionUnitBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: firmwareVer > 0x603
+                    visible: (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
                     color: "#E4E4E4"
 
                     NText{
@@ -606,7 +607,7 @@ BaseSetupWindow{
                     height: 30 * GUISetting.scale
                     anchors.top: outPositionRangeBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: firmwareVer > 0x603
+                    visible: (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
                     color: "#E4E4E4"
 
                     NText{
@@ -627,7 +628,7 @@ BaseSetupWindow{
                     height: 30 * GUISetting.scale
                     anchors.top: outPressureUnitBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: firmwareVer > 0x603
+                    visible: (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
                     color: "#E4E4E4"
 
                     NText{
@@ -648,7 +649,7 @@ BaseSetupWindow{
                     height: 30 * GUISetting.scale
                     anchors.top: outSensor01RangeBox.bottom; anchors.topMargin: GUISetting.line_margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
 
-                    visible: firmwareVer > 0x603
+                    visible: (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
                     color: "#E4E4E4"
 
                     NText{

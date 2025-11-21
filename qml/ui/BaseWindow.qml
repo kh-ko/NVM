@@ -708,6 +708,7 @@ Window {
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
             firmwareVer: parseInt(model.mFirmwareVersion.slice(-4), 16)
+            company    : model.mCompany
         }
     }
     Component{

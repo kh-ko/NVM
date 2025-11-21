@@ -69,9 +69,9 @@ public:
     QList<int> mChartMSecOption = {30000, 60000, 120000, 300000};
 
     qint64  mMonitoringCycle       = 10;
-    QString mBuildVersion          = "1.10.16";
+    QString mBuildVersion          = "1.10.18";
     bool    mIsWithoutLogo         = false; // not used
-    int     mCompany               = (int)ValveEnumDef::COMPANY_SOAO;
+    int     mCompany               = (int)ValveEnumDef::COMPANY_APSYS;
 
     bool    mIsDrawCurrPos         = true ;
     bool    mIsDrawTargetPos       = true ;
@@ -261,6 +261,12 @@ signals:
     void signalEventChangedFUCount              ();
 };
 #endif // LOCALSETTINGSPROVIDER_H
+
+
+
+
+
+
 
 
 

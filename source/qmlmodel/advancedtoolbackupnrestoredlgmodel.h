@@ -539,11 +539,15 @@ public slots:
         out.setCodec("utf-8");
 
         do{
-            QStringList line = out.readLine().split(",");
-
-            if(line.count() > 1)
-                mImportCmdList.append(line[1].trimmed());
-
+            QString line = out.readLine();
+            if(line.contains(","))
+            {
+                mImportCmdList.append(line.split(",")[1].trimmed());
+            }
+            else
+            {
+                mImportCmdList.append(line.trimmed());
+            }
         }while(!out.atEnd());
 
         file.close();

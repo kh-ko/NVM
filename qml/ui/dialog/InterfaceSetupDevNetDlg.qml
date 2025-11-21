@@ -274,7 +274,7 @@ BaseSetupWindow{
 
                     NText{
                         Layout.fillWidth: true; isBold: true
-                        text : firmwareVer > 0x603 ?  qsTr("In Range") : qsTr("In/Out Range")
+                        text : (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B)) ?  qsTr("In Range") : qsTr("In/Out Range")
                     }
 
                     Item{
@@ -392,13 +392,13 @@ BaseSetupWindow{
 
                     NText{
                         Layout.fillWidth: true; isBold: true
-                        visible: firmwareVer > 0x603
+                        visible: (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
                         text : qsTr("Out Range")
                     }
 
                     Item{
                         Layout.fillWidth: true; height: 24 * GUISetting.scale;
-                        visible: firmwareVer > 0x603
+                        visible: (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
 
                         NComboBox{
                             id : _outPositionUnitCombo
@@ -429,7 +429,7 @@ BaseSetupWindow{
 
                     Item{
                         Layout.fillWidth: true; height: 24 * GUISetting.scale;
-                        visible: _outPositionUnitCombo.currentIndex == 0 && firmwareVer > 0x603
+                        visible: _outPositionUnitCombo.currentIndex == 0 && (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
 
                         NInputNumber{
                             id : _outPositionRange
@@ -455,7 +455,7 @@ BaseSetupWindow{
 
                     Item{
                         Layout.fillWidth: true; height: 24 * GUISetting.scale;
-                        visible: firmwareVer > 0x603
+                        visible: firmwareVer > (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
 
                         NComboBox{
                             id : _outPressureUnitCombo
@@ -485,7 +485,7 @@ BaseSetupWindow{
 
                     Item{
                         Layout.fillWidth: true; height: 24 * GUISetting.scale;
-                        visible: _outPressureUnitCombo.currentIndex == 0 && firmwareVer > 0x603
+                        visible: _outPressureUnitCombo.currentIndex == 0 && (dialog.firmwareVer > 0x603 || (dialog.company === ValveEnumDef.COMPANY_APSYS && dialog.firmwareVer >= 0x59B))
 
                         NInputNumber{
                             id : _outSensorRange
