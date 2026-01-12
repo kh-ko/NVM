@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 17.0.2, 2025-11-21T13:20:27. -->
+<!-- Written by QtCreator 17.0.2, 2026-01-10T19:30:20. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -86,6 +86,9 @@
     <valuelist type="QVariantList" key="ClangTools.SuppressedDiagnostics"/>
     <value type="bool" key="ClangTools.UseGlobalSettings">true</value>
    </valuemap>
+   <valuemap type="QVariantMap" key="CppEditor.QuickFix">
+    <value type="bool" key="UseGlobalSettings">true</value>
+   </valuemap>
   </valuemap>
  </data>
  <data>
@@ -100,8 +103,8 @@
    <value type="qlonglong" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="qlonglong" key="ProjectExplorer.Target.ActiveRunConfiguration">1</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">E:\04_Working\01_APC_VALVE\001_NVM\03_SRC_BIN\Binary\build_qtcreator</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">E:/04_Working/01_APC_VALVE/001_NVM/03_SRC_BIN/Binary/build_qtcreator</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">E:\04_Working\01_APC_VALVE\001_NVM\03_SRC_BIN\Source\build_qtcreator</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">E:/04_Working/01_APC_VALVE/001_NVM/03_SRC_BIN/Source/build_qtcreator</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -186,7 +189,7 @@
      <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
      <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
      <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-     <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/04_Working/01_APC_VALVE/001_NVM/03_SRC_BIN/Binary/build_qtcreator</value>
+     <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/04_Working/01_APC_VALVE/001_NVM/03_SRC_BIN/Source/build_qtcreator</value>
     </valuemap>
     <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">2</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">0</value>
@@ -241,7 +244,7 @@
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/04_Working/01_APC_VALVE/001_NVM/03_SRC_BIN/Binary/build_qtcreator</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/04_Working/01_APC_VALVE/001_NVM/03_SRC_BIN/Source/build_qtcreator</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">2</value>
   </valuemap>

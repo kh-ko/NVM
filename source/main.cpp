@@ -57,6 +57,11 @@
 #include "source/qmlmodel/advencedtooldiskhoricalibdlgmodel.h"
 #include "source/qmlmodel/graphanalyzedlgmodel.h"
 #include "source/nchart/nchartview.h"
+
+#include "source/pmviewmodel/pmviewmodel.h"
+#include "source/pmmodel/pmvalvemodel.h"
+#include "source/newmodel/view/generaldlgmodel.h"
+
 //#include "source/nchart/nvoltchartview.h"
 //#include "source/nchart/nanalyzechartview.h"
 
@@ -209,6 +214,12 @@ int main(int argc, char *argv[])
     qmlRegisterType<AdvancedToolDiskHoriCalibDlgModel>("AdvancedToolDiskHoriCalibDlgModel", 1, 0, "AdvancedToolDiskHoriCalibDlgModel");
     qmlRegisterType<GraphAnalyzeDlgModel>("GraphAnalyzeDlgModel", 1, 0, "GraphAnalyzeDlgModel");
 
+    // for PM Protocol
+    qmlRegisterType<PmViewModel>("PmViewModel", 1, 0, "PmViewModel");
+    qmlRegisterType<PmValveItemModel>("PmValveItemModel", 1, 0, "PmValveItemModel");
+    qmlRegisterType<GeneralDlgModel>("GeneralDlgModel", 1, 0, "GeneralDlgModel");
+    qmlRegisterType<ViewTagModel>("ViewTagModel", 1, 0, "ViewTagModel");
+
     //qmlRegisterType<LineChartData>("LineChartData", 1, 0, "LineChartData");
 
     qmlRegisterSingletonType(QUrl("qrc:/uiengine/FontManager.qml"), "FontManager", 1, 0, "FontManager");
@@ -217,6 +228,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType(QUrl("qrc:/uiengine/StrUtil.qml"), "StrUtil", 1, 0, "StrUtil");
     qmlRegisterSingletonType(QUrl("qrc:/uiengine/GUISetting.qml"), "GUISetting", 1, 0, "GUISetting");
     qmlRegisterSingletonType(QUrl("qrc:/ui/GlobalUiValue.qml"), "GlobalUiValue", 1, 0, "GlobalUiValue");
+    qmlRegisterSingletonType(QUrl("qrc:/pm_private/helper/ComponentHelper.qml"), "ComponentHelper", 1, 0, "ComponentHelper");
 
     NSDebug::startService();
 

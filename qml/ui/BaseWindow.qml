@@ -1,19 +1,24 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
-import QmlCoreModel 1.0
-import DebuggingModel 1.0
-import "./."
-import "../control/."
-import "./dialog/."
-//import ViewManager 1.0
-//import MainModel 1.0
 import QtQuick.Layouts 1.3
 import Qt.labs.platform 1.1
+import QmlCoreModel 1.0
+import DebuggingModel 1.0
+
 import ValveEnumDef 1.0
 import UnitUtil 1.0
 import MathUtil 1.0
 import GlobalUiValue 1.0
 import GUISetting 1.0
+
+import "./."
+import "../control/."
+import "./dialog/."
+import "../pm_private/ui/."
+import "../newqml/view/clustermastersetting/."
+import "../newqml/view/clusterdevicemonitor/."
+
+
 
 Window {
     id: window
@@ -184,6 +189,8 @@ Window {
         onClickPressureCtrlLearnParam     : { var popup = pressureCtrlLearnParamDlg.createObject(window) ; popup.show(); }//popup.open(); }
         onClickPressureCtrlLearnList      : { var popup = pressureCtrlLearnListDlg.createObject(window)  ; popup.show(); }//popup.open(); }
         onClickPressureCtrlGainMointoring : { var popup = pressureCtrlGainMonitorDlg.createObject(window); popup.show(); }
+        onClickClusterMasterSetting       : { var popup = clusterMasterSettingDlg.createObject(window)   ; popup.show(); }
+        onClickClusterDeviceMonitor       : { var popup = clusterDeviceMonitorDlg.createObject(window)   ; popup.show(); }
         onClickNCPASettings               : { var popup = ncpaSettingsDlg.createObject(window)           ; popup.show(); }
         onClickInterfaceSetup             : {
             var popup
@@ -618,6 +625,22 @@ Window {
         PressureCtrlGainMonitorDlg{
             connectInfo: model.mConnectionInfo
             valveID    : model.mValveID
+        }
+    }
+
+    Component{
+        id : clusterMasterSettingDlg
+
+        ClusterMasterSettingDlg{
+
+        }
+    }
+
+    Component{
+        id : clusterDeviceMonitorDlg
+
+        ClusterDeviceMonitorDlg{
+
         }
     }
 

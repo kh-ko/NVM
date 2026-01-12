@@ -355,6 +355,8 @@
 #define ENABLE_SLOT_VALVE_WRITTEN_TEST_MODE                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenTestMode                       (ValveResponseDto                                )), this, SLOT(onValveWrittenTestMode                       (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_ENCODER_ZERO                          connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenEncoderZero                    (ValveResponseDto                                )), this, SLOT(onValveWrittenEncoderZero                    (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_WRITTEN_CUSTOM_REQUEST                        connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenCustomRequest                  (ValveResponseDto                                )), this, SLOT(onValveWrittenCustomRequest                  (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_PM_SYNC                               connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenPmSync                         (ValveResponseDto                                )), this, SLOT(onValveWrittenPmSync                         (ValveResponseDto                                )))
+#define ENABLE_SLOT_VALVE_WRITTEN_PM_COMMIT                             connect(ValveSProvider::getInstance(), SIGNAL(signalEventWrittenPmCommit                       (ValveResponseDto                                )), this, SLOT(onValveWrittenPmCommit                       (ValveResponseDto                                )))
 #define ENABLE_SLOT_VALVE_TRACE                                         connect(ValveSProvider::getInstance(), SIGNAL(signalEventReceivedTraceData                     (QString                                         )), this, SLOT(onValveRecevedTraceData                      (QString                                         )))
 
 class ReqCommandUserData : public QObject
@@ -1163,6 +1165,8 @@ signals:
     void signalEventWrittenTestMode                       (ValveResponseDto                                 dto);
     void signalEventWrittenEncoderZero                    (ValveResponseDto                                 dto);
     void signalEventWrittenCustomRequest                  (ValveResponseDto                                 dto);
+    void signalEventWrittenPmSync                         (ValveResponseDto                                 dto);
+    void signalEventWrittenPmCommit                       (ValveResponseDto                                 dto);
 //    void signalEventWrittenFatalErrReset          (ValveResponseDto                              dto);
     void signalEventReceivedTraceData                     (QString data);
     //****************************/
@@ -1305,20 +1309,20 @@ public :
 
         if(mpASyncWorker != nullptr)
         {
-            disconnect(this         , SIGNAL(signalCommandSetMonitoringCycle (qint64, ValveRequestDto)), mpASyncWorker, SLOT(onCommandSetMonitoringCycle(qint64, ValveRequestDto)));
-            disconnect(this         , SIGNAL(signalCommandSearch             (                       )), mpASyncWorker, SLOT(onCommandSearch            (                       )));
-            disconnect(this         , SIGNAL(signalCommandSearchStop         (                       )), mpASyncWorker, SLOT(onCommandSearchStop        (                       )));
-            disconnect(this         , SIGNAL(signalCommandConnect            (int , QString          )), mpASyncWorker, SLOT(onCommandConnect           (int , QString          )));
-            disconnect(this         , SIGNAL(signalCommandReConnect          (                       )), mpASyncWorker, SLOT(onCommandReConnect         (                       )));
-            disconnect(this         , SIGNAL(signalCommandReadyFirmwareUpdate(                       )), mpASyncWorker, SLOT(onCommandReadyFirmwareUpdate(                      )));
-            disconnect(this         , SIGNAL(signalCommandRequest            (ValveRequestDto        )), mpASyncWorker, SLOT(onCommandRequest           (ValveRequestDto        )));
-            disconnect(this         , SIGNAL(signalCommandSetTraceMode       (bool, ValveRequestDto  )), mpASyncWorker, SLOT(onCommandSetTraceMode       (bool, ValveRequestDto )));
-            disconnect(mpASyncWorker, SIGNAL(signalEventChangedIsConnecting  (bool, bool             )), this         , SLOT(onChangedIsConnecting      (bool, bool             )));
-            disconnect(mpASyncWorker, SIGNAL(signalResultConnect             (bool, QString          )), this         , SLOT(onResultConnect            (bool, QString          )));
-            disconnect(mpASyncWorker, SIGNAL(signalResultReadyFirmwareUpdate (bool                   )), this         , SLOT(onResultReadyFirmwareUpdate (bool                  )));
-            disconnect(mpASyncWorker, SIGNAL(signalEventSearchedDevice       (QStringList            )), this         , SLOT(onSearchedDevice           (QStringList            )));
-            disconnect(mpASyncWorker, SIGNAL(signalEventResponseData         (ValveResponseDto       )), this         , SLOT(onResponseData             (ValveResponseDto       )));
-            disconnect(mpASyncWorker, SIGNAL(signalEventTrace                (QString                )), this         , SLOT(onTraceData                 (QString               )));
+            disconnect(this         , SIGNAL(signalCommandSetMonitoringCycle (qint64, ValveRequestDto)), mpASyncWorker, SLOT(onCommandSetMonitoringCycle (qint64, ValveRequestDto)));
+            disconnect(this         , SIGNAL(signalCommandSearch             (                       )), mpASyncWorker, SLOT(onCommandSearch             (                       )));
+            disconnect(this         , SIGNAL(signalCommandSearchStop         (                       )), mpASyncWorker, SLOT(onCommandSearchStop         (                       )));
+            disconnect(this         , SIGNAL(signalCommandConnect            (int , QString          )), mpASyncWorker, SLOT(onCommandConnect            (int , QString          )));
+            disconnect(this         , SIGNAL(signalCommandReConnect          (                       )), mpASyncWorker, SLOT(onCommandReConnect          (                       )));
+            disconnect(this         , SIGNAL(signalCommandReadyFirmwareUpdate(                       )), mpASyncWorker, SLOT(onCommandReadyFirmwareUpdate(                       )));
+            disconnect(this         , SIGNAL(signalCommandRequest            (ValveRequestDto        )), mpASyncWorker, SLOT(onCommandRequest            (ValveRequestDto        )));
+            disconnect(this         , SIGNAL(signalCommandSetTraceMode       (bool, ValveRequestDto  )), mpASyncWorker, SLOT(onCommandSetTraceMode       (bool, ValveRequestDto  )));
+            disconnect(mpASyncWorker, SIGNAL(signalEventChangedIsConnecting  (bool, bool             )), this         , SLOT(onChangedIsConnecting       (bool, bool             )));
+            disconnect(mpASyncWorker, SIGNAL(signalResultConnect             (bool, QString          )), this         , SLOT(onResultConnect             (bool, QString          )));
+            disconnect(mpASyncWorker, SIGNAL(signalResultReadyFirmwareUpdate (bool                   )), this         , SLOT(onResultReadyFirmwareUpdate (bool                   )));
+            disconnect(mpASyncWorker, SIGNAL(signalEventSearchedDevice       (QStringList            )), this         , SLOT(onSearchedDevice            (QStringList            )));
+            disconnect(mpASyncWorker, SIGNAL(signalEventResponseData         (ValveResponseDto       )), this         , SLOT(onResponseData              (ValveResponseDto       )));
+            disconnect(mpASyncWorker, SIGNAL(signalEventTrace                (QString                )), this         , SLOT(onTraceData                 (QString                )));
 
             mpASyncWorker= nullptr;
         }
@@ -2551,6 +2555,18 @@ public :
     {
         //qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << command;
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenCustomCommand, nullptr, command, "", 0, retryCnt, userData));
+    }
+
+    void pmSyncRequest(QString command, void * userData, int seqnum, int retryCnt = 0)
+    {
+        //qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << command;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenPmSync, nullptr, command, "", 0, retryCnt, seqnum, userData));
+    }
+
+    void pmCommitRequest(QString command, void * userData, int seqnum, int retryCnt = 0)
+    {
+        //qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << command;
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenPmCommit, nullptr, command, "", 0, retryCnt, seqnum, userData));
     }
 
 public slots:
@@ -7465,6 +7481,28 @@ public slots:
         if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
         {
             emit signalEventWrittenCustomRequest(signalDto);
+        }
+    }
+
+    static void staticProcWrittenPmSync(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenPmSync(pResData);}
+    void procWrittenPmSync(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenPmSync(signalDto);
+        }
+    }
+
+    static void staticProcWrittenPmCommit(void * pResData){ ((ValveSProvider *)(((ValveResponseDto *)pResData)->mReqDto.mpValveSProvider))->procWrittenPmCommit(pResData);}
+    void procWrittenPmCommit(void * pResData)
+    {
+        ValveResponseDto signalDto(*(ValveResponseDto *)pResData);
+
+        if(signalDto.mReqDto.mpRef != this && signalDto.mReqDto.mpRef != nullptr)
+        {
+            emit signalEventWrittenPmCommit(signalDto);
         }
     }
 

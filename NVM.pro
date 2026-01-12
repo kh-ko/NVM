@@ -43,6 +43,22 @@ HEADERS += \
     source/nchart/nchartcontrol.h \
     source/nchart/nchartpointbuffer.h \
     source/nchart/nchartview.h \
+    source/newmodel/protocol/protocolmanager.h \
+    source/newmodel/protocol/protocolmodel.h \
+    source/newmodel/view/converter/base10tofloatconverter.h \
+    source/newmodel/view/converter/base36converter.h \
+    source/newmodel/view/converter/positionconverter.h \
+    source/newmodel/view/converter/tagvalueconverter.h \
+    source/newmodel/view/converter/userpositionconverter.h \
+    source/newmodel/view/generaldlgmodel.h \
+    source/newmodel/view/globalvariable/globalvariable.h \
+    source/newmodel/view/tag/tagenum.h \
+    source/newmodel/view/tag/viewtagmanager.h \
+    source/newmodel/view/tag/viewtagmodel.h \
+    source/pmmodel/pmenum.h \
+    source/pmmodel/pmvalveitemmodel.h \
+    source/pmmodel/pmvalvemodel.h \
+    source/pmviewmodel/pmviewmodel.h \
     source/qmlmodel/interfacesetupdevnetrangedlgmodel.h \
     source/qmlmodel/pressurectrlforpmprotodlgmodel.h \
     source/qmlmodel/pressurectrlgainmonitordlgmodel.h \

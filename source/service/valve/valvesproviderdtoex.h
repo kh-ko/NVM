@@ -15,6 +15,7 @@ public:
     QString   mCheckString  = "";
     int       mCheckLen     = 0;
     int       mRetryCnt     = 0;
+    int       mSeqNum       = 0;
     void    * mpRef         = nullptr;
 
     ValveRequestDto(){}
@@ -31,6 +32,22 @@ public:
         mCheckLen        = checkLen    ;
         mRetryCnt        = retryCnt    ;
         mpRef            = pRef        ;
+        mSeqNum          = 0;
+    }
+    ValveRequestDto(void * pValveSProvider,
+                    void (* mainProcFunc)(void * pResData),
+                    void (* subProcFunc )(void * pResData),
+                    QString reqCommand, QString checkString, int checkLen, int retryCnt, int seqNum, void * pRef)
+    {
+        mpValveSProvider = pValveSProvider;
+        mMainProcFunc    = mainProcFunc;
+        mSubProcFunc     = subProcFunc ;
+        mReqCommand      = reqCommand  ;
+        mCheckString     = checkString ;
+        mCheckLen        = checkLen    ;
+        mRetryCnt        = retryCnt    ;
+        mSeqNum          = seqNum      ;
+        mpRef            = pRef        ;
     }
     ValveRequestDto(const ValveRequestDto& copy) :
         mpValveSProvider(copy.mpValveSProvider),
@@ -40,6 +57,7 @@ public:
         mCheckString    (copy.mCheckString    ),
         mCheckLen       (copy.mCheckLen       ),
         mRetryCnt       (copy.mRetryCnt       ),
+        mSeqNum         (copy.mSeqNum         ),
         mpRef           (copy.mpRef           ){}
 
     ~ValveRequestDto(){}
@@ -53,6 +71,7 @@ public:
         mCheckString     = other.mCheckString    ;
         mCheckLen        = other.mCheckLen       ;
         mRetryCnt        = other.mRetryCnt       ;
+        mSeqNum          = other.mSeqNum         ;
         mpRef            = other.mpRef           ;
 
         return *this;

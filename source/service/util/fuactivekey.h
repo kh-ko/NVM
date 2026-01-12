@@ -154,7 +154,7 @@ public:
 
     QString GetKey()
     {
-        int idx = 2025 - QDateTime::currentDateTime().date().year();
+        int idx = QDateTime::currentDateTime().date().year() - 2025;
 
         return decrypt(pressure[idx]);
     }

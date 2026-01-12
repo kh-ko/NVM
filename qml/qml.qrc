@@ -164,5 +164,26 @@
         <file>ui/dialog/InterfaceSetupDevNetRangeDlg.qml</file>
         <file>ui/dialog/InterfaceSetupDevNetRangeDataItem.qml</file>
         <file>ui/dialog/ValveParamPMDlg.qml</file>
+        <file>pm_private/control/PmBaseWindow.qml</file>
+        <file>pm_private/control/PmIntegerInput.qml</file>
+        <file>pm_private/control/PmComboBox.qml</file>
+        <file>pm_private/control/PmLabel.qml</file>
+        <file>pm_private/helper/ComponentHelper.qml</file>
+        <file>pm_private/control/PmDialogTitle.qml</file>
+        <file>pm_private/control/PmDialogFooter.qml</file>
+        <file>pm_private/control/PmTextButton.qml</file>
+        <file>pm_private/ui/ClusterMonitorDlg.qml</file>
+        <file>pm_private/ui/ClusterMonitorRow.qml</file>
+        <file>pm_private/ui/ClusterMonitorHeaderRow.qml</file>
+        <file>newqml/usercomponent/CustomTitleBar.qml</file>
+        <file>newqml/usercomponent/CustomTextButton.qml</file>
+        <file>newqml/usercomponent/CustomFooter.qml</file>
+        <file>newqml/usercomponent/CustomWindow.qml</file>
+        <file>newqml/usercomponent/CustomIntegerInput.qml</file>
+        <file>newqml/usercomponent/CustomLabel.qml</file>
+        <file>newqml/usercomponent/CustomComboBox.qml</file>
+        <file>newqml/view/clustermastersetting/ClusterMasterSettingDlg.qml</file>
+        <file>newqml/view/clusterdevicemonitor/ClusterDeviceMonitorDlg.qml</file>
+        <file>newqml/view/clusterdevicemonitor/ClusterDeviceMonitorRow.qml</file>
     </qresource>
 </RCC>

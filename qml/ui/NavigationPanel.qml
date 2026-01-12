@@ -41,6 +41,8 @@ Rectangle {
     signal clickToolFuSelectMethod()
     signal clickToolFirmwareUpdate()
     signal clickToolFirmwareUpdateViaNet()
+    signal clickClusterMasterSetting()
+    signal clickClusterDeviceMonitor()
     signal clickNCPASettings()
     signal clickAdvToolTest()
     signal clickAdvBackupNRestore()
@@ -56,7 +58,7 @@ Rectangle {
 
         delegate : Item{
 
-            width: parent.width; height: exBtnValve.height + exBtnSensor.height + exBtnPressControl.height + exBtnInterface.height + exBtnTools.height + exBtnNCPA.height + exBtnAdvencedTool.height + exBtnHelp.height;
+            width: parent.width; height: exBtnValve.height + exBtnSensor.height + exBtnPressControl.height + exBtnInterface.height + exBtnCluster.height + exBtnTools.height + exBtnNCPA.height + exBtnAdvencedTool.height + exBtnHelp.height;
 
             NExButton{
                 id : exBtnValve
@@ -266,8 +268,34 @@ Rectangle {
             }
 
             NExButton{
-                id : exBtnTools
+                id : exBtnCluster
                 anchors.top: exBtnInterface.bottom;
+                enabled: panel.isConnected
+
+                titleText.text: qsTr("Cluster")
+                expendHeight : titleBox.height + (children.length - 1) * GUISetting.exbtnitem_height // NExButtonItem height is 18
+
+                NExButtonItem{
+                    id : menuClusterSetting
+                    anchors.bottom: menuClusterMonitor.top
+                    text.text: qsTr("Master Setup")
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+
+                    onClicked:{ panel.clickClusterMasterSetting() }
+                }
+                NExButtonItem{
+                    id : menuClusterMonitor
+                    anchors.bottom: parent.bottom
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+                    text.text: qsTr("Slave Monitor")
+
+                    onClicked:{ panel.clickClusterDeviceMonitor() }
+                }
+            }
+
+            NExButton{
+                id : exBtnTools
+                anchors.top: exBtnCluster.bottom;
                 //enabled: panel.isConnected
 
                 titleText.text: qsTr("Tools")
