@@ -4,78 +4,38 @@
 #include <QDebug>
 #include <QList>
 
-#include "source/newmodel/view/converter/tagvalueconverter.h"
-#include "source/newmodel/view/tag/viewtagmodel.h"
-
-class ProtocolTagLink : public QObject{
-    Q_OBJECT
-
-public:
-    int Offset;
-    int Length;
-    double Gain = 1;
-    QString ProtocolValue = "";
-    ViewTagModel * TagPointer;
-    TagValueConverter * ConverterPointer = nullptr;
-
-    explicit ProtocolTagLink(QObject *parent = nullptr): QObject(parent){}
-    ~ProtocolTagLink(){}
-
-    explicit ProtocolTagLink(ViewTagModel * pTag, int offset, int length, TagValueConverter * pConverter, double gain,QObject * parent): QObject(parent)
-    {
-        TagPointer = pTag;
-        Offset = offset;
-        Length = length;
-        Gain = gain;
-
-        if(ConverterPointer != nullptr)
-        {
-            ConverterPointer->unRegSignal(this);
-        }
-
-        ConverterPointer = pConverter;
-
-        if(pConverter != nullptr)
-        {
-            ConverterPointer->regSignal(this, SLOT(onValueChanged()));
-        }
-    }
-
-    void onValueChanged()
-    {
-        if(TagPointer != nullptr && ConverterPointer != nullptr && ProtocolValue.length() > 0)
-        {
-            TagPointer->SetProtocolValue(ConverterPointer->convertToTagValue(ProtocolValue, Gain));
-        }
-    }
-};
+#include "source/newmodel/protocol/protocolparamslot.h"
 
 class ProtocolModel : public QObject{
     Q_OBJECT
 
 public:
-    QString Path;
+    bool    IsParam = false;
+    QString Name;
     QString AccType;
     QString ReqProtocol;
     QString RespProtocol;
-    QList<ProtocolTagLink *> TagLinkList;
+    QList<ProtocolParamSlot *> SlotList;
 
     explicit ProtocolModel(QObject *parent = nullptr): QObject(parent){
     }
     ~ProtocolModel(){}
 
-    explicit ProtocolModel(QString path, QString accType, QString req, QString res, QObject * parent): QObject(parent)
+    explicit ProtocolModel(QString name, QString accType, bool isParam, QString req, QString res, QObject * parent): QObject(parent)
     {
-        Path = path;
+        Name = name;
         AccType = accType;
+        IsParam = isParam;
         ReqProtocol = req;
         RespProtocol = res;
     }
 
-    void SetTag(ViewTagModel * pTag, int offset, int length, TagValueConverter * pConverter, double gain)
+    ProtocolParamSlot * AppendSlot(QString name, int offset, int length, int dataType, double gain)
     {
-        pTag->SetProtocol(AccType, this);
-        TagLinkList.append(new ProtocolTagLink(pTag, offset, length, pConverter, gain, this));
+        ProtocolParamSlot * pSlot = new ProtocolParamSlot(name, AccType, offset, length, dataType, gain, this);
+        SlotList.append(pSlot);
+
+        return pSlot;
     }
 
     QString MakeReadCmd()
@@ -87,16 +47,9 @@ public:
     {
         QString cmd = ReqProtocol;
 
-        foreach(ProtocolTagLink * pTagLink, TagLinkList)
+        foreach(ProtocolParamSlot * pSlot, SlotList)
         {
-            if(pTagLink->ConverterPointer == nullptr)
-            {
-                cmd += pTagLink->TagPointer->GetWriteValue();
-            }
-            else
-            {
-                cmd += pTagLink->ConverterPointer->convertToProtocolValue(pTagLink->TagPointer->GetWriteValue(), pTagLink->Gain, pTagLink->Length);
-            }
+            cmd += pSlot->MakeProtoWriteValue();
         }
 
         return cmd;
@@ -104,33 +57,23 @@ public:
 
     void SetReponseData(QString value, bool isPrintDebug = false)
     {
+        if(isPrintDebug)
+            qDebug() << "[" << Q_FUNC_INFO << "]" << value;
+
         if(value.startsWith(RespProtocol))
         {
-            foreach(ProtocolTagLink * pTagLink, TagLinkList)
+            foreach(ProtocolParamSlot * pSlot, SlotList)
             {
-                QString param;
-                if(pTagLink->ConverterPointer == nullptr)
-                {
-                    param = pTagLink->Length > 0 ? value.mid(pTagLink->Offset, pTagLink->Length) : value.mid(pTagLink->Offset);
-                }
-                else
-                {
-                    param = pTagLink->ConverterPointer->convertToTagValue(pTagLink->Length > 0 ? value.mid(pTagLink->Offset, pTagLink->Length) : value.mid(pTagLink->Offset), pTagLink->Gain);
-                }
-
-                if(isPrintDebug)
-                    qDebug() << "[" << Q_FUNC_INFO << "]" << param;
-                pTagLink->ProtocolValue = param;
-                pTagLink->TagPointer->SetProtocolValue(param);
+                pSlot->SetProtocolResponseData(value);
             }
         }
     }
 
     void SetIsSupport(bool value)
     {
-        foreach(ProtocolTagLink * pTagLink, TagLinkList)
+        foreach(ProtocolParamSlot * pSlot, SlotList)
         {
-            pTagLink->TagPointer->setIsSupport(value);
+            pSlot->SetIsSupport(value);
         }
     }
 };

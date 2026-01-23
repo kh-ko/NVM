@@ -2557,16 +2557,16 @@ public :
         emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenCustomCommand, nullptr, command, "", 0, retryCnt, userData));
     }
 
-    void pmSyncRequest(QString command, void * userData, int seqnum, int retryCnt = 0)
+    void pmSyncRequest(QString command, QObject * modelObjPointer, QObject * protocolObjPointer, int retryCnt = 0)
     {
         //qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << command;
-        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenPmSync, nullptr, command, "", 0, retryCnt, seqnum, userData));
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenPmSync, nullptr, command, "", 0, retryCnt, modelObjPointer, protocolObjPointer));
     }
 
-    void pmCommitRequest(QString command, void * userData, int seqnum, int retryCnt = 0)
+    void pmCommitRequest(QString command, QObject * modelObjPointer, QObject * protocolObjPointer, int retryCnt = 0)
     {
         //qDebug() << "[khko_debug][" << Q_FUNC_INFO <<"]" << command;
-        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenPmCommit, nullptr, command, "", 0, retryCnt, seqnum, userData));
+        emit signalCommandRequest(ValveRequestDto(this, staticProcWrittenPmCommit, nullptr, command, "", 0, retryCnt, modelObjPointer, protocolObjPointer));
     }
 
 public slots:

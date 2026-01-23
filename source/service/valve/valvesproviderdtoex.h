@@ -15,8 +15,8 @@ public:
     QString   mCheckString  = "";
     int       mCheckLen     = 0;
     int       mRetryCnt     = 0;
-    int       mSeqNum       = 0;
     void    * mpRef         = nullptr;
+    void    * mpSubRef      = nullptr;
 
     ValveRequestDto(){}
     ValveRequestDto(void * pValveSProvider,
@@ -32,12 +32,12 @@ public:
         mCheckLen        = checkLen    ;
         mRetryCnt        = retryCnt    ;
         mpRef            = pRef        ;
-        mSeqNum          = 0;
+        mpSubRef         = nullptr     ;
     }
     ValveRequestDto(void * pValveSProvider,
                     void (* mainProcFunc)(void * pResData),
                     void (* subProcFunc )(void * pResData),
-                    QString reqCommand, QString checkString, int checkLen, int retryCnt, int seqNum, void * pRef)
+                    QString reqCommand, QString checkString, int checkLen, int retryCnt, QObject * pRef, QObject * pSubRef)
     {
         mpValveSProvider = pValveSProvider;
         mMainProcFunc    = mainProcFunc;
@@ -46,8 +46,8 @@ public:
         mCheckString     = checkString ;
         mCheckLen        = checkLen    ;
         mRetryCnt        = retryCnt    ;
-        mSeqNum          = seqNum      ;
         mpRef            = pRef        ;
+        mpSubRef         = pSubRef     ;
     }
     ValveRequestDto(const ValveRequestDto& copy) :
         mpValveSProvider(copy.mpValveSProvider),
@@ -57,8 +57,8 @@ public:
         mCheckString    (copy.mCheckString    ),
         mCheckLen       (copy.mCheckLen       ),
         mRetryCnt       (copy.mRetryCnt       ),
-        mSeqNum         (copy.mSeqNum         ),
-        mpRef           (copy.mpRef           ){}
+        mpRef           (copy.mpRef           ),
+        mpSubRef        (copy.mpSubRef        ){}
 
     ~ValveRequestDto(){}
 
@@ -71,8 +71,8 @@ public:
         mCheckString     = other.mCheckString    ;
         mCheckLen        = other.mCheckLen       ;
         mRetryCnt        = other.mRetryCnt       ;
-        mSeqNum          = other.mSeqNum         ;
         mpRef            = other.mpRef           ;
+        mpSubRef         = other.mpSubRef        ;
 
         return *this;
     }

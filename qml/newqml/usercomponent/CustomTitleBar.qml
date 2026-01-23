@@ -7,11 +7,13 @@ Rectangle {
 
     property string title : ""
 
-    property alias btnApply   :  btnApplyComponent
-    property alias btnRefresh :  btnRefreshComponent
+    property alias btnApply     :  btnApplyComponent
+    property alias btnRefresh   :  btnRefreshComponent
+    property alias btnCreateEds :  btnCreateEdsComponent
 
     signal clickedApply();
     signal clickedRefresh();
+    signal clickedCreateEds();
 
     x:0; y:0; width : parent.width; height: 30; color: "#24292e"
 
@@ -33,6 +35,16 @@ Rectangle {
         height: parent.height
         anchors.right: parent.right; anchors.rightMargin: 10; anchors.verticalCenter: parent.verticalCenter
 
+
+        CustomTextButton{
+            id : btnCreateEdsComponent
+            height: parent.height
+            textColor : "#FFFFFF"
+            text : qsTr("Create EDS")
+
+            visible: false
+            onClick: {control.clickedCreateEds()}
+        }
 
         CustomTextButton{
             id : btnRefreshComponent

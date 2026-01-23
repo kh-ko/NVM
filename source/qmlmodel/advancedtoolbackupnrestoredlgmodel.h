@@ -710,8 +710,62 @@ public slots:
                 tempItem.setCommand("Interface(Device Net) Out Pressure Sensor 2 Gain", QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_S02_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_S02_GAIN     )); mExportCmdList.append(tempItem);
             }
 
-            tempItem.setCommand("Interface(Device Net) input assembly"        , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_IN_ASS       ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_IN_ASS       )); mExportCmdList.append(tempItem);
-            tempItem.setCommand("Interface(Device Net) output assembly"       , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_ASS      ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_ASS      )); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) Profile"          , "p:0BA405660000", "p:01A405660000"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) Profile Data Type", "p:0BA405670000", "p:01A405670000"); mExportCmdList.append(tempItem);
+
+            tempItem.setCommand("Interface(Device Net) input assembly v1"        , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_IN_ASS       ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_IN_ASS       )); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output assembly v1"       , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_ASS      ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_ASS      )); mExportCmdList.append(tempItem);
+
+            tempItem.setCommand("Interface(Device Net) input Produced Assembly", "p:0BA405650000", "p:01A405650000"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 01"      , "p:0BA406660000", "p:01A406660000"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 02"      , "p:0BA406660001", "p:01A406660001"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 03"      , "p:0BA406660002", "p:01A406660002"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 04"      , "p:0BA406660003", "p:01A406660003"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 05"      , "p:0BA406660004", "p:01A406660004"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 06"      , "p:0BA406660005", "p:01A406660005"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 07"      , "p:0BA406660006", "p:01A406660006"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 08"      , "p:0BA406660007", "p:01A406660007"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 09"      , "p:0BA406660008", "p:01A406660008"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 10"      , "p:0BA406660009", "p:01A406660009"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 11"      , "p:0BA406660010", "p:01A406660010"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 12"      , "p:0BA406660011", "p:01A406660011"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 13"      , "p:0BA406660012", "p:01A406660012"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 14"      , "p:0BA406660013", "p:01A406660013"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 15"      , "p:0BA406660014", "p:01A406660014"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 16"      , "p:0BA406660015", "p:01A406660015"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 17"      , "p:0BA406660016", "p:01A406660016"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 18"      , "p:0BA406660017", "p:01A406660017"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 19"      , "p:0BA406660018", "p:01A406660018"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) input selector 20"      , "p:0BA406660019", "p:01A406660019"); mExportCmdList.append(tempItem);
+
+            tempItem.setCommand("Interface(Device Net) output Consumed Assembly", "p:0BA405640000", "p:01A405640000"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 01"      , "p:0BA406650000", "p:01A406650000"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 02"      , "p:0BA406650001", "p:01A406650001"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 03"      , "p:0BA406650002", "p:01A406650002"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 04"      , "p:0BA406650003", "p:01A406650003"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 05"      , "p:0BA406650004", "p:01A406650004"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 06"      , "p:0BA406650005", "p:01A406650005"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 07"      , "p:0BA406650006", "p:01A406650006"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 08"      , "p:0BA406650007", "p:01A406650007"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 09"      , "p:0BA406650008", "p:01A406650008"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 10"      , "p:0BA406650009", "p:01A406650009"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 11"      , "p:0BA406650010", "p:01A406650010"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 12"      , "p:0BA406650011", "p:01A406650011"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 13"      , "p:0BA406650012", "p:01A406650012"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 14"      , "p:0BA406650013", "p:01A406650013"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 15"      , "p:0BA406650014", "p:01A406650014"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 16"      , "p:0BA406650015", "p:01A406650015"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 17"      , "p:0BA406650016", "p:01A406650016"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 18"      , "p:0BA406650017", "p:01A406650017"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 19"      , "p:0BA406650018", "p:01A406650018"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) output selector 20"      , "p:0BA406650019", "p:01A406650019"); mExportCmdList.append(tempItem);
+
+            tempItem.setCommand("Interface(Device Net) Loss Reaction Enable"    , "p:0BA471010000", "p:01A471010000"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) Loss Reaction Func"      , "p:0BA471030000", "p:01A471030000"); mExportCmdList.append(tempItem);
+
+            tempItem.setCommand("Interface(Device Net) Digital Output"          , "i:2611", "s:2611"); mExportCmdList.append(tempItem);
+            tempItem.setCommand("Interface(Device Net) Digital Input"           , "i:2601", "s:2601"); mExportCmdList.append(tempItem);
+
             break;
 
         case ValveEnumDef::INTERFACE_ETHERNET:

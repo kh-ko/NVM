@@ -13,6 +13,14 @@ Item{
     signal click()
     signal rightClick()
 
+    BorderImage {
+        height: parent.height + 100; width: parent.width + 100
+        anchors.verticalCenter: parent.verticalCenter; anchors.horizontalCenter: parent.horizontalCenter
+        source: (itemMouseArea.containsPress || !parent.enabled) ? "/image/card-1.png" : "/image/card-2.png"
+        border.left: 50; border.top: 50
+        border.right: 50; border.bottom: 50
+    }
+
     Rectangle{
         anchors.fill: parent
         color : itemMouseArea.containsPress ? "#39000000" : itemMouseArea.containsMouse ? "#49000000" : "#00000000"

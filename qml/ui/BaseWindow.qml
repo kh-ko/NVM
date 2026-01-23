@@ -14,9 +14,9 @@ import GUISetting 1.0
 import "./."
 import "../control/."
 import "./dialog/."
-import "../pm_private/ui/."
 import "../newqml/view/clustermastersetting/."
 import "../newqml/view/clusterdevicemonitor/."
+import "../newqml/view/interfacedevicenet/."
 
 
 
@@ -666,17 +666,24 @@ Window {
             company    : model.mCompany
         }
     }
+
+    //Component{
+    //    id : interfaceSetupDevNetDlg
+    //    InterfaceSetupDevNetDlg{
+    //        connectInfo: model.mConnectionInfo
+    //        valveID    : model.mValveID
+    //        company    : model.mCompany
+    //        firmwareVer: parseInt(model.mFirmwareVersion.slice(-4), 16)
+    //
+    //        onClickRangeSetting: {
+    //             var popup = interfaceSetupDevNetRangeDlg.createObject(window) ; popup.show();
+    //        }
+    //    }
+    //}
+
     Component{
         id : interfaceSetupDevNetDlg
-        InterfaceSetupDevNetDlg{
-            connectInfo: model.mConnectionInfo
-            valveID    : model.mValveID
-            company    : model.mCompany
-            firmwareVer: parseInt(model.mFirmwareVersion.slice(-4), 16)
-
-            onClickRangeSetting: {
-                 var popup = interfaceSetupDevNetRangeDlg.createObject(window) ; popup.show();
-            }
+        InterfaceDeviceNetSettingDlg{
         }
     }
 
@@ -725,13 +732,18 @@ Window {
             valveID    : model.mValveID
         }
     }
+    //Component{
+    //    id : interfaceStatusDNetDlg
+    //    InterfaceStatusDNetDlg{
+    //        connectInfo: model.mConnectionInfo
+    //        valveID    : model.mValveID
+    //        firmwareVer: parseInt(model.mFirmwareVersion.slice(-4), 16)
+    //        company    : model.mCompany
+    //    }
+    //}
     Component{
         id : interfaceStatusDNetDlg
-        InterfaceStatusDNetDlg{
-            connectInfo: model.mConnectionInfo
-            valveID    : model.mValveID
-            firmwareVer: parseInt(model.mFirmwareVersion.slice(-4), 16)
-            company    : model.mCompany
+        InterfaceDeviceNetMonitorDlg{
         }
     }
     Component{

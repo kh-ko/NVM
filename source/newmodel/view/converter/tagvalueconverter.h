@@ -2,28 +2,31 @@
 #define TAGVALUECONVERTER_H
 
 #include <QObject>
+#include "source/newmodel/view/tag/tagmodel.h"
 
 class TagValueConverter: public QObject{
     Q_OBJECT
 
 public:
+    QString Name;
+
     explicit TagValueConverter(QObject *parent = nullptr):QObject(parent)
     {
 
     }
 
-    virtual QString convertToTagValue(QString inValue, double gain)
+    virtual void convertToTagValue(QList<TagModel *> * pTagList, QString inValue, double gain)
     {
+        Q_UNUSED(pTagList)
         Q_UNUSED(inValue)
         Q_UNUSED(gain)
-        return "";
     }
 
-    virtual QString convertToProtocolValue(QString inValue, double gain, int length)
+    virtual QString convertToProtocolValue(QList<TagModel *> * pTagList, double gain)
     {
-        Q_UNUSED(inValue)
+        Q_UNUSED(pTagList)
         Q_UNUSED(gain)
-        Q_UNUSED(length)
+        Q_UNUSED(pTagList)
         return "";
     }
 
@@ -41,23 +44,6 @@ signals:
     void signalEventValueChanged();
 
 protected:
-    QString applyLengthConstraint(QString result, int length)
-    {
-        if (length == -1) {
-            return result;
-        }
-
-        if (result.length() > length) {
-            // 결과가 length보다 길면 앞에서부터 자름 (오른쪽에서 length만큼 남김)
-            // 예: "12345", length=3 -> "345"
-            return result.right(length);
-        } else {
-            // 결과가 length보다 짧으면 앞에 '0'을 채움
-            // 예: "12", length=4 -> "0012"
-            return result.rightJustified(length, '0');
-        }
-    }
-
     void trimeZero(QString * pValue)
     {
         if (pValue->contains('.'))

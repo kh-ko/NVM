@@ -8,7 +8,7 @@ import GlobalUiValue 1.0
 import GUISetting 1.0
 
 import "../../usercomponent/."
-import GeneralDlgModel 1.0
+import ViewTagContainerModel 1.0
 
 CustomWindow{
     id : win
@@ -16,17 +16,17 @@ CustomWindow{
     title: qsTr("Cluster Master Settings")
 
     Component.onCompleted: {
-        numOfValve.viewTag             = viewModel.loadInitTag("Cluster.Master.Settings.Number of Valves"           );
-        clusterAddr.viewTag            = viewModel.loadInitTag("Cluster.Master.Settings.Cluster Address"            );
-        showAddr.viewTag               = viewModel.loadInitTag("Cluster.Master.Settings.Show Address on Display"    );
-        connectionLossReaction.viewTag = viewModel.loadInitTag("Cluster.Master.Settings.Connection Loss Reaction"   );
-        interlockOfSlave.viewTag       = viewModel.loadInitTag("Cluster.Master.Settings.Disable Interlocks of Slave");
+        numOfValve.viewTag             = findTag("Cluster.Master.Settings.Number of Valves"           );
+        clusterAddr.viewTag            = findTag("Cluster.Master.Settings.Cluster Address"            );
+        showAddr.viewTag               = findTag("Cluster.Master.Settings.Show Address on Display"    );
+        connectionLossReaction.viewTag = findTag("Cluster.Master.Settings.Connection Loss Reaction"   );
+        interlockOfSlave.viewTag       = findTag("Cluster.Master.Settings.Disable Interlocks of Slave");
 
-        rwItemArray.push(numOfValve            );
-        rwItemArray.push(clusterAddr           );
-        rwItemArray.push(showAddr              );
-        rwItemArray.push(connectionLossReaction);
-        rwItemArray.push(interlockOfSlave      );
+        regRWComponent(numOfValve            );
+        regRWComponent(clusterAddr           );
+        regRWComponent(showAddr              );
+        regRWComponent(connectionLossReaction);
+        regRWComponent(interlockOfSlave      );
 
         checkApplyBtn()
         refresh()
@@ -36,7 +36,7 @@ CustomWindow{
         id : itemContainer
 
         anchors.top: parent.top; topPadding: 10
-        width: win.scrollContainer.width
+        width: win.scrollContainer.width - 10
         spacing: 10
 
         CustomIntegerInput{

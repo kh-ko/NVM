@@ -4,19 +4,21 @@ import QtQuick.Controls 2.14
 import FontManager 1.0
 import GUISetting 1.0
 
-import ViewTagModel 1.0
+import TagModel 1.0
 
 Item {
     id: control
     height: 24
     opacity: enabled ? 1 : 0.3
-    enabled: viewTag.IsSupport && control.isEnable
+    enabled: viewTag.IsSupport && control.isEnable && viewTag.IsBlock == false
     clip: true
 
     property alias label : labelComponent
 
-    property ViewTagModel viewTag  : ViewTagModel{}
+    property TagModel     viewTag  : TagModel{}
     property string       tagValue : viewTag.Value
+    property int          selValue
+    property int          selIndex
 
     property int          emptyIndex   : 0
     property int          unKnownIndex : 1
@@ -30,8 +32,7 @@ Item {
 
         var inValue = comboBox.currentValue;
 
-        if(Object.is(parseInt(tagValue), inValue) === false)
-            viewTag.writeValue(""+comboBox.currentValue);
+        viewTag.writeValue(""+comboBox.currentValue);
     }
 
     function qmlValueChange()
@@ -43,12 +44,16 @@ Item {
             return;
         }
 
-        var inValue = comboBox.currentValue;
-        isDirty = !Object.is(parseInt(tagValue), inValue);
+        control.selValue = comboBox.currentValue;
+
+        isDirty = !Object.is(parseInt(tagValue), control.selValue);
     }
 
     function tagValueChange()
     {
+        if(control.isDirty)
+            return;
+
         if(control.tagValue.length == 0)
         {
             comboBox.currentIndex = emptyIndex;
@@ -58,6 +63,8 @@ Item {
             var tempIndex = comboBox.indexOfValue(parseInt(control.tagValue));
             comboBox.currentIndex = tempIndex < 0 ? unKnownIndex : tempIndex;
         }
+
+        control.selValue = comboBox.currentValue;
         control.isDirty = false;
     }
 
@@ -98,6 +105,7 @@ Item {
         height: parent.height
         anchors.left: flagComponent.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 10
 
+        visible: viewTag.IsSupport
         model : viewTag.modeOptions
         textRole : "text"
         valueRole : "value"
@@ -146,7 +154,7 @@ Item {
 
         contentItem: Item{
             CustomLabel {
-                width: comboBox.width - /*indicator.width*/ - 20
+                width: comboBox.width - 40
                 anchors.left: parent.left; anchors.leftMargin: 10; anchors.verticalCenter: parent.verticalCenter
 
                 text: comboBox.displayText
@@ -182,4 +190,14 @@ Item {
             }
         }
     }
+
+    CustomLabel {
+        id: notSupportIndi
+        height: parent.height
+        anchors.left: flagComponent.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 10
+
+        visible: viewTag.IsSupport == false
+        text : "Not Support";
+    }
+
 }

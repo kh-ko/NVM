@@ -45,20 +45,24 @@ HEADERS += \
     source/nchart/nchartview.h \
     source/newmodel/protocol/protocolmanager.h \
     source/newmodel/protocol/protocolmodel.h \
-    source/newmodel/view/converter/base10tofloatconverter.h \
-    source/newmodel/view/converter/base36converter.h \
+    source/newmodel/protocol/protocolparamslot.h \
+    source/newmodel/protocol/versionchecker.h \
+    source/newmodel/view/converter/base10todnetrevconverter.h \
+    source/newmodel/view/converter/base10tofloatgainconverter.h \
+    source/newmodel/view/converter/base10tohexconverter.h \
+    source/newmodel/view/converter/base36tobase10converter.h \
+    source/newmodel/view/converter/defaultconverter.h \
+    source/newmodel/view/converter/dnetv1assyconverter.h \
+    source/newmodel/view/converter/fhextofloatconverter.h \
+    source/newmodel/view/converter/hextobase10converter.h \
+    source/newmodel/view/converter/hextobase36converter.h \
     source/newmodel/view/converter/positionconverter.h \
     source/newmodel/view/converter/tagvalueconverter.h \
     source/newmodel/view/converter/userpositionconverter.h \
-    source/newmodel/view/generaldlgmodel.h \
-    source/newmodel/view/globalvariable/globalvariable.h \
+    source/newmodel/view/file/filehelper.h \
     source/newmodel/view/tag/tagenum.h \
-    source/newmodel/view/tag/viewtagmanager.h \
-    source/newmodel/view/tag/viewtagmodel.h \
-    source/pmmodel/pmenum.h \
-    source/pmmodel/pmvalveitemmodel.h \
-    source/pmmodel/pmvalvemodel.h \
-    source/pmviewmodel/pmviewmodel.h \
+    source/newmodel/view/tag/tagmodel.h \
+    source/newmodel/view/tag/viewtagcontainermodel.h \
     source/qmlmodel/interfacesetupdevnetrangedlgmodel.h \
     source/qmlmodel/pressurectrlforpmprotodlgmodel.h \
     source/qmlmodel/pressurectrlgainmonitordlgmodel.h \

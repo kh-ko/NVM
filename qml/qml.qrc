@@ -164,17 +164,6 @@
         <file>ui/dialog/InterfaceSetupDevNetRangeDlg.qml</file>
         <file>ui/dialog/InterfaceSetupDevNetRangeDataItem.qml</file>
         <file>ui/dialog/ValveParamPMDlg.qml</file>
-        <file>pm_private/control/PmBaseWindow.qml</file>
-        <file>pm_private/control/PmIntegerInput.qml</file>
-        <file>pm_private/control/PmComboBox.qml</file>
-        <file>pm_private/control/PmLabel.qml</file>
-        <file>pm_private/helper/ComponentHelper.qml</file>
-        <file>pm_private/control/PmDialogTitle.qml</file>
-        <file>pm_private/control/PmDialogFooter.qml</file>
-        <file>pm_private/control/PmTextButton.qml</file>
-        <file>pm_private/ui/ClusterMonitorDlg.qml</file>
-        <file>pm_private/ui/ClusterMonitorRow.qml</file>
-        <file>pm_private/ui/ClusterMonitorHeaderRow.qml</file>
         <file>newqml/usercomponent/CustomTitleBar.qml</file>
         <file>newqml/usercomponent/CustomTextButton.qml</file>
         <file>newqml/usercomponent/CustomFooter.qml</file>
@@ -185,5 +174,19 @@
         <file>newqml/view/clustermastersetting/ClusterMasterSettingDlg.qml</file>
         <file>newqml/view/clusterdevicemonitor/ClusterDeviceMonitorDlg.qml</file>
         <file>newqml/view/clusterdevicemonitor/ClusterDeviceMonitorRow.qml</file>
+        <file>newqml/usercomponent/CustomCheckBox.qml</file>
+        <file>newqml/usercomponent/CustomButton.qml</file>
+        <file>newqml/usercomponent/CustomCommand.qml</file>
+        <file>newqml/view/interfacedevicenet/InterfaceDeviceNetSettingDlg.qml</file>
+        <file>newqml/usercomponent/CustomValueLabel.qml</file>
+        <file>newqml/usercomponent/CustomDNetRevInput.qml</file>
+        <file>newqml/usercomponent/CustomDivider.qml</file>
+        <file>newqml/usercomponent/CustomMultiLine.qml</file>
+        <file>newqml/usercomponent/CustomComboLabel.qml</file>
+        <file>newqml/view/interfacedevicenet/InterfaceDeviceNetV1OutTable.qml</file>
+        <file>newqml/view/interfacedevicenet/InterfaceDeviceNetV1InTable.qml</file>
+        <file>newqml/view/interfacedevicenet/InterfaceDeviceNetMonitorDlg.qml</file>
+        <file>newqml/usercomponent/CustomDNetRevLabel.qml</file>
+        <file>newqml/usercomponent/CustomFloatInput.qml</file>
     </qresource>
 </RCC>

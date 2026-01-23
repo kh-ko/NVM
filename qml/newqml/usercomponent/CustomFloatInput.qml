@@ -37,17 +37,6 @@ Item {
         }
 
         control.isDirty = true;
-
-        //var inValue = parseInt(textField.text);
-
-        //if(min > inValue)
-        //{
-        //    textField.text = control.min;
-        //}
-        //else if(max < inValue )
-        //{
-        //    textField.text = control.max;
-        //}
     }
 
     function tagValueChange()
@@ -111,7 +100,7 @@ Item {
         font.pixelSize : 10
         bottomPadding : 0; topPadding: 0; leftPadding: 10; rightPadding: 10
         verticalAlignment : Text.AlignVCenter; horizontalAlignment : Text.AlignHCenter
-        validator: IntValidator{}
+        validator: DoubleValidator{}
 
         text: ""
         color: "#000000"
