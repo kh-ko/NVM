@@ -7,12 +7,40 @@ import ValveEnumDef 1.0
 import InterfaceSetupProfibusDlgModel 1.0
 import GUISetting 1.0
 
+import ViewTagContainerModel 1.0
+import TagModel  1.0
+
 BaseSetupWindow{
     id : dialog
 
     readonly property int emptyHeight : 24 * GUISetting.scale
     property var body : null
     property var company : ValveEnumDef.COMPANY_NOVA
+
+    property TagModel valveRev1Tag     : TagModel{}
+    property TagModel valveRev2Tag     : TagModel{}
+    property TagModel valveRev3Tag     : TagModel{}
+    property bool     blockDIO         : false
+
+    ViewTagContainerModel{
+        id : winTagContainer
+
+        onMProgressChanged: {
+            if(mProgress == 1)
+            {
+                var valveRev = (parseInt(valveRev1Tag.Value) * 36 * 36) + (parseInt(valveRev2Tag.Value) * 36) + parseInt(valveRev3Tag.Value)
+
+                if(valveRev < 36 /* 010 (36진수)*/)
+                {
+                    blockDIO = false
+                }
+                else
+                {
+                    blockDIO = true
+                }
+            }
+        }
+    }
 
     titleText   : qsTr("Interface setup(Profibus)")
     progress    : dlgModel.mProgress
@@ -42,6 +70,16 @@ BaseSetupWindow{
         body = bodyImpl.createObject(contentBody)
         bodyHeight = body.height
         bodyWidth  = 800 * GUISetting.scale
+
+        valveRev1Tag = winTagContainer.getTag("System.Identification.Valve Revision (1)"); // RO
+        valveRev2Tag = winTagContainer.getTag("System.Identification.Valve Revision (2)"); // RO
+        valveRev3Tag = winTagContainer.getTag("System.Identification.Valve Revision (3)"); // RO
+
+        winTagContainer.addInitTag(valveRev1Tag)
+        winTagContainer.addInitTag(valveRev2Tag)
+        winTagContainer.addInitTag(valveRev3Tag)
+
+        winTagContainer.refresh()
     }
 
     InterfaceSetupProfibusDlgModel{
@@ -263,6 +301,7 @@ BaseSetupWindow{
                     height: 24  * GUISetting.scale
                     anchors.top: diTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
+                    visible: !dialog.blockDIO
                     textColor: dlgModel.mErrDIFunction ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
@@ -274,7 +313,23 @@ BaseSetupWindow{
                 }
 
                 NText{
-                    anchors.verticalCenter: _diFunctionCombo.verticalCenter; anchors.left: _diFunctionCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    id : _diFunctionNotSupport
+
+                    width : 200 * GUISetting.scale
+                    height: 24  * GUISetting.scale
+                    anchors.top: diTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    visible: dialog.blockDIO
+                    verticalAlignment: Text.AlignVCenter
+                    opacity: 0.3
+
+                    text : qsTr("Not Support")
+                }
+
+                NText{
+                    anchors.verticalCenter: dialog.blockDIO ? _diFunctionNotSupport.verticalCenter : _diFunctionCombo.verticalCenter;
+                    anchors.left          : dialog.blockDIO ? _diFunctionNotSupport.right          : _diFunctionCombo.right         ;
+                    anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
                     text : qsTr("function")
                 }
 
@@ -283,6 +338,7 @@ BaseSetupWindow{
                     width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _diFunctionCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
+                    visible: !dialog.blockDIO
                     textColor: dlgModel.mErrDIMode ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
@@ -294,7 +350,23 @@ BaseSetupWindow{
                 }
 
                 NText{
-                    anchors.verticalCenter: _diModeCombo.verticalCenter; anchors.left: _diModeCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    id : _diModeNotSupport
+
+                    width : 200 * GUISetting.scale
+                    height: 24  * GUISetting.scale
+                    anchors.top: _diFunctionNotSupport.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    visible: dialog.blockDIO
+                    verticalAlignment: Text.AlignVCenter
+                    opacity: 0.3
+
+                    text : qsTr("Not Support")
+                }
+
+                NText{
+                    anchors.verticalCenter: dialog.blockDIO ? _diModeNotSupport.verticalCenter : _diModeCombo.verticalCenter;
+                    anchors.left          : dialog.blockDIO ? _diModeNotSupport.right          : _diModeCombo.right         ;
+                    anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
                     text : qsTr("inverted")
                 }
 
@@ -303,6 +375,7 @@ BaseSetupWindow{
                     width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _diModeCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left : parent.left; anchors.leftMargin : GUISetting.margin
 
+                    visible: !dialog.blockDIO
                     textColor: dlgModel.mErrDIInput ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
@@ -314,7 +387,23 @@ BaseSetupWindow{
                 }
 
                 NText{
-                    anchors.verticalCenter: _diInputCombo.verticalCenter; anchors.left: _diInputCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    id : _diInputNotSupport
+
+                    width : 200 * GUISetting.scale
+                    height: 24  * GUISetting.scale
+                    anchors.top: _diModeNotSupport.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    visible: dialog.blockDIO
+                    verticalAlignment: Text.AlignVCenter
+                    opacity: 0.3
+
+                    text : qsTr("Not Support")
+                }
+
+                NText{
+                    anchors.verticalCenter: dialog.blockDIO ? _diInputNotSupport.verticalCenter : _diInputCombo.verticalCenter;
+                    anchors.left          : dialog.blockDIO ? _diInputNotSupport.right          : _diInputCombo.right         ;
+                    anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
                     text : qsTr("disable")
                 }
             }
@@ -339,6 +428,7 @@ BaseSetupWindow{
                     width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: doTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
+                    visible: !dialog.blockDIO
                     textColor: dlgModel.mErrDOFunction ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
@@ -350,7 +440,24 @@ BaseSetupWindow{
                 }
 
                 NText{
-                    anchors.verticalCenter: _doFunctionCombo.verticalCenter; anchors.left: _doFunctionCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    id : _doFunctionNotSupport
+
+                    width : 200 * GUISetting.scale
+                    height: 24  * GUISetting.scale
+                    anchors.top: doTitle.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    visible: dialog.blockDIO
+                    verticalAlignment: Text.AlignVCenter
+                    opacity: 0.3
+
+                    text : qsTr("Not Support")
+                }
+
+                NText{
+                    anchors.verticalCenter: dialog.blockDIO ? _doFunctionNotSupport.verticalCenter : _doFunctionCombo.verticalCenter;
+                    anchors.left          : dialog.blockDIO ? _doFunctionNotSupport.right          : _doFunctionCombo.right         ;
+                    anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
                     text : qsTr("function")
                 }
 
@@ -359,6 +466,7 @@ BaseSetupWindow{
                     width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _doFunctionCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
+                    visible: !dialog.blockDIO
                     textColor: dlgModel.mErrDOMode ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
@@ -370,7 +478,24 @@ BaseSetupWindow{
                 }
 
                 NText{
-                    anchors.verticalCenter: _doModeCombo.verticalCenter; anchors.left: _doModeCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    id : _doModeNotSupport
+
+                    width : 200 * GUISetting.scale
+                    height: 24  * GUISetting.scale
+                    anchors.top: _doFunctionNotSupport.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    visible: dialog.blockDIO
+                    verticalAlignment: Text.AlignVCenter
+                    opacity: 0.3
+
+                    text : qsTr("Not Support")
+                }
+
+                NText{
+                    anchors.verticalCenter: dialog.blockDIO ? _doModeNotSupport.verticalCenter : _doModeCombo.verticalCenter;
+                    anchors.left          : dialog.blockDIO ? _doModeNotSupport.right          : _doModeCombo.right         ;
+                    anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
                     text : qsTr("inverted")
                 }
 
@@ -379,6 +504,7 @@ BaseSetupWindow{
                     width: 200 * GUISetting.scale; height: 24 * GUISetting.scale
                     anchors.top: _doModeCombo.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
 
+                    visible: !dialog.blockDIO
                     textColor: dlgModel.mErrDOOutput ? "#FF0000" : "#000000"
                     enabled: dialog.progress === 100 && (dialog.company !== ValveEnumDef.COMPANY_APSYS)
 
@@ -390,7 +516,24 @@ BaseSetupWindow{
                 }
 
                 NText{
-                    anchors.verticalCenter: _doOutputCombo.verticalCenter; anchors.left: _doOutputCombo.right; anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+                    id : _doOutputNotSupport
+
+                    width : 200 * GUISetting.scale
+                    height: 24  * GUISetting.scale
+                    anchors.top: _doModeNotSupport.bottom; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
+
+                    visible: dialog.blockDIO
+                    verticalAlignment: Text.AlignVCenter
+                    opacity: 0.3
+
+                    text : qsTr("Not Support")
+                }
+
+                NText{
+                    anchors.verticalCenter: dialog.blockDIO ? _doOutputNotSupport.verticalCenter : _doOutputCombo.verticalCenter;
+                    anchors.left          : dialog.blockDIO ? _doOutputNotSupport.right          : _doOutputCombo.right         ;
+                    anchors.leftMargin: GUISetting.margin; anchors.right: parent.right; anchors.rightMargin: GUISetting.margin
+
                     text : qsTr("disable")
                 }
             }

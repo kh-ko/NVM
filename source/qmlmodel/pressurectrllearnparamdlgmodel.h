@@ -149,6 +149,7 @@ signals:
     void signalEventChangedProgress            (int         value);
     void signalEventProcIdx                    (int         idx  );
     void signalEventLoadData                   (int idx, int data);
+    void signalEventUnknowFormat               (             );
 
 public:
     explicit PressureCtrlLearnParamDlgModel(QObject *parent = nullptr): QObject(parent)
@@ -285,21 +286,46 @@ public slots:
             return;
         }
 
-        setState(STATE_LOAD_START, true);
-
-        setIsControllerData(false);
-        setIsFileData(true);
-
         QTextStream out(&file);
         out.setCodec("utf-8");
         int readIdx = 0;
 
         do{
             QString value = out.readLine();
+
+            if(readIdx == 0)
+            {
+                if(value.contains(",") == false || value.at(3) != ',')
+                {
+                    file.close();
+                    emit signalEventUnknowFormat();
+                    return;
+                }
+                else
+                {
+                    bool ok;
+
+                    value.split(",")[0].toInt(&ok, 10);
+
+                    if(ok == false)
+                    {
+                        file.close();
+                        emit signalEventUnknowFormat();
+                        return;
+                    }
+                }
+
+                setState(STATE_LOAD_START, true);
+
+                setIsControllerData(false);
+                setIsFileData(true);
+            }
+
             value.replace(",","");
 
             if(readIdx <= mEndParamIdx )
             {
+                readIdx++;
                 setParam(value);
             }
 

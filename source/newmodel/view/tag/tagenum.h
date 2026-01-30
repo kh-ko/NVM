@@ -145,6 +145,18 @@ public:
         pTemp->addPair(35,  "Z");
         EnumList.append(pTemp);
 
+        pTemp = new TagEnumListModel("PowerDIFunc", this);
+        pTemp->addPair(0, "Interlock Open" );
+        pTemp->addPair(1, "Interlock Close");
+        pTemp->addPair(2, "Hold"           );
+        EnumList.append(pTemp);
+
+        pTemp = new TagEnumListModel("PowerDOFunc", this);
+        pTemp->addPair(0, "Open" );
+        pTemp->addPair(1, "Close");
+        pTemp->addPair(2, "Hold" );
+        EnumList.append(pTemp);
+
         pTemp = new TagEnumListModel("DIFunc", this);
         pTemp->addPair(0, "Interlock Close");
         pTemp->addPair(1, "Interlock Open" );

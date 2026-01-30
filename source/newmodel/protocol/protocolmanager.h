@@ -637,6 +637,62 @@ public:
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Power Connector IO
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        pFolder = pRootFolder->createFolder("Power Connector IO.Digital Input 1");
+        {
+            TagModel * enable = createTag("Enable"       , "RW", TagModel::TypeEnum(), pEnumDefine->Find("DisableEnable"), 0, pFolder);
+            TagModel * func   = createTag("Functionality", "RW", TagModel::TypeEnum(), pEnumDefine->Find("PowerDIFunc"  ), 0, pFolder);
+            TagModel * invert = createTag("Inverted"     , "RW", TagModel::TypeEnum(), pEnumDefine->Find("Polarity"     ), 0, pFolder);
+            TagModel * state  = createTag("State"        , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
+
+            createPMProtocol("Power DIO Input 1 Enable", "37010100", "00", "RW"); createSlot(enable->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(enable);
+            createPMProtocol("Power DIO Input 1 Func"  , "37010300", "00", "RW"); createSlot(func  ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(func  );
+            createPMProtocol("Power DIO Input 1 Invert", "37010400", "00", "RW"); createSlot(invert->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(invert);
+            createPMProtocol("Power DIO Input 1 State" , "37010200", "00", "RO"); createSlot(state ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(state );
+        }
+
+        pFolder = pRootFolder->createFolder("Power Connector IO.Digital Input 2");
+        {
+            TagModel * enable = createTag("Enable"       , "RW", TagModel::TypeEnum(), pEnumDefine->Find("DisableEnable"), 0, pFolder);
+            TagModel * func   = createTag("Functionality", "RW", TagModel::TypeEnum(), pEnumDefine->Find("PowerDIFunc"  ), 0, pFolder);
+            TagModel * invert = createTag("Inverted"     , "RW", TagModel::TypeEnum(), pEnumDefine->Find("Polarity"     ), 0, pFolder);
+            TagModel * state  = createTag("State"        , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
+
+            createPMProtocol("Power DIO Input 2 Enable", "37020100", "00", "RW"); createSlot(enable->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(enable);
+            createPMProtocol("Power DIO Input 2 Func"  , "37020300", "00", "RW"); createSlot(func  ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(func  );
+            createPMProtocol("Power DIO Input 2 Invert", "37020400", "00", "RW"); createSlot(invert->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(invert);
+            createPMProtocol("Power DIO Input 2 State" , "37020200", "00", "RO"); createSlot(state ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(state );
+        }
+
+        pFolder = pRootFolder->createFolder("Power Connector IO.Digital Output 1");
+        {
+            TagModel * enable = createTag("Enable"       , "RW", TagModel::TypeEnum(), pEnumDefine->Find("DisableEnable"), 0, pFolder);
+            TagModel * func   = createTag("Functionality", "RW", TagModel::TypeEnum(), pEnumDefine->Find("PowerDOFunc"  ), 0, pFolder);
+            TagModel * invert = createTag("Inverted"     , "RW", TagModel::TypeEnum(), pEnumDefine->Find("Polarity"     ), 0, pFolder);
+            TagModel * state  = createTag("State"        , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
+
+            createPMProtocol("Power DIO Output 1 Enable", "37030100", "00", "RW"); createSlot(enable->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(enable);
+            createPMProtocol("Power DIO Output 1 Func"  , "37030300", "00", "RW"); createSlot(func  ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(func  );
+            createPMProtocol("Power DIO Output 1 Invert", "37030400", "00", "RW"); createSlot(invert->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(invert);
+            createPMProtocol("Power DIO Output 1 State" , "37030200", "00", "RO"); createSlot(state ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(state );
+        }
+
+        pFolder = pRootFolder->createFolder("Power Connector IO.Digital Output 2");
+        {
+            TagModel * enable = createTag("Enable"       , "RW", TagModel::TypeEnum(), pEnumDefine->Find("DisableEnable"), 0, pFolder);
+            TagModel * func   = createTag("Functionality", "RW", TagModel::TypeEnum(), pEnumDefine->Find("PowerDOFunc"  ), 0, pFolder);
+            TagModel * invert = createTag("Inverted"     , "RW", TagModel::TypeEnum(), pEnumDefine->Find("Polarity"     ), 0, pFolder);
+            TagModel * state  = createTag("State"        , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
+
+            createPMProtocol("Power DIO Output 2 Enable", "37040100", "00", "RW"); createSlot(enable->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(enable);
+            createPMProtocol("Power DIO Output 2 Func"  , "37040300", "00", "RW"); createSlot(func  ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(func  );
+            createPMProtocol("Power DIO Output 2 Invert", "37040400", "00", "RW"); createSlot(invert->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(invert);
+            createPMProtocol("Power DIO Output 2 State" , "37040200", "00", "RO"); createSlot(state ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(state );
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// Cluster
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -733,9 +789,35 @@ public:
                                                         FindSlot("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.DNet In Assembly v1" ,"Read" ),
                                                         FindSlot("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.DNet In Assembly v1" ,"Write"));
         VersionChecker::getInstance()->setDNetV1TbDummyTag(FindTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Dummy(1)"), FindTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Dummy(1)"));
+        VersionChecker::getInstance()->setDNetDIOTag(FindTag("Interface DeviceNet.Input Output.Digital Output.Enable"        ),
+                                                     FindTag("Interface DeviceNet.Input Output.Digital Output.Functionality" ),
+                                                     FindTag("Interface DeviceNet.Input Output.Digital Output.Polarity"      ),
+                                                     FindTag("Interface DeviceNet.Input Output.DIO Status.Digital Out Status"),
+                                                     FindTag("Interface DeviceNet.Input Output.Digital Input.Enable"        ),
+                                                     FindTag("Interface DeviceNet.Input Output.Digital Input.Functionality" ),
+                                                     FindTag("Interface DeviceNet.Input Output.Digital Input.Polarity"      ),
+                                                     FindTag("Interface DeviceNet.Input Output.DIO Status.Digital In Status"));
+        VersionChecker::getInstance()->setPwrConnDIOTag(FindTag("Power Connector IO.Digital Input 1.Enable"        ),
+                                                        FindTag("Power Connector IO.Digital Input 1.Functionality" ),
+                                                        FindTag("Power Connector IO.Digital Input 1.Inverted"      ),
+                                                        FindTag("Power Connector IO.Digital Input 1.State"         ),
+                                                        FindTag("Power Connector IO.Digital Input 2.Enable"        ),
+                                                        FindTag("Power Connector IO.Digital Input 2.Functionality" ),
+                                                        FindTag("Power Connector IO.Digital Input 2.Inverted"      ),
+                                                        FindTag("Power Connector IO.Digital Input 2.State"         ),
+                                                        FindTag("Power Connector IO.Digital Output 1.Enable"       ),
+                                                        FindTag("Power Connector IO.Digital Output 1.Functionality"),
+                                                        FindTag("Power Connector IO.Digital Output 1.Inverted"     ),
+                                                        FindTag("Power Connector IO.Digital Output 1.State"        ),
+                                                        FindTag("Power Connector IO.Digital Output 2.Enable"       ),
+                                                        FindTag("Power Connector IO.Digital Output 2.Functionality"),
+                                                        FindTag("Power Connector IO.Digital Output 2.Inverted"     ),
+                                                        FindTag("Power Connector IO.Digital Output 2.State"        ));
 
         VersionChecker::getInstance()->regIdValveTypeTag(FindTag("System.Identification.ID: Valve Type"                 ));
-        VersionChecker::getInstance()->regValveRevTag   (FindTag("System.Identification.Valve Revision (3)"             ));
+        VersionChecker::getInstance()->regValveRev1Tag  (FindTag("System.Identification.Valve Revision (1)"             ));
+        VersionChecker::getInstance()->regValveRev2Tag  (FindTag("System.Identification.Valve Revision (2)"             ));
+        VersionChecker::getInstance()->regValveRev3Tag  (FindTag("System.Identification.Valve Revision (3)"             ));
         VersionChecker::getInstance()->regFirmwareVerTag(FindTag("System.Identification.Firmware.Valve Firmware Version"));
 
     }

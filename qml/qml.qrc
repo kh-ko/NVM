@@ -188,5 +188,6 @@
         <file>newqml/view/interfacedevicenet/InterfaceDeviceNetMonitorDlg.qml</file>
         <file>newqml/usercomponent/CustomDNetRevLabel.qml</file>
         <file>newqml/usercomponent/CustomFloatInput.qml</file>
+        <file>newqml/view/powerconnectorio/PowerConnectorIOSettingDlg.qml</file>
     </qresource>
 </RCC>

@@ -260,6 +260,10 @@ NWindow{ // khko_todo
             //    itemModel.append({"idxValue":idx})
             //}
         }
+
+        onSignalEventUnknowFormat: {
+            showErrMessage("Unknown File Format")
+        }
     }
 
     ListModel{

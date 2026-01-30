@@ -192,6 +192,10 @@ NWindow{
                 graphView.yTo   = Math.ceil(maxYValue / 10000);
             }
         }
+
+        onSignalEventUnknowFormat: {
+            showErrMessage("Unknown File Format")
+        }
     }
 
     ListModel{
@@ -261,7 +265,7 @@ NWindow{
 
                     delegate : Rectangle{
                         property PressureCtrlLearnParamItemModel paramItemModel : dlgModel.onCommandGetParamItem(idxValue)
-                        height: 20 * GUISetting.scale; width: parent.width
+                        height: 20 * GUISetting.scale; width: paramListView.width
                         color: "#E4E4E4"
                         visible: paramItemModel.mIsPresent
 

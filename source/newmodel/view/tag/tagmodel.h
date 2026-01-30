@@ -6,6 +6,7 @@
 class TagModel : public QObject{
     Q_OBJECT
 
+    Q_PROPERTY(bool     IsNotUsed            READ getIsNotUsed         NOTIFY signalEventChangedIsNotUsed )
     Q_PROPERTY(bool     IsBlock              READ getIsBlock           NOTIFY signalEventChangedIsBlock   )
     Q_PROPERTY(bool     IsSupport            READ getIsSupport         NOTIFY signalEventChangedIsSupport )
     Q_PROPERTY(QString  AccType              READ getAccType           NOTIFY signalEventChangedAccType   )
@@ -41,6 +42,7 @@ public:
     QObject * ReadProtocol = nullptr ;
     QObject * WriteProtocol = nullptr;
 
+    bool    IsNotUsed        = false;
     bool    IsBlock          = false;
     bool    IsSupport        = true ;
     QString AccType          = ""   ;
@@ -51,6 +53,7 @@ public:
     int     LengthInfo       = 0    ;
     TagEnumListModel *m_modeOptions;
 
+    bool    getIsNotUsed       (){ return IsNotUsed       ; }
     bool    getIsBlock         (){ return IsBlock         ; }
     bool    getIsSupport       (){ return IsSupport       ; }
     QString getAccType         (){ return AccType         ; }
@@ -61,6 +64,7 @@ public:
     int     getLengthInfo      (){ return LengthInfo      ; }
     TagEnumListModel* modeOptions() const { return m_modeOptions;}
 
+    void setIsNotUsed       (bool    value){ if(IsNotUsed        == value) return; IsNotUsed        = value; emit signalEventChangedIsNotUsed       (value);}
     void setIsBlock         (bool    value){ if(IsBlock          == value) return; IsBlock          = value; emit signalEventChangedIsBlock         (value);}
     void setIsSupport       (bool    value){ if(IsSupport        == value) return; IsSupport        = value; emit signalEventChangedIsSupport       (value);}
     void setAccType         (QString value){ if(AccType          == value) return; AccType          = value; emit signalEventChangedAccType         (value);}
@@ -71,6 +75,7 @@ public:
     void setLengthInfo      (int     value){                                       LengthInfo       = value; emit signalEventChangedLengthInfo      (value);}
 
 signals:
+    void signalEventChangedIsNotUsed       (bool    value);
     void signalEventChangedIsBlock         (bool    value);
     void signalEventChangedIsSupport       (bool    value);
     void signalEventChangedAccType         (QString value);

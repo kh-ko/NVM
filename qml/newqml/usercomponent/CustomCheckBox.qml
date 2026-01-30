@@ -10,7 +10,7 @@ Item {
     id: control
     height: 24
     opacity: enabled ? 1 : 0.3
-    enabled: viewTag.IsSupport && control.isEnable && viewTag.IsBlock == false
+    enabled: viewTag.IsSupport && control.isEnable && viewTag.IsBlock == false && viewTag.IsNotUsed == false
     clip: true
 
     property alias label : labelComponent
@@ -91,7 +91,7 @@ Item {
         width: parent.height * 0.6; height: parent.height * 0.6
         anchors.left: flagComponent.right; anchors.leftMargin: 10; anchors.verticalCenter: parent.verticalCenter
 
-        visible: viewTag.IsSupport
+        visible: viewTag.IsSupport && viewTag.IsNotUsed == false
         radius: 3
         border.color: "#ECECEC"
 
@@ -110,7 +110,7 @@ Item {
         height: parent.height
         anchors.left: flagComponent.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 10
 
-        visible: viewTag.IsSupport == false
+        visible: viewTag.IsSupport == false || viewTag.IsNotUsed
         text : "Not Support";
     }
 

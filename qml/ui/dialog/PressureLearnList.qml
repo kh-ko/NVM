@@ -372,6 +372,10 @@ NWindow{ // khko_todo
 
         Component.onCompleted : {
         }
+
+        onSignalEventUnknowFormat: {
+            showErrMessage("Unknown File Format")
+        }
     }
 
     ListModel{
@@ -597,7 +601,7 @@ NWindow{ // khko_todo
                     property bool   isEdit04   : isEdit04Arg
 
 
-                    height:(46 * GUISetting.scale); width: parent.width
+                    height:(46 * GUISetting.scale); width: paramListView.width
 
                     onValue01Changed:
                     {

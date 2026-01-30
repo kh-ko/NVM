@@ -129,9 +129,10 @@ signals:
     void signalEventChangedIsEdit           (bool    value);
     void signalEventChangedStrStatus        (QString value);
     void signalEventChangedErrMsg           (QString value);
-    void signalEventChangedErrMsg2           (QString value);
+    void signalEventChangedErrMsg2          (QString value);
     void signalEventChangedProgress         (int     value);
     void signalEventProcIdx                 (int     idx  );
+    void signalEventUnknowFormat            (             );
 
 public:
     explicit ValveParamPMDlgModel(QObject *parent = nullptr): QObject(parent)
@@ -341,9 +342,18 @@ public slots:
         out.setCodec("utf-8");
 
         do{
+            bool idok;
+            bool valueok;
             QString value = out.readLine();
-            int id       = value.mid(0,2).toInt(nullptr, 16);
-            int intValue = value.mid(2).toInt();
+            int id       = value.mid(0,2).toInt(&idok, 16);
+            int intValue = value.mid(2).toInt(&valueok, 10);
+
+            if(idok == false || valueok == false || id == 0)
+            {
+                file.close();
+                emit signalEventUnknowFormat();
+                return;
+            }
 
             if(id < pConfigSP->getValveParamDescCount())
             {

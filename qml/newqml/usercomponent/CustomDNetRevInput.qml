@@ -7,7 +7,7 @@ Item {
     id: control
     height: 24
     opacity: enabled ? 1 : 0.3
-    enabled: viewTag.IsSupport && control.isEnable
+    enabled: viewTag.IsSupport && control.isEnable && viewTag.IsNotUsed == false
     clip: true
 
     property alias label : labelComponent
@@ -80,7 +80,7 @@ Item {
     Item{
         height: parent.height
         anchors.left: flagComponent.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 10
-        visible: viewTag.IsSupport
+        visible: viewTag.IsSupport && viewTag.IsNotUsed == false
 
         CustomLabel{
             id: dotComponent
@@ -197,7 +197,7 @@ Item {
         height: parent.height
         anchors.left: flagComponent.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 10
 
-        visible: viewTag.IsSupport == false
+        visible: viewTag.IsSupport == false || viewTag.IsNotUsed == true
         text : "Not Support";
     }
 }

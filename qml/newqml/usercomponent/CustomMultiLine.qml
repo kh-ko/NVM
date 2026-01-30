@@ -6,7 +6,7 @@ Item {
     id: control
     height: valueBox.height < 24 ? 24 : valueBox.height
     opacity: enabled ? 1 : 0.3
-    enabled: viewTag.IsSupport && control.isEnable
+    enabled: viewTag.IsSupport && control.isEnable  && viewTag.IsNotUsed == false
     clip: true
 
     property alias label : labelComponent
@@ -32,7 +32,7 @@ Item {
         lineHeight: 1.2
         wrapMode: Text.Wrap
 
-        text : viewTag.IsSupport
+        text : viewTag.IsSupport && viewTag.IsNotUsed == false
                        ? (control.tagValue ? control.tagValue.replace(/\//g, "\n") : "")
                        : " Not Support"
     }

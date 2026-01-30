@@ -34,6 +34,7 @@ Rectangle {
     signal clickPressureCtrlLearnList()
     signal clickPressureCtrlGainMointoring()
     signal clickInterfaceSetup()
+    signal clickPowerConnectorIOSetup()
     signal clickInterfaceStatus()
     signal clickInterfaceTrace()
     signal clickToolChartAnalyzer()
@@ -242,11 +243,19 @@ Rectangle {
 
                 NExButtonItem{
                     id : menuInterfaceSetup
-                    anchors.bottom: menuInterfaceStatus.top
+                    anchors.bottom: menuPowerConnectorIOSetup.top
                     text.text: qsTr("Setup")
                     enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
 
                     onClicked:{ panel.clickInterfaceSetup() }
+                }
+                NExButtonItem{
+                    id : menuPowerConnectorIOSetup
+                    anchors.bottom: menuInterfaceStatus.top
+                    text.text: qsTr("Power Connector I/O")
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+
+                    onClicked:{ panel.clickPowerConnectorIOSetup() }
                 }
                 NExButtonItem{
                     id : menuInterfaceStatus

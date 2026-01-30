@@ -21,10 +21,16 @@ CustomWindow{
     btnRefresh.visible: false
 
     property TagModel valveTypeTag     : TagModel{}
+    property TagModel valveRev1Tag     : TagModel{}
+    property TagModel valveRev2Tag     : TagModel{}
     property TagModel valveRev3Tag     : TagModel{}
     property TagModel firmwareVerTag   : TagModel{}
 
     Component.onCompleted: {
+        valveRev1Tag                         = findTag("System.Identification.Valve Revision (1)"                                                               ); // RO
+        valveRev2Tag                         = findTag("System.Identification.Valve Revision (2)"                                                               ); // RO
+        valveRev3Tag                         = findTag("System.Identification.Valve Revision (3)"                                                               ); // RO
+
         dnetStatus.viewTag                   = findTag("Interface DeviceNet.Status.Status"                                                                      ); // RO
         alarmDevComm.viewTag                 = findTag("Interface DeviceNet.Exception Status.ALARM/device-common"                                                );
         alarmDevSpecific.viewTag             = findTag("Interface DeviceNet.Exception Status.ALARM/device-specific"                                              );
@@ -133,6 +139,9 @@ CustomWindow{
         dinPolarity.viewTag                  = findTag("Interface DeviceNet.Input Output.Digital Input.Polarity"                                                ); // RW
         dinStatus.viewTag                    = findTag("Interface DeviceNet.Input Output.DIO Status.Digital In Status"                                          ); // RW
 
+        regInitTag(valveRev1Tag);
+        regInitTag(valveRev2Tag);
+        regInitTag(valveRev3Tag);
 
         regInitComponent(macSwitch                );
         regInitComponent(mac                      );

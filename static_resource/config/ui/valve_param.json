@@ -103,6 +103,11 @@
 		{"seq":100,"desc":"Adaptive Conductance Method (3, 0~3)"},
 		{"seq":101,"desc":"Adaptive Disk Back time (500, 0~5000)"},
 		{"seq":102,"desc":"Profibus gsd Version (0, 0~1)"},
-		{"seq":103,"desc":"Devicenet Revision (0x0101)"}
+		{"seq":103,"desc":"Devicenet Revision (0x0101)"},
+		{"seq":104,"desc":"FIELDBUS_FILTER_COE (1000)"},
+		{"seq":105,"desc":"MOTOR_BREAK_TIME (100)"},
+		{"seq":106,"desc":"DEVICENET_PROFILE (195, 202)"},
+		{"seq":107,"desc":"AIR_CHECK_ENABLE (1, 0~1)"},
+		{"seq":108,"desc":"ADC_CAL_SEL (0, 0~1)"}
 	]
 }

@@ -148,6 +148,7 @@ signals:
     void signalEventChangedProgress         (int     value);
     void signalEventChangedItemCountPerPage (int     value);
     void signalEventChangedTotalPageCnt     (int     value);
+    void signalEventUnknowFormat            (             );
 
 public:
     explicit PressureCtrlLearnListDlgModel(QObject *parent = nullptr): QObject(parent)
@@ -414,9 +415,25 @@ public slots:
         out.setCodec("utf-8");
 
         do{
+            bool intOk;
+            bool floatOk;
+            int  tempValue = 0;
+
             QString value = out.readLine();
-            int id = value.mid(0,4).toInt();
+            int id = value.mid(0,4).toInt(&intOk, 10);
             value = value.mid(4,value.length() - 4);
+            tempValue = value.toInt(&floatOk, 16);
+
+            if(value.length() != 8 || intOk == false || floatOk == false)
+            {
+                qDebug() << "[" << Q_FUNC_INFO << "]" << value << ", int = " << intOk << ", float = " << floatOk << ", len = " << value.length() ;
+
+                mpLearnList.clear();
+                file.close();
+                setProgress(100);
+                emit signalEventUnknowFormat();
+                return;
+            }
 
             if(mpLearnList.count() == id)
             {

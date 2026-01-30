@@ -17,6 +17,7 @@ import "./dialog/."
 import "../newqml/view/clustermastersetting/."
 import "../newqml/view/clusterdevicemonitor/."
 import "../newqml/view/interfacedevicenet/."
+import "../newqml/view/powerconnectorio/."
 
 
 
@@ -219,6 +220,10 @@ Window {
                 popup = interfaceSetupLogicDlg.createObject(window);
             }
 
+            popup.show();
+        }
+        onClickPowerConnectorIOSetup: {
+            var popup = powerConnIOSetupDlg.createObject(window);
             popup.show();
         }
         onClickInterfaceStatus        : {
@@ -717,6 +722,10 @@ Window {
         }
     }
 
+    Component{
+        id : powerConnIOSetupDlg
+        PowerConnectorIOSettingDlg{}
+    }
 
     Component{
         id : interfaceStatusLogicDlg

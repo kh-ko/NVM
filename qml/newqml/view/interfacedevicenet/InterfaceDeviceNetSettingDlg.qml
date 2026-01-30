@@ -20,6 +20,8 @@ CustomWindow{
     btnCreateEds.visible: true
 
     property TagModel valveTypeTag     : TagModel{}
+    property TagModel valveRev1Tag     : TagModel{}
+    property TagModel valveRev2Tag     : TagModel{}
     property TagModel valveRev3Tag     : TagModel{}
     property TagModel firmwareVerTag   : TagModel{}
 
@@ -43,6 +45,8 @@ CustomWindow{
 
     Component.onCompleted: {
         valveTypeTag                         = findTag("System.Identification.ID: Valve Type"                                                                   ); // RO
+        valveRev1Tag                         = findTag("System.Identification.Valve Revision (1)"                                                               ); // RO
+        valveRev2Tag                         = findTag("System.Identification.Valve Revision (2)"                                                               ); // RO
         valveRev3Tag                         = findTag("System.Identification.Valve Revision (3)"                                                               ); // RO
         firmwareVerTag                       = findTag("System.Identification.Firmware.Valve Firmware Version"                                                  ); // RO
 
@@ -192,6 +196,8 @@ CustomWindow{
 
 
         regInitTag(valveTypeTag     );
+        regInitTag(valveRev1Tag     );
+        regInitTag(valveRev2Tag     );
         regInitTag(valveRev3Tag     );
         regInitTag(firmwareVerTag   );
 

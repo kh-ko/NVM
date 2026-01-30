@@ -7,7 +7,7 @@ Item {
     id : control
     height: 24
     opacity: enabled ? 1 : 0.3
-    enabled: viewTag.IsSupport && control.isEnable
+    enabled: viewTag.IsSupport && control.isEnable && viewTag.IsNotUsed == false
     clip: true
 
     property alias label           : labelComponent
@@ -95,7 +95,7 @@ Item {
         height: parent.height
         anchors.left: flagComponent.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 10
 
-        visible: viewTag.IsSupport
+        visible: viewTag.IsSupport && viewTag.IsNotUsed == false
         source: "/image/hall-2.png"
         border.left: 6; border.top: 6; border.right: 6; border.bottom: 6
     }
@@ -106,7 +106,7 @@ Item {
         height: parent.height
         anchors.left: labelComponent.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 10
 
-        visible: viewTag.IsSupport
+        visible: viewTag.IsSupport && viewTag.IsNotUsed == false
         font.family : FontManager.nanumGothicName
         font.pixelSize : 10
         bottomPadding : 0; topPadding: 0; leftPadding: 10; rightPadding: 10
@@ -147,7 +147,7 @@ Item {
         height: parent.height
         anchors.left: flagComponent.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 10
 
-        visible: viewTag.IsSupport == false
+        visible: viewTag.IsSupport == false || viewTag.IsNotUsed
         text : "Not Support";
     }
 }

@@ -129,9 +129,10 @@ signals:
     void signalEventChangedIsEdit           (bool    value);
     void signalEventChangedStrStatus        (QString value);
     void signalEventChangedErrMsg           (QString value);
-    void signalEventChangedErrMsg2           (QString value);
+    void signalEventChangedErrMsg2          (QString value);
     void signalEventChangedProgress         (int     value);
     void signalEventProcIdx                 (int     idx  );
+    void signalEventUnknowFormat            (             );
 
 public:
     explicit ValveParamExDlgModel(QObject *parent = nullptr): QObject(parent)
@@ -380,8 +381,11 @@ public slots:
         out.setCodec("utf-8");
 
         do{
+            bool idok;
+            bool valueok;
+
             QString value = out.readLine();
-            int id = value.mid(0,2).toInt();
+            int id = value.mid(0,2).toInt(&idok, 10);
             int tempValue;
             value = value.mid(2,value.length() - 2);
 
@@ -389,12 +393,21 @@ public slots:
             {
                 if(value.contains("-"))
                 {
-                    tempValue = value.replace("-","0").toInt(nullptr, 16) * -1;
+                    tempValue = value.replace("-","0").toInt(&valueok, 16);
+                    tempValue = tempValue * -1;
                 }
                 else
                 {
-                    tempValue = value.toInt(nullptr, 16);
+                    tempValue = value.toInt(&valueok, 16);
                 }
+
+                if(idok == false || valueok == false || id == 0)
+                {
+                    file.close();
+                    emit signalEventUnknowFormat();
+                    return;
+                }
+
                 setParamByFile(true, id, tempValue);
             }
 

@@ -6,7 +6,7 @@ Item {
     id: control
     height: 24
     opacity: enabled ? 1 : 0.3
-    enabled: viewTag.IsSupport && control.isEnable
+    enabled: viewTag.IsSupport && control.isEnable && viewTag.IsNotUsed == false
     clip: true
 
     property alias label : labelComponent
@@ -39,6 +39,6 @@ Item {
         height: parent.height
         anchors.left: flagComponent.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 10
 
-        text : viewTag.IsSupport ? "" + viewTag.MajRev + "." + viewTag.MinRev : " Not Support"
+        text : viewTag.IsSupport && viewTag.IsNotUsed === false ? "" + viewTag.MajRev + "." + viewTag.MinRev : " Not Support"
     }
 }

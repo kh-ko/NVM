@@ -91,6 +91,7 @@ signals:
     void signalEventCompletedExport               (             );
     void signalEventWrittenSettingToFile          (             );
     void signalEventWrittenSettingToValve         (             );
+    void signalEventUnknowFormat                  (             );
 
 private:
     QString exportFilePath;
@@ -540,14 +541,24 @@ public slots:
 
         do{
             QString line = out.readLine();
+            QString content;
             if(line.contains(","))
             {
-                mImportCmdList.append(line.split(",")[1].trimmed());
+                content = line.split(",")[1].trimmed();
             }
             else
             {
-                mImportCmdList.append(line.trimmed());
+                content = line.trimmed();
             }
+            if(content.length() > 0 && content.contains(":") == false)
+            {
+                file.close();
+                mImportCmdList.clear();
+                mImportCmdIdx = 0;
+                emit signalEventUnknowFormat();
+                return;
+            }
+            mImportCmdList.append(content);
         }while(!out.atEnd());
 
         file.close();

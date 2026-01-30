@@ -7,10 +7,38 @@ import ValveEnumDef 1.0
 import InterfaceStatusEtherCATDlgModel 1.0
 import GUISetting 1.0
 
+import ViewTagContainerModel 1.0
+import TagModel  1.0
+
 BaseSetupWindow{
     id : dialog
 
     property var body : null
+
+    property TagModel valveRev1Tag     : TagModel{}
+    property TagModel valveRev2Tag     : TagModel{}
+    property TagModel valveRev3Tag     : TagModel{}
+    property bool     blockDIO         : false
+
+    ViewTagContainerModel{
+        id : winTagContainer
+
+        onMProgressChanged: {
+            if(mProgress == 1)
+            {
+                var valveRev = (parseInt(valveRev1Tag.Value) * 36 * 36) + (parseInt(valveRev2Tag.Value) * 36) + parseInt(valveRev3Tag.Value)
+
+                if(valveRev < 36 /* 010 (36진수)*/)
+                {
+                    blockDIO = false
+                }
+                else
+                {
+                    blockDIO = true
+                }
+            }
+        }
+    }
 
     titleText   : qsTr("Interface status(EtherCAT)")
     progress    : dlgModel.mProgress
@@ -28,6 +56,16 @@ BaseSetupWindow{
         body = bodyImpl.createObject(contentBody)
         bodyHeight = body.height
         bodyWidth  = GUISetting.popup_nor_width
+
+        valveRev1Tag = winTagContainer.getTag("System.Identification.Valve Revision (1)"); // RO
+        valveRev2Tag = winTagContainer.getTag("System.Identification.Valve Revision (2)"); // RO
+        valveRev3Tag = winTagContainer.getTag("System.Identification.Valve Revision (3)"); // RO
+
+        winTagContainer.addInitTag(valveRev1Tag)
+        winTagContainer.addInitTag(valveRev2Tag)
+        winTagContainer.addInitTag(valveRev3Tag)
+
+        winTagContainer.refresh()
     }
 
     InterfaceStatusEtherCATDlgModel{
@@ -82,12 +120,12 @@ BaseSetupWindow{
 
                     InterfaceStatusEtherCATItem{
                         Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredHeight: 1; enabled: dialog.progress === 100;
-                        col01Text : dlgModel.mDIFunction === 0 ? qsTr("interlock close")  : qsTr("interlock open");
-                        col02Text : dlgModel.mDIMode     === 0 ? qsTr("not inverted") : qsTr("inverted"  );
-                        col03Text : dlgModel.mDIInput    === 0 ? qsTr("enabled")      : qsTr("disabled"  );
+                        col01Text : dialog.blockDIO ? "Not Support" : dlgModel.mDIFunction === 0 ? qsTr("interlock close")  : qsTr("interlock open");
+                        col02Text : dialog.blockDIO ? "Not Support" : dlgModel.mDIMode     === 0 ? qsTr("not inverted") : qsTr("inverted"  );
+                        col03Text : dialog.blockDIO ? "Not Support" : dlgModel.mDIInput    === 0 ? qsTr("enabled")      : qsTr("disabled"  );
                         col04Text : qsTr("3 / 1");
-                        col05Text : dlgModel.mStatusDI === 1 ? qsTr("ON") : qsTr("OFF")
-                        isON: dlgModel.mStatusDI === 1 ? true : false
+                        col05Text : dialog.blockDIO ? "Not Support" : dlgModel.mStatusDI === 1 ? qsTr("ON") : qsTr("OFF")
+                        isON: dialog.blockDIO ? false : dlgModel.mStatusDI === 1 ? true : false
                     }
                 }
 
@@ -129,12 +167,12 @@ BaseSetupWindow{
 
                     InterfaceStatusEtherCATItem{
                         Layout.fillHeight: true; Layout.fillWidth: true; Layout.preferredHeight: 1; enabled: dialog.progress === 100;
-                        col01Text : dlgModel.mDOFunction === 0 ? qsTr("close")  : dlgModel.mDOFunction === 1 ? qsTr("open") : qsTr("On")
-                        col02Text : dlgModel.mDOMode     === 0 ? qsTr("not inverted") : qsTr("inverted"  );
-                        col03Text : dlgModel.mDOOutput    === 0 ? qsTr("enabled")      : qsTr("disabled"  );
+                        col01Text : dialog.blockDIO ? "Not Support" :  dlgModel.mDOFunction === 0 ? qsTr("close")  : dlgModel.mDOFunction === 1 ? qsTr("open") : qsTr("On")
+                        col02Text : dialog.blockDIO ? "Not Support" : dlgModel.mDOMode     === 0 ? qsTr("not inverted") : qsTr("inverted"  );
+                        col03Text : dialog.blockDIO ? "Not Support" : dlgModel.mDOOutput   === 0 ? qsTr("enabled")      : qsTr("disabled"  );
                         col04Text : qsTr("2 / 4");
-                        col05Text : dlgModel.mStatusDO === 1 ? qsTr("ON") : qsTr("OFF")
-                        isON: dlgModel.mStatusDO === 1 ? true : false
+                        col05Text : dialog.blockDIO ? "Not Support" : dlgModel.mStatusDO === 1 ? qsTr("ON") : qsTr("OFF")
+                        isON: dialog.blockDIO ? false : dlgModel.mStatusDO === 1 ? true : false
                     }
                 }
 
