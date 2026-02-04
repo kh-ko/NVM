@@ -614,7 +614,7 @@ BaseSetupWindow{
                     visible: dialog.unlock
 
                     fontFamily: FontManager.codingName
-                    model: ["Unknown", "B : Basic", "S : SPS", "P : with PFO", "D : with SPS and PFO", "U : with UPS", "A : with SPS & UPS"]
+                    model: ["Unknown", "B : Basic", "S : SPS(30W, 60W)", "P : PFO", "D : SPS & PFO", "U : UPS", "A : SPS & UPS", "E : Basic & VC master", "F : SPS & VC master", "G : PFO & VC master", "H : SPS & PFO & VC master", "I : UPS & VC master", "J : SPS & UPS & VC master"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)

@@ -2776,7 +2776,7 @@ public slots:
             setInterface          (signalDto.mInterface   );
             setSensorVersion      (signalDto.mSensorVerion);
 
-            qDebug() << "[khko_debug]interface = " << signalDto.mInterface;
+            qDebug() << "[khko_debug]interface = " << signalDto.mInterface << "," << signalDto.mResData;
 
         }while(false);
 
