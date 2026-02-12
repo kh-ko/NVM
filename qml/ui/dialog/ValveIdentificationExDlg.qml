@@ -580,7 +580,7 @@ BaseSetupWindow{
                     visible: dialog.unlock
 
                     fontFamily: FontManager.codingName
-                    model: ["UK : Unknown", "R2 : RS-232", "R3 : RS-232 with analog outputs", "R4 : RS-485", "LO : Logic", "DN : DeviceNet", "PB : Profibus", "EN : Ethernet", "CC : CC-Link", "EC : EtherCAT", "LL : Legacy Logic", "LD : Legacy DeviceNet", "AD : AP DeviceNet", "RL : Retrofit Logic", "ND : Norcal Devicenet"]
+                    model: ["UK : Unknown", "R2 : RS-232", "R3 : RS-232 with analog outputs", "R4 : RS-485", "LO : Logic", "DN : DeviceNet", "PB : Profibus", "EN : Ethernet", "CC : CC-Link", "EC : EtherCAT", "LL : Legacy Logic", "LD : Legacy DeviceNet", "AD : AP DeviceNet", "RL : Retrofit Logic", "ND : Norcal Devicenet", "SL : Cluster Slave"]
 
                     onCurrentIndexChanged: {
                         dlgModel.onCommandSetEdit(true)

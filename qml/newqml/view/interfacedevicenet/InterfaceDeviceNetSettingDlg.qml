@@ -349,6 +349,14 @@ CustomWindow{
         refresh()
     }
 
+    onProgressChanged: {
+        if(win.progress == 1)
+        {
+            outV1Tb.reCalAddr()
+            inV1Tb.reCalAddr()
+        }
+    }
+
     Column{
         id : itemContainerLeft
 
