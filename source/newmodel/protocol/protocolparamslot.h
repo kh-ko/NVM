@@ -13,6 +13,7 @@
 #include "source/newmodel/view/converter/base36tobase10converter.h"
 #include "source/newmodel/view/converter/hextobase36converter.h"
 #include "source/newmodel/view/converter/fhextofloatconverter.h"
+#include "source/newmodel/view/converter/fhexto10000gainconverter.h"
 #include "source/newmodel/view/tag/tagmodel.h"
 
 class ProtocolParamSlot : public QObject{
@@ -105,6 +106,10 @@ public:
             if(pTag->ValueType == TagModel::TypeFloat())
             {
                 return FHexToFloatConverter::getInstance();
+            }
+            else if(pTag->ValueType == TagModel::Type10000Gain())
+            {
+                return FHexTo10000GainConverter::getInstance();
             }
         }
         else if(DataType == TypeBase16())

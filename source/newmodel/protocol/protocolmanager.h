@@ -522,32 +522,32 @@ public:
 
         pFolder = pRootFolder->createFolder("Interface DeviceNet.Scaling.Output");
         {
-            TagModel * posiUnit  = createTag("Position Setpoint Unit"        , "RW", TagModel::TypeEnum() , pEnumDefine->Find("DNetPosiUnit"),  0, pFolder);
-            TagModel * posiGain  = createTag("Position Setpoint Gain"        , "RW", TagModel::TypeFloat(), nullptr,  0, pFolder);
-            TagModel * presUnit  = createTag("Pressure Setpoint Unit"        , "RW", TagModel::TypeEnum() , pEnumDefine->Find("DNetPresUnit"),  0, pFolder);
-            TagModel * sens1Gain = createTag("Pressure Setpoint Sensor1 Gain", "RW", TagModel::TypeFloat(), nullptr,  0, pFolder);
-            TagModel * sens2Gain = createTag("Pressure Setpoint Sensor2 Gain", "RW", TagModel::TypeFloat(), nullptr,  0, pFolder);
+            TagModel * posiUnit  = createTag("Position Setpoint Unit"        , "RW", TagModel::TypeEnum()     , pEnumDefine->Find("DNetPosiUnit"),  0, pFolder);
+            TagModel * posiMax   = createTag("Position Setpoint Max"         , "RW", TagModel::Type10000Gain(), nullptr                          ,  0, pFolder);
+            TagModel * presUnit  = createTag("Pressure Setpoint Unit"        , "RW", TagModel::TypeEnum()     , pEnumDefine->Find("DNetPresUnit"),  0, pFolder);
+            TagModel * sens1Max  = createTag("Pressure Setpoint Sensor1 Max" , "RW", TagModel::Type10000Gain(), nullptr                          ,  0, pFolder);
+            TagModel * sens2Max  = createTag("Pressure Setpoint Sensor2 Max" , "RW", TagModel::Type10000Gain(), nullptr                          ,  0, pFolder);
 
             createICProtocol("DNet Position Setpoint Unit"        , "a:7250001B", "a:7250001B", "a:7250011B", "a:7250011B"); createSlot(posiUnit ->Name, 10, 4, 10, 4, ProtocolParamSlot::TypeBase16()  , 1, pFolder); setTag(posiUnit );
-            createICProtocol("DNet Position Setpoint Gain"        , "a:7250001F", "a:7250001F", "a:7250011F", "a:7250011F"); createSlot(posiGain ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(posiGain );
+            createICProtocol("DNet Position Setpoint Max"         , "a:7250001F", "a:7250001F", "a:7250011F", "a:7250011F"); createSlot(posiMax  ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(posiMax  );
             createICProtocol("DNet Pressure Setpoint Unit"        , "a:7250001A", "a:7250001A", "a:7250011A", "a:7250011A"); createSlot(presUnit ->Name, 10, 4, 10, 4, ProtocolParamSlot::TypeBase16()  , 1, pFolder); setTag(presUnit );
-            createICProtocol("DNet Pressure Setpoint Sensor1 Gain", "a:7250001D", "a:7250001D", "a:7250011D", "a:7250011D"); createSlot(sens1Gain->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens1Gain);
-            createICProtocol("DNet Pressure Setpoint Sensor2 Gain", "a:7250001E", "a:7250001E", "a:7250011E", "a:7250011E"); createSlot(sens2Gain->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens2Gain);
+            createICProtocol("DNet Pressure Setpoint Sensor1 Max" , "a:7250001D", "a:7250001D", "a:7250011D", "a:7250011D"); createSlot(sens1Max ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens1Max );
+            createICProtocol("DNet Pressure Setpoint Sensor2 Max" , "a:7250001E", "a:7250001E", "a:7250011E", "a:7250011E"); createSlot(sens2Max ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens2Max );
         }
 
         pFolder = pRootFolder->createFolder("Interface DeviceNet.Scaling.Input");
         {
-            TagModel * posiUnit  = createTag("Position Setpoint Unit"        , "RW", TagModel::TypeEnum() , pEnumDefine->Find("DNetPosiUnit"),  0, pFolder);
-            TagModel * posiGain  = createTag("Position Setpoint Gain"        , "RW", TagModel::TypeFloat(), nullptr,  0, pFolder);
-            TagModel * presUnit  = createTag("Pressure Setpoint Unit"        , "RW", TagModel::TypeEnum() , pEnumDefine->Find("DNetPresUnit"),  0, pFolder);
-            TagModel * sens1Gain = createTag("Pressure Setpoint Sensor1 Gain", "RW", TagModel::TypeFloat(), nullptr,  0, pFolder);
-            TagModel * sens2Gain = createTag("Pressure Setpoint Sensor2 Gain", "RW", TagModel::TypeFloat(), nullptr,  0, pFolder);
+            TagModel * posiUnit  = createTag("Position Setpoint Unit"        , "RW", TagModel::TypeEnum()     , pEnumDefine->Find("DNetPosiUnit"),  0, pFolder);
+            TagModel * posiMax   = createTag("Position Setpoint Max"         , "RW", TagModel::Type10000Gain(), nullptr                          ,  0, pFolder);
+            TagModel * presUnit  = createTag("Pressure Setpoint Unit"        , "RW", TagModel::TypeEnum()     , pEnumDefine->Find("DNetPresUnit"),  0, pFolder);
+            TagModel * sens1Max  = createTag("Pressure Setpoint Sensor1 Max" , "RW", TagModel::Type10000Gain(), nullptr                          ,  0, pFolder);
+            TagModel * sens2Max  = createTag("Pressure Setpoint Sensor2 Max" , "RW", TagModel::Type10000Gain(), nullptr                          ,  0, pFolder);
 
             createICProtocol("DNet Position Setpoint Unit"        , "a:7250000B", "a:7250000B", "a:7250010B", "a:7250010B"); createSlot(posiUnit ->Name, 10, 4, 10, 4, ProtocolParamSlot::TypeBase16()  , 1, pFolder); setTag(posiUnit );
-            createICProtocol("DNet Position Setpoint Gain"        , "a:7250000F", "a:7250000F", "a:7250010F", "a:7250010F"); createSlot(posiGain ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(posiGain );
+            createICProtocol("DNet Position Setpoint Max"         , "a:7250000F", "a:7250000F", "a:7250010F", "a:7250010F"); createSlot(posiMax  ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(posiMax  );
             createICProtocol("DNet Pressure Setpoint Unit"        , "a:7250000A", "a:7250000A", "a:7250010A", "a:7250010A"); createSlot(presUnit ->Name, 10, 4, 10, 4, ProtocolParamSlot::TypeBase16()  , 1, pFolder); setTag(presUnit );
-            createICProtocol("DNet Pressure Setpoint Sensor1 Gain", "a:7250000D", "a:7250000D", "a:7250010D", "a:7250010D"); createSlot(sens1Gain->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens1Gain);
-            createICProtocol("DNet Pressure Setpoint Sensor2 Gain", "a:7250000E", "a:7250000E", "a:7250010E", "a:7250010E"); createSlot(sens2Gain->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens2Gain);
+            createICProtocol("DNet Pressure Setpoint Sensor1 Max" , "a:7250000D", "a:7250000D", "a:7250010D", "a:7250010D"); createSlot(sens1Max ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens1Max );
+            createICProtocol("DNet Pressure Setpoint Sensor2 Max" , "a:7250000E", "a:7250000E", "a:7250010E", "a:7250010E"); createSlot(sens2Max ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens2Max );
         }
 
         pFolder = pRootFolder->createFolder("Interface DeviceNet.Connection Loss Reaction");
@@ -703,9 +703,11 @@ public:
             TagModel * showAddr    = createTag("Show Address on Display"    , "RW", TagModel::TypeEnum()  , pEnumDefine->Find("FalseTrue")                    , 0, pFolder);
             TagModel * reaction    = createTag("Connection Loss Reaction"   , "RW", TagModel::TypeEnum()  , pEnumDefine->Find("ClusterConnectionLossReaction"), 0, pFolder);
             TagModel * disableLock = createTag("Disable Interlocks of Slave", "RW", TagModel::TypeEnum()  , pEnumDefine->Find("NotDisableDisable")            , 0, pFolder);
+            TagModel * baudrate    = createTag("Baud Rate"                  , "RW", TagModel::TypeEnum()  , pEnumDefine->Find("RS232Baudrate")                , 0, pFolder);
 
             createPMProtocol("Cluster Number of Valves"           , "200D0100", "00", "RW"); createSlot("Number of Valves"           , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(numOfValve );
             createPMProtocol("Cluster Cluster Address"            , "200D0200", "00", "RW"); createSlot("Cluster Address"            , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(addr       );
+            createPMProtocol("Cluster Communication Baud Rate"    , "A1110100", "00", "RW"); createSlot("Cluster Baud Rate"          , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(baudrate   );
             createPMProtocol("Cluster Show Address on Display"    , "200D0300", "00", "RW"); createSlot("Show Address on Display"    , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(showAddr   );
             createPMProtocol("Cluster Connection Loss Reaction"   , "200D0400", "00", "RW"); createSlot("Connection Loss Reaction"   , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(reaction   );
             createPMProtocol("Cluster Disable Interlocks of Slave", "200D0500", "00", "RW"); createSlot("Disable Interlocks of Slave", PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(disableLock);

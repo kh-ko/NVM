@@ -162,16 +162,16 @@ CustomWindow{
         inSelector20.viewTag                 = findTag("Interface DeviceNet.Connection Object.Input.Input Selector 20"                                          ); // RW
 
         outScalingPosiUnit.viewTag           = findTag("Interface DeviceNet.Scaling.Output.Position Setpoint Unit"                                              ); // RW
-        outScalingPosiGain.viewTag           = findTag("Interface DeviceNet.Scaling.Output.Position Setpoint Gain"                                              ); // RW
+        outScalingPosiGain.viewTag           = findTag("Interface DeviceNet.Scaling.Output.Position Setpoint Max"                                               ); // RW
         outScalingPresUnit.viewTag           = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Unit"                                              ); // RW
-        outScalingSens1Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor1 Gain"                                      ); // RW
-        outScalingSens2Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor2 Gain"                                      ); // RW
+        outScalingSens1Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor1 Max"                                       ); // RW
+        outScalingSens2Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor2 Max"                                       ); // RW
 
         inScalingPosiUnit.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Position Setpoint Unit"                                               ); // RW
-        inScalingPosiGain.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Position Setpoint Gain"                                               ); // RW
+        inScalingPosiGain.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Position Setpoint Max"                                                ); // RW
         inScalingPresUnit.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Unit"                                               ); // RW
-        inScalingSens1Gain.viewTag           = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Sensor1 Gain"                                       ); // RW
-        inScalingSens2Gain.viewTag           = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Sensor2 Gain"                                       ); // RW
+        inScalingSens1Gain.viewTag           = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Sensor1 Max"                                        ); // RW
+        inScalingSens2Gain.viewTag           = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Sensor2 Max"                                        ); // RW
 
         serialNum.viewTag                    = findTag("Interface DeviceNet.Identity Object.Instance.Serial Number(Hex)"                                        ); // RO
         pdName.viewTag                       = findTag("Interface DeviceNet.Identity Object.Instance.Product Name"                                              ); // RO

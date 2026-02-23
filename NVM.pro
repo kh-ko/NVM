@@ -53,6 +53,7 @@ HEADERS += \
     source/newmodel/view/converter/base36tobase10converter.h \
     source/newmodel/view/converter/defaultconverter.h \
     source/newmodel/view/converter/dnetv1assyconverter.h \
+    source/newmodel/view/converter/fhexto10000gainconverter.h \
     source/newmodel/view/converter/fhextofloatconverter.h \
     source/newmodel/view/converter/hextobase10converter.h \
     source/newmodel/view/converter/hextobase36converter.h \

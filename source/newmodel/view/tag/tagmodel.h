@@ -31,6 +31,7 @@ public:
     static int TypePosi           (){ return 10; }
     static int TypeFloatGain      (){ return 11; }
     static int TypeEnumSelect     (){ return 12; }
+    static int Type10000Gain      (){ return 13; }
 
     bool    IsEdit = false;
     int     ValueType = 0;

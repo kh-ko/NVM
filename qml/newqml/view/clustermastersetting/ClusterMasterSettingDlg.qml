@@ -18,6 +18,7 @@ CustomWindow{
     Component.onCompleted: {
         numOfValve.viewTag             = findTag("Cluster.Master.Settings.Number of Valves"           );
         clusterAddr.viewTag            = findTag("Cluster.Master.Settings.Cluster Address"            );
+        baudrate.viewTag              = findTag("Cluster.Master.Settings.Baud Rate"                  );
         showAddr.viewTag               = findTag("Cluster.Master.Settings.Show Address on Display"    );
         connectionLossReaction.viewTag = findTag("Cluster.Master.Settings.Connection Loss Reaction"   );
         interlockOfSlave.viewTag       = findTag("Cluster.Master.Settings.Disable Interlocks of Slave");
@@ -25,6 +26,7 @@ CustomWindow{
         regRWComponent(numOfValve            );
         regRWComponent(clusterAddr           );
         regRWComponent(showAddr              );
+        regRWComponent(baudrate              );
         regRWComponent(connectionLossReaction);
         regRWComponent(interlockOfSlave      );
 
@@ -57,6 +59,14 @@ CustomWindow{
 
         CustomComboBox{
             id : showAddr
+            width:parent.width;
+
+            label.width: 150
+            onIsDirtyChanged: {win.checkApplyBtn()}
+        }
+
+        CustomComboBox{
+            id : baudrate
             width:parent.width;
 
             label.width: 150

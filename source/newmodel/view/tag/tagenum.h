@@ -423,6 +423,20 @@ public:
         pTemp->addPair(1, "Close"        );
         pTemp->addPair(2, "Keep Position");
         EnumList.append(pTemp);
+
+        pTemp = new TagEnumListModel("RS232Baudrate", this);
+        pTemp->addPair(0 , "1200"   );
+        pTemp->addPair(1 , "2400"   );
+        pTemp->addPair(2 , "9600"   );
+        pTemp->addPair(3 , "19200"  );
+        pTemp->addPair(4 , "38400"  );
+        pTemp->addPair(6 , "57600"  );
+        pTemp->addPair(7 , "115200" );
+        pTemp->addPair(8 , "230400" );
+        pTemp->addPair(9 , "460800" );
+        pTemp->addPair(10, "921600" );
+        pTemp->addPair(11, "1000000");
+        EnumList.append(pTemp);
     }
 
     TagEnumListModel * Find(QString name)
