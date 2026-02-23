@@ -707,7 +707,8 @@ public:
 
             createPMProtocol("Cluster Number of Valves"           , "200D0100", "00", "RW"); createSlot("Number of Valves"           , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(numOfValve );
             createPMProtocol("Cluster Cluster Address"            , "200D0200", "00", "RW"); createSlot("Cluster Address"            , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(addr       );
-            createPMProtocol("Cluster Communication Baud Rate"    , "A1110100", "00", "RW"); createSlot("Cluster Baud Rate"          , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(baudrate   );
+            createPMProtocol("Cluster Communication Baud Rate V1" , "A1110100", "00", "RW"); createSlot("Cluster Baud Rate V1"       , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(baudrate   );
+            createPMProtocol("Cluster Communication Baud Rate V2" , "200D0700", "00", "RW"); createSlot("Cluster Baud Rate V2"       , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder);
             createPMProtocol("Cluster Show Address on Display"    , "200D0300", "00", "RW"); createSlot("Show Address on Display"    , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(showAddr   );
             createPMProtocol("Cluster Connection Loss Reaction"   , "200D0400", "00", "RW"); createSlot("Connection Loss Reaction"   , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(reaction   );
             createPMProtocol("Cluster Disable Interlocks of Slave", "200D0500", "00", "RW"); createSlot("Disable Interlocks of Slave", PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(disableLock);
@@ -816,12 +817,17 @@ public:
                                                         FindTag("Power Connector IO.Digital Output 2.Inverted"     ),
                                                         FindTag("Power Connector IO.Digital Output 2.State"        ));
 
+        VersionChecker::getInstance()->setClusterMasterBaudRateSlot(FindSlot("Cluster.Master.Settings.Cluster Baud Rate V1" ,"Read" ),
+                                                                    FindSlot("Cluster.Master.Settings.Cluster Baud Rate V1" ,"Write"),
+                                                                    FindSlot("Cluster.Master.Settings.Cluster Baud Rate V2" ,"Read" ),
+                                                                    FindSlot("Cluster.Master.Settings.Cluster Baud Rate V2" ,"Write"));
+        VersionChecker::getInstance()->setClusterMasterBaudRateTag(FindTag("Cluster.Master.Settings.Baud Rate"));
+
         VersionChecker::getInstance()->regIdValveTypeTag(FindTag("System.Identification.ID: Valve Type"                 ));
         VersionChecker::getInstance()->regValveRev1Tag  (FindTag("System.Identification.Valve Revision (1)"             ));
         VersionChecker::getInstance()->regValveRev2Tag  (FindTag("System.Identification.Valve Revision (2)"             ));
         VersionChecker::getInstance()->regValveRev3Tag  (FindTag("System.Identification.Valve Revision (3)"             ));
         VersionChecker::getInstance()->regFirmwareVerTag(FindTag("System.Identification.Firmware.Valve Firmware Version"));
-
     }
 
     ProtocolParamSlotFolder * FindSlotFolder(QString path)

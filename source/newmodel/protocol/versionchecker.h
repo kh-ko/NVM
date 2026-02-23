@@ -5,6 +5,7 @@
 #include <QDebug>
 #include "source/newmodel/view/tag/tagmodel.h"
 #include "source/newmodel/protocol/protocolparamslot.h"
+#include "source/newmodel/protocol/protocolmodel.h"
 #include "source/newmodel/view/converter/dnetv1assyconverter.h"
 #include "source/newmodel/view/converter/hextobase10converter.h"
 
@@ -114,6 +115,19 @@ public:
         PwrConnDO02StateTagPointer    = pPwrConnDO02StateTag;
     }
 
+    void setClusterMasterBaudRateSlot(ProtocolParamSlot * pV1ReadSlot, ProtocolParamSlot * pV1WriteSlot, ProtocolParamSlot * pV2ReadSlot, ProtocolParamSlot * pV2WriteSlot)
+    {
+        ClusterMasterBaudRateReadSlotV1Pointer  = pV1ReadSlot;
+        ClusterMasterBaudRateWriteSlotV1Pointer = pV1WriteSlot;
+        ClusterMasterBaudRateReadSlotV2Pointer  = pV2ReadSlot;
+        ClusterMasterBaudRateWriteSlotV2Pointer = pV2WriteSlot;
+    }
+
+    void setClusterMasterBaudRateTag(TagModel * pTag)
+    {
+        ClusterMasterBaudRateTagPointer = pTag;
+    }
+
 
 public slots:
     void onTagChangedIdValveType(QString value)
@@ -166,6 +180,8 @@ public slots:
         qDebug() << "[" << Q_FUNC_INFO << "]value = " << value.rightRef(4) << ", int value = " << firmwareVersion;
 
         if(!ok){ firmwareVersion = 0; qDebug() << "[" << Q_FUNC_INFO << "]Convert Error";}
+
+        checkFirmwareVersionDependency();
     }
 
 private:
@@ -201,6 +217,12 @@ private:
     TagModel * PwrConnDO02FuncTagPointer;
     TagModel * PwrConnDO02PolarityTagPointer;
     TagModel * PwrConnDO02StateTagPointer;
+
+    ProtocolParamSlot * ClusterMasterBaudRateReadSlotV1Pointer;
+    ProtocolParamSlot * ClusterMasterBaudRateWriteSlotV1Pointer;
+    ProtocolParamSlot * ClusterMasterBaudRateReadSlotV2Pointer;
+    ProtocolParamSlot * ClusterMasterBaudRateWriteSlotV2Pointer;
+    TagModel * ClusterMasterBaudRateTagPointer;
 
 
     void checkRevisionDependency()
@@ -283,6 +305,27 @@ private:
             PwrConnDO02FuncTagPointer->setIsNotUsed(false);
             PwrConnDO02PolarityTagPointer->setIsNotUsed(false);
             PwrConnDO02StateTagPointer->setIsNotUsed(false);
+        }
+    }
+
+    void checkFirmwareVersionDependency()
+    {
+        if(firmwareVersion < 0x623)
+        {
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            /// Cluster
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ClusterMasterBaudRateReadSlotV1Pointer ->reSetTag(ClusterMasterBaudRateTagPointer);
+            ClusterMasterBaudRateWriteSlotV1Pointer->reSetTag(ClusterMasterBaudRateTagPointer);
+        }
+        else
+        {
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            /// Cluster
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ClusterMasterBaudRateReadSlotV2Pointer ->reSetTag(ClusterMasterBaudRateTagPointer);
+            ClusterMasterBaudRateWriteSlotV2Pointer->reSetTag(ClusterMasterBaudRateTagPointer);
         }
     }
 };

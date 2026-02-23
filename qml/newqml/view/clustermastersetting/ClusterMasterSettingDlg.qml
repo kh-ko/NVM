@@ -9,20 +9,26 @@ import GUISetting 1.0
 
 import "../../usercomponent/."
 import ViewTagContainerModel 1.0
+import TagModel  1.0
 
 CustomWindow{
     id : win
     width: 400; height: 500; minWidth : 400
     title: qsTr("Cluster Master Settings")
 
-    Component.onCompleted: {
-        numOfValve.viewTag             = findTag("Cluster.Master.Settings.Number of Valves"           );
-        clusterAddr.viewTag            = findTag("Cluster.Master.Settings.Cluster Address"            );
-        baudrate.viewTag              = findTag("Cluster.Master.Settings.Baud Rate"                  );
-        showAddr.viewTag               = findTag("Cluster.Master.Settings.Show Address on Display"    );
-        connectionLossReaction.viewTag = findTag("Cluster.Master.Settings.Connection Loss Reaction"   );
-        interlockOfSlave.viewTag       = findTag("Cluster.Master.Settings.Disable Interlocks of Slave");
+    property TagModel firmwareVerTag   : TagModel{}
 
+    Component.onCompleted: {
+        firmwareVerTag                 = findTag("System.Identification.Firmware.Valve Firmware Version"); // RO
+
+        numOfValve.viewTag             = findTag("Cluster.Master.Settings.Number of Valves"             );
+        clusterAddr.viewTag            = findTag("Cluster.Master.Settings.Cluster Address"              );
+        baudrate.viewTag               = findTag("Cluster.Master.Settings.Baud Rate"                    );
+        showAddr.viewTag               = findTag("Cluster.Master.Settings.Show Address on Display"      );
+        connectionLossReaction.viewTag = findTag("Cluster.Master.Settings.Connection Loss Reaction"     );
+        interlockOfSlave.viewTag       = findTag("Cluster.Master.Settings.Disable Interlocks of Slave"  );
+
+        regInitTag    (firmwareVerTag        );
         regRWComponent(numOfValve            );
         regRWComponent(clusterAddr           );
         regRWComponent(showAddr              );

@@ -102,7 +102,7 @@ public slots:
             return;
         }
 
-        if(dto.mResData.startsWith("E:") || dto.mResData.startsWith("E:"))
+        if(dto.mResData.startsWith("E:") || dto.mResData.startsWith(currentProtocol->RespProtocol) == false)
         {
             currentProtocol->SetIsSupport(false);
         }
@@ -219,33 +219,31 @@ public slots:
         mReadProtocolIdx       = 0;
         mWriteProtocolIdx      = 0;
 
-        ProtocolModel * protocol;
-
         mWriteProtocolList.clear();
         mReadProtocolList.clear();
 
-        foreach (TagModel * tempTag, mRWTagList) {
-            protocol = (ProtocolModel *)tempTag->ReadProtocol;
+        //foreach (TagModel * tempTag, mRWTagList) {
+        //    protocol = (ProtocolModel *)tempTag->ReadProtocol;
 
-            if(protocol == nullptr)
-                continue;
+        //    if(protocol == nullptr)
+        //        continue;
 
-            if(mReadProtocolList.contains(protocol) == false)
-            {
-                mReadProtocolList.append(protocol);
-            }
-        }
+        //    if(mReadProtocolList.contains(protocol) == false)
+        //    {
+        //        mReadProtocolList.append(protocol);
+        //    }
+        //}
 
-        foreach(TagModel * tempTag, mAlwaysReadTagList) {
-            protocol = (ProtocolModel *)tempTag->ReadProtocol;
+        //foreach(TagModel * tempTag, mAlwaysReadTagList) {
+        //    protocol = (ProtocolModel *)tempTag->ReadProtocol;
 
-            if(protocol != nullptr && mReadProtocolList.contains(protocol) == false)
-            {
-                mReadProtocolList.append(protocol);
+        //    if(protocol != nullptr && mReadProtocolList.contains(protocol) == false)
+        //    {
+        //        mReadProtocolList.append(protocol);
 
-                qDebug() << "[" << Q_FUNC_INFO << "]Read = " << protocol->ReqProtocol;
-            }
-        }
+        //        qDebug() << "[" << Q_FUNC_INFO << "]Read = " << protocol->ReqProtocol;
+        //    }
+        //}
 
         if(mInitTagList.size() == 0 && mWriteProtocolList.size() == 0 && mReadProtocolList.size() == 0)
         {
@@ -344,6 +342,34 @@ public slots:
             else
             {
                 mState = STATE_READ;
+
+                ProtocolModel * protocol;
+
+                mReadProtocolList.clear();
+
+                foreach (TagModel * tempTag, mRWTagList) {
+                    protocol = (ProtocolModel *)tempTag->ReadProtocol;
+
+                    if(protocol == nullptr)
+                        continue;
+
+                    if(mReadProtocolList.contains(protocol) == false)
+                    {
+                        mReadProtocolList.append(protocol);
+                    }
+                }
+
+                foreach(TagModel * tempTag, mAlwaysReadTagList) {
+                    protocol = (ProtocolModel *)tempTag->ReadProtocol;
+
+                    if(protocol != nullptr && mReadProtocolList.contains(protocol) == false)
+                    {
+                        mReadProtocolList.append(protocol);
+
+                        qDebug() << "[" << Q_FUNC_INFO << "]Read = " << protocol->ReqProtocol;
+                    }
+                }
+
                 startTimer();
                 return;
             }

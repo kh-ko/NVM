@@ -80,6 +80,27 @@ public:
         return;
     }
 
+    void reSetTag(TagModel * pTag)
+    {
+        if(pTag == nullptr)
+            return;
+
+        TagList.clear();
+
+        TagList.append(pTag);
+
+        pTag->SetProtocol(AccType, parent());
+
+        TagValueConverter * pConverter = GetMatchConverter(pTag);
+
+        if(pConverter != ConverterPointer)
+        {
+            SetConverter(pConverter);
+        }
+
+        return;
+    }
+
     void SetConverter(TagValueConverter * pConverter)
     {
         if(ConverterPointer != nullptr)
