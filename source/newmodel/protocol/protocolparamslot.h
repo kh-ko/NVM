@@ -14,6 +14,7 @@
 #include "source/newmodel/view/converter/hextobase36converter.h"
 #include "source/newmodel/view/converter/fhextofloatconverter.h"
 #include "source/newmodel/view/converter/fhexto10000gainconverter.h"
+#include "source/newmodel/view/converter/floattobase10converter.h"
 #include "source/newmodel/view/tag/tagmodel.h"
 
 class ProtocolParamSlot : public QObject{
@@ -175,6 +176,13 @@ public:
             if(pTag->ValueType == TagModel::TypeBase10() || pTag->ValueType == TagModel::TypeEnum() || pTag->ValueType == TagModel::TypeEnumSelect())
             {
                 return Base36ToBase10Converter::getInstance();
+            }
+        }
+        else if(DataType == TypeFloat())
+        {
+            if(pTag->ValueType == TagModel::TypeBase10())
+            {
+                return FloatToBase10Converter::getInstance();
             }
         }
         return DefaultConverter::getInstance();

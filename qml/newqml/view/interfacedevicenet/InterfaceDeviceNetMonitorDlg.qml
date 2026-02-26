@@ -31,14 +31,14 @@ CustomWindow{
         valveRev2Tag                         = findTag("System.Identification.Valve Revision (2)"                                                               ); // RO
         valveRev3Tag                         = findTag("System.Identification.Valve Revision (3)"                                                               ); // RO
 
-        dnetStatus.viewTag                   = findTag("Interface DeviceNet.Status.Status"                                                                      ); // RO
-        alarmDevComm.viewTag                 = findTag("Interface DeviceNet.Exception Status.ALARM/device-common"                                                );
-        alarmDevSpecific.viewTag             = findTag("Interface DeviceNet.Exception Status.ALARM/device-specific"                                              );
-        alarmMenuSpecific.viewTag            = findTag("Interface DeviceNet.Exception Status.ALARM/manufacturer-specific"                                        );
-        warningDevComm.viewTag               = findTag("Interface DeviceNet.Exception Status.WARNING/device-common"                                              );
-        warningDevSpecific.viewTag           = findTag("Interface DeviceNet.Exception Status.WARNING/device-specific"                                            );
-        warningMenuSpecifi.viewTag           = findTag("Interface DeviceNet.Exception Status.WARNING/manufacturer-specific"                                      );
-        expandedMode.viewTag                 = findTag("Interface DeviceNet.Exception Status.expanded mode"                                                      );
+        //dnetStatus.viewTag                   = findTag("Interface DeviceNet.Status.Status"                                                                      ); // RO
+        //alarmDevComm.viewTag                 = findTag("Interface DeviceNet.Exception Status.ALARM/device-common"                                                );
+        //alarmDevSpecific.viewTag             = findTag("Interface DeviceNet.Exception Status.ALARM/device-specific"                                              );
+        //alarmMenuSpecific.viewTag            = findTag("Interface DeviceNet.Exception Status.ALARM/manufacturer-specific"                                        );
+        //warningDevComm.viewTag               = findTag("Interface DeviceNet.Exception Status.WARNING/device-common"                                              );
+        //warningDevSpecific.viewTag           = findTag("Interface DeviceNet.Exception Status.WARNING/device-specific"                                            );
+        //warningMenuSpecifi.viewTag           = findTag("Interface DeviceNet.Exception Status.WARNING/manufacturer-specific"                                      );
+        //expandedMode.viewTag                 = findTag("Interface DeviceNet.Exception Status.expanded mode"                                                      );
 
         macSwitch.viewTag                    = findTag("Interface DeviceNet.DeviceNet Object.Instance.MAC ID Switch"                                            ); // RO
         mac.viewTag                          = findTag("Interface DeviceNet.DeviceNet Object.Instance.MAC ID"                                                   ); // RW
@@ -107,16 +107,16 @@ CustomWindow{
         //inV1Tb.dummy.viewTag                 = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Dummy(1)"                          ); // RW
 
         outScalingPosiUnit.viewTag           = findTag("Interface DeviceNet.Scaling.Output.Position Setpoint Unit"                                              ); // RW
-        outScalingPosiGain.viewTag           = findTag("Interface DeviceNet.Scaling.Output.Position Setpoint Gain"                                              ); // RW
+        outScalingPosiGain.viewTag           = findTag("Interface DeviceNet.Scaling.Output.Position Setpoint Max"                                               ); // RW
         outScalingPresUnit.viewTag           = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Unit"                                              ); // RW
-        outScalingSens1Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor1 Gain"                                      ); // RW
-        outScalingSens2Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor2 Gain"                                      ); // RW
+        outScalingSens1Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor1 Max"                                       ); // RW
+        outScalingSens2Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor2 Max"                                       ); // RW
 
         inScalingPosiUnit.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Position Setpoint Unit"                                               ); // RW
-        inScalingPosiGain.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Position Setpoint Gain"                                               ); // RW
+        inScalingPosiGain.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Position Setpoint Max"                                                ); // RW
         inScalingPresUnit.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Unit"                                               ); // RW
-        inScalingSens1Gain.viewTag           = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Sensor1 Gain"                                       ); // RW
-        inScalingSens2Gain.viewTag           = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Sensor2 Gain"                                       ); // RW
+        inScalingSens1Gain.viewTag           = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Sensor1 Max"                                        ); // RW
+        inScalingSens2Gain.viewTag           = findTag("Interface DeviceNet.Scaling.Input.Pressure Setpoint Sensor2 Max"                                        ); // RW
 
         serialNum.viewTag                    = findTag("Interface DeviceNet.Identity Object.Instance.Serial Number(Hex)"                                        ); // RO
         pdName.viewTag                       = findTag("Interface DeviceNet.Identity Object.Instance.Product Name"                                              ); // RO
@@ -241,14 +241,14 @@ CustomWindow{
         regInitComponent(dinPolarity                 );
         regMonitoringComponent(dinStatus             );
 
-        regMonitoringComponent(dnetStatus            );
-        regMonitoringComponent(alarmDevComm          );
-        regMonitoringComponent(alarmDevSpecific      );
-        regMonitoringComponent(alarmMenuSpecific     );
-        regMonitoringComponent(warningDevComm        );
-        regMonitoringComponent(warningDevSpecific    );
-        regMonitoringComponent(warningMenuSpecifi    );
-        regMonitoringComponent(expandedMode          );
+        //regMonitoringComponent(dnetStatus            );
+        //regMonitoringComponent(alarmDevComm          );
+        //regMonitoringComponent(alarmDevSpecific      );
+        //regMonitoringComponent(alarmMenuSpecific     );
+        //regMonitoringComponent(warningDevComm        );
+        //regMonitoringComponent(warningDevSpecific    );
+        //regMonitoringComponent(warningMenuSpecifi    );
+        //regMonitoringComponent(expandedMode          );
 
         refresh()
     }
@@ -260,21 +260,21 @@ CustomWindow{
         width: minWidth > (win.scrollContainer.width - 10) ? (minWidth - 10): (win.scrollContainer.width - 10);
         spacing: 10
 
-        CustomLabel       { id: dnetStatusTitle        ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Status"            ;}
-        CustomComboLabel  { id: dnetStatus             ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ;}
+        //CustomLabel       { id: dnetStatusTitle        ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Status"            ;}
+        //CustomComboLabel  { id: dnetStatus             ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ;}
 
-        CustomDivider     { }
+        //CustomDivider     { }
 
-        CustomLabel       { id: warnStatusTitle                     ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Exception Status"  ;}
-        CustomCheckBox    { id: alarmDevComm      ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
-        CustomCheckBox    { id: alarmDevSpecific  ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
-        CustomCheckBox    { id: alarmMenuSpecific ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
-        CustomCheckBox    { id: warningDevComm    ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
-        CustomCheckBox    { id: warningDevSpecific; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
-        CustomCheckBox    { id: warningMenuSpecifi; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
-        CustomCheckBox    { id: expandedMode      ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
+        //CustomLabel       { id: warnStatusTitle                     ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Exception Status"  ;}
+        //CustomCheckBox    { id: alarmDevComm      ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
+        //CustomCheckBox    { id: alarmDevSpecific  ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
+        //CustomCheckBox    { id: alarmMenuSpecific ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
+        //CustomCheckBox    { id: warningDevComm    ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
+        //CustomCheckBox    { id: warningDevSpecific; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
+        //CustomCheckBox    { id: warningMenuSpecifi; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
+        //CustomCheckBox    { id: expandedMode      ; isReadOnly: true; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 200          ;}
 
-        CustomDivider     { }
+        //CustomDivider     { }
 
         CustomLabel       { id: doutTitle              ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Digital Output"    ;}
         CustomComboLabel  { id: doutActivation         ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ;}

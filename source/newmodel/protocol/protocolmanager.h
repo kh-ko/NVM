@@ -778,9 +778,9 @@ public:
             QString speedReq      = QString("20%1%2").arg(slaveCode[i-1], "0800");
             QString fresszeReq    = QString("20%1%2").arg(slaveCode[i-1], "0100");
 
-            createPMProtocol(QString("Cluster %1 Posi Offset").arg(i), posiOffsetReq, "00", "WO"); createSlot(posiOffset->Name, 0, 0, 14, -1, ProtocolParamSlot::TypeUserPosi(), 1, pFolder); setTag(posiOffset );
-            createPMProtocol(QString("Cluster %1 Valve Speed").arg(i), speedReq     , "00", "WO"); createSlot(posiSpeed->Name , 0, 0, 14, -1, ProtocolParamSlot::TypeBase10()  , 1, pFolder); setTag(posiSpeed  );
-            createPMProtocol(QString("Cluster %1 Fressze"    ).arg(i), fresszeReq   , "00", "WO"); createSlot(fressze->Name   , 0, 0, 14, -1, ProtocolParamSlot::TypeBase10()  , 1, pFolder); setTag(fressze    );
+            createPMProtocol(QString("Cluster %1 Posi Offset").arg(i), posiOffsetReq, "00", "WO"); createSlot(posiOffset->Name, 0, 0, 14, -1, ProtocolParamSlot::TypeUserPosi(), 1   , pFolder); setTag(posiOffset );
+            createPMProtocol(QString("Cluster %1 Valve Speed").arg(i), speedReq     , "00", "WO"); createSlot(posiSpeed->Name , 0, 0, 14, -1, ProtocolParamSlot::TypeFloat()   , 1000, pFolder); setTag(posiSpeed  );
+            createPMProtocol(QString("Cluster %1 Fressze"    ).arg(i), fresszeReq   , "00", "WO"); createSlot(fressze->Name   , 0, 0, 14, -1, ProtocolParamSlot::TypeBase10()  , 1   , pFolder); setTag(fressze    );
         }
 
         UserPositionConverter::getInstance()->regRS232ScalingTag(FindTag("Interface RS232/RS485.Scaling.Position.Position Unit"));
