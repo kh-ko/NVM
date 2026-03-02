@@ -56,7 +56,7 @@ CustomWindow{
 
         profile.viewTag                      = findTag("Interface DeviceNet.Connection Object.Profile.Profile"                                                  ); // RW
         dataType.viewTag                     = findTag("Interface DeviceNet.Connection Object.Profile.Data Type"                                                ); // RW
-        dataTypeLabel.viewTag                = findTag("Interface DeviceNet.Connection Object.Profile.Data Type"                                                ); // RW
+        //dataTypeLabel.viewTag              = findTag("Interface DeviceNet.Connection Object.Profile.Data Type"                                                ); // RW
 
         outAssy.viewTag                      = findTag("Interface DeviceNet.Connection Object.Output.Output IO Consumed Assembly"                               ); // RW
         outName.viewTag                      = findTag("Interface DeviceNet.Connection Object.Output.Output Name"                                               ); // RO
@@ -373,8 +373,8 @@ CustomWindow{
 
         CustomLabel       { id: profileTitle           ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Profile"           ;}
         CustomComboBox    { id: profile                ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
-        CustomComboBox    { id: dataType               ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: profile.selValue === 1 && profile.viewTag.IsSupport === true; onIsDirtyChanged: {win.checkApplyBtn()}}
-        CustomComboLabel  { id: dataTypeLabel          ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: profile.selValue === 0 && profile.viewTag.IsSupport === true; }
+        CustomComboBox    { id: dataType               ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: profile.selValue !== 2 && profile.viewTag.IsSupport === true; onIsDirtyChanged: {win.checkApplyBtn()}}
+        //CustomComboLabel  { id: dataTypeLabel          ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: profile.selValue === 0 && profile.viewTag.IsSupport === true; }
         CustomLabel       { height: 24                 ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: ""                  ; visible: !dataType.visible}
         CustomLabel       { height: 24                 ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: ""                  ; }
 
