@@ -29,22 +29,22 @@ CustomWindow{
         di01Enable.viewTag   = findTag("Power Connector IO.Digital Input 1.Enable"       );
         di01Func.viewTag     = findTag("Power Connector IO.Digital Input 1.Functionality");
         di01Polarity.viewTag = findTag("Power Connector IO.Digital Input 1.Inverted"     );
-        di01State.viewTag    = findTag("Power Connector IO.Digital Input 1.State"        );
+        di01State.viewTag    = findTag("Power Connector IO.Digital Input 1.Switch State" );
 
         di02Enable.viewTag   = findTag("Power Connector IO.Digital Input 2.Enable"       );
         di02Func.viewTag     = findTag("Power Connector IO.Digital Input 2.Functionality");
         di02Polarity.viewTag = findTag("Power Connector IO.Digital Input 2.Inverted"     );
-        di02State.viewTag    = findTag("Power Connector IO.Digital Input 2.State"        );
+        di02State.viewTag    = findTag("Power Connector IO.Digital Input 2.Switch State" );
 
         do01Enable.viewTag   = findTag("Power Connector IO.Digital Output 1.Enable"       );
         do01Func.viewTag     = findTag("Power Connector IO.Digital Output 1.Functionality");
         do01Polarity.viewTag = findTag("Power Connector IO.Digital Output 1.Inverted"     );
-        do01State.viewTag    = findTag("Power Connector IO.Digital Output 1.State"        );
+        do01State.viewTag    = findTag("Power Connector IO.Digital Output 1.Switch State" );
 
         do02Enable.viewTag   = findTag("Power Connector IO.Digital Output 2.Enable"       );
         do02Func.viewTag     = findTag("Power Connector IO.Digital Output 2.Functionality");
         do02Polarity.viewTag = findTag("Power Connector IO.Digital Output 2.Inverted"     );
-        do02State.viewTag    = findTag("Power Connector IO.Digital Output 2.State"        );
+        do02State.viewTag    = findTag("Power Connector IO.Digital Output 2.Switch State" );
 
         regInitTag(valveRev1Tag     );
         regInitTag(valveRev2Tag     );

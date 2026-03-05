@@ -190,5 +190,7 @@
         <file>newqml/usercomponent/CustomFloatInput.qml</file>
         <file>newqml/view/powerconnectorio/PowerConnectorIOSettingDlg.qml</file>
         <file>newqml/view/interfacedevicenet/InterfaceDeviceNetV1CheckItem.qml</file>
+        <file>newqml/usercomponent/Custom2ButtonMessageBox.qml</file>
+        <file>newqml/view/clusterslavesetting/ClusterSlaveSettingDlg.qml</file>
     </qresource>
 </RCC>

@@ -27,6 +27,14 @@ CustomWindow{
 
     function beforeProcApply()
     {
+        var msgBox = questionApplyMsgBox.createObject(win);
+        msgBox.open()
+
+        return true;
+    }
+
+    function beforeProcApplyConfirm()
+    {
         if(inScalingPosiUnit.isDirty)
             outScalingPosiUnit.isDirty = true;
 
@@ -65,23 +73,23 @@ CustomWindow{
         outV1Tb.ctrlMode.viewTag             = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Control Model(1)"                ); // RW
         outV1Tb.setPointInt.viewTag          = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Setpoint-INT(2)"                 ); // RW
         outV1Tb.setPointFloat.viewTag        = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Setpoint-FLOAT(4)"               ); // RW
-        outV1Tb.setPointType.viewTag         = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Setpoint type(1)"                ); // RW
+        outV1Tb.setPointType.viewTag         = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Setpoint Type(1)"                ); // RW
         outV1Tb.learn.viewTag                = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Learn(1)"                        ); // RW
-        outV1Tb.learnPresLimInt.viewTag      = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Learn pressure limit-INT(2)"     ); // RW
-        outV1Tb.learnPresLimFloat.viewTag    = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Learn pressure limit-FLOAT(4)"   ); // RW
+        outV1Tb.learnPresLimInt.viewTag      = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Learn Pressure Limit-INT(2)"     ); // RW
+        outV1Tb.learnPresLimFloat.viewTag    = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Learn Pressure Limit-FLOAT(4)"   ); // RW
         outV1Tb.zero.viewTag                 = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Zero(1)"                         ); // RW
-        outV1Tb.presCtrlMode.viewTag         = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Pressure control mode(1)"        ); // RW
-        outV1Tb.writeCtrlParam.viewTag       = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Write control parameter(1)"      ); // RW
-        outV1Tb.adaptiveGain.viewTag         = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive gain(4)"                ); // RW
-        outV1Tb.adaptiveSensDelay.viewTag    = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive sensor delay(4)"        ); // RW
-        outV1Tb.adaptiveRampTime.viewTag     = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive ramp time(4)"           ); // RW
-        outV1Tb.adaptiveRampMode.viewTag     = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive ramp mode(1)"           ); // RW
-        outV1Tb.fixedPGain.viewTag           = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Fixed P-gain(4)"                 ); // RW
+        outV1Tb.presCtrlMode.viewTag         = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Pressure Control Mode(1)"        ); // RW
+        outV1Tb.writeCtrlParam.viewTag       = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Write Control Parameter(1)"      ); // RW
+        outV1Tb.adaptiveGain.viewTag         = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive Gain(4)"                ); // RW
+        outV1Tb.adaptiveSensDelay.viewTag    = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive Sensor Delay(4)"        ); // RW
+        outV1Tb.adaptiveRampTime.viewTag     = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive Ramp Time(4)"           ); // RW
+        outV1Tb.adaptiveRampMode.viewTag     = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive Ramp Mode(1)"           ); // RW
+        outV1Tb.fixedPGain.viewTag           = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Fixed P-Gain(4)"                 ); // RW
         outV1Tb.fixedIGain.viewTag           = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Fixed I-Gain(4)"                 ); // RW
-        outV1Tb.fixedRampTime.viewTag        = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Fixed ramp time(4)"              ); // RW
-        outV1Tb.fixedRampMode.viewTag        = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Fixed ramp mode(1)"              ); // RW
-        outV1Tb.fixedDir.viewTag             = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Fixed direction mode(1)"         ); // RW
-        outV1Tb.adaptiveDeltaGain.viewTag    = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive delta gain(4)"          ); // RW
+        outV1Tb.fixedRampTime.viewTag        = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Fixed Ramp Time(4)"              ); // RW
+        outV1Tb.fixedRampMode.viewTag        = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Fixed Ramp Mode(1)"              ); // RW
+        outV1Tb.fixedDir.viewTag             = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Fixed Direction Mode(1)"         ); // RW
+        outV1Tb.adaptiveDeltaGain.viewTag    = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Adaptive Delta Gain(4)"          ); // RW
         outV1Tb.calibration.viewTag          = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Calibration(1)"                  ); // RW
         outV1Tb.dummy.viewTag                = findTag("Interface DeviceNet.Connection Object.Output.Output Selector Bitmap v1.Dummy(1)"                        ); // RW
 
@@ -122,7 +130,7 @@ CustomWindow{
         inV1Tb.valveCloseOpenCheck.viewTag   = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Valve Close/Open Check(1)"         ); // RW
         inV1Tb.devStatus2.viewTag            = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Device Status 2(1)"                ); // RW
         inV1Tb.accMode.viewTag               = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Access Mode(1)"                    ); // RW
-        inV1Tb.presCtrlMode.viewTag          = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Pressure control Mode(1)"          ); // RW
+        inV1Tb.presCtrlMode.viewTag          = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Pressure Control Mode(1)"          ); // RW
         inV1Tb.writeCtrlParamAnalyze.viewTag = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Write Control Parameter Analyze(1)"); // RW
         inV1Tb.adaptiveGain.viewTag          = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Adaptive Gain(4)"                  ); // RW
         inV1Tb.adaptiveSensDelay.viewTag     = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Adaptive Sensor Delay(4)"          ); // RW
@@ -134,10 +142,10 @@ CustomWindow{
         inV1Tb.fixedRampMode.viewTag         = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Fixed Ramp Mode(1)"                ); // RW
         inV1Tb.fixedDir.viewTag              = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Fixed Direction Mode(1)"           ); // RW
         inV1Tb.adaptiveDeltaGain.viewTag     = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Adaptive Delta Gain(4)"            ); // RW
-        inV1Tb.sens1PresInt.viewTag          = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Sensor1 Pressure-INT(2)"           ); // RW
-        inV1Tb.sens1PresFloat.viewTag        = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Sensor1 Pressure-FLOAT(4)"         ); // RW
-        inV1Tb.sens2PresInt.viewTag          = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Sensor2 Pressure-INT(2)"           ); // RW
-        inV1Tb.sens2PresFloat.viewTag        = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Sensor2 Pressure-FLOAT(4)"         ); // RW
+        inV1Tb.sens1PresInt.viewTag          = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Sensor1 Reading-INT(2)"            ); // RW
+        inV1Tb.sens1PresFloat.viewTag        = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Sensor1 Reading-FLOAT(4)"          ); // RW
+        inV1Tb.sens2PresInt.viewTag          = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Sensor2 Reading-INT(2)"            ); // RW
+        inV1Tb.sens2PresFloat.viewTag        = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Sensor2 Reading-FLOAT(4)"          ); // RW
         inV1Tb.dummy.viewTag                 = findTag("Interface DeviceNet.Connection Object.Input.Input Selector Bitmap v1.Dummy(1)"                          ); // RW
 
         inSelector01.viewTag                 = findTag("Interface DeviceNet.Connection Object.Input.Input Selector 01"                                          ); // RW
@@ -166,6 +174,9 @@ CustomWindow{
         outScalingPresUnit.viewTag           = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Unit"                                              ); // RW
         outScalingSens1Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor1 Max"                                       ); // RW
         outScalingSens2Gain.viewTag          = findTag("Interface DeviceNet.Scaling.Output.Pressure Setpoint Sensor2 Max"                                       ); // RW
+        outScalingKpScaler.viewTag           = findTag("Interface DeviceNet.Scaling.Output.KP(Gain Factor) Scaler"                                              ); // RW
+        outScalingKiScaler.viewTag           = findTag("Interface DeviceNet.Scaling.Output.KI(Delta Factor) Scaler"                                             ); // RW
+        outScalingRampTimeScaler.viewTag     = findTag("Interface DeviceNet.Scaling.Output.Ramp Time Scaler"                                                    ); // RW
 
         inScalingPosiUnit.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Position Setpoint Unit"                                               ); // RW
         inScalingPosiGain.viewTag            = findTag("Interface DeviceNet.Scaling.Input.Position Setpoint Max"                                                ); // RW
@@ -180,11 +191,11 @@ CustomWindow{
         devType.viewTag                      = findTag("Interface DeviceNet.Identity Object.Instance.Device Type"                                               ); // RW
         pdCode.viewTag                       = findTag("Interface DeviceNet.Identity Object.Instance.Product Code"                                              ); // RW
 
-        reactEnable.viewTag                  = findTag("Interface DeviceNet.Connection Loss Reaction.Enable"                                                    ); // RW
-        reactState.viewTag                   = findTag("Interface DeviceNet.Connection Loss Reaction.State"                                                     ); // RO
-        reactfunc.viewTag                    = findTag("Interface DeviceNet.Connection Loss Reaction.Functionality"                                             ); // RW
+        //reactEnable.viewTag                  = findTag("Interface DeviceNet.Connection Loss Reaction.Enable"                                                    ); // RW
+        //reactState.viewTag                   = findTag("Interface DeviceNet.Connection Loss Reaction.State"                                                     ); // RO
+        //reactfunc.viewTag                    = findTag("Interface DeviceNet.Connection Loss Reaction.Functionality"                                             ); // RW
 
-        reset.viewTag                        = findTag("Interface DeviceNet.Identity Object.Services.Reset"                                                     ); // RW
+        //reset.viewTag                        = findTag("Interface DeviceNet.Identity Object.Services.Reset"                                                     ); // RW
 
         doutActivation.viewTag               = findTag("Interface DeviceNet.Input Output.Digital Output.Enable"                                                 ); // RW
         doutFunc.viewTag                     = findTag("Interface DeviceNet.Input Output.Digital Output.Functionality"                                          ); // RW
@@ -324,6 +335,9 @@ CustomWindow{
         regRWComponent        (outScalingPresUnit      );
         regRWComponent        (outScalingSens1Gain     );
         regRWComponent        (outScalingSens2Gain     );
+        regRWComponent        (outScalingKpScaler      );
+        regRWComponent        (outScalingKiScaler      );
+        regRWComponent        (outScalingRampTimeScaler);
 
         regAlwaysReadComponent(serialNum               );
         regAlwaysReadComponent(pdName                  );
@@ -332,11 +346,11 @@ CustomWindow{
         regRWComponent        (devType                 );
         regRWComponent        (pdCode                  );
 
-        regRWComponent        (reactEnable             );
-        regAlwaysReadComponent(reactState              );
-        regRWComponent        (reactfunc               );
+        //regRWComponent        (reactEnable             );
+        //regAlwaysReadComponent(reactState              );
+        //regRWComponent        (reactfunc               );
 
-        regRWComponent        (reset                   );
+        //regRWComponent        (reset                   );
 
         regRWComponent        (doutActivation          );
         regRWComponent        (doutFunc                );
@@ -415,23 +429,26 @@ CustomWindow{
 
         CustomDivider{}
 
-        CustomLabel       { id: outScalingTitle        ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Output Scaling"    ;}
-        CustomComboBox    { id: outScalingPosiUnit     ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
-        CustomFloatInput  { id: outScalingPosiGain     ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: outScalingPosiUnit.selValue === 4097; onIsDirtyChanged: {win.checkApplyBtn()}}
-        CustomComboBox    { id: outScalingPresUnit     ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
-        CustomFloatInput  { id: outScalingSens1Gain    ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: outScalingPresUnit.selValue === 4097; onIsDirtyChanged: {win.checkApplyBtn()}}
-        CustomFloatInput  { id: outScalingSens2Gain    ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: outScalingPresUnit.selValue === 4097; onIsDirtyChanged: {win.checkApplyBtn()}}
+        CustomLabel       { id: outScalingTitle         ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Output Scaling"    ;}
+        CustomComboBox    { id: outScalingPosiUnit      ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
+        CustomFloatInput  { id: outScalingPosiGain      ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: outScalingPosiUnit.selValue === 4097; onIsDirtyChanged: {win.checkApplyBtn()}}
+        CustomComboBox    { id: outScalingPresUnit      ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
+        CustomFloatInput  { id: outScalingSens1Gain     ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: outScalingPresUnit.selValue === 4097; onIsDirtyChanged: {win.checkApplyBtn()}}
+        CustomFloatInput  { id: outScalingSens2Gain     ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: outScalingPresUnit.selValue === 4097; onIsDirtyChanged: {win.checkApplyBtn()}}
+        CustomFloatInput  { id: outScalingKpScaler      ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
+        CustomFloatInput  { id: outScalingKiScaler      ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
+        CustomFloatInput  { id: outScalingRampTimeScaler; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
 
         CustomDivider     { }
 
-        CustomLabel       { id: doutTitle              ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Digital Output"    ;}
+        CustomLabel       { id: doutTitle              ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Digital Output(Interface Connector)";}
         CustomComboBox    { id: doutActivation         ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
         CustomComboBox    { id: doutFunc               ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
         CustomComboBox    { id: doutPolarity           ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
 
         CustomDivider     { }
 
-        CustomLabel       { id: dinTitle              ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Digital Input"     ;}
+        CustomLabel       { id: dinTitle              ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Digital Input(Interface Connector)";}
         CustomComboBox    { id: dinActivation         ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
         CustomComboBox    { id: dinFunc               ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
         CustomComboBox    { id: dinPolarity           ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
@@ -504,18 +521,43 @@ CustomWindow{
         CustomFloatInput  { id: inScalingSens1Gain     ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: inScalingPresUnit.selValue === 4097; onIsDirtyChanged: {win.checkApplyBtn()}}
         CustomFloatInput  { id: inScalingSens2Gain     ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; visible: inScalingPresUnit.selValue === 4097; onIsDirtyChanged: {win.checkApplyBtn()}}
 
+        //CustomDivider{}
+
+        //CustomLabel       { id: reactionTitle          ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Connection Loss Reaction";}
+        //CustomComboBox    { id: reactEnable            ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
+        //CustomComboLabel  { id: reactState             ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150         ;}
+        //CustomComboBox    { id: reactfunc              ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
+
+        //CustomDivider{}
+
+        //CustomLabel       { id: serviceTitle           ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Services";}
+        //CustomComboBox    { id: reset                  ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150         ; onIsDirtyChanged: {win.checkApplyBtn()}}
+
         CustomDivider{}
+    }
 
-        CustomLabel       { id: reactionTitle          ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Connection Loss Reaction";}
-        CustomComboBox    { id: reactEnable            ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
-        CustomComboLabel  { id: reactState             ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150         ;}
-        CustomComboBox    { id: reactfunc              ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150          ; onIsDirtyChanged: {win.checkApplyBtn()}}
+    Component{
+        id : questionApplyMsgBox
 
-        CustomDivider{}
+        Custom2ButtonMessageBox
+        {
+            property string method : ""
 
-        CustomLabel       { id: serviceTitle           ; anchors.left: parent.left; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin:  0; text: "Services";}
-        CustomComboBox    { id: reset                  ; anchors.left: parent.left; anchors.leftMargin: 20; anchors.right: parent.right; anchors.rightMargin: 10; label.width: 150         ; onIsDirtyChanged: {win.checkApplyBtn()}}
+            msgIcon.source: "/image/icon-alret.png"
+            contentText : qsTr("Module resetting. Valve opens or closes based on network fail settings.<br>* Menu : Valve > Setup > [target-position at network-fail]")
+            titleText: qsTr("Warning!!")
+            okText : qsTr("Apply")
+            noText: qsTr("Cancel")
+            contentHeight: 170 * GUISetting.scale; contentWidth: 600 * GUISetting.scale
 
-        CustomDivider{}
+            onResult:
+            {
+                if(bOk)
+                {
+                    win.beforeProcApplyConfirm()
+                    win.finalyApply();
+                }
+            }
+        }
     }
 }

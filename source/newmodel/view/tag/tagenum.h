@@ -188,7 +188,7 @@ public:
         pTemp = new TagEnumListModel("ClusterConnectionLossReaction", this);
         pTemp->addPair(0, "Close");
         pTemp->addPair(1, "Open");
-        pTemp->addPair(2, "Stay");
+        pTemp->addPair(2, "Keep Position");
         EnumList.append(pTemp);
 
         pTemp = new TagEnumListModel("NotDisableDisable", this);
@@ -321,7 +321,7 @@ public:
         pTemp->addPair(  8, "(8)CONTROL MODE/SETPOINT/SETPOINT TYPE"                                                                                       );
         pTemp->addPair( 23, "(23)SETPOINT/SETPOINT TYPE"                                                                                                   );
         pTemp->addPair( 24, "(24)CONTROL MODE/SETPOINT/SETPOINT TYPE"                                                                                      );
-        pTemp->addPair( 32, "(32)CONTROL MODE/SETPOINT/KP/KI/KD"                                                                                           );
+        pTemp->addPair( 32, "(32)CONTROL MODE/SETPOINT/KP(GAIN FACTOR)/KI(DLETA FACTOR)/RAMP TIME"                                                         );
         pTemp->addPair(102, "(102)CONTROL MODE/SETPOINT/SETPOINT TYPE/LEARN/LEARN PRES. LIMIT/ZERO"                                                        );
         pTemp->addPair(103, "(103)CONTROL MODE/SETPOINT/SETPOINT TYPE/CLUSTER ADDR./CLUSTER ACTION"                                                        );
         pTemp->addPair(107, "(107)CONTROL MODE/SETPOINT/SETPOINT TYPE/LEARN/LEARN PRES. LIMIT/ZERO"                                                        );

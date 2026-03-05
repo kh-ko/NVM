@@ -598,7 +598,7 @@ BaseSetupWindow{
                     id : diTitle
                     anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                     isBold: true
-                    text : qsTr("Digital input")
+                    text : qsTr("Digital input(Interface Connector)")
                 }
 
                 NComboBox{
@@ -654,7 +654,7 @@ BaseSetupWindow{
                     id : doTitle
                     anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                     isBold: true
-                    text : qsTr("Digital outputs")
+                    text : qsTr("Digital outputs(Interface Connector)")
                 }
 
                 NComboBox{

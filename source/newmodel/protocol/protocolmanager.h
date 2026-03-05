@@ -173,7 +173,7 @@ public:
             }
         }
 
-        qDebug() << "[" << Q_FUNC_INFO << "]not found path = " << path;
+        qDebug() << "[" << Q_FUNC_INFO << "]not found tag = " << path;
         return nullptr;
     }
 };
@@ -244,10 +244,12 @@ public:
 
         pFolder = pRootFolder->createFolder("Interface RS232/RS485.Scaling.Position");
         {
-            TagModel * posiUnit    = createTag("Position Unit"         , "RW", TagModel::TypeEnum()  , pEnumDefine->Find("PosiScaling"), 0, pFolder);
-            TagModel * closestPosi = createTag("Value Closest Position", "RW", TagModel::TypeBase10(), nullptr                         , 0, pFolder);
-            TagModel * openPosi    = createTag("Value Open Position"   , "RW", TagModel::TypeBase10(), nullptr                         , 0, pFolder);
+            TagModel * baudRate    = createTag("Baud Rate"             , "RW", TagModel::TypeEnum()  , pEnumDefine->Find("RS232Baudrate"), 0, pFolder);
+            TagModel * posiUnit    = createTag("Position Unit"         , "RW", TagModel::TypeEnum()  , pEnumDefine->Find("PosiScaling"  ), 0, pFolder);
+            TagModel * closestPosi = createTag("Value Closest Position", "RW", TagModel::TypeBase10(), nullptr                           , 0, pFolder);
+            TagModel * openPosi    = createTag("Value Open Position"   , "RW", TagModel::TypeBase10(), nullptr                           , 0, pFolder);
 
+            createPMProtocol("RS232 Interface - Baud Rate"        , "A1110100", "00", "RW"); createSlot("Baud Rate"             , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(baudRate   );
             createPMProtocol("RS232 Interface - Posi Scaling Unit", "A1120101", "00", "RW"); createSlot("Position Unit"         , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(posiUnit   );
             createPMProtocol("RS232 Interface - Posi Closest"     , "A1120102", "00", "RW"); createSlot("Value Closest Position", PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(closestPosi);
             createPMProtocol("RS232 Interface - Posi Open"        , "A1120103", "00", "RW"); createSlot("Value Open Position"   , PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(openPosi   );
@@ -310,23 +312,23 @@ public:
             TagModel * ctrlMode          = createTag("Control Model(1)"             , "RW", TagModel::TypeBitmap(), nullptr,  0, pFolder); ctrlMode         ->setLengthInfo(1);
             TagModel * setPointInt       = createTag("Setpoint-INT(2)"              , "RW", TagModel::TypeBitmap(), nullptr,  1, pFolder); setPointInt      ->setLengthInfo(2);
             TagModel * setPointFloat     = createTag("Setpoint-FLOAT(4)"            , "RW", TagModel::TypeBitmap(), nullptr,  2, pFolder); setPointFloat    ->setLengthInfo(4);
-            TagModel * setPointType      = createTag("Setpoint type(1)"             , "RW", TagModel::TypeBitmap(), nullptr,  3, pFolder); setPointType     ->setLengthInfo(1);
+            TagModel * setPointType      = createTag("Setpoint Type(1)"             , "RW", TagModel::TypeBitmap(), nullptr,  3, pFolder); setPointType     ->setLengthInfo(1);
             TagModel * learn             = createTag("Learn(1)"                     , "RW", TagModel::TypeBitmap(), nullptr,  4, pFolder); learn            ->setLengthInfo(1);
-            TagModel * learnPresLimInt   = createTag("Learn pressure limit-INT(2)"  , "RW", TagModel::TypeBitmap(), nullptr,  5, pFolder); learnPresLimInt  ->setLengthInfo(2);
-            TagModel * learnPresLimFloat = createTag("Learn pressure limit-FLOAT(4)", "RW", TagModel::TypeBitmap(), nullptr,  6, pFolder); learnPresLimFloat->setLengthInfo(4);
+            TagModel * learnPresLimInt   = createTag("Learn Pressure Limit-INT(2)"  , "RW", TagModel::TypeBitmap(), nullptr,  5, pFolder); learnPresLimInt  ->setLengthInfo(2);
+            TagModel * learnPresLimFloat = createTag("Learn Pressure Limit-FLOAT(4)", "RW", TagModel::TypeBitmap(), nullptr,  6, pFolder); learnPresLimFloat->setLengthInfo(4);
             TagModel * zero              = createTag("Zero(1)"                      , "RW", TagModel::TypeBitmap(), nullptr,  7, pFolder); zero             ->setLengthInfo(1);
-            TagModel * presCtrlMode      = createTag("Pressure control mode(1)"     , "RW", TagModel::TypeBitmap(), nullptr,  8, pFolder); presCtrlMode     ->setLengthInfo(1);
-            TagModel * writeCtrlParam    = createTag("Write control parameter(1)"   , "RW", TagModel::TypeBitmap(), nullptr,  9, pFolder); writeCtrlParam   ->setLengthInfo(1);
-            TagModel * adaptiveGain      = createTag("Adaptive gain(4)"             , "RW", TagModel::TypeBitmap(), nullptr, 10, pFolder); adaptiveGain     ->setLengthInfo(4);
-            TagModel * adaptiveSensDelay = createTag("Adaptive sensor delay(4)"     , "RW", TagModel::TypeBitmap(), nullptr, 11, pFolder); adaptiveSensDelay->setLengthInfo(4);
-            TagModel * adaptiveRampTime  = createTag("Adaptive ramp time(4)"        , "RW", TagModel::TypeBitmap(), nullptr, 12, pFolder); adaptiveRampTime ->setLengthInfo(4);
-            TagModel * adaptiveRampMode  = createTag("Adaptive ramp mode(1)"        , "RW", TagModel::TypeBitmap(), nullptr, 13, pFolder); adaptiveRampMode ->setLengthInfo(1);
-            TagModel * fixedPGain        = createTag("Fixed P-gain(4)"              , "RW", TagModel::TypeBitmap(), nullptr, 14, pFolder); fixedPGain       ->setLengthInfo(4);
+            TagModel * presCtrlMode      = createTag("Pressure Control Mode(1)"     , "RW", TagModel::TypeBitmap(), nullptr,  8, pFolder); presCtrlMode     ->setLengthInfo(1);
+            TagModel * writeCtrlParam    = createTag("Write Control Parameter(1)"   , "RW", TagModel::TypeBitmap(), nullptr,  9, pFolder); writeCtrlParam   ->setLengthInfo(1);
+            TagModel * adaptiveGain      = createTag("Adaptive Gain(4)"             , "RW", TagModel::TypeBitmap(), nullptr, 10, pFolder); adaptiveGain     ->setLengthInfo(4);
+            TagModel * adaptiveSensDelay = createTag("Adaptive Sensor Delay(4)"     , "RW", TagModel::TypeBitmap(), nullptr, 11, pFolder); adaptiveSensDelay->setLengthInfo(4);
+            TagModel * adaptiveRampTime  = createTag("Adaptive Ramp Time(4)"        , "RW", TagModel::TypeBitmap(), nullptr, 12, pFolder); adaptiveRampTime ->setLengthInfo(4);
+            TagModel * adaptiveRampMode  = createTag("Adaptive Ramp Mode(1)"        , "RW", TagModel::TypeBitmap(), nullptr, 13, pFolder); adaptiveRampMode ->setLengthInfo(1);
+            TagModel * fixedPGain        = createTag("Fixed P-Gain(4)"              , "RW", TagModel::TypeBitmap(), nullptr, 14, pFolder); fixedPGain       ->setLengthInfo(4);
             TagModel * fixedIGain        = createTag("Fixed I-Gain(4)"              , "RW", TagModel::TypeBitmap(), nullptr, 15, pFolder); fixedIGain       ->setLengthInfo(4);
-            TagModel * fixedRampTime     = createTag("Fixed ramp time(4)"           , "RW", TagModel::TypeBitmap(), nullptr, 16, pFolder); fixedRampTime    ->setLengthInfo(4);
-            TagModel * fixedRampMode     = createTag("Fixed ramp mode(1)"           , "RW", TagModel::TypeBitmap(), nullptr, 17, pFolder); fixedRampMode    ->setLengthInfo(1);
-            TagModel * fixedDir          = createTag("Fixed direction mode(1)"      , "RW", TagModel::TypeBitmap(), nullptr, 18, pFolder); fixedDir         ->setLengthInfo(1);
-            TagModel * adaptiveDeltaGain = createTag("Adaptive delta gain(4)"       , "RW", TagModel::TypeBitmap(), nullptr, 19, pFolder); adaptiveDeltaGain->setLengthInfo(4);
+            TagModel * fixedRampTime     = createTag("Fixed Ramp Time(4)"           , "RW", TagModel::TypeBitmap(), nullptr, 16, pFolder); fixedRampTime    ->setLengthInfo(4);
+            TagModel * fixedRampMode     = createTag("Fixed Ramp Mode(1)"           , "RW", TagModel::TypeBitmap(), nullptr, 17, pFolder); fixedRampMode    ->setLengthInfo(1);
+            TagModel * fixedDir          = createTag("Fixed Direction Mode(1)"      , "RW", TagModel::TypeBitmap(), nullptr, 18, pFolder); fixedDir         ->setLengthInfo(1);
+            TagModel * adaptiveDeltaGain = createTag("Adaptive Delta Gain(4)"       , "RW", TagModel::TypeBitmap(), nullptr, 19, pFolder); adaptiveDeltaGain->setLengthInfo(4);
             TagModel * calibration       = createTag("Calibration(1)"               , "RW", TagModel::TypeBitmap(), nullptr, 20, pFolder); calibration      ->setLengthInfo(1);
             TagModel * dummy             = createTag("Dummy(1)"                     , "RW", TagModel::TypeBitmap(), nullptr, 21, pFolder); dummy            ->setLengthInfo(1);
 
@@ -425,7 +427,7 @@ public:
             TagModel * valveCloseOpenCheck   = createTag("Valve Close/Open Check(1)"         , "RW", TagModel::TypeBitmap(), nullptr,  9, pFolder); valveCloseOpenCheck  ->setLengthInfo( 1);
             TagModel * devStatus2            = createTag("Device Status 2(1)"                , "RW", TagModel::TypeBitmap(), nullptr, 10, pFolder); devStatus2           ->setLengthInfo( 1);
             TagModel * accMode               = createTag("Access Mode(1)"                    , "RW", TagModel::TypeBitmap(), nullptr, 11, pFolder); accMode              ->setLengthInfo( 1);
-            TagModel * presCtrlMode          = createTag("Pressure control Mode(1)"          , "RW", TagModel::TypeBitmap(), nullptr, 12, pFolder); presCtrlMode         ->setLengthInfo( 1);
+            TagModel * presCtrlMode          = createTag("Pressure Control Mode(1)"          , "RW", TagModel::TypeBitmap(), nullptr, 12, pFolder); presCtrlMode         ->setLengthInfo( 1);
             TagModel * writeCtrlParamAnalyze = createTag("Write Control Parameter Analyze(1)", "RW", TagModel::TypeBitmap(), nullptr, 13, pFolder); writeCtrlParamAnalyze->setLengthInfo( 1);
             TagModel * adaptiveGain          = createTag("Adaptive Gain(4)"                  , "RW", TagModel::TypeBitmap(), nullptr, 14, pFolder); adaptiveGain         ->setLengthInfo( 4);
             TagModel * adaptiveSensDelay     = createTag("Adaptive Sensor Delay(4)"          , "RW", TagModel::TypeBitmap(), nullptr, 15, pFolder); adaptiveSensDelay    ->setLengthInfo( 4);
@@ -437,10 +439,10 @@ public:
             TagModel * fixedRampMode         = createTag("Fixed Ramp Mode(1)"                , "RW", TagModel::TypeBitmap(), nullptr, 21, pFolder); fixedRampMode        ->setLengthInfo( 1);
             TagModel * fixedDir              = createTag("Fixed Direction Mode(1)"           , "RW", TagModel::TypeBitmap(), nullptr, 22, pFolder); fixedDir             ->setLengthInfo( 1);
             TagModel * adaptiveDeltaGain     = createTag("Adaptive Delta Gain(4)"            , "RW", TagModel::TypeBitmap(), nullptr, 23, pFolder); adaptiveDeltaGain    ->setLengthInfo( 4);
-            TagModel * sens1PresInt          = createTag("Sensor1 Pressure-INT(2)"           , "RW", TagModel::TypeBitmap(), nullptr, 24, pFolder); sens1PresInt         ->setLengthInfo( 2);
-            TagModel * sens1PresFloat        = createTag("Sensor1 Pressure-FLOAT(4)"         , "RW", TagModel::TypeBitmap(), nullptr, 25, pFolder); sens1PresFloat       ->setLengthInfo( 4);
-            TagModel * sens2PresInt          = createTag("Sensor2 Pressure-INT(2)"           , "RW", TagModel::TypeBitmap(), nullptr, 26, pFolder); sens2PresInt         ->setLengthInfo( 2);
-            TagModel * sens2PresFloat        = createTag("Sensor2 Pressure-FLOAT(4)"         , "RW", TagModel::TypeBitmap(), nullptr, 27, pFolder); sens2PresFloat       ->setLengthInfo( 4);
+            TagModel * sens1PresInt          = createTag("Sensor1 Reading-INT(2)"            , "RW", TagModel::TypeBitmap(), nullptr, 24, pFolder); sens1PresInt         ->setLengthInfo( 2);
+            TagModel * sens1PresFloat        = createTag("Sensor1 Reading-FLOAT(4)"          , "RW", TagModel::TypeBitmap(), nullptr, 25, pFolder); sens1PresFloat       ->setLengthInfo( 4);
+            TagModel * sens2PresInt          = createTag("Sensor2 Reading-INT(2)"            , "RW", TagModel::TypeBitmap(), nullptr, 26, pFolder); sens2PresInt         ->setLengthInfo( 2);
+            TagModel * sens2PresFloat        = createTag("Sensor2 Reading-FLOAT(4)"          , "RW", TagModel::TypeBitmap(), nullptr, 27, pFolder); sens2PresFloat       ->setLengthInfo( 4);
             TagModel * dummy                 = createTag("Dummy(1)"                          , "RW", TagModel::TypeBitmap(), nullptr, 28, pFolder); dummy                ->setLengthInfo( 1);
 
             createICProtocol("DNet In Assembly v1", "a:72500005", "a:72500005", "a:72500105", "a:72500105"); createSlot("DNet In Assembly v1", 10, 8, 10, 8, ProtocolParamSlot::TypeBase16()  , 1, pFolder);
@@ -522,17 +524,24 @@ public:
 
         pFolder = pRootFolder->createFolder("Interface DeviceNet.Scaling.Output");
         {
-            TagModel * posiUnit  = createTag("Position Setpoint Unit"        , "RW", TagModel::TypeEnum()     , pEnumDefine->Find("DNetPosiUnit"),  0, pFolder);
-            TagModel * posiMax   = createTag("Position Setpoint Max"         , "RW", TagModel::Type10000Gain(), nullptr                          ,  0, pFolder);
-            TagModel * presUnit  = createTag("Pressure Setpoint Unit"        , "RW", TagModel::TypeEnum()     , pEnumDefine->Find("DNetPresUnit"),  0, pFolder);
-            TagModel * sens1Max  = createTag("Pressure Setpoint Sensor1 Max" , "RW", TagModel::Type10000Gain(), nullptr                          ,  0, pFolder);
-            TagModel * sens2Max  = createTag("Pressure Setpoint Sensor2 Max" , "RW", TagModel::Type10000Gain(), nullptr                          ,  0, pFolder);
+            TagModel * posiUnit       = createTag("Position Setpoint Unit"        , "RW", TagModel::TypeEnum()        , pEnumDefine->Find("DNetPosiUnit"),  0, pFolder);
+            TagModel * posiMax        = createTag("Position Setpoint Max"         , "RW", TagModel::Type10000Gain()   , nullptr                          ,  0, pFolder);
+            TagModel * presUnit       = createTag("Pressure Setpoint Unit"        , "RW", TagModel::TypeEnum()        , pEnumDefine->Find("DNetPresUnit"),  0, pFolder);
+            TagModel * sens1Max       = createTag("Pressure Setpoint Sensor1 Max" , "RW", TagModel::Type10000Gain()   , nullptr                          ,  0, pFolder);
+            TagModel * sens2Max       = createTag("Pressure Setpoint Sensor2 Max" , "RW", TagModel::Type10000Gain()   , nullptr                          ,  0, pFolder);
+            TagModel * kpScaler       = createTag("KP(Gain Factor) Scaler"        , "RW", TagModel::TypeFloatDivisor(), nullptr                          ,  0, pFolder);
+            TagModel * kiScaler       = createTag("KI(Delta Factor) Scaler"       , "RW", TagModel::TypeFloatDivisor(), nullptr                          ,  0, pFolder);
+            TagModel * rampTimeScaler = createTag("Ramp Time Scaler"              , "RW", TagModel::TypeFloatDivisor(), nullptr                          ,  0, pFolder);
 
-            createICProtocol("DNet Position Setpoint Unit"        , "a:7250001B", "a:7250001B", "a:7250011B", "a:7250011B"); createSlot(posiUnit ->Name, 10, 4, 10, 4, ProtocolParamSlot::TypeBase16()  , 1, pFolder); setTag(posiUnit );
-            createICProtocol("DNet Position Setpoint Max"         , "a:7250001F", "a:7250001F", "a:7250011F", "a:7250011F"); createSlot(posiMax  ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(posiMax  );
-            createICProtocol("DNet Pressure Setpoint Unit"        , "a:7250001A", "a:7250001A", "a:7250011A", "a:7250011A"); createSlot(presUnit ->Name, 10, 4, 10, 4, ProtocolParamSlot::TypeBase16()  , 1, pFolder); setTag(presUnit );
-            createICProtocol("DNet Pressure Setpoint Sensor1 Max" , "a:7250001D", "a:7250001D", "a:7250011D", "a:7250011D"); createSlot(sens1Max ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens1Max );
-            createICProtocol("DNet Pressure Setpoint Sensor2 Max" , "a:7250001E", "a:7250001E", "a:7250011E", "a:7250011E"); createSlot(sens2Max ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens2Max );
+            createICProtocol("DNet Position Setpoint Unit"          , "a:7250001B", "a:7250001B", "a:7250011B", "a:7250011B"); createSlot(posiUnit ->Name, 10, 4, 10, 4, ProtocolParamSlot::TypeBase16()  , 1, pFolder); setTag(posiUnit );
+            createICProtocol("DNet Position Setpoint Max"           , "a:7250001F", "a:7250001F", "a:7250011F", "a:7250011F"); createSlot(posiMax  ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(posiMax  );
+            createICProtocol("DNet Pressure Setpoint Unit"          , "a:7250001A", "a:7250001A", "a:7250011A", "a:7250011A"); createSlot(presUnit ->Name, 10, 4, 10, 4, ProtocolParamSlot::TypeBase16()  , 1, pFolder); setTag(presUnit );
+            createICProtocol("DNet Pressure Setpoint Sensor1 Max"   , "a:7250001D", "a:7250001D", "a:7250011D", "a:7250011D"); createSlot(sens1Max ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens1Max );
+            createICProtocol("DNet Pressure Setpoint Sensor2 Max"   , "a:7250001E", "a:7250001E", "a:7250011E", "a:7250011E"); createSlot(sens2Max ->Name, 10, 8, 10, 8, ProtocolParamSlot::TypeBaseFHex(), 1, pFolder); setTag(sens2Max );
+
+            createICProtocol("DNet Pressure KP(Gain Factor) Scaler" , "b:1054"  , "b:1054", "a:1054", "a:1054"); createSlot(kpScaler->Name      ,           6,           6,           6,           6, ProtocolParamSlot::TypeBase16(), 10, pFolder); setTag(kpScaler      );
+            createICProtocol("DNet Pressure KI(Delta Factor) Scaler", "b:1055"  , "b:1055", "a:1055", "a:1055"); createSlot(kiScaler->Name      ,           6,           6,           6,           6, ProtocolParamSlot::TypeBase16(), 10, pFolder); setTag(kiScaler      );
+            createPMProtocol("DNet Pressure Ramp Time Scaler"       , "B0000100", "6D"    , "RW"              ); createSlot(rampTimeScaler->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 10, pFolder); setTag(rampTimeScaler);
         }
 
         pFolder = pRootFolder->createFolder("Interface DeviceNet.Scaling.Input");
@@ -645,7 +654,7 @@ public:
             TagModel * enable = createTag("Enable"       , "RW", TagModel::TypeEnum(), pEnumDefine->Find("DisableEnable"), 0, pFolder);
             TagModel * func   = createTag("Functionality", "RW", TagModel::TypeEnum(), pEnumDefine->Find("PowerDIFunc"  ), 0, pFolder);
             TagModel * invert = createTag("Inverted"     , "RW", TagModel::TypeEnum(), pEnumDefine->Find("Polarity"     ), 0, pFolder);
-            TagModel * state  = createTag("State"        , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
+            TagModel * state  = createTag("Switch State" , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
 
             createPMProtocol("Power DIO Input 1 Enable", "37010100", "00", "RW"); createSlot(enable->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(enable);
             createPMProtocol("Power DIO Input 1 Func"  , "37010300", "00", "RW"); createSlot(func  ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(func  );
@@ -658,12 +667,12 @@ public:
             TagModel * enable = createTag("Enable"       , "RW", TagModel::TypeEnum(), pEnumDefine->Find("DisableEnable"), 0, pFolder);
             TagModel * func   = createTag("Functionality", "RW", TagModel::TypeEnum(), pEnumDefine->Find("PowerDIFunc"  ), 0, pFolder);
             TagModel * invert = createTag("Inverted"     , "RW", TagModel::TypeEnum(), pEnumDefine->Find("Polarity"     ), 0, pFolder);
-            TagModel * state  = createTag("State"        , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
+            TagModel * state  = createTag("Switch State" , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
 
             createPMProtocol("Power DIO Input 2 Enable", "37020100", "00", "RW"); createSlot(enable->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(enable);
             createPMProtocol("Power DIO Input 2 Func"  , "37020300", "00", "RW"); createSlot(func  ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(func  );
             createPMProtocol("Power DIO Input 2 Invert", "37020400", "00", "RW"); createSlot(invert->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(invert);
-            createPMProtocol("Power DIO Input 2 State" , "37020200", "00", "RO"); createSlot(state ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(state );
+            createPMProtocol("Power DIO Input 2 State", "37020200", "00", "RO"); createSlot(state ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(state );
         }
 
         pFolder = pRootFolder->createFolder("Power Connector IO.Digital Output 1");
@@ -671,7 +680,7 @@ public:
             TagModel * enable = createTag("Enable"       , "RW", TagModel::TypeEnum(), pEnumDefine->Find("DisableEnable"), 0, pFolder);
             TagModel * func   = createTag("Functionality", "RW", TagModel::TypeEnum(), pEnumDefine->Find("PowerDOFunc"  ), 0, pFolder);
             TagModel * invert = createTag("Inverted"     , "RW", TagModel::TypeEnum(), pEnumDefine->Find("Polarity"     ), 0, pFolder);
-            TagModel * state  = createTag("State"        , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
+            TagModel * state  = createTag("Switch State" , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
 
             createPMProtocol("Power DIO Output 1 Enable", "37030100", "00", "RW"); createSlot(enable->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(enable);
             createPMProtocol("Power DIO Output 1 Func"  , "37030300", "00", "RW"); createSlot(func  ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(func  );
@@ -684,7 +693,7 @@ public:
             TagModel * enable = createTag("Enable"       , "RW", TagModel::TypeEnum(), pEnumDefine->Find("DisableEnable"), 0, pFolder);
             TagModel * func   = createTag("Functionality", "RW", TagModel::TypeEnum(), pEnumDefine->Find("PowerDOFunc"  ), 0, pFolder);
             TagModel * invert = createTag("Inverted"     , "RW", TagModel::TypeEnum(), pEnumDefine->Find("Polarity"     ), 0, pFolder);
-            TagModel * state  = createTag("State"        , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
+            TagModel * state  = createTag("Switch State" , "RW", TagModel::TypeEnum(), pEnumDefine->Find("OffOn"        ), 0, pFolder);
 
             createPMProtocol("Power DIO Output 2 Enable", "37040100", "00", "RW"); createSlot(enable->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(enable);
             createPMProtocol("Power DIO Output 2 Func"  , "37040300", "00", "RW"); createSlot(func  ->Name, PM_R_OFFSET, PM_R_LENGTH, PM_W_OFFSET, PM_W_LENGTH, ProtocolParamSlot::TypeBase10(), 1, pFolder); setTag(func  );
@@ -803,19 +812,19 @@ public:
         VersionChecker::getInstance()->setPwrConnDIOTag(FindTag("Power Connector IO.Digital Input 1.Enable"        ),
                                                         FindTag("Power Connector IO.Digital Input 1.Functionality" ),
                                                         FindTag("Power Connector IO.Digital Input 1.Inverted"      ),
-                                                        FindTag("Power Connector IO.Digital Input 1.State"         ),
+                                                        FindTag("Power Connector IO.Digital Input 1.Switch State"  ),
                                                         FindTag("Power Connector IO.Digital Input 2.Enable"        ),
                                                         FindTag("Power Connector IO.Digital Input 2.Functionality" ),
                                                         FindTag("Power Connector IO.Digital Input 2.Inverted"      ),
-                                                        FindTag("Power Connector IO.Digital Input 2.State"         ),
+                                                        FindTag("Power Connector IO.Digital Input 2.Switch State"  ),
                                                         FindTag("Power Connector IO.Digital Output 1.Enable"       ),
                                                         FindTag("Power Connector IO.Digital Output 1.Functionality"),
                                                         FindTag("Power Connector IO.Digital Output 1.Inverted"     ),
-                                                        FindTag("Power Connector IO.Digital Output 1.State"        ),
+                                                        FindTag("Power Connector IO.Digital Output 1.Switch State" ),
                                                         FindTag("Power Connector IO.Digital Output 2.Enable"       ),
                                                         FindTag("Power Connector IO.Digital Output 2.Functionality"),
                                                         FindTag("Power Connector IO.Digital Output 2.Inverted"     ),
-                                                        FindTag("Power Connector IO.Digital Output 2.State"        ));
+                                                        FindTag("Power Connector IO.Digital Output 2.Switch State" ));
 
         VersionChecker::getInstance()->setClusterMasterBaudRateSlot(FindSlot("Cluster.Master.Settings.Cluster Baud Rate V1" ,"Read" ),
                                                                     FindSlot("Cluster.Master.Settings.Cluster Baud Rate V1" ,"Write"),

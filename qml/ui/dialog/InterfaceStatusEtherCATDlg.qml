@@ -102,7 +102,7 @@ BaseSetupWindow{
                     id : diTitle
                     anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                     isBold: true
-                    text : qsTr("Digital inputs")
+                    text : qsTr("Digital inputs(Interface Connector)")
                 }
 
                 ColumnLayout{
@@ -149,7 +149,7 @@ BaseSetupWindow{
                     id : doTitle
                     anchors.top: parent.top; anchors.topMargin: GUISetting.margin; anchors.left: parent.left; anchors.leftMargin: GUISetting.margin
                     isBold: true
-                    text : qsTr("Digital outputs")
+                    text : qsTr("Digital outputs(Interface Connector)")
                 }
 
                 ColumnLayout{

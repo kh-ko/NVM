@@ -30,6 +30,7 @@ ApplicationWindow {
 
     function findTag(tagPath)
     {
+        console.debug(tagPath)
         return winTagContainer.getTag(tagPath)
     }
 
@@ -100,13 +101,27 @@ ApplicationWindow {
 
     function beforeProcApply()
     {
-
+        return false;
     }
 
     function apply()
     {
-        beforeProcApply()
+        if(beforeProcApply() === true)
+            return;
 
+        for(var i = 0; i < rwItemArray.length; i ++)
+        {
+            if(rwItemArray[i].isDirty && rwItemArray[i].visible)
+            {
+                rwItemArray[i].updateTagWriteValue();
+                rwItemArray[i].isDirty = false;
+            }
+        }
+        winTagContainer.apply();
+    }
+
+    function finalyApply()
+    {
         for(var i = 0; i < rwItemArray.length; i ++)
         {
             if(rwItemArray[i].isDirty && rwItemArray[i].visible)

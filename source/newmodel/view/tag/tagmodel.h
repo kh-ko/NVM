@@ -33,6 +33,7 @@ public:
     static int TypeEnumSelect     (){ return 12; }
     static int Type10000Gain      (){ return 13; }
     static int Type1000GainBase10 (){ return 14; }
+    static int TypeFloatDivisor   (){ return 15; }
 
     bool    IsEdit = false;
     int     ValueType = 0;

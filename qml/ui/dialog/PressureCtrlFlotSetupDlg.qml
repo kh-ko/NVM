@@ -251,7 +251,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _adapRampTime.verticalCenter; anchors.left: _adapRampTime.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("ramp time(0.00 sec ~ 10000.00 sec)")
+                    text : _adapRampMode.currentIndex == 0 ? qsTr("ramp time(sec, target reach time)") : qsTr("ramp time(sec, 0 to SFS time)")
                 }
 
 
@@ -391,7 +391,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _fixed1RampTime.verticalCenter; anchors.left: _fixed1RampTime.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("ramp time(0.00 sec ~ 10000.00 sec)")
+                    text : _fixed1RampMode.currentIndex == 0 ? qsTr("ramp time(sec, target reach time)") : qsTr("ramp time(sec, 0 to SFS time)")
                 }
 
 
@@ -552,7 +552,7 @@ BaseSetupWindow{
 
                 NText{
                     anchors.verticalCenter: _fixed2RampTime.verticalCenter; anchors.left: _fixed2RampTime.right; anchors.leftMargin: GUISetting.margin
-                    text : qsTr("ramp time(0.00 sec ~ 10000.00 secs)")
+                    text : _fixed2RampMode.currentIndex == 0 ? qsTr("ramp time(sec, target reach time)") : qsTr("ramp time(sec, 0 to SFS time)")
                 }
 
 

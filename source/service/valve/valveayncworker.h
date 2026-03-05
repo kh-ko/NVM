@@ -776,6 +776,7 @@ public:
         INTERFACE_LOGIC_4_20mA_SPECIAL       = 17, // H
         INTERFACE_CCLINK                     = 18, // I
         INTERFACE_ETHERCAT                   = 19, // J
+        INTERFACE_CLUSTER_SLAVE              = 20,
     };
 
     enum eCompany{

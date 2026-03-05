@@ -15,6 +15,8 @@
 #include "source/newmodel/view/converter/fhextofloatconverter.h"
 #include "source/newmodel/view/converter/fhexto10000gainconverter.h"
 #include "source/newmodel/view/converter/floattobase10converter.h"
+#include "source/newmodel/view/converter/hextofloatdivisorconverte.h"
+#include "source/newmodel/view/converter/base10tofloatdivisorconverter.h"
 #include "source/newmodel/view/tag/tagmodel.h"
 
 class ProtocolParamSlot : public QObject{
@@ -144,6 +146,10 @@ public:
             {
                 return HexToBase36Converter::getInstance();
             }
+            else if(pTag->ValueType == TagModel::TypeFloatDivisor())
+            {
+                return HexToFloatDivisorConverter::getInstance();
+            }
         }
         else if(DataType == TypeBase10())
         {
@@ -162,6 +168,10 @@ public:
             else if(pTag->ValueType == TagModel::TypeFloatGain())
             {
                 return Base10ToFloatGainConverter::getInstance();
+            }
+            else if(pTag->ValueType == TagModel::TypeFloatDivisor())
+            {
+                return Base10ToFloatDivisorConverter::getInstance();
             }
         }
         else if(DataType == TypeUserPosi())

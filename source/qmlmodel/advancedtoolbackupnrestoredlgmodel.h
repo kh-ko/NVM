@@ -627,7 +627,7 @@ public slots:
 
         if(isForUpdate == false)
         {
-            int nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
+            nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
             if(nfirmwareVer >= 0x600)
             {
                 int paramCount = pConfigSP->getValveParamDescCount();
@@ -711,7 +711,6 @@ public slots:
             tempItem.setCommand("Interface(Device Net) Pressure Sensor 1 Gain", QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_S01_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_S01_GAIN     )); mExportCmdList.append(tempItem);
             tempItem.setCommand("Interface(Device Net) Pressure Sensor 2 Gain", QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_S02_GAIN     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_S02_GAIN     )); mExportCmdList.append(tempItem);
 
-            nfirmwareVer = pValveSP->getFirmwareVersion().right(4).toInt(nullptr, 16);
             if(nfirmwareVer >= 0x604 || (pLSettingSP->mCompany == ValveEnumDef::COMPANY_APSYS && nfirmwareVer >= 0x59B))
             {
                 tempItem.setCommand("Interface(Device Net) Out Position Unit"         , QString("%1").arg(REQ_READ_INTERFACE_CFG_DNET_OUT_POS_UNIT     ), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_DNET_OUT_POS_UNIT     )); mExportCmdList.append(tempItem);
@@ -817,10 +816,44 @@ public slots:
             }
             break;
 
+        case ValveEnumDef::INTERFACE_CLUSTER_SLAVE:
+            tempItem.setCommand("Interface(Cluster Slave) Baud Rate"      , "p:0BA111010000", "p:01A111010000"); mExportCmdList.append(tempItem);
+            break;
+
         default:/* Interface logic*/
             tempItem.setCommand("Interface(Logic)", QString("%1").arg(REQ_READ_INTERFACE_CONFIG_LOGIC), QString("%1").arg(REQ_WRITE_INTERFACE_CONFIG_LOGIC)); mExportCmdList.append(tempItem);
             break;
         }
+
+        /* Power Connector DIO */
+        tempItem.setCommand("Power Connector DI01-Enable"       ,  "p:0B3701010000", "p:013701010000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DI01-Functionality",  "p:0B3701030000", "p:013701030000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DI01-Inverted"     ,  "p:0B3701040000", "p:013701040000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DI01-Switch State" ,  "p:0B3701020000", "p:013701020000"); mExportCmdList.append(tempItem);
+
+        tempItem.setCommand("Power Connector DI02-Enable"       ,  "p:0B3702010000", "p:013702010000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DI02-Functionality",  "p:0B3702030000", "p:013702030000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DI02-Inverted"     ,  "p:0B3702040000", "p:013702040000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DI02-Switch State" ,  "p:0B3702020000", "p:013702020000"); mExportCmdList.append(tempItem);
+
+        tempItem.setCommand("Power Connector DO01-Enable"       ,  "p:0B3703010000", "p:013703010000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DO01-Functionality",  "p:0B3703030000", "p:013703030000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DO01-Inverted"     ,  "p:0B3703040000", "p:013703040000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DO01-Switch State" ,  "p:0B3703020000", "p:013703020000"); mExportCmdList.append(tempItem);
+
+        tempItem.setCommand("Power Connector DO02-Enable"       ,  "p:0B3704010000", "p:013704010000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DO02-Functionality",  "p:0B3704030000", "p:013704030000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DO02-Inverted"     ,  "p:0B3704040000", "p:013704040000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Power Connector DO02-Switch State" ,  "p:0B3704020000", "p:013704020000"); mExportCmdList.append(tempItem);
+
+
+        /* Cluster Master Setting*/
+        tempItem.setCommand("Cluster Master-Slave Count"            ,  "p:0B3704010000", "p:013704010000"); mExportCmdList.append(tempItem);
+        tempItem.setCommand("Cluster Master-Show Address on Display",  "p:0B3704010000", "p:013704010000"); mExportCmdList.append(tempItem);
+
+        if(nfirmwareVer < 0x623){ tempItem.setCommand("Cluster Master-Baud Rate v1",  "p:0BA111010000", "p:01A111010000"); mExportCmdList.append(tempItem);}
+        else                    { tempItem.setCommand("Cluster Master-Baud Rate v2",  "p:0B200D070000", "p:01200D070000"); mExportCmdList.append(tempItem);}
+
 
         setState(eState::STATE_EXPORT_SENSOR_CHECK);
     }

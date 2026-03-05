@@ -6,6 +6,7 @@ Item{
 
     property string text : "test"
     property string textColor : "#000000"
+    property var bgColor : "#00000000"
 
     opacity: enabled ? 1 : 0.3
     width: 100; height: 24
@@ -19,6 +20,11 @@ Item{
         source: (itemMouseArea.containsPress || !parent.enabled) ? "/image/card-1.png" : "/image/card-2.png"
         border.left: 50; border.top: 50
         border.right: 50; border.bottom: 50
+    }
+
+    Rectangle{
+        anchors.fill: parent
+        color : control.bgColor
     }
 
     Rectangle{

@@ -48,6 +48,7 @@ HEADERS += \
     source/newmodel/protocol/protocolparamslot.h \
     source/newmodel/protocol/versionchecker.h \
     source/newmodel/view/converter/base10todnetrevconverter.h \
+    source/newmodel/view/converter/base10tofloatdivisorconverter.h \
     source/newmodel/view/converter/base10tofloatgainconverter.h \
     source/newmodel/view/converter/base10tohexconverter.h \
     source/newmodel/view/converter/base36tobase10converter.h \
@@ -58,6 +59,7 @@ HEADERS += \
     source/newmodel/view/converter/floattobase10converter.h \
     source/newmodel/view/converter/hextobase10converter.h \
     source/newmodel/view/converter/hextobase36converter.h \
+    source/newmodel/view/converter/hextofloatdivisorconverte.h \
     source/newmodel/view/converter/positionconverter.h \
     source/newmodel/view/converter/tagvalueconverter.h \
     source/newmodel/view/converter/userpositionconverter.h \

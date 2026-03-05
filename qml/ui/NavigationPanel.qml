@@ -16,6 +16,7 @@ Rectangle {
     property bool isLogoVisible : false
     property bool isApSysCtrlMonitor : true
     property int  company       : 0
+    property int  userInterface : 0
 
     color : "#FFFFFF"
 
@@ -43,6 +44,7 @@ Rectangle {
     signal clickToolFirmwareUpdate()
     signal clickToolFirmwareUpdateViaNet()
     signal clickClusterMasterSetting()
+    signal clickClusterSlaveSetting()
     signal clickClusterDeviceMonitor()
     signal clickNCPASettings()
     signal clickAdvToolTest()
@@ -245,7 +247,7 @@ Rectangle {
                     id : menuInterfaceSetup
                     anchors.bottom: menuPowerConnectorIOSetup.top
                     text.text: qsTr("Setup")
-                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn && panel.userInterface !== ValveEnumDef.INTERFACE_CLUSTER_SLAVE
 
                     onClicked:{ panel.clickInterfaceSetup() }
                 }
@@ -260,7 +262,7 @@ Rectangle {
                 NExButtonItem{
                     id : menuInterfaceStatus
                     anchors.bottom: menuInterfaceTrace.top
-                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn && panel.userInterface !== ValveEnumDef.INTERFACE_CLUSTER_SLAVE
                     text.text: qsTr("Status")
 
                     onClicked:{ panel.clickInterfaceStatus() }
@@ -286,16 +288,26 @@ Rectangle {
 
                 NExButtonItem{
                     id : menuClusterSetting
-                    anchors.bottom: menuClusterMonitor.top
+                    anchors.bottom: slaveClusterSetting.top
                     text.text: qsTr("Master Setup")
-                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn && panel.userInterface !== ValveEnumDef.INTERFACE_CLUSTER_SLAVE
 
                     onClicked:{ panel.clickClusterMasterSetting() }
                 }
+
+                NExButtonItem{
+                    id : slaveClusterSetting
+                    anchors.bottom: menuClusterMonitor.top
+                    text.text: qsTr("Slave Setup")
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn && panel.userInterface === ValveEnumDef.INTERFACE_CLUSTER_SLAVE
+
+                    onClicked:{ panel.clickClusterSlaveSetting() }
+                }
+
                 NExButtonItem{
                     id : menuClusterMonitor
                     anchors.bottom: parent.bottom
-                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn
+                    enabled: panel.isConnected && !GlobalUiValue.disableWinCreateBtn && panel.userInterface !== ValveEnumDef.INTERFACE_CLUSTER_SLAVE
                     text.text: qsTr("Slave Monitor")
 
                     onClicked:{ panel.clickClusterDeviceMonitor() }

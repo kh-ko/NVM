@@ -15,6 +15,7 @@ import "./."
 import "../control/."
 import "./dialog/."
 import "../newqml/view/clustermastersetting/."
+import "../newqml/view/clusterslavesetting/."
 import "../newqml/view/clusterdevicemonitor/."
 import "../newqml/view/interfacedevicenet/."
 import "../newqml/view/powerconnectorio/."
@@ -140,6 +141,7 @@ Window {
         width: GUISetting.navi_panel_width
         anchors.top: title.bottom; anchors.topMargin: 2; anchors.bottom: statusBar.top; anchors.bottomMargin : 2;
 
+        userInterface     : model.mInterface
         isLogoVisible     : !model.mIsWithoutLogo
         isRunSequencer    : seqTestDlg.isRun
         isZeroEnable      : model.mZeroEnable
@@ -191,6 +193,7 @@ Window {
         onClickPressureCtrlLearnList      : { var popup = pressureCtrlLearnListDlg.createObject(window)  ; popup.show(); }//popup.open(); }
         onClickPressureCtrlGainMointoring : { var popup = pressureCtrlGainMonitorDlg.createObject(window); popup.show(); }
         onClickClusterMasterSetting       : { var popup = clusterMasterSettingDlg.createObject(window)   ; popup.show(); }
+        onClickClusterSlaveSetting        : { var popup = clusterSlaveSettingDlg.createObject(window)    ; popup.show(); }
         onClickClusterDeviceMonitor       : { var popup = clusterDeviceMonitorDlg.createObject(window)   ; popup.show(); }
         onClickNCPASettings               : { var popup = ncpaSettingsDlg.createObject(window)           ; popup.show(); }
         onClickInterfaceSetup             : {
@@ -637,6 +640,14 @@ Window {
         id : clusterMasterSettingDlg
 
         ClusterMasterSettingDlg{
+
+        }
+    }
+
+    Component{
+        id : clusterSlaveSettingDlg
+
+        ClusterSlaveSettingDlg{
 
         }
     }
